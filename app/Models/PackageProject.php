@@ -78,4 +78,9 @@ class PackageProject extends Model
     {
         return $this->belongsTo(GeographyBlock::class);
     }
+    public function procurementDetail()
+{
+    return $this->hasOne(ProcurementDetail::class);
+}
+
 }
