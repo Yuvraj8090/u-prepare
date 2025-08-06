@@ -18,25 +18,25 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
-            Route::resource('procurement', ProcurementDetailController::class)->except(['create', 'store', 'index', 'show']);
-            Route::prefix('package-projects/{packageProject}')->group(function () {
-    Route::get('procurement/create', [ProcurementDetailController::class, 'create'])->name('procurement.create');
-    Route::post('procurement', [ProcurementDetailController::class, 'store'])->name('procurement.store');
-});
-
-
+            // Procurement Details Routes
+            Route::prefix('package-projects/{packageProject}/procurement-details')->group(function () {
+                Route::get('create', [ProcurementDetailController::class, 'create'])->name('procurement-details.create');
+                Route::post('/', [ProcurementDetailController::class, 'store'])->name('procurement-details.store');
+            });
+            
+            Route::resource('procurement-details', ProcurementDetailController::class)->except(['create', 'store']);
+            
+            // Other admin routes...
             Route::resource('users', UserController::class);
             Route::resource('roles', RoleController::class);
             Route::resource('departments', DepartmentController::class);
             Route::resource('designations', DesignationController::class);
-
-            Route::resource('project', ProjectController::class);
+            Route::resource('projects', ProjectController::class);
             Route::resource('projects-category', ProjectsCategoryController::class);
             Route::resource('package-projects', PackageProjectController::class);
-
         });
-        Route::get('admin/dashboard', function () {
+    
+    Route::get('admin/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    
 });
