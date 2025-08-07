@@ -223,8 +223,10 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-check form-switch mb-3">
-                                        <input class="form-check-input" type="checkbox" name="dec_approved" 
-                                            id="dec_approved" @checked(old('dec_approved'))>
+                                                                              <input type="hidden" name="dec_approved" value="0">
+<input class="form-check-input" type="checkbox" name="dec_approved"
+       id="dec_approved" value="1" >
+
                                         <label class="form-check-label" for="dec_approved">Approved</label>
                                     </div>
                                     
@@ -260,8 +262,10 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-check form-switch mb-3">
-                                        <input class="form-check-input" type="checkbox" name="hpc_approved" 
-                                            id="hpc_approved" @checked(old('hpc_approved'))>
+                                                  <input type="hidden" name="hpc_approved" value="0">
+<input class="form-check-input" type="checkbox" name="hpc_approved"
+       id="hpc_approved" value="1" >
+
                                         <label class="form-check-label" for="hpc_approved">Approved</label>
                                     </div>
                                     

@@ -8,7 +8,8 @@ use App\Http\Controllers\Admin\PackageProjectController;
 use App\Http\Controllers\Admin\DesignationController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\ProjectsCategoryController;
-use App\Http\Controllers\ProcurementDetailController;
+use App\Http\Controllers\Admin\ProcurementDetailController;
+use App\Http\Controllers\Admin\ProcurementWorkProgramController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +19,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+             Route::resource('procurement-work-programs',ProcurementWorkProgramController::class);
+
             // Procurement Details Routes
             Route::prefix('package-projects/{packageProject}/procurement-details')->group(function () {
                 Route::get('create', [ProcurementDetailController::class, 'create'])->name('procurement-details.create');

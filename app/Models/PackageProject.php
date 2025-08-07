@@ -82,5 +82,9 @@ class PackageProject extends Model
 {
     return $this->hasOne(ProcurementDetail::class);
 }
+public function workPrograms()
+{
+    return $this->hasMany(ProcurementWorkProgram::class);
+}
 
 }

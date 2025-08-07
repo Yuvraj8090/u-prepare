@@ -20,6 +20,9 @@ class ProcurementDetail extends Model
         'bid_validity_days',
         'emd_validity_days',
     ];
+protected $casts = [
+    'publication_date' => 'date',
+];
 
     public function packageProject()
     {
