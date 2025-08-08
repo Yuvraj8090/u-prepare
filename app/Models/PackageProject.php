@@ -86,5 +86,13 @@ public function workPrograms()
 {
     return $this->hasMany(ProcurementWorkProgram::class);
 }
+public function getHasWorkProgramAttribute()
+    {
+        return $this->workPrograms->isNotEmpty();
+    }
+    public function scopeWithWorkProgramData($query)
+    {
+        return $query->with(['procurementDetail', 'workPrograms']);
+    }
 
 }

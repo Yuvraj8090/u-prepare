@@ -42,15 +42,9 @@
             </div>
 
             <div class="card-body">
-                <x-admin.data-table 
-                    id="work-programs-table"
-                    :headers="['#', 'Package Name', 'Procurement Status', 'Work Program Status', 'Actions']"
-                    :excel="true" 
-                    :print="true"
-                    title="Procurement Work Programs Export"
-                    searchPlaceholder="Search packages..."
-                    resourceName="procurement-work-programs"
-                    :pageLength="10">
+                <x-admin.data-table id="work-programs-table" :headers="['#', 'Package Name', 'Procurement Status', 'Work Program Status', 'Actions']" :excel="true" :print="true"
+                    title="Procurement Work Programs Export" searchPlaceholder="Search packages..."
+                    resourceName="procurement-work-programs" :pageLength="10">
 
                     @foreach ($packageProjects as $index => $project)
                         <tr>
@@ -63,7 +57,7 @@
                             </td>
 
                             <td>
-                                @if($project->procurementDetail)
+                                @if ($project->procurementDetail)
                                     <span class="badge bg-success">Done</span>
                                 @else
                                     <span class="badge bg-warning text-dark">Not Done</span>
@@ -71,7 +65,7 @@
                             </td>
 
                             <td>
-                                @if($project->has_work_program)
+                                @if ($project->has_work_program)
                                     <span class="badge bg-info">Added</span>
                                 @else
                                     <span class="badge bg-secondary">Not Added</span>
@@ -80,13 +74,28 @@
 
                             <td>
                                 <div class="d-flex justify-content-end gap-2">
-                                    <a href="{{ route('admin.procurement-work-programs.create', ['package_project_id' => $project->id]) }}"
-                                        class="btn btn-sm {{ $project->has_work_program ? 'btn-outline-primary' : 'btn-outline-success' }}">
-                                        <i class="fas fa-{{ $project->has_work_program ? 'edit' : 'plus' }} me-1"></i>
-                                        {{ $project->has_work_program ? 'Edit' : 'Add' }}
-                                    </a>
+                                    @if ($project->has_work_program)
+    <a href="{{ route('admin.procurement-work-programs.edit-by-package', [
+        'package_project_id' => $project->id,
+        'procurement_details_id' => optional($project->procurementDetail)->id,
+    ]) }}" 
+        class="btn btn-sm btn-outline-primary">
+        <i class="fas fa-edit me-1"></i> Edit
+    </a>
+
+
+                                    @else
+                                        <a href="{{ route('admin.procurement-work-programs.create', [
+                                            'package_project_id' => $project->id,
+                                            'procurement_details_id' => optional($project->procurementDetail)->id,
+                                        ]) }}"
+                                            class="btn btn-sm btn-outline-success">
+                                            <i class="fas fa-plus me-1"></i> Add
+                                        </a>
+                                    @endif
                                 </div>
                             </td>
+
                         </tr>
                     @endforeach
 

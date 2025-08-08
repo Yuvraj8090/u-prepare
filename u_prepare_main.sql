@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2025 at 11:53 AM
+-- Generation Time: Aug 08, 2025 at 01:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -60,14 +60,6 @@ CREATE TABLE `cache` (
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `cache`
---
-
-INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('397c8c469a50c6ba825e9af3bca73a9c', 'i:1;', 1754470318),
-('397c8c469a50c6ba825e9af3bca73a9c:timer', 'i:1754470318;', 1754470318);
-
 -- --------------------------------------------------------
 
 --
@@ -105,6 +97,56 @@ INSERT INTO `constituencies` (`id`, `name`, `status`, `created_at`, `updated_at`
 (3, 'Haridwar', 1, '2024-03-27 01:18:58', '2024-03-27 01:18:58', NULL),
 (4, 'Almora', 1, '2024-03-27 01:58:41', '2024-03-27 01:58:41', NULL),
 (5, 'Nainital–Udhamsingh Nagar', 1, '2024-03-27 01:58:59', '2024-03-27 01:58:59', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contractors`
+--
+
+CREATE TABLE `contractors` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `authorized_personnel_name` varchar(255) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `gst_no` varchar(255) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contractors`
+--
+
+INSERT INTO `contractors` (`id`, `company_name`, `authorized_personnel_name`, `phone`, `email`, `gst_no`, `address`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'USDMA', 'Ankit Sati Sir', '9258360243', 'admin@gmail.com', '29GGGGG1314R9Z6', 'Dehradun', '2025-08-08 05:18:39', '2025-08-08 05:18:39', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contracts`
+--
+
+CREATE TABLE `contracts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `contract_number` varchar(255) NOT NULL,
+  `project_id` bigint(20) UNSIGNED NOT NULL,
+  `contract_value` decimal(15,2) NOT NULL,
+  `security` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `signing_date` date DEFAULT NULL,
+  `commencement_date` date DEFAULT NULL,
+  `initial_completion_date` date DEFAULT NULL,
+  `revised_completion_date` date DEFAULT NULL,
+  `actual_completion_date` date DEFAULT NULL,
+  `contract_document` varchar(255) DEFAULT NULL,
+  `contractor_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -366,7 +408,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2025_08_05_104358_create_geography_blocks_table', 9),
 (20, '2025_08_05_104955_create_assembly_table', 10),
 (22, '2025_08_05_105357_create_package_project_table', 11),
-(23, '2025_08_06_063443_create_procurement_details_table', 12);
+(23, '2025_08_06_063443_create_procurement_details_table', 12),
+(24, '2025_08_07_073336_create_procurement_work_programs_table', 13),
+(25, '2025_08_08_071156_add_documents_to_procurement_work_programs_table', 14),
+(28, '2025_08_08_095248_create_contractors_table', 15),
+(29, '2025_08_08_095338_create_contracts_table', 15);
 
 -- --------------------------------------------------------
 
@@ -405,7 +451,9 @@ CREATE TABLE `package_projects` (
 --
 
 INSERT INTO `package_projects` (`id`, `project_id`, `package_category_id`, `package_sub_category_id`, `department_id`, `package_name`, `package_number`, `estimated_budget_incl_gst`, `vidhan_sabha_id`, `lok_sabha_id`, `district_id`, `block_id`, `dec_approved`, `dec_approval_date`, `dec_letter_number`, `dec_document_path`, `hpc_approved`, `hpc_approval_date`, `hpc_letter_number`, `hpc_document_path`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 1, 5, 1, 'Demo First', '01/02/PWD', 14800000000.00, 1, NULL, 3, 1, 1, '2025-08-05', 'Demo TEST', 'package-projects/dec-documents/7dHMkLOe9qSEAdRRV6JMgWKVxJ4PgZpWv2PWBO72.pdf', 1, '2025-08-06', 'Demo Test 090', 'package-projects/hpc-documents/HOSWxddlNcgolzKxOtsJ9a0Ou4lFDtPhsJACVNPt.pdf', '2025-08-05 06:28:33', '2025-08-05 07:19:34', NULL);
+(1, 1, 1, 5, 1, 'Demo First', '01/02/PWD', 14800000000.00, 1, NULL, 3, 1, 1, '2025-08-05', 'Demo TEST', 'package-projects/dec-documents/7dHMkLOe9qSEAdRRV6JMgWKVxJ4PgZpWv2PWBO72.pdf', 1, '2025-08-06', 'Demo Test 090', 'package-projects/hpc-documents/HOSWxddlNcgolzKxOtsJ9a0Ou4lFDtPhsJACVNPt.pdf', '2025-08-05 06:28:33', '2025-08-05 07:19:34', NULL),
+(2, 1, 1, 5, 1, 'PWD 120Mtr. Bridge', '01/03/PWD', 9000000.00, 3, NULL, 4, 2, 1, '2025-08-07', 'Demo TESTw3', 'package-projects/dec-documents/J8YX2G4KdCZbDhKeQZbmuNSmuWE5i88vH0uUZ42Z.pdf', 1, '2025-08-07', 'Demo Test 090', 'package-projects/hpc-documents/QM0ihwlsbvJBxCzyfy4PeMOzEnylX86YUBNWLdsN.pdf', '2025-08-07 01:46:56', '2025-08-07 01:46:56', NULL),
+(3, 1, 1, 5, 1, 'PWD 12230Mtr. Bridge', '01/04/PWD', 80.00, 3, NULL, 10, 2, 1, '2025-08-01', 'Demo TESTweq', 'package-projects/dec-documents/hpqCwHPBrT5WeUt5K9FFth28EpbU0MVai8sFLmKU.pdf', 1, '2025-08-02', 'Demo Test 0902we', 'package-projects/hpc-documents/XWY6Yl5cqAEwIWQUHCgf2xeKNdcX3JMzKcdpDj6S.pdf', '2025-08-08 04:40:59', '2025-08-08 04:41:08', '2025-08-08 04:41:08');
 
 -- --------------------------------------------------------
 
@@ -459,6 +507,54 @@ CREATE TABLE `procurement_details` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `procurement_details`
+--
+
+INSERT INTO `procurement_details` (`id`, `package_project_id`, `method_of_procurement`, `type_of_procurement`, `publication_date`, `publication_document_path`, `tender_fee`, `earnest_money_deposit`, `bid_validity_days`, `emd_validity_days`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(5, 2, 'Request for Proposals', 'EPC', '2025-08-01', 'procurement_docs/NnJYQEvv23ycKdI2C3h6m8cDoVvFhBG8XG0gcHvQ.pdf', 90.00, 90.00, 90, 120, '2025-08-08 01:21:35', '2025-08-08 01:21:35', NULL),
+(6, 1, 'Request for Proposals', 'EPC', '2025-08-01', 'procurement_docs/5I89Jb7KQxHh9oGgRS8zXmec01369fwS4qVyANA8.pdf', 20.00, 30.00, 40, 120, '2025-08-08 02:15:42', '2025-08-08 02:15:42', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `procurement_work_programs`
+--
+
+CREATE TABLE `procurement_work_programs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `package_project_id` bigint(20) UNSIGNED NOT NULL,
+  `procurement_details_id` bigint(20) UNSIGNED NOT NULL,
+  `name_work_program` varchar(255) NOT NULL,
+  `weightage` decimal(5,2) DEFAULT NULL,
+  `days` int(11) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `planned_date` date DEFAULT NULL,
+  `procurement_bid_document` varchar(255) DEFAULT NULL,
+  `pre_bid_minutes_document` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `procurement_work_programs`
+--
+
+INSERT INTO `procurement_work_programs` (`id`, `package_project_id`, `procurement_details_id`, `name_work_program`, `weightage`, `days`, `start_date`, `planned_date`, `procurement_bid_document`, `pre_bid_minutes_document`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 6, 'Preparation and Approval of Bid Document and Estimate', 30.00, 20, '2025-08-01', '2025-08-21', 'procurement_docs/aM8ZJmwsovPVUTb7AQcbZuM9sLIPssG5f86NRdu7.pdf', 'procurement_docs/1ZbQv5fnteY2zwCINgWPGp7hl4UbnDZo6TDR5RnJ.pdf', '2025-08-08 02:35:48', '2025-08-08 04:14:46', NULL),
+(2, 1, 6, 'Publication of Bids', 20.00, 20, '2025-08-01', '2025-09-10', 'procurement_docs/2oiY4U4kWBPSJvqbjpADx6eciYBxM2LflFZWdtmB.pdf', 'procurement_docs/1ZbQv5fnteY2zwCINgWPGp7hl4UbnDZo6TDR5RnJ.pdf', '2025-08-08 02:35:48', '2025-08-08 02:35:48', NULL),
+(3, 1, 6, 'Opening of Technical Bids', 5.00, 20, '2025-08-21', '2025-09-30', 'procurement_docs/2oiY4U4kWBPSJvqbjpADx6eciYBxM2LflFZWdtmB.pdf', 'procurement_docs/1ZbQv5fnteY2zwCINgWPGp7hl4UbnDZo6TDR5RnJ.pdf', '2025-08-08 02:35:48', '2025-08-08 02:35:48', NULL),
+(4, 1, 6, 'Technical Evaluation', 5.00, 20, '2025-09-10', '2025-10-20', 'procurement_docs/2oiY4U4kWBPSJvqbjpADx6eciYBxM2LflFZWdtmB.pdf', 'procurement_docs/1ZbQv5fnteY2zwCINgWPGp7hl4UbnDZo6TDR5RnJ.pdf', '2025-08-08 02:35:48', '2025-08-08 02:35:48', NULL),
+(5, 1, 6, 'Notification of Award', 20.00, 20, '2025-09-30', '2025-11-09', 'procurement_docs/2oiY4U4kWBPSJvqbjpADx6eciYBxM2LflFZWdtmB.pdf', 'procurement_docs/1ZbQv5fnteY2zwCINgWPGp7hl4UbnDZo6TDR5RnJ.pdf', '2025-08-08 02:35:48', '2025-08-08 02:35:48', NULL),
+(6, 1, 6, 'Contract', 20.00, 20, '2025-10-20', '2025-11-29', 'procurement_docs/2oiY4U4kWBPSJvqbjpADx6eciYBxM2LflFZWdtmB.pdf', 'procurement_docs/1ZbQv5fnteY2zwCINgWPGp7hl4UbnDZo6TDR5RnJ.pdf', '2025-08-08 02:35:48', '2025-08-08 02:35:48', NULL),
+(7, 2, 5, 'Preparation and Approval of Bid Document and Estimate', 30.00, 30, '2025-08-01', '2025-08-31', 'procurement_docs/PhxMOep07sFURMUbBjfG8He7StTZN073P7AbBb2f.pdf', 'procurement_docs/XhAwwEa2ZDBOCO2WL3dOGZApt3SIXTgX7k5QX4Pg.pdf', '2025-08-08 04:19:30', '2025-08-08 04:19:30', NULL),
+(8, 2, 5, 'Publication of Bids', 20.00, 30, '2025-08-01', '2025-09-30', 'procurement_docs/PhxMOep07sFURMUbBjfG8He7StTZN073P7AbBb2f.pdf', 'procurement_docs/XhAwwEa2ZDBOCO2WL3dOGZApt3SIXTgX7k5QX4Pg.pdf', '2025-08-08 04:19:30', '2025-08-08 04:19:30', NULL),
+(9, 2, 5, 'Opening of Technical Bids', 10.00, 30, '2025-08-31', '2025-10-30', 'procurement_docs/PhxMOep07sFURMUbBjfG8He7StTZN073P7AbBb2f.pdf', 'procurement_docs/XhAwwEa2ZDBOCO2WL3dOGZApt3SIXTgX7k5QX4Pg.pdf', '2025-08-08 04:19:30', '2025-08-08 04:19:30', NULL),
+(10, 2, 5, 'Technical Evaluation', 10.00, 30, '2025-09-30', '2025-11-29', 'procurement_docs/PhxMOep07sFURMUbBjfG8He7StTZN073P7AbBb2f.pdf', 'procurement_docs/XhAwwEa2ZDBOCO2WL3dOGZApt3SIXTgX7k5QX4Pg.pdf', '2025-08-08 04:19:30', '2025-08-08 04:19:30', NULL),
+(11, 2, 5, 'Notification of Award', 10.00, 30, '2025-10-30', '2025-12-29', 'procurement_docs/PhxMOep07sFURMUbBjfG8He7StTZN073P7AbBb2f.pdf', 'procurement_docs/XhAwwEa2ZDBOCO2WL3dOGZApt3SIXTgX7k5QX4Pg.pdf', '2025-08-08 04:19:30', '2025-08-08 04:19:30', NULL),
+(12, 2, 5, 'Contract', 20.00, 30, '2025-11-29', '2026-01-28', 'procurement_docs/PhxMOep07sFURMUbBjfG8He7StTZN073P7AbBb2f.pdf', 'procurement_docs/XhAwwEa2ZDBOCO2WL3dOGZApt3SIXTgX7k5QX4Pg.pdf', '2025-08-08 04:19:30', '2025-08-08 04:19:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -550,7 +646,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('ody0YbPmPrspENrzcxLXxII1MDL4tCxnr3SwPouS', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiR0F5UlhmMU5BRUhsbVAxNVEyTWRuZlQ5YmNXS1ZmczFObjlTTFJ1VCI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjY1OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWRtaW4vcGFja2FnZS1wcm9qZWN0cy8xL3Byb2N1cmVtZW50L2NyZWF0ZSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjM7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkSGFnOW9TMGIyMjZpdzlMYm8ySHZBZWVwVTlBTk14TkxwUjJqcmNYbW41dHFIRy9oOG5GdGkiO30=', 1754470305);
+('C8E9nXjxJykglXIXikjcr4H9oxCGs75hqaTzzGhE', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiTnY3VnhXOWtiWE1FNzZacTNiY0R2R3BXTTZ2b3BBdTNrQWdqNXN6QSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM3OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWRtaW4vY29udHJhY3RzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MztzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMiRIYWc5b1MwYjIyNml3OUxibzJIdkFlZXBVOUFOTXhOTHBSMmpyY1htbjV0cUhHL2g4bkZ0aSI7fQ==', 1754652504);
 
 -- --------------------------------------------------------
 
@@ -624,7 +720,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`, `department_id`, `designation_id`, `gender`, `phone_no`, `status`, `district`, `deleted_at`) VALUES
 (1, 1, 'admin', 'admin@gmail.com', NULL, '$2y$12$kWxg7ssc6zidAC/DKu5.0e9cmmMFcLlBOOQiH1yFglFzNP.i9TLQi', NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-04 06:58:54', '2025-08-04 06:58:54', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (2, 1, 'Test User 1', 'testuser1@example.com', '2025-08-04 11:12:57', '$2y$12$VzxX3jmvEG/0dKL4w5jbWe3PLWtM8cIz7eU3YUh0MV4k1uTP8uAlu', NULL, NULL, NULL, 'OjPV8Rf3S1', NULL, NULL, '2025-08-04 11:12:58', '2025-08-04 12:31:58', NULL, NULL, NULL, NULL, 'active', NULL, '2025-08-04 12:31:58'),
-(3, 3, 'Test User 2', 'testuser2@example.com', '2025-08-04 11:12:58', '$2y$12$Hag9oS0b226iw9Lbo2HvAeepU9ANMxNLpR2jrcXmn5tqHG/h8nFti', NULL, NULL, NULL, 'QdbVbxcTSVwmp9UfLPowFPpX6X7uQVjG2g4DGbzzQyUtWCd4QLAOupCpQojF', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-04 23:34:32', 1, 10, 'male', '9090909090', 'active', 'Dehradun', NULL),
+(3, 3, 'Test User 2', 'testuser2@example.com', '2025-08-04 11:12:58', '$2y$12$Hag9oS0b226iw9Lbo2HvAeepU9ANMxNLpR2jrcXmn5tqHG/h8nFti', NULL, NULL, NULL, 'EOhJLh6qklUu6IFvwY3FK5oDO2mwdwxUaIN55ExizOwutuIDbQM3rGn9twYN', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-04 23:34:32', 1, 10, 'male', '9090909090', 'active', 'Dehradun', NULL),
 (4, 1, 'Test User 3', 'testuser3@example.com', '2025-08-04 11:12:58', '$2y$12$.WEudQx6rlE8IvXmtz3she.zKNd2NOA3FpF6.WGHv8QoqKV2yajUq', NULL, NULL, NULL, 'P7Kjy9dmBp', NULL, NULL, '2025-08-04 11:12:58', '2025-08-04 11:12:58', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (5, 1, 'Test User 4', 'testuser4@example.com', '2025-08-04 11:12:58', '$2y$12$OiQc5Mamqa0WO4SsmHzovOm520kqdi6hszqA6gXQYdycPHwsRJqYS', NULL, NULL, NULL, 'aI1TSgyKKG', NULL, NULL, '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (6, 1, 'Test User 5', 'testuser5@example.com', '2025-08-04 11:12:59', '$2y$12$ArGPNhRO/EFR48OFxTVLPOpJgMl226X.RWfsAp.G6id8.JpKk8ege', NULL, NULL, NULL, 'XuV6KCkwjv', NULL, NULL, '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
@@ -684,6 +780,24 @@ ALTER TABLE `cache_locks`
 --
 ALTER TABLE `constituencies`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contractors`
+--
+ALTER TABLE `contractors`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `contractors_phone_unique` (`phone`),
+  ADD UNIQUE KEY `contractors_email_unique` (`email`),
+  ADD UNIQUE KEY `contractors_gst_no_unique` (`gst_no`);
+
+--
+-- Indexes for table `contracts`
+--
+ALTER TABLE `contracts`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `contracts_contract_number_unique` (`contract_number`),
+  ADD KEY `contracts_project_id_foreign` (`project_id`),
+  ADD KEY `contracts_contractor_id_foreign` (`contractor_id`);
 
 --
 -- Indexes for table `departments`
@@ -793,6 +907,14 @@ ALTER TABLE `procurement_details`
   ADD KEY `procurement_details_package_project_id_foreign` (`package_project_id`);
 
 --
+-- Indexes for table `procurement_work_programs`
+--
+ALTER TABLE `procurement_work_programs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `procurement_work_programs_package_project_id_foreign` (`package_project_id`),
+  ADD KEY `procurement_work_programs_procurement_details_id_foreign` (`procurement_details_id`);
+
+--
 -- Indexes for table `projects`
 --
 ALTER TABLE `projects`
@@ -855,6 +977,18 @@ ALTER TABLE `constituencies`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `contractors`
+--
+ALTER TABLE `contractors`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `contracts`
+--
+ALTER TABLE `contracts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
@@ -906,13 +1040,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `package_projects`
 --
 ALTER TABLE `package_projects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -924,7 +1058,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `procurement_details`
 --
 ALTER TABLE `procurement_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `procurement_work_programs`
+--
+ALTER TABLE `procurement_work_programs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `projects`
@@ -968,6 +1108,13 @@ ALTER TABLE `assembly`
   ADD CONSTRAINT `assembly_district_id_foreign` FOREIGN KEY (`district_id`) REFERENCES `geography_districts` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `contracts`
+--
+ALTER TABLE `contracts`
+  ADD CONSTRAINT `contracts_contractor_id_foreign` FOREIGN KEY (`contractor_id`) REFERENCES `contractors` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `contracts_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `package_projects` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `geography_blocks`
 --
 ALTER TABLE `geography_blocks`
@@ -998,6 +1145,13 @@ ALTER TABLE `package_projects`
 --
 ALTER TABLE `procurement_details`
   ADD CONSTRAINT `procurement_details_package_project_id_foreign` FOREIGN KEY (`package_project_id`) REFERENCES `package_projects` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `procurement_work_programs`
+--
+ALTER TABLE `procurement_work_programs`
+  ADD CONSTRAINT `procurement_work_programs_package_project_id_foreign` FOREIGN KEY (`package_project_id`) REFERENCES `package_projects` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `procurement_work_programs_procurement_details_id_foreign` FOREIGN KEY (`procurement_details_id`) REFERENCES `procurement_details` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `sub_category`

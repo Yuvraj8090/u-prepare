@@ -41,7 +41,7 @@
                 </h5>
                 <a href="{{ route('admin.project.create') }}" class="btn btn-sm btn-primary">
                     <i class="fas fa-plus-circle me-1"></i> Create Project
-                </a>
+                </a>w
             </div>
 
             <div class="card-body">

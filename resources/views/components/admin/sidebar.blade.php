@@ -34,14 +34,14 @@
                     <li><a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Dashboard</a></li>
 
                     {{-- Project Monitoring --}}
-                    <li><a href="{{ route('admin.projects.index') }}"><i class="fa fa-tasks"></i> Project Monitoring</a></li>
+                    <li><a href="{{ route('admin.project.index') }}"><i class="fa fa-tasks"></i> Project Monitoring</a></li>
 
                     {{-- Manage Projects --}}
                     <li>
                         <a><i class="fa fa-sitemap"></i> Manage Projects <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ route('admin.projects.create') }}">Create</a></li>
-                            <li><a href="{{ route('admin.projects.index') }}">Edit</a></li>
+                            <li><a href="{{ route('admin.project.create') }}">Create</a></li>
+                            <li><a href="{{ route('admin.project.index') }}">Edit</a></li>
                         </ul>
                     </li>
 
@@ -52,6 +52,7 @@
                             <ul class="nav child_menu">
                                 <li><a href="{{ route('admin.procurement-details.index') }}">Manage Procurements</a></li>
                                 <li><a href="{{ route('admin.package-projects.index') }}">Package Projects</a></li>
+                                  <li><a href="{{ route('admin.procurement-work-programs.index') }}">Work programs</a></li>
                             </ul>
                         </li>
                    
