@@ -77,6 +77,10 @@
                     <!-- Projects -->
                     <li><a href="{{ route('admin.project.index') }}"><i class="fa fa-tasks"></i> Projects</a></li>
 
+                    <!-- Package Projects -->
+                    <li><a href="{{ route('admin.package-projects.index') }}"><i class="fa fa-archive"></i> Package Projects</a></li>
+
+
                     <!-- Procurement -->
                     <li>
                         <a><i class="fa fa-book"></i> Procurement <span class="fa fa-chevron-down"></span></a>
@@ -86,11 +90,7 @@
                                     <i class="fa fa-list"></i> Procurement Details
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ route('admin.package-projects.index') }}">
-                                    <i class="fa fa-archive"></i> Package Projects
-                                </a>
-                            </li>
+                             
                             <li>
                                 <a href="{{ route('admin.procurement-work-programs.index') }}">
                                     <i class="fa fa-calendar"></i> Work Programs
