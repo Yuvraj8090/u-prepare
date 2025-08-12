@@ -12,9 +12,11 @@ use App\Http\Controllers\SafeguardEntryController;
 use App\Http\Controllers\Admin\PackageProjectController;
 use App\Http\Controllers\Admin\DesignationController;
 use App\Http\Controllers\Admin\ContractionPhaseController;
+use App\Http\Controllers\AlreadyDefineEpcController;
 use App\Http\Controllers\Admin\SafeguardComplianceController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\ProjectsCategoryController;
+use App\Http\Controllers\Admin\WorkServiceController;
 use App\Http\Controllers\Admin\ProcurementDetailController;
 use App\Http\Controllers\Admin\ProcurementWorkProgramController;
 
@@ -26,6 +28,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+            Route::resource('already_define_epc', AlreadyDefineEpcController::class);
+            Route::post('epcentry_data/store-from-defined', [EpcEntryDataController::class, 'storeFromDefined'])->name('epcentry_data.storeFromDefined');
+
+            Route::resource('work_services', WorkServiceController::class);
             Route::get('/procurement-work-programs/{package_project_id}/edit-by-package/{procurement_details_id}', [ProcurementWorkProgramController::class, 'editByPackage'])->name('procurement-work-programs.edit-by-package');
             Route::post('/procurement-work-programs/{package_project_id}/{procurement_details_id}/upload-documents', [ProcurementWorkProgramController::class, 'uploadDocumentsAndUpdate'])->name('procurement-work-programs.upload-documents');
             Route::resource('procurement-work-programs', ProcurementWorkProgramController::class);
@@ -41,7 +47,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::post('safeguard_entries/import', [SafeguardEntryController::class, 'import'])->name('safeguard_entries.import');
             Route::delete('safeguard_entries/bulk-delete', [SafeguardEntryController::class, 'bulkDelete'])->name('safeguard_entries.bulk-delete');
             Route::resource('safeguard_entries', SafeguardEntryController::class);
-            Route::prefix('boqentry')->name('boqentry.')->group(function () {
+            Route::prefix('boqentry')
+                ->name('boqentry.')
+                ->group(function () {
                     Route::get('/', [BoqentryDataController::class, 'index'])->name('index');
                     Route::post('/upload', [BoqentryDataController::class, 'uploadExcel'])->name('upload');
                     Route::get('/create', [BoqentryDataController::class, 'create'])->name('create');
@@ -53,7 +61,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
                 });
             Route::resource('contraction-phases', ContractionPhaseController::class);
             Route::resource('safeguard-compliances', SafeguardComplianceController::class);
-            Route::prefix('epcentry_data')->name('epcentry_data.')->group(function () {
+            Route::prefix('epcentry_data')
+                ->name('epcentry_data.')
+                ->group(function () {
                     Route::get('/', [EpcEntryDataController::class, 'index'])->name('index');
                     Route::get('/create', [EpcEntryDataController::class, 'create'])->name('create');
                     Route::post('/', [EpcEntryDataController::class, 'store'])->name('store');

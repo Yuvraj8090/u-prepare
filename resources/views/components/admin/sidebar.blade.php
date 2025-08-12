@@ -148,7 +148,16 @@
                             <li><a href="{{ route('admin.epcentry_data.create') }}"><i class="fa fa-plus-circle"></i> Create EPC Entry</a></li>
                         </ul>
                     </li>
-
+<li >
+                        <a href="{{ route('admin.already_define_epc.index') }}">
+                            <i class="fa fa-check-square"></i> Already Define EPC
+                        </a>
+                    </li>
+                    <li >
+                        <a href="{{ route('admin.work_services.index') }}">
+                            <i class="fa fa-check-square"></i> Work Services
+                        </a>
+                    </li>
                     <!-- Admin Panel -->
                     <li>
                         <a><i class="fa fa-shield"></i> Admin Panel <span class="fa fa-chevron-down"></span></a>

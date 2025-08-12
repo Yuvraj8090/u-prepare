@@ -5,99 +5,134 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SubPackageProject;
 use App\Models\EpcEntryData;
+use App\Models\WorkService;
+use App\Models\AlreadyDefineEpc;
 
 class EpcEntryDataController extends Controller
 {
- public function index(Request $request)
+    public function index(Request $request)
+    {
+        $subProjects = SubPackageProject::select('id', 'name')->get();
+        $workservices = WorkService::select('id', 'name')->get();
+
+        // Get selected filters
+        $selectedWorkServiceId = $request->input('work_service_id');
+        $selectedProjectId = $request->input('sub_package_project_id');
+
+        // Filter AlreadyDefineEpc by selected work service
+        $epcentrydefine = collect();
+        if ($selectedWorkServiceId) {
+            $epcentrydefine = AlreadyDefineEpc::with(['activityName']) // eager load activity name relation
+                ->where('work_service', $selectedWorkServiceId)
+                ->orderBy('sl_no')
+                ->get();
+        }
+
+        $epcEntries = collect();
+        $subProject = null;
+        $remainingPercent = null;
+        $remainingAmount = null;
+        $warnings = [];
+
+        if ($selectedProjectId) {
+            $subProject = SubPackageProject::find($selectedProjectId);
+
+            $epcEntries = EpcEntryData::where('sub_package_project_id', $selectedProjectId)
+                ->orderByRaw("CAST(SUBSTRING_INDEX(sl_no, '.', 1) AS UNSIGNED), sl_no")
+                ->get()
+                ->groupBy(function ($item) {
+                    return explode('.', $item->sl_no)[0];
+                });
+
+            $allEntries = $epcEntries->flatten();
+
+            // Check percent totals
+            $totalPercent = $allEntries->sum('percent');
+            if ($totalPercent !== 100) {
+                $remainingPercent = 100 - $totalPercent;
+                $warnings[] = $totalPercent > 100 ? 'Total percentage exceeds 100% by ' . abs($remainingPercent) . '%.' : 'Total percentage is less than 100% by ' . abs($remainingPercent) . '%.';
+            }
+
+            // Check amount totals
+            $totalAmount = $allEntries->sum('amount');
+            if ($subProject && $subProject->contract_value !== null) {
+                $remainingAmount = $subProject->contract_value - $totalAmount;
+                $warnings[] = $totalAmount > $subProject->contract_value ? 'Total amount exceeds contract value by ' . number_format(abs($remainingAmount), 2) . '.' : 'Total amount is less than contract value by ' . number_format(abs($remainingAmount), 2) . '.';
+            }
+
+            // Check individual entries
+            foreach ($allEntries as $entry) {
+                if ($entry->percent < 0 || $entry->percent > 100) {
+                    $warnings[] = "Entry '{$entry->sl_no}' has invalid percent value ({$entry->percent}%).";
+                }
+                if ($entry->amount < 0) {
+                    $warnings[] = "Entry '{$entry->sl_no}' has a negative amount.";
+                }
+            }
+        }
+
+        return view('admin.epcentry_data.index', compact('subProjects', 'workservices', 'epcentrydefine', 'epcEntries', 'subProject', 'selectedWorkServiceId', 'selectedProjectId', 'remainingPercent', 'remainingAmount', 'warnings'));
+    }
+    public function storeFromDefined(Request $request)
 {
-    $subProjects = SubPackageProject::select('id', 'name')->get();
-    $selectedProjectId = $request->input('sub_package_project_id');
+    $validated = $request->validate([
+        'sub_package_project_id' => 'required|exists:sub_package_projects,id',
+        'work_service_id' => 'required|exists:work_service,id',
+    ]);
 
-    $epcEntries = collect();
-    $subProject = null;
-    $remainingPercent = null;
-    $remainingAmount = null;
-    $warnings = []; // <-- store validation messages
+    $subProjectId = $validated['sub_package_project_id'];
+    $workServiceId = $validated['work_service_id'];
 
-    if ($selectedProjectId) {
-        $subProject = SubPackageProject::find($selectedProjectId);
+    // Get Already Defined EPC for that work service
+    $definedEntries = AlreadyDefineEpc::where('work_service', $workServiceId)->get();
 
-        $epcEntries = EpcEntryData::where('sub_package_project_id', $selectedProjectId)
-            ->orderByRaw("CAST(SUBSTRING_INDEX(sl_no, '.', 1) AS UNSIGNED), sl_no")
-            ->get()
-            ->groupBy(function ($item) {
-                return explode('.', $item->sl_no)[0];
-            });
-
-        $allEntries = $epcEntries->flatten();
-
-        // 1️⃣ Percentage check
-        $totalPercent = $allEntries->sum('percent');
-        if ($totalPercent !== 100) {
-            $remainingPercent = 100 - $totalPercent;
-            if ($totalPercent > 100) {
-                $warnings[] = "Total percentage exceeds 100% by " . abs($remainingPercent) . "%.";
-            } elseif ($totalPercent < 100) {
-                $warnings[] = "Total percentage is less than 100% by " . abs($remainingPercent) . "%.";
-            }
-        }
-
-        // 2️⃣ Amount check
-        $totalAmount = $allEntries->sum('amount');
-        if ($subProject && $subProject->contract_value !== null) {
-            $remainingAmount = $subProject->contract_value - $totalAmount;
-            if ($totalAmount > $subProject->contract_value) {
-                $warnings[] = "Total amount exceeds contract value by " . number_format(abs($remainingAmount), 2) . ".";
-            } elseif ($totalAmount < $subProject->contract_value) {
-                $warnings[] = "Total amount is less than contract value by " . number_format(abs($remainingAmount), 2) . ".";
-            }
-        }
-
-        // 3️⃣ Per-entry anomaly checks
-        foreach ($allEntries as $entry) {
-            if ($entry->percent < 0 || $entry->percent > 100) {
-                $warnings[] = "Entry '{$entry->sl_no}' has invalid percent value ({$entry->percent}%).";
-            }
-            if ($entry->amount < 0) {
-                $warnings[] = "Entry '{$entry->sl_no}' has a negative amount.";
-            }
-        }
+    if ($definedEntries->isEmpty()) {
+        return back()->with('error', 'No defined EPC entries found for this work service.');
     }
 
-    return view('admin.epcentry_data.index', compact(
-        'subProjects',
-        'epcEntries',
-        'subProject',
-        'selectedProjectId',
-        'remainingPercent',
-        'remainingAmount',
-        'warnings'
-    ));
+    $insertCount = 0;
+
+    foreach ($definedEntries as $def) {
+        EpcEntryData::create([
+            'sub_package_project_id' => $subProjectId,
+            'sl_no' => $def->sl_no,
+            'activity_name' => $def->activityName?->name ?? null,
+            'stage_name' => $def->stage_name,
+            'item_description' => $def->item_description,
+            'percent' => $def->percent,
+            'amount' => 0, // you can calculate amount if needed
+        ]);
+        $insertCount++;
+    }
+
+    return redirect()
+        ->route('admin.epcentry_data.index', [
+            'sub_package_project_id' => $subProjectId,
+            'work_service_id' => $workServiceId
+        ])
+        ->with('success', "{$insertCount} EPC entries stored successfully from defined entries.");
 }
 
 
-
-    // Show create form
     public function create(Request $request)
     {
         $subProject = null;
         if ($request->has('sub_package_project_id')) {
             $subProject = SubPackageProject::findOrFail($request->sub_package_project_id);
         }
-
         return view('admin.epcentry_data.create', compact('subProject'));
     }
 
-    // Store single or multiple EPC entries
     public function store(Request $request)
     {
-        // Bulk insert mode (entries array provided)
         if ($request->has('entries') && is_array($request->entries)) {
             $validated = $request->validate([
                 'sub_package_project_id' => 'required|exists:sub_package_projects,id',
                 'entries' => 'required|array|min:1',
                 'entries.*.sl_no' => 'required|string|max:255',
-                'entries.*.item_description' => 'required|string',
+                'entries.*.activity_name' => 'required|string',
+                'entries.*.stage_name' => 'nullable|string',
+                'entries.*.item_description' => 'nullable|string',
                 'entries.*.percent' => 'nullable|numeric|min:0|max:100',
                 'entries.*.amount' => 'nullable|numeric|min:0',
             ]);
@@ -112,11 +147,12 @@ class EpcEntryDataController extends Controller
                 ->with('success', count($validated['entries']) . ' EPC entries created successfully.');
         }
 
-        // Single insert mode
         $validated = $request->validate([
             'sub_package_project_id' => 'required|exists:sub_package_projects,id',
             'sl_no' => 'required|string|max:255',
-            'item_description' => 'required|string',
+            'activity_name' => 'required|string',
+            'stage_name' => 'nullable|string',
+            'item_description' => 'nullable|string',
             'percent' => 'nullable|numeric|min:0|max:100',
             'amount' => 'nullable|numeric|min:0',
         ]);
@@ -128,16 +164,13 @@ class EpcEntryDataController extends Controller
             ->with('success', 'EPC entry created successfully.');
     }
 
-    // Show edit form
     public function edit($id)
     {
         $entry = EpcEntryData::findOrFail($id);
         $subProjects = SubPackageProject::select('id', 'name')->get();
-
         return view('admin.epcentry_data.edit', compact('entry', 'subProjects'));
     }
 
-    // Update EPC entry
     public function update(Request $request, $id)
     {
         $entry = EpcEntryData::findOrFail($id);
@@ -145,7 +178,9 @@ class EpcEntryDataController extends Controller
         $validated = $request->validate([
             'sub_package_project_id' => 'required|exists:sub_package_projects,id',
             'sl_no' => 'required|string|max:255',
-            'item_description' => 'required|string',
+            'activity_name' => 'required|string',
+            'stage_name' => 'nullable|string',
+            'item_description' => 'nullable|string',
             'percent' => 'nullable|numeric|min:0|max:100',
             'amount' => 'nullable|numeric|min:0',
         ]);
@@ -157,8 +192,6 @@ class EpcEntryDataController extends Controller
             ->with('success', 'EPC entry updated successfully.');
     }
 
-    // Bulk delete EPC entries
-    // Bulk delete (permanent)
     public function bulkDestroy(Request $request)
     {
         $request->validate([
@@ -169,7 +202,6 @@ class EpcEntryDataController extends Controller
         $ids = $request->input('ids');
 
         try {
-            // Force delete permanently
             EpcEntryData::withTrashed()->whereIn('id', $ids)->forceDelete();
 
             if ($request->ajax()) {
@@ -194,13 +226,11 @@ class EpcEntryDataController extends Controller
         }
     }
 
-    // Single delete (soft delete)
     public function destroy($id)
     {
         $entry = EpcEntryData::findOrFail($id);
         $projectId = $entry->sub_package_project_id;
-
-        $entry->delete(); // Soft delete
+        $entry->delete();
 
         return redirect()
             ->route('admin.epcentry_data.index', ['sub_package_project_id' => $projectId])
