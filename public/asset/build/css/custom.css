@@ -1500,7 +1500,13 @@ a:hover, a:focus {
   line-height: 30px; }
 
 .main_menu_side {
-  padding: 0; }
+	padding: 0;
+	  
+    height: 700px;
+	
+    overflow: scroll;
+}
+
 
 .bs-docs-sidebar .nav > li > a {
   display: block;

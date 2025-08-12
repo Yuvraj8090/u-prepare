@@ -34,10 +34,36 @@
 
         <!-- Profile Info -->
         <div class="profile clearfix text-center mt-3">
-            <img style="height:150px;width:auto" src="{{ $user->profile_photo_url }}" alt="Profile"
-                class="img-circle profile_img h-30">
-            <h5 class="mt-2">{{ ucfirst($user->name) }}</h5>
-        </div>
+    @php
+        $name = $user->name;
+        $nameParts = explode(' ', trim($name));
+        $initials = '';
+        if(count($nameParts) > 1){
+            $initials = strtoupper($nameParts[0][0] . $nameParts[1][0]);
+        } else {
+            $initials = strtoupper(substr($nameParts[0], 0, 2));
+        }
+    @endphp
+
+    <img 
+        id="profileImage" 
+        style="height:150px; width:auto; display: block; margin: 0 auto;" 
+        src="{{ $user->profile_photo_url }}" 
+        alt="Profile" 
+        class="img-circle profile_img h-30"
+        onerror="this.style.display='none'; document.getElementById('initialsDiv').style.display='flex';"
+    >
+
+    <div id="initialsDiv" 
+         style="height:150px; width:150px; background-color: #ADD8E6; color: white; border-radius: 50%; 
+                font-size: 72px; font-weight: bold; display: none; align-items: center; justify-content: center; 
+                margin: 0 auto; user-select:none;">
+        {{ $initials }}
+    </div>
+
+    <h5 class="mt-2">{{ ucfirst($user->name) }}</h5>
+</div>
+
         <br />
 
         <!-- Sidebar Menu -->
