@@ -3,11 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\BoqentryDataController;
 use App\Http\Controllers\ContractorController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ContractController;
+use App\Http\Controllers\EpcEntryDataController;
+use App\Http\Controllers\SafeguardEntryController;
 use App\Http\Controllers\Admin\PackageProjectController;
 use App\Http\Controllers\Admin\DesignationController;
+use App\Http\Controllers\Admin\ContractionPhaseController;
+use App\Http\Controllers\Admin\SafeguardComplianceController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\ProjectsCategoryController;
 use App\Http\Controllers\Admin\ProcurementDetailController;
@@ -26,16 +31,37 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::resource('procurement-work-programs', ProcurementWorkProgramController::class);
             Route::post('/procurement-work-programs/store-single', [ProcurementWorkProgramController::class, 'storeSingle'])->name('procurement-work-programs.store-single');
             Route::put('/procurement-work-programs/update-single/{id}', [ProcurementWorkProgramController::class, 'updateSingle'])->name('procurement-work-programs.update-single');
- Route::resource('contractors', ContractorController::class);
- Route::resource('contracts', ContractController::class);
-            // Procurement Details Routes
+            Route::resource('contractors', ContractorController::class);
+            Route::resource('contracts', ContractController::class);
             Route::prefix('package-projects/{packageProject}/procurement-details')->group(function () {
                 Route::get('create', [ProcurementDetailController::class, 'create'])->name('procurement-details.create');
                 Route::post('/', [ProcurementDetailController::class, 'store'])->name('procurement-details.store');
             });
-
             Route::resource('procurement-details', ProcurementDetailController::class)->except(['create', 'store']);
-            // Other admin routes...
+            Route::post('safeguard_entries/import', [SafeguardEntryController::class, 'import'])->name('safeguard_entries.import');
+            Route::delete('safeguard_entries/bulk-delete', [SafeguardEntryController::class, 'bulkDelete'])->name('safeguard_entries.bulk-delete');
+            Route::resource('safeguard_entries', SafeguardEntryController::class);
+            Route::prefix('boqentry')->name('boqentry.')->group(function () {
+                    Route::get('/', [BoqentryDataController::class, 'index'])->name('index');
+                    Route::post('/upload', [BoqentryDataController::class, 'uploadExcel'])->name('upload');
+                    Route::get('/create', [BoqentryDataController::class, 'create'])->name('create');
+                    Route::post('/', [BoqentryDataController::class, 'store'])->name('store');
+                    Route::get('/{id}/edit', [BoqentryDataController::class, 'edit'])->name('edit');
+                    Route::put('/{id}', [BoqentryDataController::class, 'update'])->name('update');
+                    Route::delete('/bulk-delete', [BoqentryDataController::class, 'bulkDestroy'])->name('bulk-delete');
+                    Route::delete('/{id}', [BoqentryDataController::class, 'destroy'])->name('destroy');
+                });
+            Route::resource('contraction-phases', ContractionPhaseController::class);
+            Route::resource('safeguard-compliances', SafeguardComplianceController::class);
+            Route::prefix('epcentry_data')->name('epcentry_data.')->group(function () {
+                    Route::get('/', [EpcEntryDataController::class, 'index'])->name('index');
+                    Route::get('/create', [EpcEntryDataController::class, 'create'])->name('create');
+                    Route::post('/', [EpcEntryDataController::class, 'store'])->name('store');
+                    Route::get('/{id}/edit', [EpcEntryDataController::class, 'edit'])->name('edit');
+                    Route::put('/{id}', [EpcEntryDataController::class, 'update'])->name('update');
+                    Route::delete('/bulk-destroy', [EpcEntryDataController::class, 'bulkDestroy'])->name('bulkDestroy');
+                    Route::delete('/{id}', [EpcEntryDataController::class, 'destroy'])->name('destroy');
+                });
             Route::resource('users', UserController::class);
             Route::resource('roles', RoleController::class);
             Route::resource('departments', DepartmentController::class);
@@ -44,7 +70,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::resource('projects-category', ProjectsCategoryController::class);
             Route::resource('package-projects', PackageProjectController::class);
         });
-
     Route::get('admin/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');

@@ -1,7 +1,6 @@
-
 <x-app-layout>
     <div class="container-fluid">
-        <!-- Header + Breadcrumb -->
+        <!-- Page Header -->
         <div class="row mb-4">
             <div class="col-md-12 d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">
@@ -18,18 +17,15 @@
             </div>
         </div>
 
-        <!-- Flash Messages -->
+        <!-- Error Alerts -->
         @if ($errors->any())
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <x-alert type="danger" dismissible>
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </x-alert>
-                </div>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
 
@@ -40,181 +36,203 @@
                     <i class="fas fa-plus-circle me-2"></i> New Contract Details
                 </h5>
                 <a href="{{ route('admin.contracts.index') }}" class="btn btn-sm btn-outline-secondary">
-                    <i class="fas fa-arrow-left me-1"></i> Back to Contracts
+                    <i class="fas fa-arrow-left me-1"></i> Back
                 </a>
             </div>
 
             <div class="card-body">
-                <form action="{{ route('admin.contracts.store') }}" method="POST">
+                <form action="{{ route('admin.contracts.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row g-3">
-                        <!-- Basic Contract Info -->
+                        <!-- Basic Info -->
                         <div class="col-md-6">
-                            <x-label for="contract_number" value="Contract Number" required />
-                            <x-input id="contract_number" name="contract_number" 
-                                value="{{ old('contract_number') }}" 
-                                placeholder="CT-2023-001" 
-                                required />
+                            <label class="form-label">Contract Number <span class="text-danger">*</span></label>
+                            <input type="text" name="contract_number" class="form-control @error('contract_number') is-invalid @enderror"
+                                   value="{{ old('contract_number') }}" required>
+                            @error('contract_number')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="col-md-6">
-                            <x-label for="project_id" value="Project" required />
-                            <select name="project_id" id="project_id" required 
-                                class="form-select @error('project_id') is-invalid @enderror">
+                            <label class="form-label">Project <span class="text-danger">*</span></label>
+                            <select name="project_id" class="form-select @error('project_id') is-invalid @enderror" required>
                                 <option value="">Select Project</option>
-                                @foreach($projects as $project)
-                                <option value="{{ $project->id }}" @selected(old('project_id') == $project->id)>
-                                    {{ $project->package_name }} ({{ $project->package_number }})
-                                </option>
+                                @foreach ($projects as $project)
+                                    <option value="{{ $project->id }}" @selected(old('project_id') == $project->id)>
+                                        {{ $project->package_name }} ({{ $project->package_number }})
+                                    </option>
                                 @endforeach
                             </select>
+                            @error('project_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="col-md-6">
-                            <x-label for="contract_value" value="Contract Value (₹)" required />
-                            <div class="input-group">
-                                <span class="input-group-text">₹</span>
-                                <x-input type="number" step="0.01" min="0" 
-                                    id="contract_value" name="contract_value" 
-                                    value="{{ old('contract_value') }}" 
-                                    placeholder="1000000.00" 
-                                    required />
+                            <label class="form-label">Contract Value (₹) <span class="text-danger">*</span></label>
+                            <input type="number" step="0.01" min="0" name="contract_value" class="form-control @error('contract_value') is-invalid @enderror"
+                                   value="{{ old('contract_value') }}" required>
+                            @error('contract_value')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Security Deposit (₹)</label>
+                            <input type="number" step="0.01" min="0" name="security" class="form-control"
+                                   value="{{ old('security') }}">
+                        </div>
+
+                        <!-- Dates -->
+                        @foreach ([
+                            'signing_date' => 'Signing Date',
+                            'commencement_date' => 'Commencement Date',
+                            'initial_completion_date' => 'Initial Completion Date',
+                            'revised_completion_date' => 'Revised Completion Date',
+                            'actual_completion_date' => 'Actual Completion Date'
+                        ] as $field => $label)
+                            <div class="col-md-4">
+                                <label class="form-label">{{ $label }}</label>
+                                <input type="date" name="{{ $field }}" class="form-control"
+                                       value="{{ old($field) }}">
                             </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <x-label for="security" value="Security Deposit (₹)" />
-                            <div class="input-group">
-                                <span class="input-group-text">₹</span>
-                                <x-input type="number" step="0.01" min="0" 
-                                    id="security" name="security" 
-                                    value="{{ old('security', 0) }}" 
-                                    placeholder="100000.00" />
-                            </div>
-                        </div>
-
-                        <!-- Date Fields -->
-                        <div class="col-md-4">
-                            <x-label for="signing_date" value="Signing Date" />
-                            <x-input type="date" id="signing_date" name="signing_date" 
-                                value="{{ old('signing_date') }}" />
-                        </div>
-
-                        <div class="col-md-4">
-                            <x-label for="commencement_date" value="Commencement Date" />
-                            <x-input type="date" id="commencement_date" name="commencement_date" 
-                                value="{{ old('commencement_date') }}" />
-                        </div>
-
-                        <div class="col-md-4">
-                            <x-label for="initial_completion_date" value="Initial Completion Date" />
-                            <x-input type="date" id="initial_completion_date" name="initial_completion_date" 
-                                value="{{ old('initial_completion_date') }}" />
-                        </div>
-
-                        <div class="col-md-6">
-                            <x-label for="revised_completion_date" value="Revised Completion Date" />
-                            <x-input type="date" id="revised_completion_date" name="revised_completion_date" 
-                                value="{{ old('revised_completion_date') }}" />
-                        </div>
-
-                        <div class="col-md-6">
-                            <x-label for="actual_completion_date" value="Actual Completion Date" />
-                            <x-input type="date" id="actual_completion_date" name="actual_completion_date" 
-                                value="{{ old('actual_completion_date') }}" />
-                        </div>
+                        @endforeach
 
                         <!-- Contract Document -->
                         <div class="col-12">
-                            <x-label for="contract_document" value="Contract Document" />
-                            <div class="input-group">
-                                <span class="input-group-text">documents/</span>
-                                <x-input id="contract_document" name="contract_document" 
-                                    value="{{ old('contract_document') }}" 
-                                    placeholder="contract123.pdf" />
-                            </div>
-                            <small class="text-muted">Enter the filename only, path will be prefixed automatically</small>
+                            <label class="form-label">Contract Document</label>
+                            <input type="file" name="contract_document_file" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                            <small class="text-muted">Accepted formats: PDF, DOC, DOCX, XLS, XLSX (Max: 5MB)</small>
                         </div>
 
-                        <!-- Contractor Section -->
-                        <div class="col-12">
+                        <!-- Contractor Info -->
+                        <div class="col-12 mt-4">
                             <div class="card border">
                                 <div class="card-header bg-light">
-                                    <h6 class="mb-0">
-                                        <i class="fas fa-user-tie me-2"></i> Contractor Information
-                                    </h6>
+                                    <h6 class="mb-0"><i class="fas fa-user-tie me-2"></i> Contractor Information</h6>
                                 </div>
-                                <div class="card-body">
-                                    <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <x-label for="contractor_id" value="Select Existing Contractor" />
-                                            <select name="contractor_id" id="contractor_id" 
-                                                class="form-select @error('contractor_id') is-invalid @enderror">
-                                                <option value="">-- Select Contractor --</option>
-                                                @foreach($contractors as $contractor)
+                                <div class="card-body row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Select Existing Contractor</label>
+                                        <select name="contractor_id" class="form-select">
+                                            <option value="">-- Select Contractor --</option>
+                                            @foreach ($contractors as $contractor)
                                                 <option value="{{ $contractor->id }}" @selected(old('contractor_id') == $contractor->id)>
                                                     {{ $contractor->company_name }} ({{ $contractor->gst_no ?? 'No GST' }})
                                                 </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
-                                        <div class="col-md-12">
-                                            <div class="alert alert-info mb-0">
-                                                <i class="fas fa-info-circle me-2"></i> 
-                                                If contractor not listed above, fill the details below to create a new one
-                                            </div>
-                                        </div>
-
-                                        <!-- New Contractor Fields -->
-                                        <div class="col-md-6">
-                                            <x-label for="contractor_company_name" value="Company Name" />
-                                            <x-input id="contractor_company_name" name="contractor[company_name]" 
-                                                value="{{ old('contractor.company_name') }}" 
-                                                placeholder="Enter company name" />
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <x-label for="contractor_authorized_personnel_name" value="Authorized Personnel" />
-                                            <x-input id="contractor_authorized_personnel_name" name="contractor[authorized_personnel_name]" 
-                                                value="{{ old('contractor.authorized_personnel_name') }}" 
-                                                placeholder="Enter authorized person name" />
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <x-label for="contractor_phone" value="Phone" />
-                                            <x-input id="contractor_phone" name="contractor[phone]" 
-                                                value="{{ old('contractor.phone') }}" 
-                                                placeholder="Enter phone number" />
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <x-label for="contractor_email" value="Email" />
-                                            <x-input type="email" id="contractor_email" name="contractor[email]" 
-                                                value="{{ old('contractor.email') }}" 
-                                                placeholder="Enter email address" />
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <x-label for="contractor_gst_no" value="GST Number" />
-                                            <x-input id="contractor_gst_no" name="contractor[gst_no]" 
-                                                value="{{ old('contractor.gst_no') }}" 
-                                                placeholder="29GGGGG1314R9Z6" />
-                                        </div>
-
-                                        <div class="col-12">
-                                            <x-label for="contractor_address" value="Address" />
-                                            <textarea id="contractor_address" name="contractor[address]" rows="2" 
-                                                class="form-control @error('contractor.address') is-invalid @enderror"
-                                                placeholder="Enter company address">{{ old('contractor.address') }}</textarea>
+                                    <div class="col-12">
+                                        <div class="alert alert-info mb-0">
+                                            <i class="fas fa-info-circle me-2"></i>
+                                            If not listed, fill details below.
                                         </div>
                                     </div>
+
+                                    @foreach ([
+                                        'company_name' => 'Company Name',
+                                        'authorized_personnel_name' => 'Authorized Personnel',
+                                        'phone' => 'Phone',
+                                        'email' => 'Email',
+                                        'gst_no' => 'GST Number',
+                                        'address' => 'Address'
+                                    ] as $field => $label)
+                                        <div class="{{ $field === 'address' ? 'col-12' : 'col-md-4' }}">
+                                            <label class="form-label">{{ $label }}</label>
+                                            @if ($field === 'address')
+                                                <textarea name="contractor[{{ $field }}]" class="form-control">{{ old("contractor.$field") }}</textarea>
+                                            @else
+                                                <input type="text" name="contractor[{{ $field }}]" class="form-control"
+                                                       value="{{ old("contractor.$field") }}">
+                                            @endif
+                                        </div>
+                                    @endforeach
+
+                                    <!-- Multiple sub-projects toggle -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">Multiple Sub-projects?</label>
+                                        <div>
+                                            <label class="form-check form-check-inline">
+                                                <input type="radio" name="has_multiple_sub_projects" value="yes" class="form-check-input"
+                                                    {{ old('has_multiple_sub_projects') === 'yes' ? 'checked' : '' }}>
+                                                Yes
+                                            </label>
+                                            <label class="form-check form-check-inline">
+                                                <input type="radio" name="has_multiple_sub_projects" value="no" class="form-check-input"
+                                                    {{ old('has_multiple_sub_projects', 'no') === 'no' ? 'checked' : '' }}>
+                                                No
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Single sub-project inputs -->
+                                    <div class="col-12 single-sub">
+                                        <label class="form-label">Sub Project Name</label>
+                                        <input type="text" name="sub_project_name" class="form-control"
+                                            value="{{ old('sub_project_name') }}">
+                                    </div>
+                                    <div class="col-12 single-sub">
+                                        <label class="form-label">Sub Project Contract Value</label>
+                                        <input type="number" step="0.01" name="sub_project_contract_value" class="form-control"
+                                            value="{{ old('sub_project_contract_value') }}">
+                                    </div>
+
+                                    <!-- Container for dynamically generated sub-projects -->
+                                    <div id="multiSubProjects" class="row g-3 multi-sub" style="display:none;"></div>
+
+                                    <script>
+                                        function toggleSubFields() {
+                                            const isMulti = document.querySelector('input[name="has_multiple_sub_projects"][value="yes"]').checked;
+                                            const multiSubContainer = document.getElementById('multiSubProjects');
+                                            const contractValue = parseFloat(document.querySelector('input[name="contract_value"]').value) || 0;
+
+                                            document.querySelectorAll('.single-sub').forEach(el => el.style.display = isMulti ? 'none' : 'block');
+                                            multiSubContainer.style.display = isMulti ? 'flex' : 'none';
+
+                                            if (isMulti) {
+                                                let count = parseInt(prompt("Enter number of sub-projects:"), 10);
+                                                if (isNaN(count) || count < 2) count = 2;
+
+                                                // Clear old inputs
+                                                multiSubContainer.innerHTML = '';
+
+                                                // Distribute contract value equally as default
+                                                let defaultValue = contractValue > 0 ? (contractValue / count).toFixed(2) : '';
+
+                                                for (let i = 1; i <= count; i++) {
+                                                    let nameField = `
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Sub Project ${i} Name</label>
+                                                            <input type="text" name="multi_sub_projects[${i}][name]" class="form-control" required>
+                                                        </div>
+                                                    `;
+                                                    let valueField = `
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Sub Project ${i} Contract Value</label>
+                                                            <input type="number" step="0.01" name="multi_sub_projects[${i}][value]" class="form-control" value="${defaultValue}" required>
+                                                        </div>
+                                                    `;
+                                                    multiSubContainer.insertAdjacentHTML('beforeend', nameField + valueField);
+                                                }
+                                            }
+                                        }
+
+                                        document.querySelectorAll('input[name="has_multiple_sub_projects"]').forEach(el => {
+                                            el.addEventListener('change', toggleSubFields);
+                                        });
+
+                                        // Initialize state on load
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            // If coming back with validation errors, we need to restore the state
+                                            if ({{ old('has_multiple_sub_projects', 'no') === 'yes' ? 'true' : 'false' }}) {
+                                                toggleSubFields();
+                                            }
+                                        });
+                                    </script>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Buttons -->
                     <div class="mt-4 d-flex justify-content-end border-top pt-3">
                         <button type="reset" class="btn btn-outline-secondary me-2">
                             <i class="fas fa-undo me-1"></i> Reset

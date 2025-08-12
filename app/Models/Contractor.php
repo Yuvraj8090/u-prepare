@@ -19,6 +19,10 @@ class Contractor extends Model
         'address',
     ];
 
+protected $casts = [
+    'phone' => 'string',
+    'email' => 'string',
+];
 
     // A Contractor can have many Contracts
     public function contracts()

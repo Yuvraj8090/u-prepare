@@ -227,9 +227,7 @@
             font-size: 16px;
         }
 
-        .img-circle.profile_img {
-            margin-left: 22% !important;
-        }
+       
 
         .menu_section h3 {
             font-size: 14px !important;

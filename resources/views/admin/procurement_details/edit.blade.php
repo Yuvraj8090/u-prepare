@@ -56,7 +56,7 @@
                             <select class="form-select @error('type_of_procurement') is-invalid @enderror" 
                                     id="type_of_procurement" name="type_of_procurement" required>
                                 <option value="">Select Type</option>
-                                <option value="Item Wise" {{ old('type_of_procurement', $procurementDetail->type_of_procurement) == 'Item Wise' ? 'selected' : '' }}>Item Wise</option>
+                                <option value="Item-Wise" {{ old('type_of_procurement', $procurementDetail->type_of_procurement) == 'Item-Wise' ? 'selected' : '' }}>Item Wise</option>
                                 <option value="EPC" {{ old('type_of_procurement', $procurementDetail->type_of_procurement) == 'EPC' ? 'selected' : '' }}>EPC</option>
                                 <option value="Others" {{ old('type_of_procurement', $procurementDetail->type_of_procurement) == 'Others' ? 'selected' : '' }}>Others</option>
                             </select>

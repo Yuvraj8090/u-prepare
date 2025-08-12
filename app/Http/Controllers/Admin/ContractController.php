@@ -6,107 +6,302 @@ use App\Http\Controllers\Controller;
 use App\Models\Contract;
 use App\Models\Contractor;
 use App\Models\PackageProject;
+use App\Models\SubPackageProject;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Exception;
 
 class ContractController extends Controller
 {
     public function index()
     {
-        $contracts = Contract::with(['project', 'contractor'])->paginate(15);
+        $contracts = Contract::with(['project:id,package_name', 'contractor:id,company_name'])
+            ->select('id', 'contract_number', 'project_id', 'contractor_id', 'contract_value', 'count_sub_project', 'signing_date')
+            ->latest()
+            ->paginate(15);
+
         return view('admin.contracts.index', compact('contracts'));
     }
 
     public function create()
-    {
-        // You may want to send existing projects and contractors to select
-        $projects = PackageProject::all();
-        $contractors = Contractor::all();
+{
+    $projects = PackageProject::select('id', 'package_name', 'package_number')
+        ->orderBy('package_name')
+        ->get();
 
-        return view('admin.contracts.create', compact('projects', 'contractors'));
-    }
+    $contractors = Contractor::select('id', 'company_name', 'gst_no')
+        ->orderBy('company_name')
+        ->get();
+
+    // Always pass an empty Contract model so the form can use $contract safely
+    $contract = new Contract();
+    $contract->contractor = new Contractor();
+
+    return view('admin.contracts.create', compact('projects', 'contractors', 'contract'));
+}
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'contract_number' => 'required|string|unique:contracts,contract_number',
-            'project_id' => 'required|exists:package_projects,id',
-            'contract_value' => 'required|numeric|min:0',
-            'security' => 'nullable|numeric|min:0',
-            'signing_date' => 'nullable|date',
-            'commencement_date' => 'nullable|date',
-            'initial_completion_date' => 'nullable|date',
-            'revised_completion_date' => 'nullable|date',
-            'actual_completion_date' => 'nullable|date',
-            'contract_document' => 'nullable|string|max:255',
+        $validated = $this->validateContract($request);
 
-            // contractor fields or contractor_id
-            'contractor_id' => 'nullable|exists:contractors,id',
+        try {
+            DB::transaction(function () use ($validated, $request) {
+                // Create contractor if not selected
+                if (empty($validated['contractor_id']) && isset($validated['contractor'])) {
+                    $validated['contractor_id'] = Contractor::create($validated['contractor'])->id;
+                }
 
-            // If no contractor_id, contractor details required
-            'contractor.company_name' => 'required_without:contractor_id|string|max:255',
-            'contractor.authorized_personnel_name' => 'required_without:contractor_id|string|max:255',
-            'contractor.phone' => 'nullable|string|max:20|unique:contractors,phone',
-            'contractor.email' => 'nullable|email|unique:contractors,email',
-            'contractor.gst_no' => 'nullable|string|max:50|unique:contractors,gst_no',
-            'contractor.address' => 'nullable|string|max:500',
-        ]);
+                // Handle file upload
+                if ($request->hasFile('contract_document_file')) {
+                    $validated['contract_document'] = $this->storeContractFile($request->file('contract_document_file'));
+                }
 
-        // If contractor_id not provided, create new Contractor
-        if (empty($validated['contractor_id'])) {
-            $contractorData = $validated['contractor'];
-            $contractor = Contractor::create($contractorData);
-            $validated['contractor_id'] = $contractor->id;
+                unset($validated['contractor'], $validated['contract_document_file']);
+
+                // Create contract
+                $contract = Contract::create($validated);
+
+                $contract->load('project');
+
+                // Handle sub-package project logic
+                $this->handleSubProjects($contract, $request); // ✅ Pass both arguments
+
+            });
+
+            return redirect()->route('admin.contracts.index')->with('success', 'Contract created successfully.');
+        } catch (Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Failed to create contract: ' . $e->getMessage()]);
+        }
+    }
+public function show($id)
+{
+    $contract = Contract::with([
+        'project.procurementDetail',
+        'contractor',
+        'subProjects'
+    ])->findOrFail($id);
+
+    // Pre-format numbers and dates so Blade doesn’t handle it
+    $contract->formatted_value = number_format($contract->contract_value, 2);
+    $contract->formatted_security = number_format($contract->security ?? 0, 2);
+    $contract->formatted_signing_date = optional($contract->signing_date)->format('d M Y') ?? 'N/A';
+    $contract->formatted_commencement_date = optional($contract->commencement_date)->format('d M Y') ?? 'N/A';
+    $contract->formatted_initial_completion_date = optional($contract->initial_completion_date)->format('d M Y') ?? 'N/A';
+    $contract->formatted_revised_completion_date = optional($contract->revised_completion_date)->format('d M Y') ?? 'N/A';
+
+    // Determine procurement type lowercase for easy checks
+    $procurementType = strtolower(trim($contract->project->procurementDetail->type_of_procurement ?? ''));
+
+    // Pre-build subProject actions
+    $subProjectsData = $contract->subProjects->map(function ($sp) use ($procurementType) {
+        $actions = [];
+
+        if ($procurementType === 'epc') {
+            $actions[] = [
+                'label' => 'Create EPC Entry',
+                'icon'  => 'fas fa-industry',
+                'class' => 'btn-success',
+                'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id])
+            ];
+        } elseif ($procurementType === 'item-wise') {
+            $actions[] = [
+                'label' => 'Create BOQ Sheet',
+                'icon'  => 'fas fa-file-invoice-dollar',
+                'class' => 'btn-primary',
+                'route' => route('admin.boqentry.index', ['sub_package_project_id' => $sp->id])
+            ];
+        } else {
+            $actions[] = [
+                'label' => 'Create BOQ Sheet',
+                'icon'  => 'fas fa-file-invoice-dollar',
+                'class' => 'btn-primary',
+                'route' => route('admin.boqentry.index', ['sub_package_project_id' => $sp->id])
+            ];
+            $actions[] = [
+                'label' => 'Create EPC Entry',
+                'icon'  => 'fas fa-industry',
+                'class' => 'btn-success',
+                'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id])
+            ];
         }
 
-        // Remove nested contractor array before creating Contract
-        unset($validated['contractor']);
+        // Always Safe Guard Entry
+        $actions[] = [
+            'label' => 'Create Safe Guard Entry',
+            'icon'  => 'fas fa-shield-alt',
+            'class' => 'btn-warning',
+            'route' => route('admin.safeguard_entries.index', ['sub_package_project_id' => $sp->id])
+        ];
 
-        Contract::create($validated);
+        return [
+            'id'            => $sp->id,
+            'name'          => $sp->name,
+            'contractValue' => number_format($sp->contract_value, 2),
+            'actions'       => $actions
+        ];
+    });
 
-        return redirect()->route('admin.contracts.index')->with('success', 'Contract created successfully.');
-    }
+    return view('admin.contracts.show', [
+        'contract'       => $contract,
+        'subProjectsData'=> $subProjectsData
+    ]);
+}
 
-    public function show(Contract $contract)
-    {
-        $contract->load(['project', 'contractor']);
-        return view('admin.contracts.show', compact('contract'));
-    }
+
+
 
     public function edit(Contract $contract)
-    {
-        $projects = PackageProject::all();
-        $contractors = Contractor::all();
+{
+    $projects = PackageProject::select('id', 'package_name', 'package_number')->get();
+    $contractors = Contractor::select('id', 'company_name', 'gst_no')->get();
 
-        $contract->load(['project', 'contractor']);
+    $contract->load(['project', 'contractor']);
 
-        return view('admin.contracts.edit', compact('contract', 'projects', 'contractors'));
+    return view('admin.contracts.edit', compact('contract', 'projects', 'contractors'));
+}
+
+
+   public function update(Request $request, $id)
+{
+    $contract = Contract::with('subProjects', 'project')->findOrFail($id);
+
+    // Update contract itself
+    $contract->update($request->only([
+        'contract_number',
+        'contract_value',
+        'security',
+        'signing_date',
+        'commencement_date',
+        'initial_completion_date',
+        'revised_completion_date',
+        'actual_completion_date',
+        'count_sub_project',
+    ]));
+
+    // Update subprojects if applicable
+    if ($contract->count_sub_project > 0) {
+        $subProjects = $contract->subProjects;
+
+        if ($subProjects->count() === 1) {
+            $sp = $subProjects->first();
+            $sp->update([
+                'name'           => $sp->name ?? $contract->project->package_name,
+                'contract_value' => $contract->contract_value,
+            ]);
+        }
     }
 
-    public function update(Request $request, Contract $contract)
-    {
-        $validated = $request->validate([
-            'contract_number' => 'required|string|unique:contracts,contract_number,' . $contract->id,
-            'project_id' => 'required|exists:package_projects,id',
-            'contract_value' => 'required|numeric|min:0',
-            'security' => 'nullable|numeric|min:0',
-            'signing_date' => 'nullable|date',
-            'commencement_date' => 'nullable|date',
-            'initial_completion_date' => 'nullable|date',
-            'revised_completion_date' => 'nullable|date',
-            'actual_completion_date' => 'nullable|date',
-            'contract_document' => 'nullable|string|max:255',
+    return redirect()->route('admin.contracts.index')->with('success', 'Contract updated successfully.');
+}
 
-            'contractor_id' => 'required|exists:contractors,id',
-        ]);
-
-        $contract->update($validated);
-
-        return redirect()->route('admin.contracts.index')->with('success', 'Contract updated successfully.');
-    }
 
     public function destroy(Contract $contract)
     {
-        $contract->delete();
-        return redirect()->route('admin.contracts.index')->with('success', 'Contract deleted successfully.');
+        try {
+            DB::transaction(function () use ($contract) {
+                $this->deleteContractFile($contract->contract_document);
+                $contract->delete();
+            });
+
+            return redirect()->route('admin.contracts.index')->with('success', 'Contract deleted successfully.');
+        } catch (Exception $e) {
+            return back()->withErrors(['error' => 'Failed to delete contract: ' . $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Create or update sub-package projects and sync count.
+     */
+    private function handleSubProjects(Contract $contract, Request $request)
+{
+    // Remove old sub-projects for this contract's project
+    SubPackageProject::where('project_id', $contract->project_id)->delete();
+
+    $isMulti = $request->input('has_multiple_sub_projects') === 'yes';
+    $contractValue = (float) $contract->contract_value;
+
+    if (!$isMulti) {
+        // Single sub-project mode
+        $name = $request->input('sub_project_name') ?: $contract->project->package_name;
+        $value = $request->input('sub_project_contract_value') ?: $contractValue;
+
+        SubPackageProject::create([
+            'name'           => $name,
+            'contract_value' => $value,
+            'project_id'     => $contract->project_id,
+        ]);
+    } else {
+        // Multiple sub-project mode
+        $multiData = $request->input('multi_sub_projects', []);
+        $count = max(count($multiData), 2); // Ensure at least 2
+
+        // Default value per project if missing
+        $defaultValue = $count > 0 ? round($contractValue / $count, 2) : 0;
+
+        foreach ($multiData as $i => $sp) {
+            SubPackageProject::create([
+                'name'           => $sp['name'] ?: "Sub Project " . ($i + 1),
+                'contract_value' => isset($sp['value']) && $sp['value'] !== '' ? $sp['value'] : $defaultValue,
+                'project_id'     => $contract->project_id,
+            ]);
+        }
+    }
+
+    // Update count on contract
+    $contract->update([
+        'count_sub_project' => SubPackageProject::where('project_id', $contract->project_id)->count()
+    ]);
+}
+
+
+    private function storeContractFile($file)
+    {
+        $fileName = 'contract_' . time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
+        return $file->storeAs('contracts', $fileName, 'public');
+    }
+
+    private function deleteContractFile($path)
+    {
+        if ($path && Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+    }
+
+    private function validateContract(Request $request, $id = null)
+    {
+        $rules = [
+            'contract_number' => ['required', 'string', Rule::unique('contracts', 'contract_number')->ignore($id)],
+            'project_id' => 'required|exists:package_projects,id',
+            'contract_value' => 'required|numeric|min:0',
+            'security' => 'nullable|numeric|min:0',
+            'count_sub_project' => 'nullable|numeric|min:0',
+            'signing_date' => 'nullable|date',
+            'commencement_date' => 'nullable|date',
+            'initial_completion_date' => 'nullable|date',
+            'revised_completion_date' => 'nullable|date',
+            'actual_completion_date' => 'nullable|date',
+            'contractor_id' => $id ? 'required|exists:contractors,id' : 'nullable|exists:contractors,id',
+            'contract_document_file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:5120',
+        ];
+
+        if (!$id && !$request->filled('contractor_id')) {
+            $rules = array_merge($rules, [
+                'contractor.company_name' => 'required_without:contractor_id|string|max:255',
+                'contractor.authorized_personnel_name' => 'required_without:contractor_id|string|max:255',
+                'contractor.phone' => 'nullable|string|max:20|unique:contractors,phone',
+                'contractor.email' => 'nullable|email|unique:contractors,email',
+                'contractor.gst_no' => 'nullable|string|max:50|unique:contractors,gst_no',
+                'contractor.address' => 'nullable|string|max:500',
+            ]);
+        }
+
+        $messages = [
+            'contractor.company_name.required_without' => 'Company Name is required if no contractor is selected.',
+            'contractor.authorized_personnel_name.required_without' => 'Authorized Personnel Name is required if no contractor is selected.',
+        ];
+
+        return $request->validate($rules, $messages);
     }
 }
