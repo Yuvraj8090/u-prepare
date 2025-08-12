@@ -14,7 +14,7 @@
                 <ol class="breadcrumb mb-0">
                     @foreach ($breadcrumbs as $breadcrumb)
                         @if (isset($breadcrumb['route']))
-                            <li class="breadcrumb-item">
+                            <li class="breadcrumb-item ">
                                 <a href="{{ route($breadcrumb['route']) }}">{!! $breadcrumb['label'] !!}</a>
                             </li>
                         @else

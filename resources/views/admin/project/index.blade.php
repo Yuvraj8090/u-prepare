@@ -1,20 +1,16 @@
 <x-app-layout>
     <div class="container-fluid">
         <!-- Breadcrumb -->
-        <div class="row mb-4">
-            <div class="col-md-12 d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">
-                    <i class="fas fa-project-diagram text-primary me-2"></i> Projects Management
-                </h4>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item">Admin</li>
-                        <li class="breadcrumb-item active" aria-current="page">Projects</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+         <x-admin.breadcrumb-header 
+                icon="fas fa-info-circle text-info" 
+                title="Projects" 
+                :breadcrumbs="[
+                    ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'], 
+                    ['route' => 'admin.project.index', 'label' => 'Projects'], 
+                    ['label' => 'View Projects']
+                ]"  /> 
+
+
 
         <!-- Success/Error Messages -->
         @if (session('success'))
@@ -35,12 +31,15 @@
 
         <!-- Projects Table -->
         <div class="card shadow-sm">
+            
+           
+            
             <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <h5 class="mb-0 text-primary">
-                    <i class="fas fa-list me-2"></i> Project List
+                <h5 class="mb-0 h4">
+                    <i class="fas fa-list me-2"></i> Add New External Aided Projects  
                 </h5>
-                <a href="{{ route('admin.project.create') }}" class="btn btn-sm btn-primary">
-                    <i class="fas fa-plus-circle me-1"></i> Create Project
+                <a href="{{ route('admin.project.create') }}" class="h3 btn btn-sm btn-primary">
+                    <i class="fas fa-plus-circle me-1"></i> Add Project
                 </a>
             </div>
 
