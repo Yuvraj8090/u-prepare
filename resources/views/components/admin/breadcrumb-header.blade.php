@@ -26,3 +26,13 @@
         </div>
     </div>
 </div>
+{{-- 
+  <x-admin.breadcrumb-header 
+    icon="fas fa-info-circle text-info" 
+    title=" EPC Entries" 
+    :breadcrumbs="[
+        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'], 
+        ['route' => 'admin.already_define_epc.index', 'label' => 'EPC Entries'], 
+        ['label' => 'Details']
+    ]" 
+/> --}}
