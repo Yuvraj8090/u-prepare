@@ -67,6 +67,8 @@
         .dt-buttons .btn {
             margin-right: 5px !important;
             margin-bottom: 5px !important;
+            /* color: white!important;
+            background-color:#218838!important; */
         }
         .badge-success {
             background-color: #e8f5e9;
@@ -77,7 +79,7 @@
         .dataTables_wrapper .dataTables_length select {
             border: 1px solid #dee2e6 !important;
             border-radius: 4px !important;
-            padding: 5px 10px !important;
+            padding: 7px 30px !important;
         }
         .dataTables_wrapper .dt-buttons {
             margin-bottom: 10px;
@@ -163,7 +165,9 @@
                 }
             ],
             initComplete: function() {
-                $('.dt-buttons .btn').removeClass('btn-secondary');
+
+                $('.btn ').removeClass('btn-secondary dt-button');
+                
                 $('.dataTables_filter input').addClass('form-control form-control-sm');
                 $('.dataTables_length select').addClass('form-control form-control-sm');
             }
