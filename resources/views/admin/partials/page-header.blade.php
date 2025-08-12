@@ -1,4 +1,3 @@
-{{-- resources/views/admin/partials/page-header.blade.php --}}
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="mb-0">
         @if(!empty($icon))
@@ -14,12 +13,12 @@
                     @if(isset($breadcrumb['route']))
                         <li class="breadcrumb-item">
                             <a href="{{ route($breadcrumb['route']) }}">
-                                {{ $breadcrumb['label'] ?? '' }}
+                                {!! $breadcrumb['label'] !!}
                             </a>
                         </li>
                     @else
                         <li class="breadcrumb-item active" aria-current="page">
-                            {{ $breadcrumb['label'] ?? '' }}
+                            {!! $breadcrumb['label'] !!}
                         </li>
                     @endif
                 @endforeach

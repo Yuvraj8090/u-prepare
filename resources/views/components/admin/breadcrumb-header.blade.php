@@ -26,6 +26,8 @@
         </div>
     </div>
 </div>
+{{--  Hot To Call Thsi Fuction  --}}
+
 {{-- 
   <x-admin.breadcrumb-header 
     icon="fas fa-info-circle text-info" 

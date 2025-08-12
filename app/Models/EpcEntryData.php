@@ -15,12 +15,13 @@ class EpcEntryData extends Model
     protected $fillable = [
         'sub_package_project_id',
         'sl_no',
-        'item_description',
+        'activity_name',    // changed from item_description
+        'stage_name',       // newly added
+        'item_description', // newly added column included here
         'percent',
         'amount',
     ];
 
-    // Relationship: EpcEntryData belongs to SubPackageProject
     public function subPackageProject()
     {
         return $this->belongsTo(SubPackageProject::class, 'sub_package_project_id');
