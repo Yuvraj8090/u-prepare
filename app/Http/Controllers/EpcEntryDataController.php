@@ -15,14 +15,12 @@ class EpcEntryDataController extends Controller
         $subProjects = SubPackageProject::select('id', 'name')->get();
         $workservices = WorkService::select('id', 'name')->get();
 
-        // Get selected filters
         $selectedWorkServiceId = $request->input('work_service_id');
         $selectedProjectId = $request->input('sub_package_project_id');
 
-        // Filter AlreadyDefineEpc by selected work service
         $epcentrydefine = collect();
         if ($selectedWorkServiceId) {
-            $epcentrydefine = AlreadyDefineEpc::with(['activityName']) // eager load activity name relation
+            $epcentrydefine = AlreadyDefineEpc::with(['activityName', 'workService'])
                 ->where('work_service', $selectedWorkServiceId)
                 ->orderBy('sl_no')
                 ->get();
@@ -37,30 +35,41 @@ class EpcEntryDataController extends Controller
         if ($selectedProjectId) {
             $subProject = SubPackageProject::find($selectedProjectId);
 
-            $epcEntries = EpcEntryData::where('sub_package_project_id', $selectedProjectId)
-                ->orderByRaw("CAST(SUBSTRING_INDEX(sl_no, '.', 1) AS UNSIGNED), sl_no")
-                ->get()
-                ->groupBy(function ($item) {
-                    return explode('.', $item->sl_no)[0];
+            $query = EpcEntryData::where('sub_package_project_id', $selectedProjectId);
+
+            if ($subProject && $subProject->contract_value !== null) {
+                $query->where(function ($q) use ($subProject) {
+                    $q->where('percent', '<', 100)
+                      ->orWhere('amount', '<', $subProject->contract_value);
                 });
+            } else {
+                $query->where('percent', '<', 100);
+            }
+
+            $epcEntries = $query->orderByRaw("CAST(SUBSTRING_INDEX(sl_no, '.', 1) AS UNSIGNED), sl_no")
+                                ->get()
+                                ->groupBy(function ($item) {
+                                    return explode('.', $item->sl_no)[0];
+                                });
 
             $allEntries = $epcEntries->flatten();
 
-            // Check percent totals
-            $totalPercent = $allEntries->sum('percent');
+            $totalPercent = EpcEntryData::where('sub_package_project_id', $selectedProjectId)->sum('percent');
             if ($totalPercent !== 100) {
                 $remainingPercent = 100 - $totalPercent;
-                $warnings[] = $totalPercent > 100 ? 'Total percentage exceeds 100% by ' . abs($remainingPercent) . '%.' : 'Total percentage is less than 100% by ' . abs($remainingPercent) . '%.';
+                $warnings[] = $totalPercent > 100
+                    ? 'Total percentage exceeds 100% by ' . abs($remainingPercent) . '%.'
+                    : 'Total percentage is less than 100% by ' . abs($remainingPercent) . '%.';
             }
 
-            // Check amount totals
-            $totalAmount = $allEntries->sum('amount');
+            $totalAmount = EpcEntryData::where('sub_package_project_id', $selectedProjectId)->sum('amount');
             if ($subProject && $subProject->contract_value !== null) {
                 $remainingAmount = $subProject->contract_value - $totalAmount;
-                $warnings[] = $totalAmount > $subProject->contract_value ? 'Total amount exceeds contract value by ' . number_format(abs($remainingAmount), 2) . '.' : 'Total amount is less than contract value by ' . number_format(abs($remainingAmount), 2) . '.';
+                $warnings[] = $totalAmount > $subProject->contract_value
+                    ? 'Total amount exceeds contract value by ' . number_format(abs($remainingAmount), 2) . '.'
+                    : 'Total amount is less than contract value by ' . number_format(abs($remainingAmount), 2) . '.';
             }
 
-            // Check individual entries
             foreach ($allEntries as $entry) {
                 if ($entry->percent < 0 || $entry->percent > 100) {
                     $warnings[] = "Entry '{$entry->sl_no}' has invalid percent value ({$entry->percent}%).";
@@ -71,48 +80,58 @@ class EpcEntryDataController extends Controller
             }
         }
 
-        return view('admin.epcentry_data.index', compact('subProjects', 'workservices', 'epcentrydefine', 'epcEntries', 'subProject', 'selectedWorkServiceId', 'selectedProjectId', 'remainingPercent', 'remainingAmount', 'warnings'));
+        return view('admin.epcentry_data.index', compact(
+            'subProjects',
+            'workservices',
+            'epcentrydefine',
+            'epcEntries',
+            'subProject',
+            'selectedWorkServiceId',
+            'selectedProjectId',
+            'remainingPercent',
+            'remainingAmount',
+            'warnings'
+        ));
     }
+
     public function storeFromDefined(Request $request)
-{
-    $validated = $request->validate([
-        'sub_package_project_id' => 'required|exists:sub_package_projects,id',
-        'work_service_id' => 'required|exists:work_service,id',
-    ]);
-
-    $subProjectId = $validated['sub_package_project_id'];
-    $workServiceId = $validated['work_service_id'];
-
-    // Get Already Defined EPC for that work service
-    $definedEntries = AlreadyDefineEpc::where('work_service', $workServiceId)->get();
-
-    if ($definedEntries->isEmpty()) {
-        return back()->with('error', 'No defined EPC entries found for this work service.');
-    }
-
-    $insertCount = 0;
-
-    foreach ($definedEntries as $def) {
-        EpcEntryData::create([
-            'sub_package_project_id' => $subProjectId,
-            'sl_no' => $def->sl_no,
-            'activity_name' => $def->activityName?->name ?? null,
-            'stage_name' => $def->stage_name,
-            'item_description' => $def->item_description,
-            'percent' => $def->percent,
-            'amount' => 0, // you can calculate amount if needed
+    {
+        $validated = $request->validate([
+            'sub_package_project_id' => 'required|exists:sub_package_projects,id',
+            'work_service_id' => 'required|exists:work_service,id',
         ]);
-        $insertCount++;
+
+        $subProjectId = $validated['sub_package_project_id'];
+        $workServiceId = $validated['work_service_id'];
+
+        $definedEntries = AlreadyDefineEpc::where('work_service', $workServiceId)->get();
+
+        if ($definedEntries->isEmpty()) {
+            return back()->with('error', 'No defined EPC entries found for this work service.');
+        }
+
+        $insertCount = 0;
+
+        foreach ($definedEntries as $def) {
+            EpcEntryData::create([
+                'sub_package_project_id' => $subProjectId,
+                'sl_no' => $def->sl_no,
+                'activity_name' => $def->activityName?->name ?? null,
+                'stage_name' => $def->stage_name,
+                'item_description' => $def->item_description,
+                'percent' => $def->percent,
+                'amount' => 0,
+            ]);
+            $insertCount++;
+        }
+
+        return redirect()
+            ->route('admin.epcentry_data.index', [
+                'sub_package_project_id' => $subProjectId,
+                'work_service_id' => $workServiceId
+            ])
+            ->with('success', "{$insertCount} EPC entries stored successfully from defined entries.");
     }
-
-    return redirect()
-        ->route('admin.epcentry_data.index', [
-            'sub_package_project_id' => $subProjectId,
-            'work_service_id' => $workServiceId
-        ])
-        ->with('success', "{$insertCount} EPC entries stored successfully from defined entries.");
-}
-
 
     public function create(Request $request)
     {
