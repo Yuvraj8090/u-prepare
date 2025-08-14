@@ -10,7 +10,6 @@
 
     <title>{{ config('app.name') }}</title>
 
-<script src="https://cdn.jsdelivr.net/npm/turbo@2.5.5/bin/turbo.min.js"></script>
     <link rel="icon" href="" type="image/ico" />
     <link rel="stylesheet" href="{{ asset('asset/vendors/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('asset/vendors/font-awesome/css/font-awesome.min.css') }}">
@@ -227,9 +226,7 @@
             font-size: 16px;
         }
 
-        .img-circle.profile_img {
-            margin-left: 22% !important;
-        }
+       
 
         .menu_section h3 {
             font-size: 14px !important;
@@ -374,176 +371,10 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.css">
     <script src="{{ asset('assets/js/mis/scripts.js') }}?ver=1.6.2"></script>
-
-    <style>
-
-    </style>
-
-
     @stack('modals')
-
     @livewireScripts
     @yield('script')
 </body>
 
 </html>
 
-
-<script>
-    $csrfToken = '{{ csrf_token() }}';
-    // $(".datepicker").datepicker({
-    //     dateFormat: "dd-mm-yy" //
-    // });
-    // new AirDatepicker('.datepicker', {})
-
-    $('.airpicker').each(function(i, el) {
-        let disabled = el.getAttribute('disabled') !== null
-        let readonly = el.getAttribute('readonly') !== null
-
-        if (!disabled && !readonly) {
-            // new Lightpick({
-            //     field: el,
-            //     format: 'DD-MM-YYYY',
-            //     parentEl: '.x_panel'
-            // });
-
-            $id = `adp-${i}`;
-            el.setAttribute('id', $id);
-
-            // new AirDatepicker(`#${$id}`, {
-            //     autoClose: false,
-            //     container: '.right_col',
-            //     dateFormat: 'dd-MM-yyyy',
-            //     position({$datepicker, $target, $pointer}) {
-            //         let coords = $target.getBoundingClientRect(),
-            //             dpHeight = $datepicker.clientHeight,
-            //             dpWidth = $datepicker.clientWidth;
-
-            //         let top = coords.y + coords.height / 2 + window.scrollY - dpHeight / 2;
-            //         let left = coords.x + coords.width / 2 - dpWidth / 2;
-
-            //         $datepicker.style.left = `${left}px`;
-            //         $datepicker.style.top = `${top}px`;
-
-            //         $pointer.style.display = 'none';
-            //     }
-            // })
-        }
-    });
-
-    function refreshPageWithoutQueryParams() {
-        // Get the current URL without query string
-        var urlWithoutQueryParams = window.location.href.split('?')[0];
-
-        // Navigate to the URL without query string
-        window.location.href = urlWithoutQueryParams;
-    }
-
-    function exportToPDF() {
-        var element = document.getElementById('tableExportData');
-
-        var opt = {
-            margin: 1,
-            filename: 'document.pdf',
-            jsPDF: {
-                format: 'a3', // Specify the desired page size as 'a4'
-                orientation: 'portrait' // Set the orientation to 'portrait' or 'landscape'
-            }
-        };
-
-        html2pdf().from(element).set(opt).save();
-    }
-
-    $(document).ready(function() {
-        window.onload = function() {
-            var hash = window.location.hash;
-            if (hash) {
-                var target = $(hash);
-                if (target.length) {
-                    $('html, body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                }
-            }
-        }
-    });
-
-    $(document).on('change', '#selectCat', function() {
-
-        var id = $(this).val();
-
-        let values = [];
-
-        if (id == 1) {
-            values = ['All', 'Others', 'Bridge', 'Building', 'Slope'];
-        } else if (id == 2) {
-            values = ['All', 'Others', 'Risk assessment and mitigation planning',
-                'Capacity building & training'];
-        } else if (id == 3) {
-            values = ['All', 'Others', 'Tent', 'Shelter', 'Fire-suit'];
-        } else {
-            values = ['All', 'Others'];
-        }
-
-        var select = $('#departmentSelect');
-
-        select.empty();
-
-        $.each(values, function(index, value) {
-            select.append($('<option>').text(value).attr('value', value));
-        });
-    });
-
-    const currencyFormatter = new Intl.NumberFormat('en-IN', {
-        style: 'currency',
-        currency: 'INR',
-        maximumFractionDigits: 0,
-        minimumFractionDigits: 0,
-    });
-
-    const currencyFormatterFraction = new Intl.NumberFormat('en-IN', {
-        style: 'currency',
-        currency: 'INR',
-        maximumFractionDigits: 2,
-        minimumFractionDigits: 2,
-    });
-
-    const formatUSDCurrency = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        maximumFractionDigits: 2,
-        minimumFractionDigits: 2,
-    });
-
-    (function() {
-        let wiw = window.innerWidth;
-        let wih = window.innerHeight;
-        let csw = document.body.clientWidth;
-
-        let zra = parseInt(csw / wiw);
-        let whr = parseInt(wiw / wih);
-
-        let haz = (csw / whr) - 60;
-
-        $('.right_col').attr('style', `min-height:${haz}px`);
-
-        initDatePicker();
-
-        let alrtMsg = null;
-        let msgType = null;
-
-        @error('error')
-            msgType = 'error';
-            alrtMsg = '{{ $message }}';
-        @enderror
-
-        @error('success')
-            msgType = 'error';
-            alrtMsg = '{{ $message }}';
-        @enderror
-
-        if (alrtMsg && msgType) {
-            showMsg(msgType, alrtMsg);
-        }
-    })()
-</script>
