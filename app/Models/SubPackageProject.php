@@ -19,6 +19,19 @@ class SubPackageProject extends Model
         'project_id',
         'name',
         'contract_value',
+        'lat',    // nullable latitude
+        'long',   // nullable longitude
+    ];
+
+    /**
+     * The attributes that should be cast.
+     * Make sure lat and long can be null or float.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'lat' => 'float',
+        'long' => 'float',
     ];
 
     /**
@@ -28,13 +41,21 @@ class SubPackageProject extends Model
     {
         return $this->belongsTo(PackageProject::class, 'project_id');
     }
+
+    /**
+     * Get the contract related to this sub package project.
+     * Assuming the relation is via the `project_id` field.
+     */
     public function contract()
     {
         return $this->belongsTo(Contract::class, 'project_id', 'project_id');
     }
-    public function safeguardEntries()
-{
-    return $this->hasMany(SafeguardEntry::class);
-}
 
+    /**
+     * Get all safeguard entries for this sub package project.
+     */
+    public function safeguardEntries()
+    {
+        return $this->hasMany(SafeguardEntry::class);
+    }
 }

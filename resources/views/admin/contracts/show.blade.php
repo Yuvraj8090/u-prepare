@@ -250,6 +250,7 @@
                                                         <p class="mb-0">{{ $action['label'] }}</p>
                                                     </a>
                                                 @endforeach
+                                                
                                             </div>
                                         </td>
                                     </tr>

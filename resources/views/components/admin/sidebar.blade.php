@@ -34,35 +34,30 @@
 
         <!-- Profile Info -->
         <div class="profile clearfix text-center mt-3">
-    @php
-        $name = $user->name;
-        $nameParts = explode(' ', trim($name));
-        $initials = '';
-        if(count($nameParts) > 1){
-            $initials = strtoupper($nameParts[0][0] . $nameParts[1][0]);
-        } else {
-            $initials = strtoupper(substr($nameParts[0], 0, 2));
-        }
-    @endphp
+            @php
+                $name = $user->name;
+                $nameParts = explode(' ', trim($name));
+                $initials = '';
+                if (count($nameParts) > 1) {
+                    $initials = strtoupper($nameParts[0][0] . $nameParts[1][0]);
+                } else {
+                    $initials = strtoupper(substr($nameParts[0], 0, 2));
+                }
+            @endphp
 
-    <img 
-        id="profileImage" 
-        style="height:150px; width:auto; display: block; margin: 0 auto;" 
-        src="{{ $user->profile_photo_url }}" 
-        alt="Profile" 
-        class="img-circle profile_img h-30"
-        onerror="this.style.display='none'; document.getElementById('initialsDiv').style.display='flex';"
-    >
+            <img id="profileImage" style="height:150px; width:auto; display: block; margin: 0 auto;"
+                src="{{ $user->profile_photo_url }}" alt="Profile" class="img-circle profile_img h-30"
+                onerror="this.style.display='none'; document.getElementById('initialsDiv').style.display='flex';">
 
-    <div id="initialsDiv" 
-         style="height:150px; width:150px; background-color: #ADD8E6; color: white; border-radius: 50%; 
+            <div id="initialsDiv"
+                style="height:150px; width:150px; background-color: #ADD8E6; color: white; border-radius: 50%; 
                 font-size: 72px; font-weight: bold; display: none; align-items: center; justify-content: center; 
                 margin: 0 auto; user-select:none;">
-        {{ $initials }}
-    </div>
+                {{ $initials }}
+            </div>
 
-    <h5 class="mt-2">{{ ucfirst($user->name) }}</h5>
-</div>
+            <h5 class="mt-2">{{ ucfirst($user->name) }}</h5>
+        </div>
 
         <br />
 
@@ -78,7 +73,8 @@
                     <li><a href="{{ route('admin.project.index') }}"><i class="fa fa-tasks"></i> Projects</a></li>
 
                     <!-- Package Projects -->
-                    <li><a href="{{ route('admin.package-projects.index') }}"><i class="fa fa-archive"></i> Package Projects</a></li>
+                    <li><a href="{{ route('admin.package-projects.index') }}"><i class="fa fa-archive"></i> Package
+                            Projects</a></li>
 
 
                     <!-- Procurement -->
@@ -90,7 +86,7 @@
                                     <i class="fa fa-list"></i> Procurement Details
                                 </a>
                             </li>
-                             
+
                             <li>
                                 <a href="{{ route('admin.procurement-work-programs.index') }}">
                                     <i class="fa fa-calendar"></i> Work Programs
@@ -134,8 +130,10 @@
                     <li>
                         <a><i class="fa fa-file-alt"></i> BOQ Entry <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ route('admin.boqentry.index') }}"><i class="fa fa-list"></i> List BOQ Entries</a></li>
-                            <li><a href="{{ route('admin.boqentry.create') }}"><i class="fa fa-plus-circle"></i> Create BOQ Entry</a></li>
+                            <li><a href="{{ route('admin.boqentry.index') }}"><i class="fa fa-list"></i> List BOQ
+                                    Entries</a></li>
+                            <li><a href="{{ route('admin.boqentry.create') }}"><i class="fa fa-plus-circle"></i> Create
+                                    BOQ Entry</a></li>
                             <!-- Upload handled in index or a dedicated view -->
                         </ul>
                     </li>
@@ -144,16 +142,18 @@
                     <li>
                         <a><i class="fa fa-industry"></i> EPC Entry Data <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ route('admin.epcentry_data.index') }}"><i class="fa fa-list"></i> List EPC Entries</a></li>
-                            <li><a href="{{ route('admin.epcentry_data.create') }}"><i class="fa fa-plus-circle"></i> Create EPC Entry</a></li>
+                            <li><a href="{{ route('admin.epcentry_data.index') }}"><i class="fa fa-list"></i> List EPC
+                                    Entries</a></li>
+                            <li><a href="{{ route('admin.epcentry_data.create') }}"><i class="fa fa-plus-circle"></i>
+                                    Create EPC Entry</a></li>
                         </ul>
                     </li>
-<li >
+                    <li>
                         <a href="{{ route('admin.already_define_epc.index') }}">
                             <i class="fa fa-check-square"></i> Already Define EPC
                         </a>
                     </li>
-                    <li >
+                    <li>
                         <a href="{{ route('admin.work_services.index') }}">
                             <i class="fa fa-check-square"></i> Work Services
                         </a>
@@ -163,10 +163,14 @@
                         <a><i class="fa fa-shield"></i> Admin Panel <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{{ route('admin.users.index') }}"><i class="fa fa-user"></i> Users</a></li>
-                            <li><a href="{{ route('admin.roles.index') }}"><i class="fa fa-id-badge"></i> Roles</a></li>
-                            <li><a href="{{ route('admin.departments.index') }}"><i class="fa fa-building"></i> Departments</a></li>
-                            <li><a href="{{ route('admin.designations.index') }}"><i class="fa fa-briefcase"></i> Designations</a></li>
-                            <li><a href="{{ route('admin.projects-category.index') }}"><i class="fa fa-tags"></i> Project Categories</a></li>
+                            <li><a href="{{ route('admin.roles.index') }}"><i class="fa fa-id-badge"></i> Roles</a>
+                            </li>
+                            <li><a href="{{ route('admin.departments.index') }}"><i class="fa fa-building"></i>
+                                    Departments</a></li>
+                            <li><a href="{{ route('admin.designations.index') }}"><i class="fa fa-briefcase"></i>
+                                    Designations</a></li>
+                            <li><a href="{{ route('admin.projects-category.index') }}"><i class="fa fa-tags"></i>
+                                    Project Categories</a></li>
                         </ul>
                     </li>
 
@@ -174,7 +178,8 @@
                     <li>
                         <a><i class="fa fa-cog"></i> Settings <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ route('profile.show') }}"><i class="fa fa-user-circle"></i> My Profile</a></li>
+                            <li><a href="{{ route('profile.show') }}"><i class="fa fa-user-circle"></i> My Profile</a>
+                            </li>
                         </ul>
                     </li>
 
@@ -184,8 +189,8 @@
 
         <!-- Footer -->
         <div class="sidebar-footer hidden-small">
-            <a data-toggle="tooltip" title="Logout"
-               href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a data-toggle="tooltip" title="Logout" href="#"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <span class="glyphicon glyphicon-off"></span>
             </a>
             <form id="logout-form" action="{{ url('logout') }}" method="POST" class="d-none">@csrf</form>

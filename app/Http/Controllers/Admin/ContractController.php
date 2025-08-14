@@ -7,6 +7,7 @@ use App\Models\Contract;
 use App\Models\Contractor;
 use App\Models\PackageProject;
 use App\Models\SubPackageProject;
+use App\Models\EpcEntryData;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -26,21 +27,17 @@ class ContractController extends Controller
     }
 
     public function create()
-{
-    $projects = PackageProject::select('id', 'package_name', 'package_number')
-        ->orderBy('package_name')
-        ->get();
+    {
+        $projects = PackageProject::select('id', 'package_name', 'package_number')->orderBy('package_name')->get();
 
-    $contractors = Contractor::select('id', 'company_name', 'gst_no')
-        ->orderBy('company_name')
-        ->get();
+        $contractors = Contractor::select('id', 'company_name', 'gst_no')->orderBy('company_name')->get();
 
-    // Always pass an empty Contract model so the form can use $contract safely
-    $contract = new Contract();
-    $contract->contractor = new Contractor();
+        // Always pass an empty Contract model so the form can use $contract safely
+        $contract = new Contract();
+        $contract->contractor = new Contractor();
 
-    return view('admin.contracts.create', compact('projects', 'contractors', 'contract'));
-}
+        return view('admin.contracts.create', compact('projects', 'contractors', 'contract'));
+    }
 
     public function store(Request $request)
     {
@@ -67,23 +64,20 @@ class ContractController extends Controller
 
                 // Handle sub-package project logic
                 $this->handleSubProjects($contract, $request); // ✅ Pass both arguments
-
             });
 
             return redirect()->route('admin.contracts.index')->with('success', 'Contract created successfully.');
         } catch (Exception $e) {
-            return back()->withInput()->withErrors(['error' => 'Failed to create contract: ' . $e->getMessage()]);
+            return back()
+                ->withInput()
+                ->withErrors(['error' => 'Failed to create contract: ' . $e->getMessage()]);
         }
     }
 public function show($id)
 {
-    $contract = Contract::with([
-        'project.procurementDetail',
-        'contractor',
-        'subProjects'
-    ])->findOrFail($id);
+    $contract = Contract::with(['project.procurementDetail', 'contractor', 'subProjects'])->findOrFail($id);
 
-    // Pre-format numbers and dates so Blade doesn’t handle it
+    // Pre-format numbers and dates
     $contract->formatted_value = number_format($contract->contract_value, 2);
     $contract->formatted_security = number_format($contract->security ?? 0, 2);
     $contract->formatted_signing_date = optional($contract->signing_date)->format('d M Y') ?? 'N/A';
@@ -91,61 +85,90 @@ public function show($id)
     $contract->formatted_initial_completion_date = optional($contract->initial_completion_date)->format('d M Y') ?? 'N/A';
     $contract->formatted_revised_completion_date = optional($contract->revised_completion_date)->format('d M Y') ?? 'N/A';
 
-    // Determine procurement type lowercase for easy checks
     $procurementType = strtolower(trim($contract->project->procurementDetail->type_of_procurement ?? ''));
 
-    // Pre-build subProject actions
     $subProjectsData = $contract->subProjects->map(function ($sp) use ($procurementType) {
         $actions = [];
 
+        // Fetch EPC entries for this subproject
+        $epcEntries = EpcEntryData::where('sub_package_project_id', $sp->id)->get();
+        $totalPercent = $epcEntries->sum('percent');
+        $totalAmount = $epcEntries->sum('amount');
+
+        // Condition for showing update buttons:
+        // sum(percent) == 100 AND sum(amount) == contract_value
+        $hasCompleteEpcEntries = ($epcEntries->count() > 0) && ($totalPercent == 100);
+        $amountMatchesContractValue = ($totalAmount == $sp->contract_value);
+
         if ($procurementType === 'epc') {
-            $actions[] = [
-                'label' => 'Create EPC Entry',
-                'icon'  => 'fas fa-industry',
-                'class' => 'btn-success',
-                'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id])
-            ];
+            if ($hasCompleteEpcEntries) {
+                $actions[] = [
+                    'label' => 'Update EPC Entry',
+                    'icon' => 'fas fa-industry',
+                    'class' => 'btn-success',
+                    'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id]),
+                ];
+
+                // Show "Update Physical Progress" ONLY if amount matches contract value
+                if ($amountMatchesContractValue) {
+                    $actions[] = [
+                        'label' => 'Update Physical Progress',
+                        'icon' => 'fas fa-hard-hat',
+                        'class' => 'btn-info',
+                        'route' => route('admin.physical_epc_progress.index', ['sub_package_project_id' => $sp->id]),
+                    ];
+                }
+            } else {
+                // Show create EPC entry button
+                $actions[] = [
+                    'label' => 'Create EPC Entry',
+                    'icon' => 'fas fa-industry',
+                    'class' => 'btn-success',
+                    'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id]),
+                ];
+            }
         } elseif ($procurementType === 'item-wise') {
             $actions[] = [
                 'label' => 'Create BOQ Sheet',
-                'icon'  => 'fas fa-file-invoice-dollar',
+                'icon' => 'fas fa-file-invoice-dollar',
                 'class' => 'btn-primary',
-                'route' => route('admin.boqentry.index', ['sub_package_project_id' => $sp->id])
+                'route' => route('admin.boqentry.index', ['sub_package_project_id' => $sp->id]),
             ];
         } else {
+            // Other procurement types: add both buttons
             $actions[] = [
                 'label' => 'Create BOQ Sheet',
-                'icon'  => 'fas fa-file-invoice-dollar',
+                'icon' => 'fas fa-file-invoice-dollar',
                 'class' => 'btn-primary',
-                'route' => route('admin.boqentry.index', ['sub_package_project_id' => $sp->id])
+                'route' => route('admin.boqentry.index', ['sub_package_project_id' => $sp->id]),
             ];
             $actions[] = [
                 'label' => 'Create EPC Entry',
-                'icon'  => 'fas fa-industry',
+                'icon' => 'fas fa-industry',
                 'class' => 'btn-success',
-                'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id])
+                'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id]),
             ];
         }
 
-        // Always Safe Guard Entry
+        // Always add Safe Guard Entry button
         $actions[] = [
             'label' => 'Create Safe Guard Entry',
-            'icon'  => 'fas fa-shield-alt',
+            'icon' => 'fas fa-shield-alt',
             'class' => 'btn-warning',
-            'route' => route('admin.safeguard_entries.index', ['sub_package_project_id' => $sp->id])
+            'route' => route('admin.safeguard_entries.index', ['sub_package_project_id' => $sp->id]),
         ];
 
         return [
-            'id'            => $sp->id,
-            'name'          => $sp->name,
+            'id' => $sp->id,
+            'name' => $sp->name,
             'contractValue' => number_format($sp->contract_value, 2),
-            'actions'       => $actions
+            'actions' => $actions,
         ];
     });
 
     return view('admin.contracts.show', [
-        'contract'       => $contract,
-        'subProjectsData'=> $subProjectsData
+        'contract' => $contract,
+        'subProjectsData' => $subProjectsData,
     ]);
 }
 
@@ -153,49 +176,37 @@ public function show($id)
 
 
     public function edit(Contract $contract)
-{
-    $projects = PackageProject::select('id', 'package_name', 'package_number')->get();
-    $contractors = Contractor::select('id', 'company_name', 'gst_no')->get();
+    {
+        $projects = PackageProject::select('id', 'package_name', 'package_number')->get();
+        $contractors = Contractor::select('id', 'company_name', 'gst_no')->get();
 
-    $contract->load(['project', 'contractor']);
+        $contract->load(['project', 'contractor']);
 
-    return view('admin.contracts.edit', compact('contract', 'projects', 'contractors'));
-}
-
-
-   public function update(Request $request, $id)
-{
-    $contract = Contract::with('subProjects', 'project')->findOrFail($id);
-
-    // Update contract itself
-    $contract->update($request->only([
-        'contract_number',
-        'contract_value',
-        'security',
-        'signing_date',
-        'commencement_date',
-        'initial_completion_date',
-        'revised_completion_date',
-        'actual_completion_date',
-        'count_sub_project',
-    ]));
-
-    // Update subprojects if applicable
-    if ($contract->count_sub_project > 0) {
-        $subProjects = $contract->subProjects;
-
-        if ($subProjects->count() === 1) {
-            $sp = $subProjects->first();
-            $sp->update([
-                'name'           => $sp->name ?? $contract->project->package_name,
-                'contract_value' => $contract->contract_value,
-            ]);
-        }
+        return view('admin.contracts.edit', compact('contract', 'projects', 'contractors'));
     }
 
-    return redirect()->route('admin.contracts.index')->with('success', 'Contract updated successfully.');
-}
+    public function update(Request $request, $id)
+    {
+        $contract = Contract::with('subProjects', 'project')->findOrFail($id);
 
+        // Update contract itself
+        $contract->update($request->only(['contract_number', 'contract_value', 'security', 'signing_date', 'commencement_date', 'initial_completion_date', 'revised_completion_date', 'actual_completion_date', 'count_sub_project']));
+
+        // Update subprojects if applicable
+        if ($contract->count_sub_project > 0) {
+            $subProjects = $contract->subProjects;
+
+            if ($subProjects->count() === 1) {
+                $sp = $subProjects->first();
+                $sp->update([
+                    'name' => $sp->name ?? $contract->project->package_name,
+                    'contract_value' => $contract->contract_value,
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.contracts.index')->with('success', 'Contract updated successfully.');
+    }
 
     public function destroy(Contract $contract)
     {
@@ -215,46 +226,51 @@ public function show($id)
      * Create or update sub-package projects and sync count.
      */
     private function handleSubProjects(Contract $contract, Request $request)
-{
-    // Remove old sub-projects for this contract's project
-    SubPackageProject::where('project_id', $contract->project_id)->delete();
+    {
+        // Remove old sub-projects for this contract's project
+        SubPackageProject::where('project_id', $contract->project_id)->delete();
 
-    $isMulti = $request->input('has_multiple_sub_projects') === 'yes';
-    $contractValue = (float) $contract->contract_value;
+        $isMulti = $request->input('has_multiple_sub_projects') === 'yes';
+        $contractValue = (float) $contract->contract_value;
 
-    if (!$isMulti) {
-        // Single sub-project mode
-        $name = $request->input('sub_project_name') ?: $contract->project->package_name;
-        $value = $request->input('sub_project_contract_value') ?: $contractValue;
+        if (!$isMulti) {
+            // Single sub-project mode
+            $name = $request->input('sub_project_name') ?: $contract->project->package_name;
+            $value = $request->input('sub_project_contract_value') ?: $contractValue;
+            $lat = $request->input('lat'); // Nullable lat
+            $long = $request->input('long'); // Nullable long
 
-        SubPackageProject::create([
-            'name'           => $name,
-            'contract_value' => $value,
-            'project_id'     => $contract->project_id,
-        ]);
-    } else {
-        // Multiple sub-project mode
-        $multiData = $request->input('multi_sub_projects', []);
-        $count = max(count($multiData), 2); // Ensure at least 2
-
-        // Default value per project if missing
-        $defaultValue = $count > 0 ? round($contractValue / $count, 2) : 0;
-
-        foreach ($multiData as $i => $sp) {
             SubPackageProject::create([
-                'name'           => $sp['name'] ?: "Sub Project " . ($i + 1),
-                'contract_value' => isset($sp['value']) && $sp['value'] !== '' ? $sp['value'] : $defaultValue,
-                'project_id'     => $contract->project_id,
+                'name' => $name,
+                'contract_value' => $value,
+                'project_id' => $contract->project_id,
+                'lat' => $lat,
+                'long' => $long,
             ]);
+        } else {
+            // Multiple sub-project mode
+            $multiData = $request->input('multi_sub_projects', []);
+            $count = max(count($multiData), 2); // Ensure at least 2
+
+            // Default value per project if missing
+            $defaultValue = $count > 0 ? round($contractValue / $count, 2) : 0;
+
+            foreach ($multiData as $i => $sp) {
+                SubPackageProject::create([
+                    'name' => $sp['name'] ?: 'Sub Project ' . ($i + 1),
+                    'contract_value' => isset($sp['value']) && $sp['value'] !== '' ? $sp['value'] : $defaultValue,
+                    'project_id' => $contract->project_id,
+                    'lat' => $sp['lat'] ?? null,
+                    'long' => $sp['long'] ?? null,
+                ]);
+            }
         }
+
+        // Update count on contract
+        $contract->update([
+            'count_sub_project' => SubPackageProject::where('project_id', $contract->project_id)->count(),
+        ]);
     }
-
-    // Update count on contract
-    $contract->update([
-        'count_sub_project' => SubPackageProject::where('project_id', $contract->project_id)->count()
-    ]);
-}
-
 
     private function storeContractFile($file)
     {
@@ -284,6 +300,14 @@ public function show($id)
             'actual_completion_date' => 'nullable|date',
             'contractor_id' => $id ? 'required|exists:contractors,id' : 'nullable|exists:contractors,id',
             'contract_document_file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:5120',
+
+            // Single sub-project lat/long (nullable, numeric)
+            'lat' => 'nullable|numeric|between:-90,90',
+            'long' => 'nullable|numeric|between:-180,180',
+
+            // For multiple sub-projects: validate each item's lat/long as nullable numeric
+            'multi_sub_projects.*.lat' => 'nullable|numeric|between:-90,90',
+            'multi_sub_projects.*.long' => 'nullable|numeric|between:-180,180',
         ];
 
         if (!$id && !$request->filled('contractor_id')) {

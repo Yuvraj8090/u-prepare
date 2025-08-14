@@ -15,8 +15,11 @@ use App\Http\Controllers\Admin\ContractionPhaseController;
 use App\Http\Controllers\AlreadyDefineEpcController;
 use App\Http\Controllers\Admin\SafeguardComplianceController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\PhysicalBoqProgressController;
 use App\Http\Controllers\Admin\ProjectsCategoryController;
+use App\Http\Controllers\Admin\PhysicalEpcProgressController;
 use App\Http\Controllers\Admin\WorkServiceController;
+use App\Http\Controllers\MediaFileController;
 use App\Http\Controllers\Admin\ProcurementDetailController;
 use App\Http\Controllers\Admin\ProcurementWorkProgramController;
 
@@ -28,6 +31,38 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+
+
+    Route::get('physical_boq_progress', [PhysicalBoqProgressController::class, 'index'])
+        ->name('physical_boq_progress.index');
+        Route::get('physical_boq_progress_get', [PhysicalBoqProgressController::class, 'physicalProgress'])
+        ->name('boqentry.physical-progress');
+ Route::post('physical_boq_update', [PhysicalBoqProgressController::class, 'saveProgress'])
+        ->name('boqentry.save-physical-progress');
+    Route::get('physical_boq_progress/create', [PhysicalBoqProgressController::class, 'create'])
+        ->name('physical_boq_progress.create');
+
+    Route::post('physical_boq_progress', [PhysicalBoqProgressController::class, 'store'])
+        ->name('physical_boq_progress.store');
+
+    Route::get('physical_boq_progress/{physicalBoqProgress}/edit', [PhysicalBoqProgressController::class, 'edit'])
+        ->name('physical_boq_progress.edit');
+
+    Route::put('physical_boq_progress/{physicalBoqProgress}', [PhysicalBoqProgressController::class, 'update'])
+        ->name('physical_boq_progress.update');
+
+    Route::delete('physical_boq_progress/{physicalBoqProgress}', [PhysicalBoqProgressController::class, 'destroy'])
+        ->name('physical_boq_progress.destroy');
+
+    // Bulk delete route
+    Route::delete('physical_boq_progress/bulk-delete', [PhysicalBoqProgressController::class, 'bulkDestroy'])
+        ->name('physical_boq_progress.bulk-delete');
+
+
+            Route::delete('physical-epc-progress/bulk-destroy', [PhysicalEpcProgressController::class, 'bulkDestroy'])->name('physical_epc_progress.bulkDestroy');
+
+            Route::resource('physical_epc_progress', PhysicalEpcProgressController::class);
+
             Route::resource('already_define_epc', AlreadyDefineEpcController::class);
             Route::post('epcentry_data/store-from-defined', [EpcEntryDataController::class, 'storeFromDefined'])->name('epcentry_data.storeFromDefined');
 
@@ -43,6 +78,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
                 Route::get('create', [ProcurementDetailController::class, 'create'])->name('procurement-details.create');
                 Route::post('/', [ProcurementDetailController::class, 'store'])->name('procurement-details.store');
             });
+
+            Route::get('media-gallery', [MediaFileController::class, 'gallery'])->name('media.gallery');
+            Route::get('media-files', [MediaFileController::class, 'index'])->name('media.index');
+
             Route::resource('procurement-details', ProcurementDetailController::class)->except(['create', 'store']);
             Route::post('safeguard_entries/import', [SafeguardEntryController::class, 'import'])->name('safeguard_entries.import');
             Route::delete('safeguard_entries/bulk-delete', [SafeguardEntryController::class, 'bulkDelete'])->name('safeguard_entries.bulk-delete');
