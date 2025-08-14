@@ -16,13 +16,8 @@
     <table id="{{ $id }}" class="table table-striped table-bordered" style="width:100%">
         <thead class="table-success">
             <tr>
-<<<<<<< HEAD
                 @foreach($headers as $header)
                     <th class="text-center align-middle text-white">{{ $header }}</th>
-=======
-                @foreach ($headers as $header)
-                    <th class="text-center align-middle">{{ $header }}</th>
->>>>>>> 547c8325cdc9eb61ab0772950ebb8bf1e4cee1ee
                 @endforeach
             </tr>
         </thead>
