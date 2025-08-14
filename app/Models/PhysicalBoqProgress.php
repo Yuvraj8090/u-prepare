@@ -15,6 +15,7 @@ class PhysicalBoqProgress extends Model
         'qty',
         'amount',
         'progress_submitted_date',
+        'sub_package_project_id',
         'media',
         'lat',
         'long'

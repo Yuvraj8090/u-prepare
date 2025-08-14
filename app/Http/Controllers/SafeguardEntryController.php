@@ -12,7 +12,9 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class SafeguardEntryController extends Controller
 {
-    /** List entries */
+    /**
+     * Display a listing of safeguard entries.
+     */
     public function index(Request $request)
     {
         $subProjects = SubPackageProject::select('id', 'name')->get();
@@ -24,109 +26,104 @@ class SafeguardEntryController extends Controller
         $contractionPhases = ContractionPhase::all();
 
         if ($selectedProjectId) {
-            $subProject = SubPackageProject::find($selectedProjectId);
-
-            $entries = SafeguardEntry::with(['subPackageProject', 'safeguardCompliance', 'contractionPhase'])
-                ->where('sub_package_project_id', $selectedProjectId)
-                ->orderByRaw("CAST(SUBSTRING_INDEX(sl_no, '.', 1) AS UNSIGNED), sl_no")
-                ->get()
-                ->groupBy(function ($item) {
-                    return explode('.', $item->sl_no)[0];
-                });
+            $subProject = SubPackageProject::findOrFail($selectedProjectId);
+            $entries = $this->getGroupedEntries($selectedProjectId);
         }
 
-        return view('admin.safeguard_entries.index', compact('subProjects', 'entries', 'subProject', 'selectedProjectId', 'safeguardCompliances', 'contractionPhases'));
+        return view('admin.safeguard_entries.index', compact(
+            'subProjects',
+            'entries',
+            'subProject',
+            'selectedProjectId',
+            'safeguardCompliances',
+            'contractionPhases'
+        ));
     }
 
-    /** Import from Excel */
+    /**
+     * Import safeguard entries from an Excel/CSV file.
+     */
     public function import(Request $request)
     {
-        $request->validate([
-            'sub_package_project_id' => 'required|exists:sub_package_projects,id',
-            'safeguard_compliance_id' => 'required|exists:safeguard_compliances,id',
-            'contraction_phase_id' => 'required|exists:contraction_phases,id',
-            'file' => 'required|mimes:xlsx,xls,csv',
-        ]);
+        $this->validateImport($request);
 
-        Excel::import(new SafeguardEntriesImport($request->sub_package_project_id, $request->safeguard_compliance_id, $request->contraction_phase_id), $request->file('file'));
+        Excel::import(
+            new SafeguardEntriesImport(
+                $request->sub_package_project_id,
+                $request->safeguard_compliance_id,
+                $request->contraction_phase_id
+            ),
+            $request->file('file')
+        );
 
         return back()->with('success', 'Safeguard entries imported successfully.');
     }
 
-    /** Show create form */
+    /**
+     * Show the form for creating a new safeguard entry.
+     */
     public function create()
     {
-        $compliances = SafeguardCompliance::all();
-        $phases = ContractionPhase::all();
-        $projects = SubPackageProject::all();
-
-        return view('admin.safeguard_entries.create', compact('compliances', 'phases', 'projects'));
+        return view('admin.safeguard_entries.create', $this->formData());
     }
 
-    /** Store new entry */
+    /**
+     * Store a newly created safeguard entry.
+     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'sub_package_project_id' => 'required|exists:sub_package_projects,id',
-            'safeguard_compliance_id' => 'required|exists:safeguard_compliances,id',
-            'contraction_phase_id' => 'required|exists:contraction_phases,id',
-            'sl_no' => 'nullable|string|max:1000',
-            'item_description' => 'nullable|string',
-        ]);
+        $validated = $this->validateEntry($request);
+        $validated['is_validity'] = $request->boolean('is_validity', false);
 
         SafeguardEntry::create($validated);
 
         return redirect()
-            ->route('admin.safeguard_entries.index', [
-                'sub_package_project_id' => $validated['sub_package_project_id'],
-            ])
+            ->route('admin.safeguard_entries.index', ['sub_package_project_id' => $validated['sub_package_project_id']])
             ->with('success', 'Safeguard entry created successfully.');
     }
 
-    /** Show edit form */
+    /**
+     * Show the form for editing an existing safeguard entry.
+     */
     public function edit(SafeguardEntry $safeguardEntry)
     {
-        $compliances = SafeguardCompliance::all();
-        $phases = ContractionPhase::all();
-        $projects = SubPackageProject::all();
-
-        return view('admin.safeguard_entries.edit', compact('safeguardEntry', 'compliances', 'phases', 'projects'));
+        return view('admin.safeguard_entries.edit', array_merge(
+            ['safeguardEntry' => $safeguardEntry],
+            $this->formData()
+        ));
     }
 
-    /** Update existing entry */
+    /**
+     * Update an existing safeguard entry.
+     */
     public function update(Request $request, SafeguardEntry $safeguardEntry)
     {
-        $validated = $request->validate([
-            'sub_package_project_id' => 'required|exists:sub_package_projects,id',
-            'safeguard_compliance_id' => 'required|exists:safeguard_compliances,id',
-            'contraction_phase_id' => 'required|exists:contraction_phases,id',
-            'sl_no' => 'nullable|string|max:1000',
-            'item_description' => 'nullable|string',
-        ]);
+        $validated = $this->validateEntry($request);
+        $validated['is_validity'] = $request->boolean('is_validity', false);
 
         $safeguardEntry->update($validated);
 
         return redirect()
-            ->route('admin.safeguard_entries.index', [
-                'sub_package_project_id' => $validated['sub_package_project_id'],
-            ])
+            ->route('admin.safeguard_entries.index', ['sub_package_project_id' => $validated['sub_package_project_id']])
             ->with('success', 'Safeguard entry updated successfully.');
     }
 
-    /** Delete single entry */
+    /**
+     * Delete a safeguard entry.
+     */
     public function destroy(SafeguardEntry $safeguardEntry)
     {
         $projectId = $safeguardEntry->sub_package_project_id;
         $safeguardEntry->delete();
 
         return redirect()
-            ->route('admin.safeguard_entries.index', [
-                'sub_package_project_id' => $projectId,
-            ])
+            ->route('admin.safeguard_entries.index', ['sub_package_project_id' => $projectId])
             ->with('success', 'Safeguard entry deleted successfully.');
     }
 
-    /** Bulk delete */
+    /**
+     * Bulk delete safeguard entries.
+     */
     public function bulkDelete(Request $request)
     {
         $request->validate([
@@ -138,9 +135,64 @@ class SafeguardEntryController extends Controller
         SafeguardEntry::whereIn('id', $request->ids)->delete();
 
         return redirect()
-            ->route('admin.safeguard_entries.index', [
-                'sub_package_project_id' => $request->sub_package_project_id,
-            ])
+            ->route('admin.safeguard_entries.index', ['sub_package_project_id' => $request->sub_package_project_id])
             ->with('success', 'Selected safeguard entries deleted successfully.');
+    }
+
+    /**
+     * Get grouped safeguard entries for a project.
+     * Groups by main sl_no but keeps different contraction_phase_id separate.
+     */
+    private function getGroupedEntries(int $projectId)
+    {
+        return SafeguardEntry::with(['subPackageProject', 'safeguardCompliance', 'contractionPhase'])
+            ->where('sub_package_project_id', $projectId)
+            ->orderByRaw("CAST(SUBSTRING_INDEX(sl_no, '.', 1) AS UNSIGNED), sl_no")
+            ->get()
+            ->groupBy(function ($item) {
+                // Group by first part of sl_no + contraction_phase_id to keep them distinct
+                $mainNo = explode('.', $item->sl_no)[0] ?? $item->sl_no;
+                return $mainNo . '-' . $item->contraction_phase_id;
+            });
+    }
+
+    /**
+     * Form data for create/edit views.
+     */
+    private function formData(): array
+    {
+        return [
+            'compliances' => SafeguardCompliance::all(),
+            'phases' => ContractionPhase::all(),
+            'projects' => SubPackageProject::all(),
+        ];
+    }
+
+    /**
+     * Validate safeguard entry data.
+     */
+    private function validateEntry(Request $request): array
+    {
+        return $request->validate([
+            'sub_package_project_id' => 'required|exists:sub_package_projects,id',
+            'safeguard_compliance_id' => 'required|exists:safeguard_compliances,id',
+            'contraction_phase_id' => 'required|exists:contraction_phases,id',
+            'sl_no' => 'nullable|string|max:1000',
+            'item_description' => 'nullable|string',
+            'is_validity' => 'nullable|boolean',
+        ]);
+    }
+
+    /**
+     * Validate safeguard import data.
+     */
+    private function validateImport(Request $request)
+    {
+        $request->validate([
+            'sub_package_project_id' => 'required|exists:sub_package_projects,id',
+            'safeguard_compliance_id' => 'required|exists:safeguard_compliances,id',
+            'contraction_phase_id' => 'required|exists:contraction_phases,id',
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
     }
 }

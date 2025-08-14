@@ -16,6 +16,7 @@ use App\Http\Controllers\AlreadyDefineEpcController;
 use App\Http\Controllers\Admin\SafeguardComplianceController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\PhysicalBoqProgressController;
+use App\Http\Controllers\SocialSafeguardEntryController;
 use App\Http\Controllers\Admin\ProjectsCategoryController;
 use App\Http\Controllers\Admin\PhysicalEpcProgressController;
 use App\Http\Controllers\Admin\WorkServiceController;
@@ -31,8 +32,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+// routes/web.php
+Route::post('/media-files/upload', [MediaFileController::class, 'upload'])->name('media_files.upload');
 
 
+Route::get('/social-safeguard-entries', [SocialSafeguardEntryController::class, 'index'])
+    ->name('social_safeguard_entries.index');
+Route::post('/social-safeguard-entries/store-or-update', [SocialSafeguardEntryController::class, 'storeOrUpdateFromIndex'])
+    ->name('social_safeguard_entries.storeOrUpdateFromIndex');
     Route::get('physical_boq_progress', [PhysicalBoqProgressController::class, 'index'])
         ->name('physical_boq_progress.index');
         Route::get('physical_boq_progress_get', [PhysicalBoqProgressController::class, 'physicalProgress'])

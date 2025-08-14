@@ -9,11 +9,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name') }}</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery-bundle.min.css">
-
-        <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/turbo@2.5.5/bin/turbo.min.js"></script>
     <link rel="icon" href="" type="image/ico" />
@@ -232,7 +227,9 @@
             font-size: 16px;
         }
 
-       
+        .img-circle.profile_img {
+            margin-left: 22% !important;
+        }
 
         .menu_section h3 {
             font-size: 14px !important;
@@ -335,15 +332,16 @@
             <x-admin.sidebar></x-admin.sidebar>
             <x-admin.header></x-admin.header>
 
-            <div class="right_col" role="main" style="min-height: 1865px;">
-                {{ $slot }}
-            </div>
+           <div class="right_col" role="main" style="min-height: 100vh;">
+    {{ $slot }}
+</div>
 
-            <x-admin.footer></x-admin.footer>
 
-            @yield('modal')
 
-            <!-- loader -->
+@yield('modal')
+
+<!-- loader -->
+<x-admin.footer></x-admin.footer>
             <x-admin.loader></x-admin.loader>
         </div>
     </div>

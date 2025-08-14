@@ -17,7 +17,7 @@
         <thead class="table-success">
             <tr>
                 @foreach($headers as $header)
-                    <th class="text-center align-middle">{{ $header }}</th>
+                    <th class="text-center align-middle text-white">{{ $header }}</th>
                 @endforeach
             </tr>
         </thead>

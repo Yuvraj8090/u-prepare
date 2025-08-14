@@ -135,9 +135,9 @@
                                     <label class="form-label text-muted">Status</label>
                                     <p class="form-control-static">
                                         @if($procurementDetail->packageProject->dec_approved)
-                                            <span class="badge bg-success">Approved</span>
+                                            <span class="badge bg-success text-white">Approved</span>
                                         @else
-                                            <span class="badge bg-secondary">Pending</span>
+                                            <span class="badge bg-secondary text-white">Pending</span>
                                         @endif
                                     </p>
                                 </div>
@@ -184,9 +184,9 @@
                                     <label class="form-label text-muted">Status</label>
                                     <p class="form-control-static">
                                         @if($procurementDetail->packageProject->hpc_approved)
-                                            <span class="badge bg-success">Approved</span>
+                                            <span class="badge bg-success text-white">Approved</span>
                                         @else
-                                            <span class="badge bg-secondary">Pending</span>
+                                            <span class="badge bg-secondary text-white">Pending</span>
                                         @endif
                                     </p>
                                 </div>

@@ -23,11 +23,16 @@ class ContractionPhaseController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'is_one_time' => 'nullable|boolean',
         ]);
 
-        ContractionPhase::create($request->only('name'));
+        $data = $request->only('name');
+       $data['is_one_time'] = $request->boolean('is_one_time', false);  // converts "on" to true, missing to false
 
-        return redirect()->route('admin.contraction-phases.index')->with('success', 'Contraction Phase created successfully.');
+        ContractionPhase::create($data);
+
+        return redirect()->route('admin.contraction-phases.index')
+            ->with('success', 'Contraction Phase created successfully.');
     }
 
     public function edit(ContractionPhase $contractionPhase)
@@ -39,16 +44,22 @@ class ContractionPhaseController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'is_one_time' => 'nullable|boolean',
         ]);
 
-        $contractionPhase->update($request->only('name'));
+        $data = $request->only('name');
+$data['is_one_time'] = $request->boolean('is_one_time', false);
+        $contractionPhase->update($data);
 
-        return redirect()->route('admin.contraction-phases.index')->with('success', 'Contraction Phase updated successfully.');
+        return redirect()->route('admin.contraction-phases.index')
+            ->with('success', 'Contraction Phase updated successfully.');
     }
 
     public function destroy(ContractionPhase $contractionPhase)
     {
         $contractionPhase->delete();
-        return redirect()->route('admin.contraction-phases.index')->with('success', 'Contraction Phase deleted successfully.');
+
+        return redirect()->route('admin.contraction-phases.index')
+            ->with('success', 'Contraction Phase deleted successfully.');
     }
 }

@@ -16,13 +16,45 @@ class SafeguardEntry extends Model
         'contraction_phase_id',
         'sl_no',
         'item_description',
+        'is_validity',
     ];
 
-    // Relationships
+    protected $casts = [
+        'is_validity' => 'boolean',
+    ];
+
     public function subPackageProject()
     {
         return $this->belongsTo(SubPackageProject::class);
     }
+   
+public function socialSafeguardEntry()
+{
+    return $this->hasOne(SocialSafeguardEntry::class)
+                ->whereDate('date_of_entry', '>=', now()->format('Y-m-d'))
+                ->latest('date_of_entry');
+}
+
+public function socialSafeguardEntries()
+{
+    return $this->hasMany(SocialSafeguardEntry::class, 'safeguard_entry_id');
+}
+
+public function latestSocialEntry($selectedDate = null)
+{
+    $selectedDate = $selectedDate ?? now()->format('Y-m-d');
+
+    // Get all related entries
+    $entries = $this->socialSafeguardEntries;
+
+    // Filter entries on or before the selected date
+    $filtered = $entries->filter(function ($entry) use ($selectedDate) {
+        return $entry->date_of_entry->format('Y-m-d') <= $selectedDate;
+    });
+
+    // Return the latest (most recent) entry
+    return $filtered->sortByDesc('date_of_entry')->first();
+}
 
     public function safeguardCompliance()
     {

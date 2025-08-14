@@ -113,7 +113,7 @@
                             </div>
                             
                             <div class="col-md-6 mb-3">
-                                <label for="estimated_budget_incl_gst" class="form-label">Estimated Budget (₹) <span class="text-danger">*</span></label>
+                                <label for="estimated_budget_incl_gst" class="form-label">Sanctioned Cost (₹) <span class="text-danger">*</span></label>
                                 <input type="number" step="0.01" class="form-control" id="estimated_budget_incl_gst" 
                                     name="estimated_budget_incl_gst" value="{{ old('estimated_budget_incl_gst') }}" required>
                                 <div class="invalid-feedback">Please provide a valid budget amount.</div>

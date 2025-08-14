@@ -10,7 +10,8 @@ class ContractionPhase extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'is_one_time'];
+
     public function safeguardEntries()
     {
         return $this->hasMany(SafeguardEntry::class);
