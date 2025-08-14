@@ -1,5 +1,4 @@
 <?php
-
 if (!function_exists('formatDate')) {
     function formatDate($date, $format = 'd M Y') {
         if (empty($date)) return '';
