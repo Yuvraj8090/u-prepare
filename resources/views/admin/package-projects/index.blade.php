@@ -69,22 +69,6 @@
                                             </span>
                                         @endif
                                     </div>
-
-                                <div class="fw-bold text-primary">
-                                    <a href="{{ route('admin.package-projects.show', $project->id) }}" class="text-decoration-none">
-                                        {{ $project->package_name }}
-                                    </a>
-
-                                </div>
-                                <div class="small text-muted">
-                                    <i class="fas fa-hashtag"></i> {{ $project->package_number ?? 'N/A' }}
-                                </div>
-                                <div class="small text-muted">
-                                    <i class="fas fa-hashtag"></i> {{ $project->package_number ?? 'N/A' }}
-                                </div>
-                                <div class="small text-muted">
-                                    <i class="fas fa-hashtag"></i> {{ $project->package_number ?? 'N/A' }}
-                                </div>
                             </td>
 
                             <!-- Category / Department -->
@@ -103,7 +87,7 @@
                             <!-- Sanction Budget -->
                             <td class="align-middle">
                                 <div class="fw-bold text-success">
-                                    {{ formatPriceToCR($project->estimated_budget_incl_gst)  }} 
+                                    {{ formatPriceToCR($project->estimated_budget_incl_gst) }}
                                 </div>
                             </td>
 
