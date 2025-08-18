@@ -1,59 +1,34 @@
 <x-app-layout>
     <div class="container-fluid py-4">
 
+
         <!-- Breadcrumb -->
-        <div class="row mb-4">
-            <div class="col-md-12 d-flex justify-content-between align-items-center">
-                <h4 class="mb-0 text-primary">
-                    <i class="fas fa-file-contract me-2"></i> Contract Details
-                </h4>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0 bg-white p-2 rounded shadow-sm">
-                        <li class="breadcrumb-item">
-                            <a href="{{ route('dashboard') }}" class="text-decoration-none">
-                                <i class="fas fa-home"></i>
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item">Admin</li>
-                        <li class="breadcrumb-item">
-                            <a href="{{ route('admin.contracts.index') }}" class="text-decoration-none">Contracts</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Details</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+        <x-admin.breadcrumb-header icon="fas fa-file-contract text-primary"
+            title="Package Contract Details | {{ $contract->contract_number }}" :breadcrumbs="[
+                ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+                ['label' => 'Admin'],
+                ['label' => 'Contracts', 'route' => 'admin.contracts.index'],
+                ['label' => 'Show'],
+            ]" />
 
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center border-0">
-                <h5 class="mb-0 text-primary">
-                    <i class="fas fa-info-circle me-2"></i> {{ $contract->contract_number }}
-                </h5>
-                <div>
-                    <a href="{{ route('admin.contracts.edit', $contract) }}"
-                        class="btn btn-sm btn-outline-primary me-2">
-                        <i class="fas fa-edit me-1"></i> Edit
-                    </a>
-                    <a href="{{ route('admin.contracts.index') }}" class="btn btn-sm btn-outline-secondary">
-                        <i class="fas fa-list me-1"></i> Back to List
-                    </a>
-                </div>
+
+        <x-admin.package-card :packageProject="$contract->project" />
+
+
+        <div class="row mt-4 mb-4">
+
+            <div class="col-md-4">
+                <x-admin.approval-details :packageProject="$contract->project" />
+
+
+                <x-admin.contract-details :contract="$contract" />
+
+                {{-- Contractor Info --}}
+                <x-admin.contractor-info :contract="$contract" />
+
             </div>
 
-            <div class="card-body">
-
-                {{-- Contract & Project Info --}}
-                <div class="row mb-4">
-                    <x-admin.contract-details :contract="$contract" />
-                    {{-- Contractor Info --}}
-                    <x-admin.contractor-info :contract="$contract" />
-                </div>
-
-              <x-admin.package-card :packageProject="$contract->project" />
-                <x-admin.approval-details :packageProject="$contract->project"/>
-
-
-              
+            <div class="col-md-8">
 
                 @if ($contract->project && $contract->project->procurementDetail)
                     <div class="card mb-4">
@@ -111,95 +86,94 @@
                     </div>
                 @endif
 
-                {{-- Sub-Projects --}}
-                {{-- Sub-Projects --}}
-                <div>
-
-                    <h6 class="text-secondary mb-3">
-                        <i class="fas fa-layer-group me-2"></i>
-                        Sub-Projects ({{ $contract->count_sub_project }})
-                    </h6>
-
-                    @if ($contract->subProjects->isEmpty())
-                        <p class="text-muted fst-italic">No sub-projects found.</p>
-                    @else
-                        <x-admin.data-table id="sub-projects-table" :headers="[
-                            '#',
-                            'Name',
-                            'Contract Value (₹)',
-                            'Financial Progress',
-                            'Physical Progress',
-                            'Actions',
-                        ]" :excel="true"
-                            :print="true" :pageLength="10" :resourceName="'sub-projects'">
-
-                            @foreach ($subProjectsData as $i => $sp)
-                                <tr>
-                                    <td>{{ $i + 1 }}</td>
-                                    <td>{{ $sp['name'] }}</td>
-                                    <td class="text-end">₹{{ $sp['contractValue'] }}</td>
-
-                                    <!-- Financial Progress -->
-                                    <td>
-                                        <div class="mb-1">
-                                            <small>₹{{ $sp['financeTotal'] }} ({{ $sp['financePercent'] }}%)</small>
-                                        </div>
-                                        <div class="progress" style="height: 12px;">
-                                            <div class="progress-bar bg-secondary" role="progressbar"
-                                                style="width: {{ $sp['financePercent'] }}%;"
-                                                aria-valuenow="{{ $sp['financePercent'] }}" aria-valuemin="0"
-                                                aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <!-- Physical Progress -->
-                                    <td>
-                                        <div class="mb-1">
-                                            <small>₹{{ $sp['physicalValue'] }} ({{ $sp['physicalPercent'] }}%)</small>
-                                        </div>
-                                        <div class="progress" style="height: 12px;">
-                                            <div class="progress-bar bg-info" role="progressbar"
-                                                style="width: {{ $sp['physicalPercent'] }}%;"
-                                                aria-valuenow="{{ $sp['physicalPercent'] }}" aria-valuemin="0"
-                                                aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <!-- Actions -->
-                                    <td>
-                                        <div class="d-flex flex-wrap gap-2">
-                                            @foreach ($sp['actions'] as $action)
-                                                <a href="{{ $action['route'] }}"
-                                                    class="btn btn-sm {{ $action['class'] }} d-flex align-items-center gap-1">
-                                                    <i class="{{ $action['icon'] }}"></i>
-                                                    <span>{{ $action['label'] }}</span>
-                                                </a>
-                                            @endforeach
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                        </x-admin.data-table>
-                    @endif
-                </div>
 
 
-                {{-- Footer Buttons --}}
-                <div class="mt-4 d-flex justify-content-between align-items-center border-top pt-3">
-                    <small class="text-muted">
-                        <i class="fas fa-info-circle me-1"></i> Contract ID: {{ $contract->id }}
-                    </small>
-                    <div>
-                        <a href="{{ route('admin.contracts.edit', $contract) }}" class="btn btn-primary me-2">
-                            <i class="fas fa-edit me-1"></i> Edit Contract
-                        </a>
-                        <a href="{{ route('admin.contracts.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left me-1"></i> Back to List
-                        </a>
+                {{-- Yuvraj Add Procurement Work Program   --}}
+
+
+
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center border-0">
+                         <h6 class="text-secondary mb-3 h2">
+                                <i class="fas fa-layer-group me-2"></i>
+                                Sub-Projects ({{ $contract->count_sub_project }})
+                            </h6>
                     </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            @if ($contract->subProjects->isEmpty())
+                                <p class="text-muted fst-italic">No sub-projects found.</p>
+                            @else
+                                <x-admin.data-table id="sub-projects-table" :headers="[
+                                    '#',
+                                    'Name',
+                                    'Contract Value (₹)',
+                                    'Financial Progress',
+                                    'Physical Progress',
+                                    'Actions',
+                                ]" :excel="true"
+                                    :print="true" :pageLength="10" :resourceName="'sub-projects'">
+
+                                    @foreach ($subProjectsData as $i => $sp)
+                                        <tr>
+                                            <td>{{ $i + 1 }}</td>
+                                            <td>{{ $sp['name'] }}</td>
+                                            <td class="text-end">₹{{ $sp['contractValue'] }}</td>
+
+                                            <!-- Financial Progress -->
+                                            <td>
+                                                <div class="mb-1">
+                                                    <small>₹{{ $sp['financeTotal'] }}
+                                                        ({{ $sp['financePercent'] }}%)</small>
+                                                </div>
+                                                <div class="progress" style="height: 12px;">
+                                                    <div class="progress-bar bg-secondary" role="progressbar"
+                                                        style="width: {{ $sp['financePercent'] }}%;"
+                                                        aria-valuenow="{{ $sp['financePercent'] }}" aria-valuemin="0"
+                                                        aria-valuemax="100">
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <!-- Physical Progress -->
+                                            <td>
+                                                <div class="mb-1">
+                                                    <small>₹{{ $sp['physicalValue'] }}
+                                                        ({{ $sp['physicalPercent'] }}%)</small>
+                                                </div>
+                                                <div class="progress" style="height: 12px;">
+                                                    <div class="progress-bar bg-info" role="progressbar"
+                                                        style="width: {{ $sp['physicalPercent'] }}%;"
+                                                        aria-valuenow="{{ $sp['physicalPercent'] }}" aria-valuemin="0"
+                                                        aria-valuemax="100">
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <!-- Actions -->
+                                            <td>
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    @foreach ($sp['actions'] as $action)
+                                                        <a href="{{ $action['route'] }}"
+                                                            class="btn btn-sm {{ $action['class'] }} d-flex align-items-center gap-1">
+                                                            <i class="{{ $action['icon'] }}"></i>
+                                                            <span>{{ $action['label'] }}</span>
+                                                        </a>
+                                                    @endforeach
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                </x-admin.data-table>
+                            @endif
+                        </div>
+
+
+
+                    </div>
+
                 </div>
 
             </div>

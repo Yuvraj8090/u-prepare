@@ -1,6 +1,6 @@
-<div class="row mt-3">
+<div class="row">
             <!-- HPC and DEC Approvals -->
-            <div class="col-md-3 mb-4">
+            <div class="col-md-12 mb-4">
                 <div class="card h-100">
                     <div class="card-header bg-light">
                         <h6 class="mb-0">
