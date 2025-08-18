@@ -35,10 +35,17 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('asset/build/css/custom.min.css') }}?ver=1.5.1">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <!-- jQuery (only one version!) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJ+Y3dxzKw7rY0hDfT+NfZ9sF6K8RlC9J3zYk=" crossorigin="anonymous"></script>
+<!-- ApexCharts -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.41.0/dist/apexcharts.min.js"></script>
+
+<!-- Optional Export Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<!-- jQuery (needed for some export plugins or future use) -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
     <!-- jQuery UI JS -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"

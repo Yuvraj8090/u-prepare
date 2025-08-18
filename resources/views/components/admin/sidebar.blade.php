@@ -161,9 +161,7 @@
                     <!-- Settings -->
                     <li>
                         <a><i class="fa fa-cog"></i> Settings <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{{ route('profile.show') }}"><i class="fa fa-user-circle"></i> My Profile</a></li>
-                        </ul>
+                        
                     </li>
 
                 </ul>

@@ -44,124 +44,15 @@
 
                 {{-- Contract & Project Info --}}
                 <div class="row mb-4">
-                    <div class="col-md-4">
-                        <h6 class="text-secondary mb-3 h2"><i class="fas fa-file-signature me-2"></i> Contract Details
-                        </h6>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-cente h3">
-                                    <i class="fas fa-hashtag text-primary me-2"></i> Contract No
-                                </p>
-                                <span class="fw-bold h4">{{ $contract->contract_number }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-center h3">
-                                    <i class="fas fa-money-bill-wave text-success me-2"></i> Contract Value
-                                </p>
-                                <span
-                                    class="fw-bold text-success h4">₹{{ number_format($contract->contract_value, 2) }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-center h3">
-                                    <i class="fas fa-shield-alt text-warning me-2"></i> Permormance Guarantee
-                                </p>
-                                <span class="fw-bold h4">₹{{ number_format($contract->security ?? 0, 2) }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-center h3">
-                                    <i class="fas fa-calendar-check text-info me-2"></i> Signing Date
-                                </p>
-                                <span class="fw-bold h4">
-                                    {{ optional($contract->signing_date)->format('d M Y') ?? 'N/A' }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-center h3">
-                                    <i class="fas fa-calendar-check text-info me-2"></i> Commencement Date :
-                                </p>
-                                <span class="fw-bold h4">
-                                    {{ optional($contract->commencement_date)->format('d M Y') ?? 'N/A' }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-center h3">
-                                    <i class="fas fa-calendar-check text-info me-2"></i> Initial Completion Date :
-                                </p>
-                                <span class="fw-bold h4">
-                                    {{ optional($contract->initial_completion_date)->format('d M Y') ?? 'N/A' }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-center h3">
-                                    <i class="fas fa-calendar-check text-info me-2"></i> Revised Completion Date :
-                                </p>
-                                <span class="fw-bold h4">
-                                    {{ optional($contract->revised_completion_date)->format('d M Y') ?? 'N/A' }}</span>
-                            </li>
-                        </ul>
-                    </div>
+                    <x-admin.contract-details :contract="$contract" />
                     {{-- Contractor Info --}}
-                    <div class="col-md-4">
-                        <h6 class="text-secondary mb-3 h2"><i class="fas fa-user-tie me-2"></i> Contractor Information</h6>
-                        
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-center h3">
-                                    <i class="fas fa-building text-primary me-2"></i> Company Name
-                                </p>
-                                <span class="fw-bold h4">{{ $contract->contractor->company_name ?? 'N/A' }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-center h3">
-                                    <i class="fas fa-receipt text-warning me-2"></i> GST Number
-                                </p>
-                                <span class="fw-bold h4">{{ $contract->contractor->gst_no ?? 'N/A' }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-center h3">
-                                    <i class="fas fa-envelope text-info me-2"></i> Email
-                                </p>
-                                <span class="fw-bold h4">{{ $contract->contractor->email ?? 'N/A' }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-center h3">
-                                    <i class="fas fa-phone text-success me-2"></i> Phone
-                                </p>
-                                <span class="fw-bold h4">{{ $contract->contractor->phone ?? 'N/A' }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <p class="mb-0 d-flex align-items-center h3">
-                                    <i class="fas fa-map-marker-alt text-danger me-2 mt-1"></i> Address
-                                </p>
-                                <span class="fw-bold h4">{{ $contract->contractor->address ?? 'N/A' }}</span>
-                            </li>
-                        </ul>
-                    </div>
+                    <x-admin.contractor-info :contract="$contract" />
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <h6 class="text-secondary mb-3"><i class="fas fa-project-diagram me-2 h2"></i> Project Information
-                        </h6>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-center">
-                                    <i class="fas fa-box text-primary me-2"></i> Package Name
-                                </p>
-                                <span class="fw-bold">{{ $contract->project->package_name ?? 'N/A' }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p class="mb-0 d-flex align-items-center">
-                                    <i class="fas fa-barcode text-secondary me-2"></i> Package Number
-                                </p>
-                                <span>{{ $contract->project->package_number ?? 'N/A' }}</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+              <x-admin.package-card :packageProject="$contract->project" />
 
 
-                {{-- Timeline Dates --}}
-                <div class="row mb-4">
-
-                </div>
+              
 
                 @if ($contract->project && $contract->project->procurementDetail)
                     <div class="card mb-4">
