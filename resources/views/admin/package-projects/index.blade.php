@@ -30,7 +30,6 @@
             </div>
 
             <div class="card-body">
-<<<<<<< Updated upstream
                 <x-admin.data-table id="package-projects-table" :headers="[
                     'Package Details',
                     'Category',
@@ -45,32 +44,10 @@
                     title="Package Projects Export" searchPlaceholder="Search package projects..."
                     resourceName="package-projects" :pageLength="10">
 
-=======
-                <x-admin.data-table 
-                    id="package-projects-table" 
-                    :headers="[
-                        'Package Name & Number', 
-                        'Category / Department', 
-                        'Budget (₹)', 
-                        'Location', 
-                        'Procurement Details', 
-                        'Contracts', 
-                        'Approvals & Status', 
-                        'Actions'
-                    ]" 
-                    :excel="true" 
-                    :print="true" 
-                    title="Package Projects Export" 
-                    searchPlaceholder="Search package projects..." 
-                    resourceName="package-projects" 
-                    :pageLength="10"
-                >
->>>>>>> Stashed changes
                     @foreach ($packageProjects as $project)
                         <tr>
                             <!-- Package Name & Number -->
                             <td>
-<<<<<<< Updated upstream
                                 <div class="d-flex flex-column">
                                     <!-- Main Title -->
                                     <a href="{{ route('admin.package-projects.show', $project->id) }}"
@@ -91,12 +68,6 @@
                                             </span>
                                         @endif
                                     </div>
-=======
-                                <div class="fw-bold text-primary">
-                                    <a href="{{ route('admin.package-projects.show', $project->id) }}" class="text-decoration-none">
-                                        {{ $project->package_name }}
-                                    </a>
->>>>>>> Stashed changes
                                 </div>
                                 <div class="small text-muted">
                                     <i class="fas fa-hashtag"></i> {{ $project->package_number ?? 'N/A' }}
@@ -104,24 +75,6 @@
                             </td>
 
                             <!-- Category / Department -->
-                            <td>
-                                @if($project->subCategory?->name)
-                                    <span class="badge bg-info text-white">
-                                        <i class="fas fa-tag"></i> {{ $project->subCategory->name }}
-                                    </span>
-                                @endif
-                                @if($project->category?->name)
-                                    <span class="badge bg-primary text-white">
-                                        <i class="fas fa-layer-group"></i> {{ $project->category->name }}
-                                    </span>
-                                @endif
-                                @if($project->department?->name)
-                                    <span class="badge bg-success text-white">
-                                        <i class="fas fa-building"></i> {{ $project->department->name }}
-                                    </span>
-                                @endif
-                            </td>
-
                             <td>
                                 @if ($project->category?->name)
                                     <i class="fas fa-tags"></i> {{ $project->category->name }}
@@ -139,14 +92,6 @@
                                 <div class="fw-bold text-success">
                                     {{ formatPriceToCR($project->estimated_budget_incl_gst)  }} 
                                 </div>
-<<<<<<< Updated upstream
-=======
-                                @if($project->workPrograms->isNotEmpty())
-                                    <div class="small text-muted">
-                                        {{ $project->workPrograms->count() }} Work Program(s)
-                                    </div>
-                                @endif
->>>>>>> Stashed changes
                             </td>
 
                             <!-- Location -->
@@ -163,7 +108,6 @@
                             </td>
 
                             <!-- Procurement -->
-<<<<<<< Updated upstream
                             <td class="align-middle">
                                 @if ($project->procurementDetail)
                                     <div class="fw-semibold">
@@ -182,13 +126,6 @@
                                         </span>
                                     </div>
                                     @if ($project->procurementDetail->tender_fee)
-=======
-                            <td>
-                                @if($project->procurementDetail)
-                                    <div class="fw-semibold">{{ $project->procurementDetail->method_of_procurement }}</div>
-                                    <span class="badge bg-secondary mb-1">{{ $project->procurementDetail->type_of_procurement }}</span>
-                                    @if($project->procurementDetail->tender_fee)
->>>>>>> Stashed changes
                                         <div class="small text-muted">
                                             Fee: ₹ {{ number_format($project->procurementDetail->tender_fee, 2) }}
                                         </div>
@@ -201,13 +138,8 @@
                             </td>
 
                             <!-- Contracts -->
-<<<<<<< Updated upstream
                             <td class="align-middle">
                                 @if ($project->contracts->isNotEmpty())
-=======
-                            <td>
-                                @if($project->contracts->isNotEmpty())
->>>>>>> Stashed changes
                                     <div class="dropdown">
                                         <button class="btn btn-sm btn-outline-info dropdown-toggle" type="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -250,7 +182,6 @@
                             <td>
                                 <div class="d-flex flex-column gap-1">
                                     <span class="badge bg-{{ $project->dec_approved ? 'success' : 'secondary' }}">
-<<<<<<< Updated upstream
                                         <i class="fas fa-check-circle"></i> DEC:
                                         {{ $project->dec_approved ? 'Approved' : 'Pending' }}
                                     </span>
@@ -267,21 +198,10 @@
                                             <i class="fas fa-circle-pause"></i> Inactive
                                         </span>
                                     @endif
-=======
-                                        DEC: {{ $project->dec_approved ? 'Approved' : 'Pending' }}
-                                    </span>
-                                    <span class="badge bg-{{ $project->hpc_approved ? 'success' : 'secondary' }}">
-                                        HPC: {{ $project->hpc_approved ? 'Approved' : 'Pending' }}
-                                    </span>
-                                    <span class="badge bg-{{ $project->is_active ? 'success' : 'danger' }}">
-                                        {{ $project->is_active ? 'Active' : 'Inactive' }}
-                                    </span>
->>>>>>> Stashed changes
                                 </div>
                             </td>
 
                             <!-- Actions -->
-<<<<<<< Updated upstream
                             <td class="align-middle">
                                 <div class="d-flex justify-content-end gap-1">
                                     <!-- View Button -->
@@ -305,29 +225,6 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" title="Delete"
                                             data-bs-toggle="tooltip">
-=======
-                            <td class="text-end">
-                                <div class="btn-group" role="group">
-                                    <a href="{{ route('admin.package-projects.show', $project->id) }}" 
-                                       class="btn btn-sm btn-outline-info" 
-                                       title="View" data-bs-toggle="tooltip">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('admin.package-projects.edit', $project->id) }}" 
-                                       class="btn btn-sm btn-outline-primary" 
-                                       title="Edit" data-bs-toggle="tooltip">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('admin.package-projects.destroy', $project->id) }}" 
-                                          method="POST" 
-                                          onsubmit="return confirm('Are you sure you want to delete this package project?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" 
-                                                class="btn btn-sm btn-outline-danger" 
-                                                title="Delete"
-                                                data-bs-toggle="tooltip">
->>>>>>> Stashed changes
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
@@ -340,25 +237,14 @@
         </div>
     </div>
 
-<<<<<<< Updated upstream
 
     <script>
         // Initialize tooltips
         document.addEventListener('DOMContentLoaded', function() {
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
             var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-=======
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            tooltipTriggerList.map(function (tooltipTriggerEl) {
->>>>>>> Stashed changes
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
         });
     </script>
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 </x-app-layout>
