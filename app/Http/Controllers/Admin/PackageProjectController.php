@@ -7,25 +7,30 @@ use App\Http\Requests\Admin\StorePackageProjectRequest;
 use App\Http\Requests\Admin\UpdatePackageProjectRequest;
 use App\Models\PackageProject;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class PackageProjectController extends Controller
 {
     /**
-     * Display a listing of package projects.
+     * Display a listing of package projects with related data.
      */
     public function index(): View
     {
         $packageProjects = PackageProject::with([
-            'project',
-            'category',
-            'subCategory',
-            'department',
-            'vidhanSabha',
-            'district',
-            'block'
+            'project:id,name,budget',
+            'category:id,name',
+            'subCategory:id,name',
+            'department:id,name',
+            'vidhanSabha:id,name',
+            'lokSabha:id,name',
+            'district:id,name',
+            'block:id,name',
+            'procurementDetail:id,package_project_id,method_of_procurement,type_of_procurement,publication_date',
+            'workPrograms:id,package_project_id,procurement_details_id,name_work_program,weightage,days,start_date,planned_date',
+            'subProjects:id,project_id,name',
         ])
+        ->withCount('workPrograms') // quick info: how many work programs exist
         ->latest()
         ->paginate(10);
 
@@ -38,13 +43,13 @@ class PackageProjectController extends Controller
     public function create(): View
     {
         return view('admin.package-projects.create', [
-            'projects' => \App\Models\Project::select('id', 'name', 'budget')->get(),
-            'categories' => \App\Models\ProjectsCategory::all(),
-            'subCategories' => \App\Models\SubCategory::all(),
-            'departments' => \App\Models\Department::all(),
+            'projects'       => \App\Models\Project::select('id', 'name', 'budget')->get(),
+            'categories'     => \App\Models\ProjectsCategory::all(),
+            'subCategories'  => \App\Models\SubCategory::all(),
+            'departments'    => \App\Models\Department::all(),
             'constituencies' => \App\Models\Constituency::all(),
-            'districts' => \App\Models\GeographyDistrict::all(),
-            'blocks' => \App\Models\GeographyBlock::all(),
+            'districts'      => \App\Models\GeographyDistrict::all(),
+            'blocks'         => \App\Models\GeographyBlock::all(),
         ]);
     }
 
@@ -55,12 +60,11 @@ class PackageProjectController extends Controller
     {
         try {
             $data = $request->validated();
-            
+
             // Handle file uploads
             if ($request->hasFile('dec_document_path')) {
                 $data['dec_document_path'] = $request->file('dec_document_path')->store('package-projects/dec-documents', 'public');
             }
-            
             if ($request->hasFile('hpc_document_path')) {
                 $data['hpc_document_path'] = $request->file('hpc_document_path')->store('package-projects/hpc-documents', 'public');
             }
@@ -70,7 +74,6 @@ class PackageProjectController extends Controller
             return redirect()
                 ->route('admin.package-projects.index')
                 ->with('success', 'Package project created successfully.');
-
         } catch (\Exception $e) {
             return back()
                 ->withInput()
@@ -79,21 +82,30 @@ class PackageProjectController extends Controller
     }
 
     /**
-     * Display the specified package project.
+     * Display the specified package project with all related details.
      */
     public function show(PackageProject $packageProject): View
     {
-        return view('admin.package-projects.show', [
-            'packageProject' => $packageProject->load([
-                'project',
-                'category',
-                'subCategory',
-                'department',
-                'vidhanSabha',
-                'district',
-                'block'
-            ])
+        $packageProject->load([
+            'project:id,name,budget',
+            'category:id,name',
+            'subCategory:id,name',
+            'department:id,name',
+            'vidhanSabha:id,name',
+            'lokSabha:id,name',
+            'district:id,name',
+            'block:id,name',
+            'procurementDetail',
+            'workPrograms',
+            'subProjects:id,project_id,name',
         ]);
+
+        // Load contract separately for clarity
+        $contract = \App\Models\Contract::withBasicRelations()
+            ->where('project_id', $packageProject->id)
+            ->first();
+
+        return view('admin.package-projects.show', compact('packageProject', 'contract'));
     }
 
     /**
@@ -103,13 +115,13 @@ class PackageProjectController extends Controller
     {
         return view('admin.package-projects.edit', [
             'packageProject' => $packageProject,
-            'projects' => \App\Models\Project::select('id', 'name', 'budget')->get(),
-            'categories' => \App\Models\ProjectsCategory::all(),
-            'subCategories' => \App\Models\SubCategory::all(),
-            'departments' => \App\Models\Department::all(),
+            'projects'       => \App\Models\Project::select('id', 'name', 'budget')->get(),
+            'categories'     => \App\Models\ProjectsCategory::all(),
+            'subCategories'  => \App\Models\SubCategory::all(),
+            'departments'    => \App\Models\Department::all(),
             'constituencies' => \App\Models\Constituency::all(),
-            'districts' => \App\Models\GeographyDistrict::all(),
-            'blocks' => \App\Models\GeographyBlock::all(),
+            'districts'      => \App\Models\GeographyDistrict::all(),
+            'blocks'         => \App\Models\GeographyBlock::all(),
         ]);
     }
 
@@ -120,18 +132,15 @@ class PackageProjectController extends Controller
     {
         try {
             $data = $request->validated();
-            
-            // Handle file uploads
+
+            // Handle file updates
             if ($request->hasFile('dec_document_path')) {
-                // Delete old file if exists
                 if ($packageProject->dec_document_path) {
                     Storage::disk('public')->delete($packageProject->dec_document_path);
                 }
                 $data['dec_document_path'] = $request->file('dec_document_path')->store('package-projects/dec-documents', 'public');
             }
-            
             if ($request->hasFile('hpc_document_path')) {
-                // Delete old file if exists
                 if ($packageProject->hpc_document_path) {
                     Storage::disk('public')->delete($packageProject->hpc_document_path);
                 }
@@ -143,7 +152,6 @@ class PackageProjectController extends Controller
             return redirect()
                 ->route('admin.package-projects.index')
                 ->with('success', 'Package project updated successfully.');
-
         } catch (\Exception $e) {
             return back()
                 ->withInput()
@@ -157,11 +165,9 @@ class PackageProjectController extends Controller
     public function destroy(PackageProject $packageProject): RedirectResponse
     {
         try {
-            // Delete associated files
             if ($packageProject->dec_document_path) {
                 Storage::disk('public')->delete($packageProject->dec_document_path);
             }
-            
             if ($packageProject->hpc_document_path) {
                 Storage::disk('public')->delete($packageProject->hpc_document_path);
             }
@@ -171,7 +177,6 @@ class PackageProjectController extends Controller
             return redirect()
                 ->route('admin.package-projects.index')
                 ->with('success', 'Package project deleted successfully.');
-
         } catch (\Exception $e) {
             return back()
                 ->with('error', 'Error deleting package project: ' . $e->getMessage());

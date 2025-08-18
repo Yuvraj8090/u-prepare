@@ -8,18 +8,26 @@
     <div class="col-md-12">
         <div class="d-flex justify-content-between align-items-center">
             <h4 class="mb-0 h4">
-    <i class="{{ $icon }} me-2"></i> {!! $title !!}
-</h4>
+                <i class="{{ $icon }} me-2"></i> {!! $title !!}
+            </h4>
 
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     @foreach ($breadcrumbs as $breadcrumb)
                         @if (isset($breadcrumb['route']))
-                            <li class="breadcrumb-item ">
-                                <a href="{{ route($breadcrumb['route']) }}">{!! $breadcrumb['label'] !!}</a>
+                            @php
+                                // If parameters are provided, pass them to route()
+                                $params = $breadcrumb['params'] ?? [];
+                            @endphp
+                            <li class="breadcrumb-item">
+                                <a href="{{ route($breadcrumb['route'], $params) }}">
+                                    {!! $breadcrumb['label'] !!}
+                                </a>
                             </li>
                         @else
-                            <li class="breadcrumb-item active" aria-current="page">{!! $breadcrumb['label'] !!}</li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                {!! $breadcrumb['label'] !!}
+                            </li>
                         @endif
                     @endforeach
                 </ol>
@@ -27,6 +35,7 @@
         </div>
     </div>
 </div>
+
 {{--  Hot To Call Thsi Fuction  --}}
 
 {{-- 

@@ -5,24 +5,65 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class PackageProject extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['project_id', 'package_category_id', 'package_sub_category_id', 'department_id', 'package_name', 'package_number', 'estimated_budget_incl_gst', 'vidhan_sabha_id', 'lok_sabha_id', 'district_id', 'block_id', 'dec_approved', 'dec_approval_date', 'dec_letter_number', 'dec_document_path', 'hpc_approved', 'hpc_approval_date', 'hpc_letter_number', 'hpc_document_path'];
+    /**
+     * Mass assignable attributes
+     */
+    protected $fillable = [
+        'project_id',
+        'package_category_id',
+        'package_sub_category_id',
+        'department_id',
+        'package_name',
+        'package_number',
+        'estimated_budget_incl_gst',
+        'vidhan_sabha_id',
+        'lok_sabha_id',
+        'district_id',
+        'block_id',
+        'dec_approved',
+        'dec_approval_date',
+        'dec_letter_number',
+        'dec_document_path',
+        'hpc_approved',
+        'hpc_approval_date',
+        'hpc_letter_number',
+        'hpc_document_path',
+    ];
 
+    /**
+     * Attribute casting
+     */
     protected $casts = [
         'dec_approved' => 'boolean',
         'hpc_approved' => 'boolean',
         'estimated_budget_incl_gst' => 'decimal:2',
+        'dec_approval_date' => 'datetime',
+        'hpc_approval_date' => 'datetime',
     ];
+
+    /**
+     * Scopes
+     */
     public function scopeBasicInfo($query)
     {
         return $query->select('id', 'package_name');
     }
 
-    // Relationships
+    public function scopeWithWorkProgramData($query)
+    {
+        return $query->with(['procurementDetail', 'workPrograms']);
+    }
+
+    /**
+     * Relationships
+     */
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
@@ -62,25 +103,32 @@ class PackageProject extends Model
     {
         return $this->belongsTo(GeographyBlock::class);
     }
-    public function procurementDetail()
+
+    public function procurementDetail(): HasOne
     {
         return $this->hasOne(ProcurementDetail::class);
     }
-    public function workPrograms()
+
+    public function workPrograms(): HasMany
     {
         return $this->hasMany(ProcurementWorkProgram::class);
     }
-    public function getHasWorkProgramAttribute()
+
+    public function subProjects(): HasMany
+    {
+        return $this->hasMany(SubPackageProject::class, 'project_id', 'id');
+    }
+
+    /**
+     * Accessors
+     */
+    public function getHasWorkProgramAttribute(): bool
     {
         return $this->workPrograms->isNotEmpty();
     }
-    public function scopeWithWorkProgramData($query)
-    {
-        return $query->with(['procurementDetail', 'workPrograms']);
-    }
-    public function subProjects()
+    public function contracts()
 {
-    return $this->hasMany(SubPackageProject::class, 'project_id');
+    return $this->hasMany(Contract::class, 'project_id');
 }
 
 }
