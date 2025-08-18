@@ -49,7 +49,11 @@
                         <tr>
                             <td>{{ $department->id }}</td>
                             <td>{{ $department->name }}</td>
+<<<<<<< Updated upstream
                             <td> ₹ {{ formatPriceToCR($department->budget) }}</td>
+=======
+                            <td> ₹ {{ formatToCr($department->budget) }}</td>
+>>>>>>> Stashed changes
                             <td>
                                 <div class="d-flex justify-content-end gap-2">
                                     <a href="{{ route('admin.departments.edit', $department) }}"

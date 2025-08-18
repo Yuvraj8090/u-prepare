@@ -65,6 +65,10 @@ return array(
     'App\\Models\\MediaFile' => $baseDir . '/app/Models/MediaFile.php',
     'App\\Models\\NavbarItem' => $baseDir . '/app/Models/NavbarItem.php',
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    'App\\Models\\PackageComponent' => $baseDir . '/app/Models/PackageComponent.php',
+>>>>>>> Stashed changes
 =======
     'App\\Models\\PackageComponent' => $baseDir . '/app/Models/PackageComponent.php',
 >>>>>>> Stashed changes

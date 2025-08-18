@@ -57,10 +57,35 @@
                                     <a href="{{ route('admin.package-projects.show', $project->id) }}" class="text-decoration-none">
                                         {{ $project->package_name }}
                                     </a>
+<<<<<<< Updated upstream
+                                </div>
+                                <div class="small text-muted">
+                                    <i class="fas fa-hashtag"></i> {{ $project->package_number ?? 'N/A' }}
+=======
+>>>>>>> Stashed changes
                                 </div>
                                 <div class="small text-muted">
                                     <i class="fas fa-hashtag"></i> {{ $project->package_number ?? 'N/A' }}
                                 </div>
+                            </td>
+
+                            <!-- Category / Department -->
+                            <td>
+                                @if($project->subCategory?->name)
+                                    <span class="badge bg-info text-white">
+                                        <i class="fas fa-tag"></i> {{ $project->subCategory->name }}
+                                    </span>
+                                @endif
+                                @if($project->category?->name)
+                                    <span class="badge bg-primary text-white">
+                                        <i class="fas fa-layer-group"></i> {{ $project->category->name }}
+                                    </span>
+                                @endif
+                                @if($project->department?->name)
+                                    <span class="badge bg-success text-white">
+                                        <i class="fas fa-building"></i> {{ $project->department->name }}
+                                    </span>
+                                @endif
                             </td>
 
                             <!-- Category / Department -->

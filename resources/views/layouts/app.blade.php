@@ -48,7 +48,10 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <!-- TinyMCE -->
+<<<<<<< Updated upstream
     
+=======
+>>>>>>> Stashed changes
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
 <script src="{{ asset('asset/build/js/custom.js') }}?ver=1.5.1"></script>
     <style>
