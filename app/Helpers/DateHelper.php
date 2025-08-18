@@ -26,9 +26,35 @@ if (!function_exists('formatPrice')) {
             $rupees = floatval(str_replace(',', '', $priceStr));
         }
 
-        return '₹' . formatIndianCurrency(number_format($rupees, 2, '.', ''));
+        return ' ₹ ' . formatIndianCurrency(number_format($rupees, 2, '.', ''));
     }
 }
+
+if (!function_exists('formatPriceToCR')) {
+    function formatPriceToCR($price) {
+        if (empty($price) && $price !== 0 && $price !== '0') {
+            return '';
+        }
+
+        $priceStr = trim(strtoupper(strval($price)));
+        
+        if($priceStr > 100000 && $priceStr < 10000000)
+        {
+             
+            $rupee = '₹ ' . formatIndianCurrency($priceStr / 100000) . ' Lakhs';
+            return   $rupee;
+        }
+        
+        if($priceStr > 10000000)
+        { 
+            $rupee = '₹ ' . formatIndianCurrency($priceStr / 10000000) . ' CR';
+            return $rupee; 
+        }
+
+        return '₹ ' . formatIndianCurrency($priceStr);
+    }
+}
+
 
 if (!function_exists('formatIndianCurrency')) {
     function formatIndianCurrency($number) {
