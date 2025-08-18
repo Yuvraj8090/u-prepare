@@ -16,8 +16,8 @@ class PackageProjectController extends Controller
      * Display a listing of package projects with related data.
      */
     public function index(): View
-    {
-        $packageProjects = PackageProject::with([
+{
+    $packageProjects = PackageProject::with([
             'project:id,name,budget',
             'category:id,name',
             'subCategory:id,name',
@@ -30,12 +30,13 @@ class PackageProjectController extends Controller
             'workPrograms:id,package_project_id,procurement_details_id,name_work_program,weightage,days,start_date,planned_date',
             'subProjects:id,project_id,name',
         ])
-        ->withCount('workPrograms') // quick info: how many work programs exist
+        ->withCount('workPrograms')
         ->latest()
-        ->paginate(10);
+        ->get(); // no pagination, fetch all
 
-        return view('admin.package-projects.index', compact('packageProjects'));
-    }
+    return view('admin.package-projects.index', compact('packageProjects'));
+}
+
 
     /**
      * Show the form for creating a new package project.
