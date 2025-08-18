@@ -14,6 +14,26 @@
             </div>
         </div>
 
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+       <div class="row">
+    <x-admin.chart-card 
+        title="Department Budget" 
+        :labels="$departments->pluck('name')->toArray()" 
+        :data="$departments->pluck('budget')->map(fn($b)=> (float)$b)->toArray()" 
+        currency="true" 
+    />
+
+    <x-admin.chart-card 
+        title="Component Budget" 
+        :labels="$components->pluck('name')->toArray()" 
+        :data="$components->pluck('budget')->map(fn($b)=> (float)$b)->toArray()" 
+        currency="true" 
+    />
+</div>
+=======
+=======
+>>>>>>> Stashed changes
         <div class="row">
             <!-- Department Budget Card -->
             <div class="col-md-4 mb-4">
@@ -49,13 +69,13 @@
                                     @foreach($departments as $dept)
                                         <tr>
                                             <td>{{ $dept->name }}</td>
-                                            <td class="text-end">₹ {{ formatToCr($dept->budget, 2) }}</td>
+                                            <td class="text-end">₹ {{ formatPriceToCR($dept->budget, 2) }}</td>
                                             <td class="text-end">{{ number_format(($dept->budget/$totalDepartmentBudget)*100, 1) }}%</td>
                                         </tr>
                                     @endforeach
                                     <tr class="fw-bold bg-light">
                                         <td>Total</td>
-                                        <td class="text-end">₹ {{ formatToCr($totalDepartmentBudget, 2) }}</td>
+                                        <td class="text-end">₹ {{ formatPriceToCR($totalDepartmentBudget, 2) }}</td>
                                         <td class="text-end">100%</td>
                                     </tr>
                                 </tbody>
@@ -99,13 +119,13 @@
                                     @foreach($components as $comp)
                                         <tr>
                                             <td>{{ $comp->name }}</td>
-                                            <td class="text-end">₹ {{ formatToCr($comp->budget, 2) }}</td>
+                                            <td class="text-end">₹ {{ formatPriceToCR($comp->budget, 2) }}</td>
                                             <td class="text-end">{{ number_format(($comp->budget/$totalComponentBudget)*100, 1) }}%</td>
                                         </tr>
                                     @endforeach
                                     <tr class="fw-bold bg-light">
                                         <td>Total</td>
-                                        <td class="text-end">₹ {{ formatToCr($totalComponentBudget, 2) }}</td>
+                                        <td class="text-end">₹ {{ formatPriceToCR($totalComponentBudget, 2) }}</td>
                                         <td class="text-end">100%</td>
                                     </tr>
                                 </tbody>
@@ -149,13 +169,13 @@
                                     @foreach($projectsByDepartment as $dept => $data)
                                         <tr>
                                             <td>{{ $dept }}</td>
-                                            <td class="text-end">₹ {{ formatToCr($data['budget'], 2) }}</td>
+                                            <td class="text-end">₹ {{ formatPriceToCR($data['budget'], 2) }}</td>
                                             <td class="text-end">{{ number_format(($data['budget']/$totalProjectBudget)*100, 1) }}%</td>
                                         </tr>
                                     @endforeach
                                     <tr class="fw-bold bg-light">
                                         <td>Total</td>
-                                        <td class="text-end">₹ {{ formatToCr($totalProjectBudget, 2) }}</td>
+                                        <td class="text-end">₹ {{ formatPriceToCR($totalProjectBudget, 2) }}</td>
                                         <td class="text-end">100%</td>
                                     </tr>
                                 </tbody>
@@ -165,6 +185,10 @@
                 </div>
             </div>
         </div>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 
         <!-- S-Curve and Other Charts -->
         <div class="row mt-4">
@@ -253,6 +277,12 @@
     </div>
 
     <!-- ApexCharts CDN -->
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+ 
+=======
+=======
+>>>>>>> Stashed changes
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <!-- Chart Export Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -594,4 +624,8 @@
             border-radius: 0.5rem !important;
         }
     </style>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 </x-app-layout>

@@ -48,6 +48,7 @@
                         <tr>
                             <!-- Package Name & Number -->
                             <td>
+
                                 <div class="d-flex flex-column">
                                     <!-- Main Title -->
                                     <a href="{{ route('admin.package-projects.show', $project->id) }}"
@@ -68,6 +69,18 @@
                                             </span>
                                         @endif
                                     </div>
+
+                                <div class="fw-bold text-primary">
+                                    <a href="{{ route('admin.package-projects.show', $project->id) }}" class="text-decoration-none">
+                                        {{ $project->package_name }}
+                                    </a>
+
+                                </div>
+                                <div class="small text-muted">
+                                    <i class="fas fa-hashtag"></i> {{ $project->package_number ?? 'N/A' }}
+                                </div>
+                                <div class="small text-muted">
+                                    <i class="fas fa-hashtag"></i> {{ $project->package_number ?? 'N/A' }}
                                 </div>
                                 <div class="small text-muted">
                                     <i class="fas fa-hashtag"></i> {{ $project->package_number ?? 'N/A' }}

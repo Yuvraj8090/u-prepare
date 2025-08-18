@@ -15,10 +15,7 @@ if (!function_exists('formatPrice')) {
         if (empty($price) && $price !== 0 && $price !== '0') {
             return '';
         }
-
         $priceStr = trim(strtoupper(strval($price)));
-
-        // Convert CR to rupees
         if (strpos($priceStr, 'CR') !== false) {
             $num = floatval(str_replace('CR', '', $priceStr));
             $rupees = $num * 10000000;
@@ -29,7 +26,6 @@ if (!function_exists('formatPrice')) {
         return ' ₹ ' . formatIndianCurrency(number_format($rupees, 2, '.', ''));
     }
 }
-
 if (!function_exists('formatPriceToCR')) {
     function formatPriceToCR($price) {
         if (empty($price) && $price !== 0 && $price !== '0') {
@@ -54,8 +50,6 @@ if (!function_exists('formatPriceToCR')) {
         return '₹ ' . formatIndianCurrency($priceStr);
     }
 }
-
-
 if (!function_exists('formatIndianCurrency')) {
     function formatIndianCurrency($number) {
         $decimal = '';
