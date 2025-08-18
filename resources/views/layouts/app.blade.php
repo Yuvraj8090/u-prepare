@@ -49,7 +49,10 @@
 
     <!-- TinyMCE -->
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>

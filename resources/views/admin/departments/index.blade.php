@@ -50,7 +50,11 @@
                             <td>{{ $department->id }}</td>
                             <td>{{ $department->name }}</td>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                             <td> ₹ {{ formatPriceToCR($department->budget) }}</td>
+=======
+                            <td> ₹ {{ formatToCr($department->budget) }}</td>
+>>>>>>> Stashed changes
 =======
                             <td> ₹ {{ formatToCr($department->budget) }}</td>
 >>>>>>> Stashed changes
