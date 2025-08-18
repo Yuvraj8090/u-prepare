@@ -53,7 +53,7 @@
 
                             <!-- Budget -->
                             <td class="align-middle text-success">
-                                ₹{{ formatToCr($component->budget ) }}
+                                ₹{{ formatPriceToCR($component->budget ) }}
                             </td>
 
                             <!-- Created At -->

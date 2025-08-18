@@ -748,10 +748,7 @@ class ComposerStaticInit88970a0117c062eed55fa8728fc43833
         'App\\Models\\GeographyDivision' => __DIR__ . '/../..' . '/app/Models/GeographyDivision.php',
         'App\\Models\\MediaFile' => __DIR__ . '/../..' . '/app/Models/MediaFile.php',
         'App\\Models\\NavbarItem' => __DIR__ . '/../..' . '/app/Models/NavbarItem.php',
-<<<<<<< Updated upstream
-=======
         'App\\Models\\PackageComponent' => __DIR__ . '/../..' . '/app/Models/PackageComponent.php',
->>>>>>> Stashed changes
         'App\\Models\\PackageProject' => __DIR__ . '/../..' . '/app/Models/PackageProject.php',
         'App\\Models\\Page' => __DIR__ . '/../..' . '/app/Models/Page.php',
         'App\\Models\\PhysicalBoqProgress' => __DIR__ . '/../..' . '/app/Models/PhysicalBoqProgress.php',
