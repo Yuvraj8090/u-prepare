@@ -12,17 +12,14 @@
 
         {{-- Filter Form --}}
         <form id="filter-form" method="GET" class="row mb-4">
-            <div class="col-md-2">
-                <label class="form-label">Project Name</label>
-                <select id="project-selector" class="form-select" disabled>
-                    <option value="">-- Select Project --</option>
-                    @foreach ($projects as $project)
-                        <option value="{{ $project->id }}"
-                            {{ request('sub_package_project_id') == $project->id ? 'selected' : '' }}>
-                            {{ $project->name }}
-                        </option>
-                    @endforeach
-                </select>
+            <div class="col-md-12 ">
+               @foreach ($projects as $project)
+               
+                <input type="text"  value="{{ $project->name }}" class="form-control" disabled style="border:none !important;"/>
+                        
+                            
+                       
+                    @endforeach 
                 <input type="hidden" name="sub_package_project_id" value="{{ request('sub_package_project_id') }}">
             </div>
 
@@ -248,6 +245,8 @@
                 </div>
             </div>
         </div>
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
         {{-- JS --}}
         <script>

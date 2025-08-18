@@ -12,14 +12,12 @@ class PackageProject extends Model
 {
     use SoftDeletes;
 
-    /**
-     * Mass assignable attributes
-     */
     protected $fillable = [
         'project_id',
         'package_category_id',
         'package_sub_category_id',
         'department_id',
+        'package_component_id',
         'package_name',
         'package_number',
         'estimated_budget_incl_gst',
@@ -34,12 +32,9 @@ class PackageProject extends Model
         'hpc_approved',
         'hpc_approval_date',
         'hpc_letter_number',
-        'hpc_document_path',
+        'hpc_document_path'
     ];
 
-    /**
-     * Attribute casting
-     */
     protected $casts = [
         'dec_approved' => 'boolean',
         'hpc_approved' => 'boolean',
@@ -48,9 +43,6 @@ class PackageProject extends Model
         'hpc_approval_date' => 'datetime',
     ];
 
-    /**
-     * Scopes
-     */
     public function scopeBasicInfo($query)
     {
         return $query->select('id', 'package_name');
@@ -61,9 +53,6 @@ class PackageProject extends Model
         return $query->with(['procurementDetail', 'workPrograms']);
     }
 
-    /**
-     * Relationships
-     */
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
@@ -82,6 +71,11 @@ class PackageProject extends Model
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function packageComponent(): BelongsTo
+    {
+        return $this->belongsTo(PackageComponent::class, 'package_component_id');
     }
 
     public function vidhanSabha(): BelongsTo
@@ -119,16 +113,13 @@ class PackageProject extends Model
         return $this->hasMany(SubPackageProject::class, 'project_id', 'id');
     }
 
-    /**
-     * Accessors
-     */
+    public function contracts(): HasMany
+    {
+        return $this->hasMany(Contract::class, 'project_id');
+    }
+
     public function getHasWorkProgramAttribute(): bool
     {
         return $this->workPrograms->isNotEmpty();
     }
-    public function contracts()
-{
-    return $this->hasMany(Contract::class, 'project_id');
-}
-
 }

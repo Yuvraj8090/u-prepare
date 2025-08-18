@@ -16,6 +16,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\ContractionPhaseController' => $baseDir . '/app/Http/Controllers/Admin/ContractionPhaseController.php',
     'App\\Http\\Controllers\\Admin\\DepartmentController' => $baseDir . '/app/Http/Controllers/Admin/DepartmentController.php',
     'App\\Http\\Controllers\\Admin\\DesignationController' => $baseDir . '/app/Http/Controllers/Admin/DesignationController.php',
+    'App\\Http\\Controllers\\Admin\\PackageComponentController' => $baseDir . '/app/Http/Controllers/Admin/PackageComponentController.php',
     'App\\Http\\Controllers\\Admin\\PackageProjectController' => $baseDir . '/app/Http/Controllers/Admin/PackageProjectController.php',
     'App\\Http\\Controllers\\Admin\\PhysicalBoqProgressController' => $baseDir . '/app/Http/Controllers/Admin/PhysicalBoqProgressController.php',
     'App\\Http\\Controllers\\Admin\\PhysicalEpcProgressController' => $baseDir . '/app/Http/Controllers/Admin/PhysicalEpcProgressController.php',
@@ -63,6 +64,10 @@ return array(
     'App\\Models\\GeographyDivision' => $baseDir . '/app/Models/GeographyDivision.php',
     'App\\Models\\MediaFile' => $baseDir . '/app/Models/MediaFile.php',
     'App\\Models\\NavbarItem' => $baseDir . '/app/Models/NavbarItem.php',
+<<<<<<< Updated upstream
+=======
+    'App\\Models\\PackageComponent' => $baseDir . '/app/Models/PackageComponent.php',
+>>>>>>> Stashed changes
     'App\\Models\\PackageProject' => $baseDir . '/app/Models/PackageProject.php',
     'App\\Models\\Page' => $baseDir . '/app/Models/Page.php',
     'App\\Models\\PhysicalBoqProgress' => $baseDir . '/app/Models/PhysicalBoqProgress.php',

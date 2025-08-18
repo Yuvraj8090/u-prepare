@@ -11,7 +11,7 @@ class AlreadyDefineEpcController extends Controller
 {
     public function index()
     {
-        $items = AlreadyDefineEpc::with(['workService', 'activityName'])->paginate(10);
+        $items = AlreadyDefineEpc::with(['workService', 'activityName'])->get();
         return view('admin.already_define_epc.index', compact('items'));
     }
 
