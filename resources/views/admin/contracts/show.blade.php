@@ -50,6 +50,7 @@
                 </div>
 
               <x-admin.package-card :packageProject="$contract->project" />
+                <x-admin.approval-details :packageProject="$contract->project"/>
 
 
               
