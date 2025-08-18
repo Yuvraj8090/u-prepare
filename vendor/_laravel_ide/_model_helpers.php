@@ -2276,12 +2276,14 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property float|null $budget
      * @property string $name
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
      * @property-read int|null $users_count
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereBudget($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department newModelQuery()
@@ -5796,6 +5798,18 @@ namespace App\Models {
     /**
      * App\Models\PackageComponent
      *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property float|null $budget
+     * @property string $name
+     * @property int $id
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereBudget($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent query()
@@ -6121,6 +6135,7 @@ namespace App\Models {
      * @property mixed $package_sub_category_id
      * @property mixed $package_category_id
      * @property mixed $project_id
+     * @property mixed $package_component_id
      * @property int $id
      * @property-read mixed $has_work_program
      * @property-read \App\Models\Project $project
@@ -6140,6 +6155,7 @@ namespace App\Models {
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Contract> $contracts
      * @property-read int|null $contracts_count
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject wherePackageComponentId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject whereProjectId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject wherePackageCategoryId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject wherePackageSubCategoryId($value)

@@ -14,8 +14,7 @@
             </div>
         </div>
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
        <div class="row">
     <x-admin.chart-card 
         title="Department Budget" 
@@ -32,8 +31,7 @@
     />
 </div>
 =======
-=======
->>>>>>> Stashed changes
+
         <div class="row">
             <!-- Department Budget Card -->
             <div class="col-md-4 mb-4">
@@ -187,8 +185,7 @@
         </div>
 <<<<<<< Updated upstream
 >>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
 
         <!-- S-Curve and Other Charts -->
         <div class="row mt-4">
@@ -277,12 +274,10 @@
     </div>
 
     <!-- ApexCharts CDN -->
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
  
 =======
-=======
->>>>>>> Stashed changes
+
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <!-- Chart Export Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -626,6 +621,5 @@
     </style>
 <<<<<<< Updated upstream
 >>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
 </x-app-layout>

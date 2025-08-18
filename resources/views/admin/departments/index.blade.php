@@ -49,8 +49,7 @@
                         <tr>
                             <td>{{ $department->id }}</td>
                             <td>{{ $department->name }}</td>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
                             <td> ₹ {{ formatPriceToCR($department->budget) }}</td>
 =======
                             <td> ₹ {{ formatPriceToCR($department->budget) }}</td>

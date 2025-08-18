@@ -53,8 +53,7 @@
 
                             <!-- Budget -->
                             <td class="align-middle text-success">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+
                                 ₹{{ formatPriceToCR($component->budget ) }}
 =======
                                 ₹{{ formatPriceToCR($component->budget ) }}
