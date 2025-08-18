@@ -53,10 +53,10 @@
 <<<<<<< Updated upstream
                             <td> ₹ {{ formatPriceToCR($department->budget) }}</td>
 =======
-                            <td> ₹ {{ formatToCr($department->budget) }}</td>
+                            <td> ₹ {{ formatPriceToCR($department->budget) }}</td>
 >>>>>>> Stashed changes
 =======
-                            <td> ₹ {{ formatToCr($department->budget) }}</td>
+                            <td> ₹ {{ formatPriceToCR($department->budget) }}</td>
 >>>>>>> Stashed changes
                             <td>
                                 <div class="d-flex justify-content-end gap-2">

@@ -69,13 +69,13 @@
                                     @foreach($departments as $dept)
                                         <tr>
                                             <td>{{ $dept->name }}</td>
-                                            <td class="text-end">₹ {{ formatToCr($dept->budget, 2) }}</td>
+                                            <td class="text-end">₹ {{ formatPriceToCR($dept->budget, 2) }}</td>
                                             <td class="text-end">{{ number_format(($dept->budget/$totalDepartmentBudget)*100, 1) }}%</td>
                                         </tr>
                                     @endforeach
                                     <tr class="fw-bold bg-light">
                                         <td>Total</td>
-                                        <td class="text-end">₹ {{ formatToCr($totalDepartmentBudget, 2) }}</td>
+                                        <td class="text-end">₹ {{ formatPriceToCR($totalDepartmentBudget, 2) }}</td>
                                         <td class="text-end">100%</td>
                                     </tr>
                                 </tbody>
@@ -119,13 +119,13 @@
                                     @foreach($components as $comp)
                                         <tr>
                                             <td>{{ $comp->name }}</td>
-                                            <td class="text-end">₹ {{ formatToCr($comp->budget, 2) }}</td>
+                                            <td class="text-end">₹ {{ formatPriceToCR($comp->budget, 2) }}</td>
                                             <td class="text-end">{{ number_format(($comp->budget/$totalComponentBudget)*100, 1) }}%</td>
                                         </tr>
                                     @endforeach
                                     <tr class="fw-bold bg-light">
                                         <td>Total</td>
-                                        <td class="text-end">₹ {{ formatToCr($totalComponentBudget, 2) }}</td>
+                                        <td class="text-end">₹ {{ formatPriceToCR($totalComponentBudget, 2) }}</td>
                                         <td class="text-end">100%</td>
                                     </tr>
                                 </tbody>
@@ -169,13 +169,13 @@
                                     @foreach($projectsByDepartment as $dept => $data)
                                         <tr>
                                             <td>{{ $dept }}</td>
-                                            <td class="text-end">₹ {{ formatToCr($data['budget'], 2) }}</td>
+                                            <td class="text-end">₹ {{ formatPriceToCR($data['budget'], 2) }}</td>
                                             <td class="text-end">{{ number_format(($data['budget']/$totalProjectBudget)*100, 1) }}%</td>
                                         </tr>
                                     @endforeach
                                     <tr class="fw-bold bg-light">
                                         <td>Total</td>
-                                        <td class="text-end">₹ {{ formatToCr($totalProjectBudget, 2) }}</td>
+                                        <td class="text-end">₹ {{ formatPriceToCR($totalProjectBudget, 2) }}</td>
                                         <td class="text-end">100%</td>
                                     </tr>
                                 </tbody>
