@@ -5,8 +5,28 @@ namespace App\Models {
     /**
      * App\Models\AlreadyDefineEpc
      *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property float $percent
+     * @property string|null $item_description
+     * @property string $stage_name
+     * @property mixed $activity_id
+     * @property mixed $sl_no
+     * @property mixed $work_service
+     * @property int $id
      * @property-read \App\Models\WorkService $workService
      * @property-read \App\Models\EpcActivityName $activityName
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereWorkService($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereSlNo($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereActivityId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereStageName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereItemDescription($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc wherePercent($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc query()
@@ -1615,12 +1635,14 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property bool $is_one_time
      * @property string $name
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SafeguardEntry> $safeguardEntries
      * @property-read int|null $safeguardEntries_count
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereIsOneTime($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereDeletedAt($value)
@@ -2254,12 +2276,14 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property float|null $budget
      * @property string $name
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
      * @property-read int|null $users_count
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereBudget($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department newModelQuery()
@@ -3193,8 +3217,18 @@ namespace App\Models {
     /**
      * App\Models\EpcActivityName
      *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string $name
+     * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\AlreadyDefineEpc> $alreadyDefineEpc
      * @property-read int|null $alreadyDefineEpc_count
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName query()
@@ -3503,7 +3537,9 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property float|null $amount
      * @property float|null $percent
-     * @property string $item_description
+     * @property string|null $item_description
+     * @property string|null $stage_name
+     * @property string $activity_name
      * @property string $sl_no
      * @property mixed $sub_package_project_id
      * @property int $id
@@ -3511,6 +3547,8 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereSubPackageProjectId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereSlNo($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereActivityName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereStageName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereItemDescription($value)
      * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData wherePercent($value)
      * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereAmount($value)
@@ -5105,7 +5143,25 @@ namespace App\Models {
     /**
      * App\Models\MediaFile
      *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property float|null $long
+     * @property float|null $lat
+     * @property array|null $meta_data
+     * @property string $type
+     * @property string $path
+     * @property int $id
      * @property-read mixed $url
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile wherePath($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereType($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereMetaData($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereLat($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereLong($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile query()
@@ -5764,6 +5820,7 @@ namespace App\Models {
      * @property mixed $package_sub_category_id
      * @property mixed $package_category_id
      * @property mixed $project_id
+     * @property mixed $package_component_id
      * @property int $id
      * @property-read mixed $has_work_program
      * @property-read \App\Models\Project $project
@@ -5782,6 +5839,7 @@ namespace App\Models {
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Contract> $contracts
      * @property-read int|null $contracts_count
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject wherePackageComponentId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject whereProjectId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject wherePackageCategoryId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject wherePackageSubCategoryId($value)
@@ -6109,6 +6167,7 @@ namespace App\Models {
     /**
      * App\Models\Page
      *
+     * @property string|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property boolean $status
@@ -6118,10 +6177,12 @@ namespace App\Models {
      * @property string|null $body_hindi
      * @property string|null $body_eng
      * @property string $slug
+     * @property string|null $title_hi
      * @property string $title
      * @property int $id
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereTitle($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereTitleHi($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereSlug($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereBodyEng($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereBodyHindi($value)
@@ -6131,6 +6192,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page query()
@@ -6434,7 +6496,31 @@ namespace App\Models {
     /**
      * App\Models\PhysicalBoqProgress
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property decimal:7|null $long
+     * @property decimal:7|null $lat
+     * @property array|null $media
+     * @property \Illuminate\Support\Carbon|null $progress_submitted_date
+     * @property float $amount
+     * @property float $qty
+     * @property mixed $boq_entry_id
+     * @property mixed $sub_package_project_id
+     * @property int $id
      * @property-read \App\Models\BoqEntryData $boqEntry
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereSubPackageProjectId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereBoqEntryId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereQty($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereAmount($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereProgressSubmittedDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereMedia($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereLat($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereLong($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress query()
@@ -6738,8 +6824,28 @@ namespace App\Models {
     /**
      * App\Models\PhysicalEpcProgress
      *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property array|null $images
+     * @property \Illuminate\Support\Carbon|null $progress_submitted_date
+     * @property string|null $items
+     * @property float|null $amount
+     * @property float|null $percent
+     * @property mixed $epcentry_data_id
+     * @property int $id
      * @property-read mixed $media_files
      * @property-read \App\Models\EpcEntryData $epcentryData
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereEpcentryDataId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress wherePercent($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereAmount($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereItems($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereProgressSubmittedDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereImages($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress query()
@@ -8969,6 +9075,7 @@ namespace App\Models {
     /**
      * App\Models\SafeguardEntry
      *
+     * @property boolean $is_validity
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
@@ -8993,6 +9100,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry whereIsValidity($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry query()
@@ -9296,11 +9404,37 @@ namespace App\Models {
     /**
      * App\Models\SocialSafeguardEntry
      *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $date_of_entry
+     * @property \Illuminate\Support\Carbon|null $validity_date
+     * @property string|null $remarks
+     * @property array|null $photos_documents_case_studies
+     * @property bool|null $yes_no
+     * @property mixed $contraction_phase_id
+     * @property mixed $social_compliance_id
+     * @property mixed $sub_package_project_id
+     * @property mixed $safeguard_entry_id
+     * @property int $id
      * @property-read mixed $is_locked
      * @property-read \App\Models\SafeguardEntry $safeguardEntry
      * @property-read \App\Models\SubPackageProject $subPackageProject
      * @property-read \App\Models\SafeguardCompliance $socialCompliance
      * @property-read \App\Models\ContractionPhase $contractionPhase
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereSafeguardEntryId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereSubPackageProjectId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereSocialComplianceId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereContractionPhaseId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereYesNo($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry wherePhotosDocumentsCaseStudies($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereRemarks($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereValidityDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereDateOfEntry($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry query()
@@ -9922,6 +10056,8 @@ namespace App\Models {
     /**
      * App\Models\SubPackageProject
      *
+     * @property float|null $long
+     * @property float|null $lat
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
@@ -9940,6 +10076,8 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject whereLat($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject whereLong($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject query()
@@ -10598,7 +10736,17 @@ namespace App\Models {
     /**
      * App\Models\WorkService
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property mixed $department_id
+     * @property string $name
+     * @property int $id
      * @property-read \App\Models\Department $department
+     * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService whereDepartmentId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService query()
