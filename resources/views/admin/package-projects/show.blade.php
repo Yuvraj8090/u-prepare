@@ -17,12 +17,7 @@
                     <br />
                     <i class="fas fa-info-circle me-2"></i> Package No : {{ $packageProject->package_number }}
                 </p>
-                {{-- <div>
-                    <a href="{{ route('admin.package-projects.edit', $packageProject) }}"
-                        class="btn btn-sm btn-outline-primary">
-                        <i class="fas fa-edit me-1"></i> Edit
-                    </a>
-                </div> --}}
+                
                 <a href="{{ route('admin.package-projects.index') }}" class="btn btn-sm btn-info">
                     <i class="fas fa-arrow-left me-1"></i> Back to View All Packages
                 </a>
@@ -100,7 +95,7 @@
 
 
         <!-- Approval Status Section -->
-        <div class="row">
+        <div class="row mt-3">
             <!-- DEC Approval -->
             <div class="col-md-6 mb-4">
                 <div class="card h-100">
@@ -116,9 +111,9 @@
                             <label class="form-label text-muted">Status</label>
                             <p class="form-control-static">
                                 @if ($packageProject->dec_approved)
-                                    <span class="badge bg-success">Approved</span>
+                                    <span class="badge bg-success text-white">Approved</span>
                                 @else
-                                    <span class="badge bg-secondary">Pending</span>
+                                    <span class="badge bg-secondary text-white">Pending</span>
                                 @endif
                             </p>
                         </div>
@@ -167,9 +162,9 @@
                             <label class="form-label text-muted">Status</label>
                             <p class="form-control-static">
                                 @if ($packageProject->hpc_approved)
-                                    <span class="badge bg-success">Approved</span>
+                                    <span class="badge bg-success text-white">Approved</span>
                                 @else
-                                    <span class="badge bg-secondary">Pending</span>
+                                    <span class="badge bg-secondary text-white">Pending</span>
                                 @endif
                             </p>
                         </div>

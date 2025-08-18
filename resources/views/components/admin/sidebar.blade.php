@@ -32,17 +32,13 @@
             </a>
         </div>
 
-        <!-- Profile Info -->
+        <!-- Profile -->
         <div class="profile clearfix text-center mt-3">
             @php
-                $name = $user->name;
-                $nameParts = explode(' ', trim($name));
-                $initials = '';
-                if (count($nameParts) > 1) {
-                    $initials = strtoupper($nameParts[0][0] . $nameParts[1][0]);
-                } else {
-                    $initials = strtoupper(substr($nameParts[0], 0, 2));
-                }
+                $nameParts = explode(' ', trim($user->name));
+                $initials = count($nameParts) > 1
+                    ? strtoupper($nameParts[0][0] . $nameParts[1][0])
+                    : strtoupper(substr($nameParts[0], 0, 2));
             @endphp
 
             <img id="profileImage" style="height:150px; width:auto; display: block; margin: 0 auto;"
@@ -69,29 +65,21 @@
                     <!-- Dashboard -->
                     <li><a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Dashboard</a></li>
 
+                    <!-- Pages -->
+                    <li><a href="{{ route('admin.pages.list') }}"><i class="fa fa-file-alt"></i> Pages</a></li>
+
                     <!-- Projects -->
                     <li><a href="{{ route('admin.project.index') }}"><i class="fa fa-tasks"></i> Projects</a></li>
 
                     <!-- Package Projects -->
-                    <li><a href="{{ route('admin.package-projects.index') }}"><i class="fa fa-archive"></i> Package
-                            Projects</a></li>
-
+                    <li><a href="{{ route('admin.package-projects.index') }}"><i class="fa fa-archive"></i> Package Projects</a></li>
 
                     <!-- Procurement -->
                     <li>
                         <a><i class="fa fa-book"></i> Procurement <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li>
-                                <a href="{{ route('admin.procurement-details.index') }}">
-                                    <i class="fa fa-list"></i> Procurement Details
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('admin.procurement-work-programs.index') }}">
-                                    <i class="fa fa-calendar"></i> Work Programs
-                                </a>
-                            </li>
+                            <li><a href="{{ route('admin.procurement-details.index') }}"><i class="fa fa-list"></i> Procurement Details</a></li>
+                            <li><a href="{{ route('admin.procurement-work-programs.index') }}"><i class="fa fa-calendar"></i> Work Programs</a></li>
                         </ul>
                     </li>
 
@@ -99,78 +87,74 @@
                     <li>
                         <a><i class="fa fa-file-contract"></i> Contracts <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li>
-                                <a href="{{ route('admin.contracts.index') }}">
-                                    <i class="fa fa-list"></i> Manage Contracts
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('admin.contractors.index') }}">
-                                    <i class="fa fa-user-tie"></i> Contractors
-                                </a>
-                            </li>
+                            <li><a href="{{ route('admin.contracts.index') }}"><i class="fa fa-list"></i> Manage Contracts</a></li>
+                            <li><a href="{{ route('admin.contractors.index') }}"><i class="fa fa-user-tie"></i> Contractors</a></li>
                         </ul>
                     </li>
 
-                    <!-- Construction Phases -->
+                    <!-- Progress Updates -->
                     <li>
-                        <a href="{{ route('admin.contraction-phases.index') }}">
-                            <i class="fa fa-layer-group"></i> Construction Phases
-                        </a>
+                        <a><i class="fa fa-chart-line"></i> Progress Updates <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{ route('admin.financial-progress-updates.index') }}"><i class="fa fa-coins"></i> Financial Progress</a></li>
+                            <li><a href="{{ route('admin.physical_boq_progress.index') }}"><i class="fa fa-cubes"></i> Physical BOQ Progress</a></li>
+                            <li><a href="{{ route('admin.physical_epc_progress.index') }}"><i class="fa fa-industry"></i> Physical EPC Progress</a></li>
+                        </ul>
                     </li>
 
-                    <!-- Safeguard Compliances -->
+                    <!-- Safeguard -->
                     <li>
-                        <a href="{{ route('admin.safeguard-compliances.index') }}">
-                            <i class="fa fa-shield-alt"></i> Safeguard Compliances
-                        </a>
+                        <a><i class="fa fa-shield-alt"></i> Safeguard <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{ route('admin.safeguard-compliances.index') }}"><i class="fa fa-check-circle"></i> Compliance</a></li>
+                            <li><a href="{{ route('admin.safeguard_entries.index') }}"><i class="fa fa-shield"></i> Safeguard Entries</a></li>
+                            <li><a href="{{ route('admin.social_safeguard_entries.index') }}"><i class="fa fa-users"></i> Social Safeguards</a></li>
+                        </ul>
                     </li>
 
-                    <!-- Boqentry Data -->
+                    <!-- BOQ -->
                     <li>
                         <a><i class="fa fa-file-alt"></i> BOQ Entry <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ route('admin.boqentry.index') }}"><i class="fa fa-list"></i> List BOQ
-                                    Entries</a></li>
-                            <li><a href="{{ route('admin.boqentry.create') }}"><i class="fa fa-plus-circle"></i> Create
-                                    BOQ Entry</a></li>
-                            <!-- Upload handled in index or a dedicated view -->
+                            <li><a href="{{ route('admin.boqentry.index') }}"><i class="fa fa-list"></i> List BOQ</a></li>
+                            <li><a href="{{ route('admin.boqentry.create') }}"><i class="fa fa-plus-circle"></i> Create BOQ</a></li>
                         </ul>
                     </li>
 
-                    <!-- EPC Entry Data -->
+                    <!-- EPC -->
                     <li>
-                        <a><i class="fa fa-industry"></i> EPC Entry Data <span class="fa fa-chevron-down"></span></a>
+                        <a><i class="fa fa-industry"></i> EPC <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ route('admin.epcentry_data.index') }}"><i class="fa fa-list"></i> List EPC
-                                    Entries</a></li>
-                            <li><a href="{{ route('admin.epcentry_data.create') }}"><i class="fa fa-plus-circle"></i>
-                                    Create EPC Entry</a></li>
+                            <li><a href="{{ route('admin.epcentry_data.index') }}"><i class="fa fa-list"></i> EPC Entries</a></li>
+                            <li><a href="{{ route('admin.epcentry_data.create') }}"><i class="fa fa-plus-circle"></i> Add EPC</a></li>
+                            <li><a href="{{ route('admin.already_define_epc.index') }}"><i class="fa fa-check"></i> Already Defined EPC</a></li>
                         </ul>
                     </li>
+
+                    <!-- Work Services -->
+                    <li><a href="{{ route('admin.work_services.index') }}"><i class="fa fa-cogs"></i> Work Services</a></li>
+
+                    <!-- Admin -->
                     <li>
-                        <a href="{{ route('admin.already_define_epc.index') }}">
-                            <i class="fa fa-check-square"></i> Already Define EPC
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.work_services.index') }}">
-                            <i class="fa fa-check-square"></i> Work Services
-                        </a>
-                    </li>
-                    <!-- Admin Panel -->
-                    <li>
-                        <a><i class="fa fa-shield"></i> Admin Panel <span class="fa fa-chevron-down"></span></a>
+                        <a><i class="fa fa-user-shield"></i> Admin Panel <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{{ route('admin.users.index') }}"><i class="fa fa-user"></i> Users</a></li>
-                            <li><a href="{{ route('admin.roles.index') }}"><i class="fa fa-id-badge"></i> Roles</a>
-                            </li>
-                            <li><a href="{{ route('admin.departments.index') }}"><i class="fa fa-building"></i>
-                                    Departments</a></li>
-                            <li><a href="{{ route('admin.designations.index') }}"><i class="fa fa-briefcase"></i>
-                                    Designations</a></li>
-                            <li><a href="{{ route('admin.projects-category.index') }}"><i class="fa fa-tags"></i>
-                                    Project Categories</a></li>
+                            <li><a href="{{ route('admin.roles.index') }}"><i class="fa fa-id-badge"></i> Roles</a></li>
+                            <li><a href="{{ route('admin.departments.index') }}"><i class="fa fa-building"></i> Departments</a></li>
+                            <li><a href="{{ route('admin.designations.index') }}"><i class="fa fa-briefcase"></i> Designations</a></li>
+                            <li><a href="{{ route('admin.projects-category.index') }}"><i class="fa fa-tags"></i> Project Categories</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Navbar Items -->
+                    <li><a href="{{ route('admin.navbar-items.index') }}"><i class="fa fa-bars"></i> Navbar Items</a></li>
+
+                    <!-- Media -->
+                    <li>
+                        <a><i class="fa fa-photo-video"></i> Media <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{ route('admin.media.index') }}"><i class="fa fa-folder"></i> Media Files</a></li>
+                            <li><a href="{{ route('admin.media.gallery') }}"><i class="fa fa-images"></i> Gallery</a></li>
                         </ul>
                     </li>
 
@@ -178,8 +162,7 @@
                     <li>
                         <a><i class="fa fa-cog"></i> Settings <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ route('profile.show') }}"><i class="fa fa-user-circle"></i> My Profile</a>
-                            </li>
+                            <li><a href="{{ route('profile.show') }}"><i class="fa fa-user-circle"></i> My Profile</a></li>
                         </ul>
                     </li>
 

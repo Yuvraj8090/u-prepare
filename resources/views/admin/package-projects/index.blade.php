@@ -36,10 +36,11 @@
                 <x-admin.data-table 
                     id="package-projects-table" 
                     :headers="[
-                        'Package Name', 
-                        'Package Number', 
+                        'Package Details', 
                         'Budget (₹)', 
-                        'District', 
+                        'Location', 
+                        'Procurement', 
+                        'Contracts',
                         'Status', 
                         'Actions'
                     ]" 
@@ -52,65 +53,184 @@
                 >
                     @foreach ($packageProjects as $project)
                         <tr>
-                            <!-- Package Name -->
+                            <!-- Package Details -->
                             <td>
-                                <a href="{{ route('admin.package-projects.show', $project->id) }}" class="text-primary fw-semibold">
-                                    {{ $project->package_name }}
-                                </a>
-                                <div class="small text-muted">
-                                    {{ $project->category?->name ?? 'N/A' }}
+                                <div class="d-flex flex-column">
+                                    <!-- Main Title -->
+                                    <a href="{{ route('admin.package-projects.show', $project->id) }}" 
+                                       class="fw-bold text-primary mb-1">
+                                        {{ $project->package_name }}
+                                    </a>
+                                    
+                                    <!-- Package Number -->
+                                    <span class="text-muted small mb-1">
+                                        <i class="fas fa-hashtag"></i> {{ $project->package_number }}
+                                    </span>
+                                    
+                                    <!-- Categories -->
+                                    <div class="d-flex flex-wrap gap-1 mb-1">
+                                        @if($project->subCategory?->name)
+                                            <span class="badge bg-info text-white">
+                                                <i class="fas fa-tag"></i> {{ $project->subCategory->name }}
+                                            </span>
+                                        @endif
+                                        
+                                        @if($project->category?->name)
+                                            <span class="badge bg-primary text-white">
+                                                <i class="fas fa-tags"></i> {{ $project->category->name }}
+                                            </span>
+                                        @endif
+                                        
+                                        @if($project->department?->name)
+                                            <span class="badge bg-success text-white">
+                                                <i class="fas fa-building"></i> {{ $project->department->name }}
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
                             </td>
 
-                            <!-- Package Number -->
-                            <td>{{ $project->package_number }}</td>
-
                             <!-- Budget -->
-                            <td>
-                                ₹{{ number_format($project->estimated_budget_incl_gst, 2) }}
-                            </td>
-
-                            <!-- District / Block -->
-                            <td>
-                                {{ $project->district?->name ?? 'N/A' }}
-                                @if($project->block?->name)
+                            <td class="align-middle">
+                                <div class="fw-bold text-success">
+                                    ₹{{ number_format($project->estimated_budget_incl_gst, 2) }}
+                                </div>
+                                @if($project->workPrograms->isNotEmpty())
                                     <div class="small text-muted">
-                                        {{ $project->block->name }}
+                                        {{ $project->workPrograms->count() }} work programs
                                     </div>
                                 @endif
                             </td>
 
+                            <!-- Location -->
+                            <td class="align-middle">
+                                <div class="fw-semibold">
+                                    {{ $project->district?->name ?? 'N/A' }}
+                                </div>
+                                @if($project->block?->name)
+                                    <div class="small text-muted">
+                                        <i class="fas fa-map-marker-alt"></i> {{ $project->block->name }}
+                                    </div>
+                                @endif
+                            </td>
+
+                            <!-- Procurement -->
+                            <td class="align-middle">
+                                @if($project->procurementDetail)
+                                    <div class="fw-semibold">
+                                        {{ $project->procurementDetail->method_of_procurement }}
+                                    </div>
+                                    <div class="small">
+                                        <span class="badge bg-secondary">
+                                            {{ $project->procurementDetail->type_of_procurement }}
+                                        </span>
+                                    </div>
+                                    @if($project->procurementDetail->tender_fee)
+                                        <div class="small text-muted">
+                                            Fee: ₹{{ number_format($project->procurementDetail->tender_fee, 2) }}
+                                        </div>
+                                    @endif
+                                @else
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fas fa-exclamation-circle"></i> Not Configured
+                                    </span>
+                                @endif
+                            </td>
+
+                            <!-- Contracts -->
+                            <td class="align-middle">
+                                @if($project->contracts->isNotEmpty())
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-outline-info dropdown-toggle" 
+                                                type="button" 
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                            {{ $project->contracts->count() }} Contract(s)
+                                        </button>
+                                        <ul class="dropdown-menu shadow-sm p-2" style="min-width: 300px;">
+                                            @foreach($project->contracts as $contract)
+                                                <li class="mb-2 p-2 border-bottom">
+                                                    <div class="fw-bold">
+                                                        #{{ $contract->contract_number }}
+                                                    </div>
+                                                    <div class="small">
+                                                        <span class="text-success fw-semibold">
+                                                            ₹{{ number_format($contract->contract_value, 2) }}
+                                                        </span>
+                                                        @if($contract->contractor)
+                                                            <div class="text-muted">
+                                                                <i class="fas fa-industry"></i> {{ $contract->contractor->company_name }}
+                                                            </div>
+                                                        @endif
+                                                        @if($contract->subProjects->isNotEmpty())
+                                                            <div class="mt-1">
+                                                                <span class="badge bg-info">
+                                                                    {{ $contract->subProjects->count() }} Sub-projects
+                                                                </span>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @else
+                                    <span class="badge bg-secondary">
+                                        <i class="fas fa-times-circle"></i> No Contracts
+                                    </span>
+                                @endif
+                            </td>
+
                             <!-- Status -->
-                            <td>
-                                <div class="d-flex flex-column">
-                                    <span class="badge bg-{{ $project->dec_approved ? 'success' : 'secondary' }} mb-1">
-                                        DEC: {{ $project->dec_approved ? 'Approved' : 'Pending' }}
+                            <td class="align-middle">
+                                <div class="d-flex flex-column gap-1">
+                                    <span class="badge bg-{{ $project->dec_approved ? 'success' : 'secondary' }}">
+                                        <i class="fas fa-check-circle"></i> DEC: {{ $project->dec_approved ? 'Approved' : 'Pending' }}
                                     </span>
                                     <span class="badge bg-{{ $project->hpc_approved ? 'success' : 'secondary' }}">
-                                        HPC: {{ $project->hpc_approved ? 'Approved' : 'Pending' }}
+                                        <i class="fas fa-check-circle"></i> HPC: {{ $project->hpc_approved ? 'Approved' : 'Pending' }}
                                     </span>
+                                    @if($project->is_active)
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-circle-check"></i> Active
+                                        </span>
+                                    @else
+                                        <span class="badge bg-danger">
+                                            <i class="fas fa-circle-pause"></i> Inactive
+                                        </span>
+                                    @endif
                                 </div>
                             </td>
 
                             <!-- Actions -->
-                            <td>
-                                <div class="d-flex justify-content-end gap-2">
+                            <td class="align-middle">
+                                <div class="d-flex justify-content-end gap-1">
+                                    <!-- View Button -->
                                     <a href="{{ route('admin.package-projects.show', $project->id) }}" 
-                                       class="btn btn-sm btn-outline-info" title="View Details">
+                                       class="btn btn-sm btn-info text-white" 
+                                       title="View Details"
+                                       data-bs-toggle="tooltip">
                                         <i class="fas fa-eye"></i>
                                     </a>
-
+                                    
+                                    <!-- Edit Button -->
                                     <a href="{{ route('admin.package-projects.edit', $project->id) }}" 
-                                       class="btn btn-sm btn-outline-primary" title="Edit">
+                                       class="btn btn-sm btn-primary" 
+                                       title="Edit"
+                                       data-bs-toggle="tooltip">
                                         <i class="fas fa-edit"></i>
                                     </a>
-
+                                    
+                                    <!-- Delete Button -->
                                     <form action="{{ route('admin.package-projects.destroy', $project->id) }}" 
                                           method="POST" 
                                           onsubmit="return confirm('Are you sure you want to delete this package project?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <button type="submit" 
+                                                class="btn btn-sm btn-danger" 
+                                                title="Delete"
+                                                data-bs-toggle="tooltip">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
@@ -122,4 +242,16 @@
             </div>
         </div>
     </div>
+
+   
+        <script>
+            // Initialize tooltips
+            document.addEventListener('DOMContentLoaded', function() {
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+            });
+        </script>
+    
 </x-app-layout>

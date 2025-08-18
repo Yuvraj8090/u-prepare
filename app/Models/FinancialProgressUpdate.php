@@ -19,7 +19,6 @@ class FinancialProgressUpdate extends Model
         'media',
     ];
 
-    // Cast JSON columns
     protected $casts = [
         'bill_serial_no' => 'array',
         'media' => 'array',
@@ -27,9 +26,15 @@ class FinancialProgressUpdate extends Model
         'finance_amount' => 'decimal:2',
     ];
 
-    // Relationship to sub_package_projects
     public function project()
     {
         return $this->belongsTo(SubPackageProject::class, 'project_id');
     }
+    public function scopeForProjectOnDate($query, int $projectId, string $date)
+{
+    return $query->where('project_id', $projectId)
+        ->whereDate('submit_date', $date)
+        ->orderBy('submit_date', 'desc');
+}
+
 }

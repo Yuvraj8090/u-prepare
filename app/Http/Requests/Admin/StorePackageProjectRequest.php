@@ -28,12 +28,12 @@ class StorePackageProjectRequest extends FormRequest
             'dec_approved' => ['required', 'boolean'],
             'dec_approval_date' => ['nullable', 'date'],
             'dec_letter_number' => ['nullable', 'string', 'max:100'],
-            'dec_document_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
+            'dec_document_path' => ['nullable', 'file', 'mimes:pdf', 'max:20480'],
 
             'hpc_approved' => ['required', 'boolean'],
             'hpc_approval_date' => ['nullable', 'date'],
             'hpc_letter_number' => ['nullable', 'string', 'max:100'],
-            'hpc_document_path' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
+            'hpc_document_path' => ['nullable', 'file', 'mimes:pdf', 'max:20480'],
         ];
     }
 

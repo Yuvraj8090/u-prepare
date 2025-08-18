@@ -20,9 +20,14 @@ class ProcurementDetail extends Model
         'bid_validity_days',
         'emd_validity_days',
     ];
-protected $casts = [
-    'publication_date' => 'date',
-];
+
+    protected $casts = [
+        'publication_date'       => 'date',
+        'tender_fee'             => 'decimal:2', // ensures numeric with 2 decimals
+        'earnest_money_deposit'  => 'decimal:2',
+        'bid_validity_days'      => 'integer',
+        'emd_validity_days'      => 'integer',
+    ];
 
     public function packageProject()
     {
