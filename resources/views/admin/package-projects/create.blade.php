@@ -95,7 +95,18 @@
                                     @endforeach
                                 </select>
                             </div>
-                            
+                            <div class="col-md-4 mb-3">
+    <label for="package_component_id" class="form-label">Package Component</label>
+    <select name="package_component_id" id="package_component_id" class="form-select">
+        <option value="">Select Package Component</option>
+        @foreach ($components as $component)
+            <option value="{{ $component->id }}" @selected(old('package_component_id') == $component->id)>
+                {{ $component->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
                             <div class="col-md-6 mb-3">
                                 <label for="package_name" class="form-label">Package Name <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="package_name" name="package_name" 

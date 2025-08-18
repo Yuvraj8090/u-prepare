@@ -89,6 +89,7 @@
 
                         <div class="row">
                             <div class="col-md-2 mb-3 ">
+
                                 <x-bootstrap.dropdown
     name="project_id" 
     label="Related Project"
@@ -105,6 +106,22 @@
     class="w-100"
 />
                             </div>
+<div class="col-md-4 mb-3">
+    <x-bootstrap.dropdown
+        id="package_component_id"
+        name="package_component_id"
+        label="Package Component"
+        :items="$components->map(function($component) {
+            return [
+                'value' => $component->id,
+                'label' => $component->name
+            ];
+        })->toArray()"
+        :selected="old('package_component_id', $packageProject->package_component_id ?? null)"
+        placeholder="Select Package Component"
+        allowClear
+    />
+</div>
 
                             <div class="col-md-4 mb-3">
                                 <label for="package_name" class="form-label">Package Name <span

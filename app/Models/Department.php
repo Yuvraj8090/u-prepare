@@ -11,7 +11,7 @@ class Department extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name','budget'];
 
     // Example relation if you link it to users later
     public function users()

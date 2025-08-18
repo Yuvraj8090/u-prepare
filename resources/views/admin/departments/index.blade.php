@@ -42,14 +42,14 @@
             </div>
 
             <div class="card-body">
-                <x-admin.data-table id="departments-table" :headers="['ID', 'Name', 'Created At', 'Actions']" :excel="true" :print="true"
+                <x-admin.data-table id="departments-table" :headers="['ID', 'Name', 'Budget', 'Actions']" :excel="true" :print="true"
                     title="Departments Export" searchPlaceholder="Search departments..." resourceName="departments"
                     :pageLength="10">
                     @foreach ($departments as $department)
                         <tr>
                             <td>{{ $department->id }}</td>
                             <td>{{ $department->name }}</td>
-                            <td>{{ $department->created_at->format('M d, Y h:i A') }}</td>
+                            <td> ₹ {{ formatToCr($department->budget) }}</td>
                             <td>
                                 <div class="d-flex justify-content-end gap-2">
                                     <a href="{{ route('admin.departments.edit', $department) }}"

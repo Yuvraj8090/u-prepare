@@ -5,8 +5,28 @@ namespace App\Models {
     /**
      * App\Models\AlreadyDefineEpc
      *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property float $percent
+     * @property string|null $item_description
+     * @property string $stage_name
+     * @property mixed $activity_id
+     * @property mixed $sl_no
+     * @property mixed $work_service
+     * @property int $id
      * @property-read \App\Models\WorkService $workService
      * @property-read \App\Models\EpcActivityName $activityName
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereWorkService($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereSlNo($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereActivityId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereStageName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereItemDescription($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc wherePercent($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<AlreadyDefineEpc>|AlreadyDefineEpc query()
@@ -1615,12 +1635,14 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property bool $is_one_time
      * @property string $name
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SafeguardEntry> $safeguardEntries
      * @property-read int|null $safeguardEntries_count
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereIsOneTime($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereDeletedAt($value)
@@ -2254,12 +2276,14 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property float|null $budget
      * @property string $name
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
      * @property-read int|null $users_count
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereBudget($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Department>|Department newModelQuery()
@@ -3193,8 +3217,18 @@ namespace App\Models {
     /**
      * App\Models\EpcActivityName
      *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string $name
+     * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\AlreadyDefineEpc> $alreadyDefineEpc
      * @property-read int|null $alreadyDefineEpc_count
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<EpcActivityName>|EpcActivityName query()
@@ -3503,7 +3537,9 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property float|null $amount
      * @property float|null $percent
-     * @property string $item_description
+     * @property string|null $item_description
+     * @property string|null $stage_name
+     * @property string $activity_name
      * @property string $sl_no
      * @property mixed $sub_package_project_id
      * @property int $id
@@ -3511,6 +3547,8 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereSubPackageProjectId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereSlNo($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereActivityName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereStageName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereItemDescription($value)
      * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData wherePercent($value)
      * @method static \Illuminate\Database\Eloquent\Builder<EpcEntryData>|EpcEntryData whereAmount($value)
@@ -5105,7 +5143,25 @@ namespace App\Models {
     /**
      * App\Models\MediaFile
      *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property float|null $long
+     * @property float|null $lat
+     * @property array|null $meta_data
+     * @property string $type
+     * @property string $path
+     * @property int $id
      * @property-read mixed $url
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile wherePath($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereType($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereMetaData($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereLat($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereLong($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<MediaFile>|MediaFile query()
@@ -5740,6 +5796,321 @@ namespace App\Models {
     }
 
     /**
+     * App\Models\PackageComponent
+     *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property float|null $budget
+     * @property string $name
+     * @property int $id
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereBudget($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent query()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent select(mixed $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent selectSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query, string $as)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent selectRaw(string $expression)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent fromSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query, string $as)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent fromRaw(string $expression, mixed $bindings)
+     * @method static array createSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query)
+     * @method static array parseSub(mixed $query)
+     * @method static mixed prependDatabaseNameIfCrossDatabaseQuery(mixed $query)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent addSelect(mixed $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent distinct()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent from(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|\Illuminate\Contracts\Database\Query\Expression|string $table, string|null $as)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent useIndex(string $index)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent forceIndex(string $index)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent ignoreIndex(string $index)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent join(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second, string $type, bool $where)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent joinWhere(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string $operator, \Illuminate\Contracts\Database\Query\Expression|string $second, string $type)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent joinSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query, string $as, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second, string $type, bool $where)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent joinLateral(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent leftJoinLateral(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent leftJoin(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent leftJoinWhere(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent leftJoinSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query, string $as, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent rightJoin(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|string $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent rightJoinWhere(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string $operator, \Illuminate\Contracts\Database\Query\Expression|string $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent rightJoinSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query, string $as, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent crossJoin(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|\Illuminate\Contracts\Database\Query\Expression|string|null $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent crossJoinSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query, string $as)
+     * @method static \Illuminate\Database\Query\JoinClause newJoinClause(string $type, \Illuminate\Contracts\Database\Query\Expression|string $table)
+     * @method static \Illuminate\Database\Query\JoinLateralClause newJoinLateralClause(string $type, \Illuminate\Contracts\Database\Query\Expression|string $table)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent mergeWheres(array $wheres, array $bindings)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent where(\Closure|string|array|\Illuminate\Contracts\Database\Query\Expression $column, mixed $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent addArrayOfWheres(array $column, string $boolean, string $method)
+     * @method static array prepareValueAndOperator(string $value, string $operator, bool $useDefault)
+     * @method static bool invalidOperatorAndValue(string $operator, mixed $value)
+     * @method static bool invalidOperator(string $operator)
+     * @method static bool isBitwiseOperator(string $operator)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhere(\Closure|string|array|\Illuminate\Contracts\Database\Query\Expression $column, mixed $operator, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereNot(\Closure|string|array|\Illuminate\Contracts\Database\Query\Expression $column, mixed $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereNot(\Closure|string|array|\Illuminate\Contracts\Database\Query\Expression $column, mixed $operator, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereColumn(\Illuminate\Contracts\Database\Query\Expression|string|array $first, string|null $operator, string|null $second, string|null $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereColumn(\Illuminate\Contracts\Database\Query\Expression|string|array $first, string|null $operator, string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereRaw(\Illuminate\Contracts\Database\Query\Expression|string $sql, mixed $bindings, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereRaw(string $sql, mixed $bindings)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereLike(\Illuminate\Contracts\Database\Query\Expression|string $column, string $value, bool $caseSensitive, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereLike(\Illuminate\Contracts\Database\Query\Expression|string $column, string $value, bool $caseSensitive)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereNotLike(\Illuminate\Contracts\Database\Query\Expression|string $column, string $value, bool $caseSensitive, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereNotLike(\Illuminate\Contracts\Database\Query\Expression|string $column, string $value, bool $caseSensitive)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereIn(\Illuminate\Contracts\Database\Query\Expression|string $column, mixed $values, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereIn(\Illuminate\Contracts\Database\Query\Expression|string $column, mixed $values)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereNotIn(\Illuminate\Contracts\Database\Query\Expression|string $column, mixed $values, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereNotIn(\Illuminate\Contracts\Database\Query\Expression|string $column, mixed $values)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereIntegerInRaw(string $column, \Illuminate\Contracts\Support\Arrayable|array $values, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereIntegerInRaw(string $column, \Illuminate\Contracts\Support\Arrayable|array $values)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereIntegerNotInRaw(string $column, \Illuminate\Contracts\Support\Arrayable|array $values, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereIntegerNotInRaw(string $column, \Illuminate\Contracts\Support\Arrayable|array $values)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereNull(string|array|\Illuminate\Contracts\Database\Query\Expression $columns, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereNull(string|array|\Illuminate\Contracts\Database\Query\Expression $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereNotNull(string|array|\Illuminate\Contracts\Database\Query\Expression $columns, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereBetween(\Illuminate\Contracts\Database\Query\Expression|string $column, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereBetweenColumns(\Illuminate\Contracts\Database\Query\Expression|string $column, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereBetween(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereBetweenColumns(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereNotBetween(\Illuminate\Contracts\Database\Query\Expression|string $column, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereNotBetweenColumns(\Illuminate\Contracts\Database\Query\Expression|string $column, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereNotBetween(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereNotBetweenColumns(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereValueBetween(mixed $value, array{: \Illuminate\Contracts\Database\Query\Expression|string, : \Illuminate\Contracts\Database\Query\Expression|string} $columns, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereValueBetween(mixed $value, array{: \Illuminate\Contracts\Database\Query\Expression|string, : \Illuminate\Contracts\Database\Query\Expression|string} $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereValueNotBetween(mixed $value, array{: \Illuminate\Contracts\Database\Query\Expression|string, : \Illuminate\Contracts\Database\Query\Expression|string} $columns, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereValueNotBetween(mixed $value, array{: \Illuminate\Contracts\Database\Query\Expression|string, : \Illuminate\Contracts\Database\Query\Expression|string} $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereNotNull(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereDate(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|null $operator, \DateTimeInterface|string|null $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereDate(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|null $operator, \DateTimeInterface|string|null $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereTime(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|null $operator, \DateTimeInterface|string|null $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereTime(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|null $operator, \DateTimeInterface|string|null $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereDay(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|int|null $operator, \DateTimeInterface|string|int|null $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereDay(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|int|null $operator, \DateTimeInterface|string|int|null $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereMonth(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|int|null $operator, \DateTimeInterface|string|int|null $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereMonth(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|int|null $operator, \DateTimeInterface|string|int|null $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereYear(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|int|null $operator, \DateTimeInterface|string|int|null $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereYear(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|int|null $operator, \DateTimeInterface|string|int|null $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent addDateBasedWhere(string $type, \Illuminate\Contracts\Database\Query\Expression|string $column, string $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereNested(string $boolean)
+     * @method static \Illuminate\Database\Query\Builder forNestedWhere()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent addNestedWhereQuery(\Illuminate\Database\Query\Builder $query, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereSub(\Illuminate\Contracts\Database\Query\Expression|string $column, string $operator, \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $callback, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereExists(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $callback, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereExists(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $callback, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereNotExists(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $callback, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereNotExists(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $callback)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent addWhereExistsQuery(string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereRowValues(array $columns, string $operator, array $values, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereRowValues(array $columns, string $operator, array $values)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereJsonContains(string $column, mixed $value, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereJsonContains(string $column, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereJsonDoesntContain(string $column, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereJsonDoesntContain(string $column, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereJsonOverlaps(string $column, mixed $value, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereJsonOverlaps(string $column, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereJsonDoesntOverlap(string $column, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereJsonDoesntOverlap(string $column, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereJsonContainsKey(string $column, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereJsonContainsKey(string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereJsonDoesntContainKey(string $column, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereJsonDoesntContainKey(string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereJsonLength(string $column, mixed $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereJsonLength(string $column, mixed $operator, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent dynamicWhere(string $method, array $parameters)
+     * @method static void addDynamic(string $segment, string $connector, array $parameters, int $index)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereFullText(string|string[] $columns, string $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereFullText(string|string[] $columns, string $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereAll(\Illuminate\Contracts\Database\Query\Expression[]|\Closure[]|string[] $columns, mixed $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereAll(\Illuminate\Contracts\Database\Query\Expression[]|\Closure[]|string[] $columns, mixed $operator, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereAny(\Illuminate\Contracts\Database\Query\Expression[]|\Closure[]|string[] $columns, mixed $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereAny(\Illuminate\Contracts\Database\Query\Expression[]|\Closure[]|string[] $columns, mixed $operator, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereNone(\Illuminate\Contracts\Database\Query\Expression[]|\Closure[]|string[] $columns, mixed $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereNone(\Illuminate\Contracts\Database\Query\Expression[]|\Closure[]|string[] $columns, mixed $operator, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent groupBy(array|\Illuminate\Contracts\Database\Query\Expression|string ...$groups)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent groupByRaw(string $sql)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent having(\Illuminate\Contracts\Database\Query\Expression|\Closure|string $column, \DateTimeInterface|string|int|float|null $operator, \Illuminate\Contracts\Database\Query\Expression|\DateTimeInterface|string|int|float|null $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orHaving(\Illuminate\Contracts\Database\Query\Expression|\Closure|string $column, \DateTimeInterface|string|int|float|null $operator, \Illuminate\Contracts\Database\Query\Expression|\DateTimeInterface|string|int|float|null $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent havingNested(string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent addNestedHavingQuery(\Illuminate\Database\Query\Builder $query, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent havingNull(array|string $columns, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orHavingNull(string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent havingNotNull(array|string $columns, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orHavingNotNull(string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent havingBetween(string $column, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent havingRaw(string $sql, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orHavingRaw(string $sql)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orderBy(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|\Illuminate\Contracts\Database\Query\Expression|string $column, string $direction)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orderByDesc(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent latest(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent oldest(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent inRandomOrder(string|int $seed)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orderByRaw(string $sql, array $bindings)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent skip(int $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent offset(int $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent take(int $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent limit(int $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent groupLimit(int $value, string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent forPage(int $page, int $perPage)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent forPageBeforeId(int $perPage, int|null $lastId, string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent forPageAfterId(int $perPage, int|null $lastId, string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent reorder(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Contracts\Database\Query\Expression|string|null $column, string $direction)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent reorderDesc(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Contracts\Database\Query\Expression|string|null $column)
+     * @method static array removeExistingOrdersFor(string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent union(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $query, bool $all)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent unionAll(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $query)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent lock(string|bool $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent lockForUpdate()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent sharedLock()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent beforeQuery()
+     * @method static void applyBeforeQueryCallbacks()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent afterQuery()
+     * @method static mixed applyAfterQueryCallbacks(mixed $result)
+     * @method static string toSql()
+     * @method static string toRawSql()
+     * @method static PackageComponent|null find(int|string $id, string|\Illuminate\Contracts\Database\Query\Expression|(string|\Illuminate\Contracts\Database\Query\Expression)[] $columns)
+     * @method static mixed findOr(mixed $id, callable|string|\Illuminate\Contracts\Database\Query\Expression|(string|\Illuminate\Contracts\Database\Query\Expression)[] $columns, callable|null $callback)
+     * @method static mixed value(string $column)
+     * @method static mixed rawValue()
+     * @method static mixed soleValue(string $column)
+     * @method static \Illuminate\Support\Collection<int,\stdClass> get(string|\Illuminate\Contracts\Database\Query\Expression|(string|\Illuminate\Contracts\Database\Query\Expression)[] $columns)
+     * @method static array runSelect()
+     * @method static \Illuminate\Support\Collection withoutGroupLimitKeys(\Illuminate\Support\Collection $items)
+     * @method static \Illuminate\Pagination\LengthAwarePaginator paginate(int|\Closure $perPage, string|\Illuminate\Contracts\Database\Query\Expression|(string|\Illuminate\Contracts\Database\Query\Expression)[] $columns, string $pageName, int|null $page, \Closure|int|null $total)
+     * @method static \Illuminate\Contracts\Pagination\Paginator simplePaginate(int $perPage, string|\Illuminate\Contracts\Database\Query\Expression|(string|\Illuminate\Contracts\Database\Query\Expression)[] $columns, string $pageName, int|null $page)
+     * @method static \Illuminate\Contracts\Pagination\CursorPaginator cursorPaginate(int|null $perPage, string|\Illuminate\Contracts\Database\Query\Expression|(string|\Illuminate\Contracts\Database\Query\Expression)[] $columns, string $cursorName, \Illuminate\Pagination\Cursor|string|null $cursor)
+     * @method static \Illuminate\Support\Collection ensureOrderForCursorPagination(bool $shouldReverse)
+     * @method static int<0, max> getCountForPagination((string|\Illuminate\Contracts\Database\Query\Expression)[] $columns)
+     * @method static array runPaginationCountQuery((string|\Illuminate\Contracts\Database\Query\Expression)[] $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent cloneForPaginationCount()
+     * @method static (string|\Illuminate\Contracts\Database\Query\Expression)[] withoutSelectAliases((string|\Illuminate\Contracts\Database\Query\Expression)[] $columns)
+     * @method static \Illuminate\Support\LazyCollection<int,\stdClass> cursor()
+     * @method static void enforceOrderBy()
+     * @method static mixed pluck(\Illuminate\Contracts\Database\Query\Expression|string $column, string|null $key)
+     * @method static string|null stripTableForPluck(string $column)
+     * @method static \Illuminate\Support\Collection pluckFromObjectColumn(array $queryResult, string $column, string $key)
+     * @method static \Illuminate\Support\Collection pluckFromArrayColumn(array $queryResult, string $column, string $key)
+     * @method static string implode(string $column, string $glue)
+     * @method static bool exists()
+     * @method static bool doesntExist()
+     * @method static mixed existsOr()
+     * @method static mixed doesntExistOr()
+     * @method static int<0, max> count(\Illuminate\Contracts\Database\Query\Expression|string $columns)
+     * @method static mixed min(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static mixed max(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static mixed sum(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static mixed avg(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static mixed average(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static mixed aggregate(string $function, array $columns)
+     * @method static float|int numericAggregate(string $function, array $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent setAggregate(string $function, (\Illuminate\Contracts\Database\Query\Expression|string)[] $columns)
+     * @method static \TResult onceWithColumns((string|\Illuminate\Contracts\Database\Query\Expression)[] $columns, callable $callback)
+     * @method static bool insert()
+     * @method static int<0, max> insertOrIgnore()
+     * @method static int insertGetId(string|null $sequence)
+     * @method static int insertUsing(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query)
+     * @method static int insertOrIgnoreUsing(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query)
+     * @method static int<0, max> update()
+     * @method static int updateFrom()
+     * @method static bool updateOrInsert()
+     * @method static int upsert()
+     * @method static int<0, max> increment(string $column, float|int $amount)
+     * @method static int<0, max> incrementEach(array<string,float|int|numeric-string> $columns, array<string,mixed> $extra)
+     * @method static int<0, max> decrement(string $column, float|int $amount)
+     * @method static int<0, max> decrementEach(array<string,float|int|numeric-string> $columns, array<string,mixed> $extra)
+     * @method static int delete(mixed $id)
+     * @method static void truncate()
+     * @method static \Illuminate\Database\Query\Builder newQuery()
+     * @method static \Illuminate\Database\Query\Builder forSubQuery()
+     * @method static list<string> getColumns()
+     * @method static \Illuminate\Contracts\Database\Query\Expression raw(mixed $value)
+     * @method static \Illuminate\Support\Collection getUnionBuilders()
+     * @method static mixed getLimit()
+     * @method static mixed getOffset()
+     * @method static list getBindings()
+     * @method static array{select: list, from: list, join: list, where: list, groupBy: list, having: list, order: list, union: list, unionOrder: list} getRawBindings()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent setBindings(list $bindings, "select"|"from"|"join"|"where"|"groupBy"|"having"|"order"|"union"|"unionOrder" $type)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent addBinding(mixed $value, "select"|"from"|"join"|"where"|"groupBy"|"having"|"order"|"union"|"unionOrder" $type)
+     * @method static mixed castBinding(mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent mergeBindings(self $query)
+     * @method static list cleanBindings(array $bindings)
+     * @method static mixed flattenValue(mixed $value)
+     * @method static string defaultKeyName()
+     * @method static \Illuminate\Database\ConnectionInterface getConnection()
+     * @method static \Illuminate\Database\Query\Processors\Processor getProcessor()
+     * @method static \Illuminate\Database\Query\Grammars\Grammar getGrammar()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent useWritePdo()
+     * @method static bool isQueryable(mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent clone()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent cloneWithout()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent cloneWithoutBindings()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent dump(mixed ...$args)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent dumpRawSql()
+     * @method static void dd()
+     * @method static void ddRawSql()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent wherePast(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereNowOrPast(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWherePast(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereNowOrPast(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereFuture(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereNowOrFuture(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereFuture(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereNowOrFuture(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent wherePastOrFuture(array|string $columns, string $operator, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereToday(array|string $columns, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereBeforeToday(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereTodayOrBefore(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereAfterToday(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereTodayOrAfter(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereToday(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereBeforeToday(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereTodayOrBefore(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereAfterToday(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent orWhereTodayOrAfter(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent whereTodayBeforeOrAfter(array|string $columns, string $operator, string $boolean)
+     * @method static bool chunk(int $count, callable $callback)
+     * @method static mixed chunkMap(callable $callback, int $count)
+     * @method static bool each(callable $callback, int $count)
+     * @method static bool chunkById(int $count, callable $callback, string|null $column, string|null $alias)
+     * @method static bool chunkByIdDesc(int $count, callable $callback, string|null $column, string|null $alias)
+     * @method static bool orderedChunkById(int $count, callable $callback, string|null $column, string|null $alias, bool $descending)
+     * @method static bool eachById(callable $callback, int $count, string|null $column, string|null $alias)
+     * @method static mixed lazy(int $chunkSize)
+     * @method static mixed lazyById(int $chunkSize, string|null $column, string|null $alias)
+     * @method static mixed lazyByIdDesc(int $chunkSize, string|null $column, string|null $alias)
+     * @method static \Illuminate\Support\LazyCollection orderedLazyById(int $chunkSize, string|null $column, string|null $alias, bool $descending)
+     * @method static PackageComponent|null first(array|string $columns)
+     * @method static PackageComponent firstOrFail(array|string $columns, string|null $message)
+     * @method static PackageComponent sole(array|string $columns)
+     * @method static \Illuminate\Contracts\Pagination\CursorPaginator paginateUsingCursor(int $perPage, array|string $columns, string $cursorName, \Illuminate\Pagination\Cursor|string|null $cursor)
+     * @method static string getOriginalColumnNameForCursorPagination(\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $builder, string $parameter)
+     * @method static \Illuminate\Pagination\LengthAwarePaginator paginator(\Illuminate\Support\Collection $items, int $total, int $perPage, int $currentPage, array $options)
+     * @method static \Illuminate\Pagination\Paginator simplePaginator(\Illuminate\Support\Collection $items, int $perPage, int $currentPage, array $options)
+     * @method static \Illuminate\Pagination\CursorPaginator cursorPaginator(\Illuminate\Support\Collection $items, int $perPage, \Illuminate\Pagination\Cursor $cursor, array $options)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageComponent>|PackageComponent tap(callable $callback)
+     * @method static mixed pipe(callable $callback)
+     * @method static mixed when(callable|\TWhenParameter|null $value, callable|null $callback, callable|null $default)
+     * @method static mixed unless(callable|\TUnlessParameter|null $value, callable|null $callback, callable|null $default)
+     * @method static \Illuminate\Support\Collection explain()
+     * @method static mixed forwardCallTo(mixed $object, string $method, array $parameters)
+     * @method static mixed forwardDecoratedCallTo(mixed $object, string $method, array $parameters)
+     * @method static void throwBadMethodCallException(string $method)
+     * @method static void macro(string $name, object|callable $macro)
+     * @method static void mixin(object $mixin, bool $replace)
+     * @method static bool hasMacro(string $name)
+     * @method static void flushMacros()
+     * @method static mixed macroCall(string $method, array $parameters)
+     * @mixin \Illuminate\Database\Query\Builder
+     */
+    class PackageComponent extends \Illuminate\Database\Eloquent\Model
+    {
+        //
+    }
+
+    /**
      * App\Models\PackageProject
      *
      * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -5764,12 +6135,14 @@ namespace App\Models {
      * @property mixed $package_sub_category_id
      * @property mixed $package_category_id
      * @property mixed $project_id
+     * @property mixed $package_component_id
      * @property int $id
      * @property-read mixed $has_work_program
      * @property-read \App\Models\Project $project
      * @property-read \App\Models\ProjectsCategory $category
      * @property-read \App\Models\SubCategory $subCategory
      * @property-read \App\Models\Department $department
+     * @property-read \App\Models\PackageComponent $packageComponent
      * @property-read \App\Models\Constituency $vidhanSabha
      * @property-read \App\Models\Constituency $lokSabha
      * @property-read \App\Models\GeographyDistrict $district
@@ -5782,6 +6155,7 @@ namespace App\Models {
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Contract> $contracts
      * @property-read int|null $contracts_count
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject wherePackageComponentId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject whereProjectId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject wherePackageCategoryId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject wherePackageSubCategoryId($value)
@@ -6109,6 +6483,7 @@ namespace App\Models {
     /**
      * App\Models\Page
      *
+     * @property string|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property boolean $status
@@ -6118,10 +6493,12 @@ namespace App\Models {
      * @property string|null $body_hindi
      * @property string|null $body_eng
      * @property string $slug
+     * @property string|null $title_hi
      * @property string $title
      * @property int $id
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereTitle($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereTitleHi($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereSlug($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereBodyEng($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereBodyHindi($value)
@@ -6131,6 +6508,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Page>|Page query()
@@ -6434,7 +6812,31 @@ namespace App\Models {
     /**
      * App\Models\PhysicalBoqProgress
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property decimal:7|null $long
+     * @property decimal:7|null $lat
+     * @property array|null $media
+     * @property \Illuminate\Support\Carbon|null $progress_submitted_date
+     * @property float $amount
+     * @property float $qty
+     * @property mixed $boq_entry_id
+     * @property mixed $sub_package_project_id
+     * @property int $id
      * @property-read \App\Models\BoqEntryData $boqEntry
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereSubPackageProjectId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereBoqEntryId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereQty($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereAmount($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereProgressSubmittedDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereMedia($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereLat($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereLong($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<PhysicalBoqProgress>|PhysicalBoqProgress query()
@@ -6738,8 +7140,28 @@ namespace App\Models {
     /**
      * App\Models\PhysicalEpcProgress
      *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property array|null $images
+     * @property \Illuminate\Support\Carbon|null $progress_submitted_date
+     * @property string|null $items
+     * @property float|null $amount
+     * @property float|null $percent
+     * @property mixed $epcentry_data_id
+     * @property int $id
      * @property-read mixed $media_files
      * @property-read \App\Models\EpcEntryData $epcentryData
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereEpcentryDataId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress wherePercent($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereAmount($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereItems($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereProgressSubmittedDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereImages($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<PhysicalEpcProgress>|PhysicalEpcProgress query()
@@ -8969,6 +9391,7 @@ namespace App\Models {
     /**
      * App\Models\SafeguardEntry
      *
+     * @property boolean $is_validity
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
@@ -8993,6 +9416,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry whereIsValidity($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardEntry>|SafeguardEntry query()
@@ -9296,11 +9720,37 @@ namespace App\Models {
     /**
      * App\Models\SocialSafeguardEntry
      *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $date_of_entry
+     * @property \Illuminate\Support\Carbon|null $validity_date
+     * @property string|null $remarks
+     * @property array|null $photos_documents_case_studies
+     * @property bool|null $yes_no
+     * @property mixed $contraction_phase_id
+     * @property mixed $social_compliance_id
+     * @property mixed $sub_package_project_id
+     * @property mixed $safeguard_entry_id
+     * @property int $id
      * @property-read mixed $is_locked
      * @property-read \App\Models\SafeguardEntry $safeguardEntry
      * @property-read \App\Models\SubPackageProject $subPackageProject
      * @property-read \App\Models\SafeguardCompliance $socialCompliance
      * @property-read \App\Models\ContractionPhase $contractionPhase
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereSafeguardEntryId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereSubPackageProjectId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereSocialComplianceId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereContractionPhaseId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereYesNo($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry wherePhotosDocumentsCaseStudies($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereRemarks($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereValidityDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereDateOfEntry($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SocialSafeguardEntry>|SocialSafeguardEntry query()
@@ -9922,6 +10372,8 @@ namespace App\Models {
     /**
      * App\Models\SubPackageProject
      *
+     * @property float|null $long
+     * @property float|null $lat
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
@@ -9940,6 +10392,8 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject whereLat($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject whereLong($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SubPackageProject>|SubPackageProject query()
@@ -10598,7 +11052,17 @@ namespace App\Models {
     /**
      * App\Models\WorkService
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property mixed $department_id
+     * @property string $name
+     * @property int $id
      * @property-read \App\Models\Department $department
+     * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService whereDepartmentId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<WorkService>|WorkService query()

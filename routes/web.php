@@ -25,7 +25,9 @@ use App\Http\Controllers\Admin\PhysicalEpcProgressController;
 use App\Http\Controllers\Admin\WorkServiceController;
 use App\Http\Controllers\MediaFileController;
 use App\Http\Controllers\Admin\ProcurementDetailController;
+use App\Http\Controllers\Admin\PackageComponentController;
 use App\Http\Controllers\Admin\ProcurementWorkProgramController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/en/{slug}', [PageController::class, 'showPage'])->name('page.show');
 Route::get('/hi/{slug}', [PageController::class, 'showPageHi'])->name('page.show.hi');
@@ -37,6 +39,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+            Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+            
+            Route::resource('package-components', PackageComponentController::class);
+
             // routes/web.php
             Route::get('/pages', [PageController::class, 'listPages'])->name('pages.list');
             Route::get('/pages/create', [PageController::class, 'showCreateForm'])->name('pages.create.form');
@@ -131,7 +137,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::resource('projects-category', ProjectsCategoryController::class);
             Route::resource('package-projects', PackageProjectController::class);
         });
-    Route::get('admin/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::get('admin2/dashboard', function () {return view('dashboard');})->name('dashboard');
+    // Dashboard main page
 });
