@@ -1,110 +1,63 @@
-<div class="row mt-3">
-    <!-- HPC and DEC Approvals -->
-    <div class="col-md-12 mb-4">
-        <div class="card h-100">
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
             <div class="card-header bg-light">
-                <h6 class="mb-0">
 
-                    <span class="form-label text-muted h2"> Procuremnt Details </span>
-                </h6>
-            </div>
-            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
 
-                <div class="row mb-4">
-                    <div class="col-md-4">
-                        <p for="method_of_procurement" class="form-label h3">Method of Procurement </p>
-                        <p class="fw-semibold">{{ $procurementDetail->method_of_procurement ?? 'Not specified' }}</p>
-
+                        <h6 class="mb-0">
+                            <i
+                                class="fas fa-check-circle me-2 h2 
+                                {{ $procurementDetail->method_of_procurement ? 'text-success' : 'text-secondary' }}"></i>
+                            <span class="form-label text-muted h2"> Procurement Details </span>
+                        </h6>
                     </div>
-
-                    <div class="col-md-4">
-                        <p class="form-label h3">Type of Procurement</p>
-                        <p class="fw-semibold">{{ $procurementDetail->typeOfProcurement?->name ?? '-' }}</p>
-
-                    </div>
-
-                    <div class="col-md-4">
-                        <p for="publication_date" class="form-label h3">Bid Publication Date</p>
-
-                        <p class="fw-semibold">
-                            @if ($procurementDetail->publication_date)
-                                {{ formatDate($procurementDetail->publication_date) }}
-                            @else
-                                Not specified
-                            @endif
-                        </p>
-                    </div>
-
-                </div>
-
-                <div class="row mb-4">
-
-                    <div class="col-md-4">
-                        <p for="tender_fee" class="form-label h3">Tender Fee (₹)</p>
-                        <p class="fw-semibold">
-                            @if ($procurementDetail->tender_fee)
-                                ₹{{ number_format($procurementDetail->tender_fee, 2) }}
-                            @else
-                                Not specified
-                            @endif
-                        </p>
-                    </div>
-
-                    <div class="col-md-4">
-                        <p for="earnest_money_deposit" class="form-label h3">EMD Value (₹)</p>
-                        <p class="fw-semibold">
-                            @if ($procurementDetail->earnest_money_deposit)
-                                ₹{{ number_format($procurementDetail->earnest_money_deposit, 2) }}
-                            @else
-                                Not specified
-                            @endif
-                        </p>
-                    </div>
-
-
-                    <div class="col-md-4">
-                        <p for="emd_validity_days" class="form-label h3">EMD Validity <span class="h5">
-                                (in Days) </span> </p>
-                        <p class="fw-semibold">
-                            @if ($procurementDetail->emd_validity_days)
-                                {{ $procurementDetail->emd_validity_days }} days
-                            @else
-                                Not specified
-                            @endif
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row mb-4">
-
-                    <div class="col-md-4">
-                        <p for="bid_validity_days" class="form-label h3">Bid Validity <span class="h5">
-                                (in Days) </span> </p>
-                        <p class="fw-semibold">
-                            @if ($procurementDetail->bid_validity_days)
-                                {{ $procurementDetail->bid_validity_days }} days
-                            @else
-                                Not specified
-                            @endif
-                        </p>
-                    </div>
-
-                    <div class="col-md-4">
-                        <p for="publication_document" class="form-label h3"> Bid Publication Document</p>
+                    <div class="col-md-6">
                         @if ($procurementDetail->publication_document_path)
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-file-pdf text-danger me-3 fa-2x"></i>
-                                <div>
-                                    <p class="mb-1 fw-semibold">Publication Document</p>
-                                    <a href="{{ Storage::url($procurementDetail->publication_document_path) }}"
-                                        target="_blank" class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-download me-1"></i> Download
-                                    </a>
-                                </div>
+                            <div class="mt-3 pull-right">
+                                <a href="{{ asset('storage/' . $procurementDetail->publication_document_path) }}"
+                                    target="_blank" class="btn btn-outline-primary">
+                                    <i class="fas fa-file-pdf me-2"></i> View Bid Publication Document
+                                </a>
                             </div>
                         @endif
                     </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-5 text-muted h3">Method</dt>
+                            <dd class="col-sm-7 h4">
+                                {{ $procurementDetail->method_of_procurement }}</dd>
 
+                            <dt class="col-sm-5 text-muted h3">Type</dt>
+                            <dd class="col-sm-7 h4">
+                                {{ $procurementDetail->type_of_procurement }}</dd>
+
+                            <dt class="col-sm-5 text-muted h3">Publication Date</dt>
+                            <dd class="col-sm-7 h4">
+                                {{ optional($procurementDetail->publication_date)->format('d M Y') ?? 'N/A' }}
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-6">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-5 text-muted h3">Tender Fee</dt>
+                            <dd class="col-sm-7 h4">
+                                ₹ {{ number_format($procurementDetail->tender_fee, 2) }}
+                            </dd>
+                            <dt class="col-sm-5 text-muted h3">EMD Amount</dt>
+                            <dd class="col-sm-7 h4">
+                                ₹ {{ number_format($procurementDetail->earnest_money_deposit, 2) }}
+                            </dd>
+                            <dt class="col-sm-5 text-muted h3">Bid Validity</dt>
+                            <dd class="col-sm-7 h4">
+                                {{ $procurementDetail->bid_validity_days }} days</dd>
+                        </dl>
+                    </div>
                 </div>
             </div>
         </div>

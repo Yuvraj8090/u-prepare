@@ -2,7 +2,7 @@
 
 
     <div class="col-md-12">
-        <h6 class="card-header bg-light text-secondary mb-3 h2"><i class="fas fa-file-signature me-2"></i> Contract Details
+        <h6 class="card-header bg-light text-secondary h2"><i class="fas fa-file-signature me-2"></i> Contract Details
         </h6>
         <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-center">
