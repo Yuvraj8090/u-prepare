@@ -20,7 +20,6 @@
 /storage/pail
 /vendor
 
-.gitignore
 
 Homestead.json
 Homestead.yaml
