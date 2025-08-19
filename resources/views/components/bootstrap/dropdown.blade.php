@@ -27,9 +27,9 @@
 </script>
 
 <div class="mb-3">
-    <label for="{{ $id }}" class="form-label fw-semibold">
+    <p for="{{ $id }}" class="form-label fw-semibold h3">
         {{ $label }}{{ $required ? ' *' : '' }}
-    </label>
+    </p>
 
     <select name="{{ $name }}" id="{{ $id }}"
         class="select2-component {{ $class }} @error($name) is-invalid @enderror"
