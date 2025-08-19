@@ -124,7 +124,7 @@ class ContractController extends Controller
 
                 if ($hasCompleteEpcEntries) {
                     $actions[] = [
-                        'label' => 'Update EPC Entry',
+                        'label' => 'Modify Activities',
                         'icon' => 'fas fa-industry',
                         'class' => 'btn-success',
                         'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id]),
@@ -140,7 +140,7 @@ class ContractController extends Controller
                     }
                 } else {
                     $actions[] = [
-                        'label' => 'Create EPC Entry',
+                        'label' => 'Define Activities',
                         'icon' => 'fas fa-industry',
                         'class' => 'btn-success',
                         'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id]),
@@ -200,7 +200,7 @@ class ContractController extends Controller
 
             // Always add Safe Guard Entry
             $actions[] = [
-                'label' => 'Create Safe Guard Entry',
+                'label' => 'Create Environment Details',
                 'icon' => 'fas fa-shield-alt',
                 'class' => 'btn-warning',
                 'route' => route('admin.safeguard_entries.index', ['sub_package_project_id' => $sp->id]),
@@ -216,6 +216,25 @@ class ContractController extends Controller
                 'physicalPercent' => $physicalPercent,
                 'actions' => $actions,
             ];
+
+            $actions[] = [
+                'label' => 'Create Social Details',
+                'icon' => 'fas fa-shield-alt',
+                'class' => 'btn-warning',
+                'route' => route('admin.safeguard_entries.index', ['sub_package_project_id' => $sp->id]),
+            ];
+
+            return [
+                'id' => $sp->id,
+                'name' => $sp->name,
+                'contractValue' => number_format($sp->contract_value, 2),
+                'financeTotal' => number_format($financeTotal, 2),
+                'financePercent' => $financePercent,
+                'physicalValue' => number_format($physicalValue, 2),
+                'physicalPercent' => $physicalPercent,
+                'actions' => $actions,
+            ];
+
         });
 
         return view('admin.contracts.show', [
