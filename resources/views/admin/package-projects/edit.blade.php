@@ -79,6 +79,7 @@
                                 placeholder="Select a project"
                                 allowClear
                                 searchable
+                                disabled
                                 class="w-100"
                             />
                         </div>

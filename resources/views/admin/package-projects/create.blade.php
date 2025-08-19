@@ -86,7 +86,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="project_id" class="form-label">Related Project</label>
-                                <select name="project_id" id="project_id" class="form-select">
+                                <select name="project_id" id="project_id" class="form-select" disabled>
                                     
                                     @foreach ($projects as $project)
                                         <option value="{{ $project->id }}" @selected(old('project_id') == $project->id)>
