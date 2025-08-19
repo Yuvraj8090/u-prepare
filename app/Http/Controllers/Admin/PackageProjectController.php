@@ -92,13 +92,20 @@ class PackageProjectController extends Controller
         return view('admin.package-projects.show', compact('packageProject', 'contract'));
     }
 
-    public function edit(PackageProject $packageProject): View
-    {
-        return view('admin.package-projects.edit', array_merge(
-            ['packageProject' => $packageProject],
-            $this->formData()
-        ));
-    }
+  public function edit(PackageProject $packageProject): View
+{
+  // <-- this will show all fields, including DEC/HPC dates
+  $projects       = Project::select('id', 'name', 'budget')->get();
+            $categories    = ProjectsCategory::all();
+            $subCategories  = SubCategory::all();
+            $departments   = Department::all();
+            $constituencies = Constituency::all();
+            $districts    = GeographyDistrict::all();
+            $blocks      = GeographyBlock::all();
+            $components     = PackageComponent::all();
+    return view('admin.package-projects.edit',compact('packageProject','projects','categories','subCategories','departments','constituencies','districts','blocks','components'));
+}
+
 
     public function update(UpdatePackageProjectRequest $request, PackageProject $packageProject): RedirectResponse
     {

@@ -62,6 +62,32 @@
 />
 
             </div>
+<div class="card shadow-sm mt-4">
+    
+    <div class="card-body">
+        <x-admin.data-table 
+            :headers="['ID', 'Name', 'LOA Issued','Contract Signed','Start Date Given','LOA to be issued','Contract Signing Pending','To be Re-bidded']" 
+            id="type-of-procurement-table" 
+            :excel="true" 
+            :print="true"
+            :pageLength="10"
+        >
+            @foreach ($typeOfprocurement as $type)
+                <tr>
+                    <td>{{ $type->id }}</td>
+                    <td>{{ $type->name }}</td>
+                    <td>{{ $type->description }}</td>
+                    <td>{{ $type->description }}</td>
+                    <td>{{ $type->description }}</td>
+                    <td>{{ $type->description }}</td>
+                    <td>{{ $type->description }}</td>
+                    <td>{{ $type->description }}</td>
+                    
+                </tr>
+            @endforeach
+        </x-admin.data-table>
+    </div>
+</div>
 
         </div>
     </div>

@@ -5,23 +5,33 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\PackageComponent;
 use App\Models\Contract;
+use App\Models\TypeOfProcurement;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index()
-    {
-        // Departments: with projects, contracts, and financial stats
-        $departments = Department::withProjectAndContractStats()
-            ->withFinancialStats()
-            ->get();
+{
+    // Departments with stats
+    $departments = Department::withProjectAndContractStats()
+        ->withFinancialStats()
+        ->get();
 
-        // Package Components with budgets
-        $components = PackageComponent::select('id', 'name', 'budget')->get();
+    // Package Components
+    $components = PackageComponent::select('id', 'name', 'budget')->get();
 
-        // All Contracts with related info (make sure you have ->withBasicRelations() in Contract model)
-        $contracts = Contract::withBasicRelations()->get();
+    // Contracts
+    $contracts = Contract::withBasicRelations()->get();
 
-        return view('admin.dashboard', compact('departments', 'components', 'contracts'));
-    }
+    // Type of Procurement
+    $typeOfprocurement = TypeOfProcurement::select('id', 'name', 'description')->get();
+
+    return view('admin.dashboard', compact(
+        'departments',
+        'components',
+        'contracts',
+        'typeOfprocurement'
+    ));
+}
+
 }

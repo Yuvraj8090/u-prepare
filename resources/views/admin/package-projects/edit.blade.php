@@ -172,8 +172,9 @@
                                             <input type="date" class="form-control"
                                                 id="{{ $approval }}_approval_date"
                                                 name="{{ $approval }}_approval_date"
-                                                value="{{ old("{$approval}_approval_date", $packageProject->{$approval . '_approval_date'} ?? '') }}">
+                                                value="{{ old("{$approval}_approval_date", optional($packageProject->{$approval . '_approval_date'})->format('Y-m-d') ?? '') }}">
                                         </div>
+
 
                                         <div class="mb-3">
                                             <label for="{{ $approval }}_letter_number" class="form-label">Letter

@@ -7476,6 +7476,7 @@ namespace App\Models {
     /**
      * App\Models\ProcurementDetail
      *
+     * @property mixed $type_of_procurement_id
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
@@ -7485,7 +7486,6 @@ namespace App\Models {
      * @property decimal:2|null $tender_fee
      * @property string|null $publication_document_path
      * @property \Illuminate\Support\Carbon|null $publication_date
-     * @property string|null $type_of_procurement
      * @property string|null $method_of_procurement
      * @property mixed $package_project_id
      * @property int $id
@@ -7494,7 +7494,6 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail wherePackageProjectId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail whereMethodOfProcurement($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail whereTypeOfProcurement($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail wherePublicationDate($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail wherePublicationDocumentPath($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail whereTenderFee($value)
@@ -7504,6 +7503,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail whereTypeOfProcurementId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementDetail>|ProcurementDetail query()
@@ -10713,8 +10713,20 @@ namespace App\Models {
     /**
      * App\Models\TypeOfProcurement
      *
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string|null $description
+     * @property string $name
+     * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProcurementDetail> $procurementDetails
      * @property-read int|null $procurementDetails_count
+     * @method static \Illuminate\Database\Eloquent\Builder<TypeOfProcurement>|TypeOfProcurement whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<TypeOfProcurement>|TypeOfProcurement whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<TypeOfProcurement>|TypeOfProcurement whereDescription($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<TypeOfProcurement>|TypeOfProcurement whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<TypeOfProcurement>|TypeOfProcurement whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<TypeOfProcurement>|TypeOfProcurement whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<TypeOfProcurement>|TypeOfProcurement newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<TypeOfProcurement>|TypeOfProcurement newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<TypeOfProcurement>|TypeOfProcurement query()

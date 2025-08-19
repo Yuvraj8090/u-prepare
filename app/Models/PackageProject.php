@@ -10,35 +10,15 @@ class PackageProject extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [
-        'project_id',
-        'package_category_id',
-        'package_sub_category_id',
-        'department_id',
-        'package_component_id',
-        'package_name',
-        'package_number',
-        'estimated_budget_incl_gst',
-        'vidhan_sabha_id',
-        'lok_sabha_id',
-        'district_id',
-        'block_id',
-        'dec_approved',
-        'dec_approval_date',
-        'dec_letter_number',
-        'dec_document_path',
-        'hpc_approved',
-        'hpc_approval_date',
-        'hpc_letter_number',
-        'hpc_document_path'
-    ];
+    protected $fillable = ['project_id', 'package_category_id', 'package_sub_category_id', 'department_id', 'package_component_id', 'package_name', 'package_number', 'estimated_budget_incl_gst', 'vidhan_sabha_id', 'lok_sabha_id', 'district_id', 'block_id', 'dec_approved', 'dec_approval_date', 'dec_letter_number', 'dec_document_path', 'hpc_approved', 'hpc_approval_date', 'hpc_letter_number', 'hpc_document_path'];
 
     protected $casts = [
         'dec_approved' => 'boolean',
         'hpc_approved' => 'boolean',
         'estimated_budget_incl_gst' => 'decimal:2',
-        'dec_approval_date' => 'datetime',
-        'hpc_approval_date' => 'datetime',
+
+        'dec_approval_date' => 'date',
+        'hpc_approval_date' => 'date', // not datetime
     ];
 
     /*
