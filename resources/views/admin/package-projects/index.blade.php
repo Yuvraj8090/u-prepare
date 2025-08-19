@@ -31,12 +31,11 @@
 
             <div class="card-body">
                 <x-admin.data-table id="package-projects-table" :headers="[
-                    'Package Details',
-                    'Category',
-                    'Sub Category',
+                    'Package',
+                    'Category', 
                     'Sanction Budge (₹)',
                     'District',
-                    'Procurement Type',
+                    'Procurement',
                     'Contracts',
                     'Status',
                     'Actions',
@@ -61,25 +60,38 @@
                                         <i class="fas fa-hashtag"></i> {{ $project->package_number }}
                                     </span>
 
-                                    <!-- Implementation Agency -->
                                     <div class="d-flex flex-wrap gap-1 mb-1">
-                                        @if ($project->department?->name)
+                                      
+                                    <span class="badge bg-{{ $project->dec_approved ? 'warning' : 'secondary' }}">
+                                        <i class="fas fa-check-circle"></i> DEC:
+                                        {{ $project->dec_approved ? 'Approved' : 'Pending' }}
+                                    </span>
+
+                                    
+                                    <span class="badge bg-{{ $project->hpc_approved ? 'info' : 'secondary' }}">
+                                        <i class="fas fa-check-circle"></i> HPC:
+                                        {{ $project->hpc_approved ? 'Approved' : 'Pending' }}
+                                    </span>
+
+  
+                                    <!-- Implementation Agency -->
+                                         @if ($project->department?->name)
                                             <span class="badge bg-success text-white">
                                                 <i class="fas fa-building"></i> {{ $project->department->name }}
                                             </span>
                                         @endif
                                     </div>
+
                             </td>
 
                             <!-- Category / Department -->
                             <td>
                                 @if ($project->category?->name)
-                                    <i class="fas fa-tags"></i> {{ $project->category->name }}
+                                   <span class="font-weight-bold">  <i class="fas fa-tags"></i> {{ $project->category->name }} </span>
                                 @endif
-                            </td>
-                            <td>
+                             
                                 @if ($project->subCategory?->name)
-                                    <i class="fas fa-tag"></i> {{ $project->subCategory->name }}
+                                     ( {{ $project->subCategory->name }} )
                                 @endif
 
                             </td>
@@ -107,29 +119,21 @@
                             <!-- Procurement -->
                             <td class="align-middle">
                                 @if ($project->procurementDetail)
+                                    <span class="badge bg-success text-dark">
+                                        <i class="fas fa-exclamation-circle"></i>  Completed  
+                                    </span>
+
                                     <div class="fw-semibold">
-                                        {{ $project->procurementDetail->method_of_procurement }}
+                                        Method : {{ $project->procurementDetail->method_of_procurement }}
                                     </div>
 
-                                    @if ($project->workPrograms->isNotEmpty())
-                                        <div class="small text-muted">
-                                            {{ $project->workPrograms->count() }} Procurement work programs
-                                        </div>
-                                    @endif
-
-                                    <div class="small">
-                                        <span class="badge bg-warning">
-                                            {{ $project->procurementDetail->typeOfProcurement?->name  }}
-                                        </span>
+                                    <div class="fw-semibold">
+                                        Type : {{ $project->procurementDetail->typeOfProcurement?->name  }}
                                     </div>
-                                    @if ($project->procurementDetail->tender_fee)
-                                        <div class="small text-muted">
-                                            Fee: ₹ {{ number_format($project->procurementDetail->tender_fee, 2) }}
-                                        </div>
-                                    @endif
+                                     
                                 @else
                                     <span class="badge bg-warning text-dark">
-                                        <i class="fas fa-exclamation-circle"></i> Not Configured
+                                        <i class="fas fa-exclamation-circle"></i>   Pending  
                                     </span>
                                 @endif
                             </td>
@@ -188,14 +192,7 @@
                             <!-- Approvals & Status -->
                             <td>
                                 <div class="d-flex flex-column gap-1">
-                                    <span class="badge bg-{{ $project->dec_approved ? 'success' : 'secondary' }}">
-                                        <i class="fas fa-check-circle"></i> DEC:
-                                        {{ $project->dec_approved ? 'Approved' : 'Pending' }}
-                                    </span>
-                                    <span class="badge bg-{{ $project->hpc_approved ? 'success' : 'secondary' }}">
-                                        <i class="fas fa-check-circle"></i> HPC:
-                                        {{ $project->hpc_approved ? 'Approved' : 'Pending' }}
-                                    </span>
+                                  
                                     @if ($project->is_active)
                                         <span class="badge bg-success">
                                             <i class="fas fa-circle-check"></i> Active
