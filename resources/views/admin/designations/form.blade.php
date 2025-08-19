@@ -1,23 +1,17 @@
 <x-app-layout>
     <div class="container-fluid">
         <!-- Header + Breadcrumb -->
-        <div class="row mb-4">
-            <div class="col-md-12 d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">
-                    <i class="fas fa-id-card-alt text-primary me-2"></i>
-                    {{ isset($designation) ? 'Edit Designation' : 'Create New Designation' }}
-                </h4>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item">Admin</li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.designations.index') }}">Designations</a>
-                        </li>
-                        <li class="breadcrumb-item active">{{ isset($designation) ? 'Edit' : 'Create' }}</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+        <x-admin.breadcrumb-header
+    icon="fas fa-id-card-alt text-primary"
+    :title="isset($designation) ? 'Edit Designation' : 'Create New Designation'"
+    :breadcrumbs="[
+        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+        ['label' => 'Admin'],
+        ['route' => 'admin.designations.index', 'label' => 'Designations'],
+        ['label' => isset($designation) ? 'Edit' : 'Create']
+    ]"
+/>
+
 
         <!-- Success/Error Messages -->
         <div class="row mb-3">

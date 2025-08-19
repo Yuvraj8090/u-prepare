@@ -1,24 +1,17 @@
 <x-app-layout>
     <div class="container-fluid">
         <!-- Breadcrumbs and Header -->
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">
-                        <i class="fas fa-bars me-2 text-primary"></i>
-                        Create Navbar Item
-                    </h4>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
-                            <li class="breadcrumb-item">Admin</li>
-                            <li class="breadcrumb-item"><a href="{{ route('admin.navbar-items.index') }}">Navbar Items</a></li>
-                            <li class="breadcrumb-item active">Create</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
+        <x-admin.breadcrumb-header
+    icon="fas fa-bars text-primary"
+    title="Create Navbar Item"
+    :breadcrumbs="[
+        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+        ['label' => 'Admin'],
+        ['route' => 'admin.navbar-items.index', 'label' => 'Navbar Items'],
+        ['label' => 'Create']
+    ]"
+/>
+
 
         <!-- Session Alerts -->
         @if (session('success'))

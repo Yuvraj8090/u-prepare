@@ -1,25 +1,17 @@
 <x-app-layout>
     <div class="container-fluid">
         <!-- Breadcrumb -->
-        <div class="row mb-4">
-            <div class="col-md-12 d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">
-                    <i class="fas fa-project-diagram text-primary me-2"></i> Edit EPC Entry
-                </h4>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item">Admin</li>
-                        <li class="breadcrumb-item">
-                            <a href="{{ route('admin.epcentry_data.index', ['sub_package_project_id' => $entry->sub_package_project_id]) }}">
-                                EPC Entries
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+        <x-admin.breadcrumb-header
+    icon="fas fa-project-diagram text-primary"
+    title="Edit EPC Entry"
+    :breadcrumbs="[
+        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+        ['label' => 'Admin'],
+        ['route' => 'admin.epcentry_data.index', 'params' => ['sub_package_project_id' => $entry->sub_package_project_id], 'label' => 'EPC Entries'],
+        ['label' => 'Edit']
+    ]"
+/>
+
 
         <div class="card shadow-sm">
             <div class="card-header bg-white">

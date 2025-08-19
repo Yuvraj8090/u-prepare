@@ -1,18 +1,16 @@
 <x-app-layout>
     <div class="container-fluid">
         <!-- Breadcrumb -->
-        <div class="row mb-4">
-            <div class="col-md-12 d-flex justify-content-between align-items-center">
-                <h4 class="mb-0"><i class="fas fa-edit text-primary me-2"></i> Edit Safeguard Compliance</h4>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.safeguard-compliances.index') }}">Safeguard Compliances</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+        <x-admin.breadcrumb-header
+    icon="fas fa-edit text-primary"
+    title="Edit Safeguard Compliance"
+    :breadcrumbs="[
+        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+        ['route' => 'admin.safeguard-compliances.index', 'label' => 'Safeguard Compliances'],
+        ['label' => 'Edit']
+    ]"
+/>
+
 
         <!-- Form -->
         <div class="card shadow-sm">

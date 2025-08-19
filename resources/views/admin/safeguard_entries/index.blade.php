@@ -2,23 +2,16 @@
     <div class="container-fluid">
 
         <!-- Header & Breadcrumb -->
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0 text-primary">
-                        <i class="fas fa-shield-alt me-2"></i> Safeguard Entries Management
-                    </h4>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a>
-                            </li>
-                            <li class="breadcrumb-item">Admin</li>
-                            <li class="breadcrumb-item active">Safeguard Entries</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
+        <x-admin.breadcrumb-header
+    icon="fas fa-shield-alt text-primary"
+    title="Safeguard Entries Management"
+    :breadcrumbs="[
+        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+        ['label' => 'Admin'],
+        ['label' => 'Safeguard Entries']
+    ]"
+/>
+
 
         <!-- Alerts -->
         @foreach (['success', 'error'] as $msg)

@@ -1,20 +1,16 @@
 <x-app-layout>
     <div class="container-fluid">
         <!-- Breadcrumb -->
-        <div class="row mb-4">
-            <div class="col-md-12 d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">
-                    <i class="fas fa-layer-group text-primary me-2"></i> Construction Phases Management
-                </h4>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item">Admin</li>
-                        <li class="breadcrumb-item active" aria-current="page">Construction Phases</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+       <x-admin.breadcrumb-header
+    icon="fas fa-layer-group text-primary"
+    title="Construction Phases Management"
+    :breadcrumbs="[
+        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+        ['label' => 'Admin'],
+        ['label' => 'Construction Phases']
+    ]"
+/>
+
 
         <!-- Alerts -->
         @if (session('success'))

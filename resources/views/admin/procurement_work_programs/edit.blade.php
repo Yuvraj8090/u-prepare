@@ -2,17 +2,15 @@
     <div class="container-fluid">
 
         <!-- Header & Breadcrumb -->
-        <div class="row mb-4">
-            <div class="col-md-12 d-flex justify-content-between align-items-center">
-                <h4 class="mb-0"><i class="fas fa-edit me-2 text-primary"></i>Edit Procurement Work Programs</h4>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Procurement Work Programs</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+        <x-admin.breadcrumb-header
+    icon="fas fa-edit text-primary"
+    title="Edit Procurement Work Programs"
+    :breadcrumbs="[
+        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i> Dashboard'],
+        ['label' => 'Procurement Work Programs']
+    ]"
+/>
+
 
         <!-- Server & Validation Errors -->
         <div id="alerts"></div>
