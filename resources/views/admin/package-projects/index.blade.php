@@ -144,26 +144,36 @@
                                         </button>
                                         <ul class="dropdown-menu shadow-sm p-2" style="min-width: 300px;">
                                             @foreach ($project->contracts as $contract)
-                                                <li class="mb-2 p-2 border-bottom">
-                                                    <div class="fw-bold">#{{ $contract->contract_number }}</div>
-                                                    <div class="small">
-                                                        <span class="text-success fw-semibold">
-                                                            ₹{{ number_format($contract->contract_value, 2) }}
-                                                        </span>
-                                                        @if ($contract->contractor)
-                                                            <div class="text-muted">
-                                                                <i class="fas fa-industry"></i>
-                                                                {{ $contract->contractor->company_name }}
-                                                            </div>
-                                                        @endif
-                                                        @if ($contract->subProjects->isNotEmpty())
-                                                            <div class="mt-1">
-                                                                <span class="badge bg-info">
-                                                                    {{ $contract->subProjects->count() }} Sub-projects
-                                                                </span>
-                                                            </div>
-                                                        @endif
-                                                    </div>
+  
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <p class="mb-0 d-flex align-items-cente h5">
+                                                        <i class="fas fa-hashtag text-primary me-2"></i> Contract No
+                                                    </p>
+                                                    <span class="fw-bold h6">{{ $contract->contract_number }}</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <p class="mb-0 d-flex align-items-cente h5">
+                                                        <i class="fas text-primary me-2"> ₹ </i>  Contract Value
+                                                    </p>
+                                                    <span class="fw-bold h6"> ₹ {{ number_format($contract->contract_value, 2) }} </span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <p class="mb-0 d-flex align-items-cente h5">
+                                                        <i class="fas fa-industry text-primary me-2"></i> Firm Name
+                                                    </p>
+                                                    @if ($contract->contractor)
+                                                        <span class="fw-bold h6">
+                                                        {{ $contract->contractor->company_name }} </span>
+                                                    @endif
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <p class="mb-0 d-flex align-items-cente h5">
+                                                        <i class="fas fa-boxes  text-primary me-2"></i> Sub - Projects
+                                                    </p>
+                                                    @if ($contract->subProjects->isNotEmpty())
+                                                        <span class="fw-bold h6">
+                                                        {{ $contract->subProjects->count() }} </span>
+                                                    @endif
                                                 </li>
                                             @endforeach
                                         </ul>
