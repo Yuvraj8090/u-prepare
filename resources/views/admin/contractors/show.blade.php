@@ -2,22 +2,17 @@
 <x-app-layout>
     <div class="container-fluid">
         <!-- Header + Breadcrumb -->
-        <div class="row mb-4">
-            <div class="col-md-12 d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">
-                    <i class="fas fa-building me-2 text-primary"></i>
-                    Contractor Details
-                </h4>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item">Admin</li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.contractors.index') }}">Contractors</a></li>
-                        <li class="breadcrumb-item active">Details</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+        <x-admin.breadcrumb-header
+    icon="fas fa-building text-primary"
+    title="Contractor Details"
+    :breadcrumbs="[
+        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+        ['label' => 'Admin'],
+        ['route' => 'admin.contractors.index', 'label' => 'Contractors'],
+        ['label' => 'Details']
+    ]"
+/>
+
 
         <!-- Details Card -->
         <div class="card shadow-sm">

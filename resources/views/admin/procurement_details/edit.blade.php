@@ -1,22 +1,18 @@
 <x-app-layout>
     <div class="container-fluid">
         <!-- Breadcrumb -->
-        <div class="row mb-4">
-            <div class="col-md-12 d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">
-                    <i class="fas fa-file-contract text-primary me-2"></i> Edit Procurement Details
-                </h4>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item">Admin</li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.package-projects.index') }}">Package Projects</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.package-projects.show', $procurementDetail->package_project_id) }}">Package #{{ $procurementDetail->package_project_id }}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit Procurement</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+        <x-admin.breadcrumb-header
+    icon="fas fa-file-contract text-primary"
+    title="Edit Procurement Details"
+    :breadcrumbs="[
+        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+        ['label' => 'Admin'],
+        ['route' => 'admin.package-projects.index', 'label' => 'Package Projects'],
+        ['route' => 'admin.package-projects.show', 'params' => $procurementDetail->package_project_id, 'label' => 'Package #' . $procurementDetail->package_project_id],
+        ['label' => 'Edit Procurement']
+    ]"
+/>
+
 
         <!-- Main Card -->
         <div class="card shadow-sm">

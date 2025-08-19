@@ -1,21 +1,17 @@
 <x-app-layout>
     <div class="container-fluid">
         <!-- Breadcrumb -->
-        <div class="row mb-4">
-            <div class="col-md-12 d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">
-                    <i class="fas fa-folder text-primary me-2"></i> {{ isset($projectsCategory) ? 'Edit' : 'Create' }} Project Category
-                </h4>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item">Admin</li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.projects-category.index') }}">Project Categories</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ isset($projectsCategory) ? 'Edit' : 'Create' }}</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+        <x-admin.breadcrumb-header
+    icon="fas fa-folder text-primary"
+    :title="isset($projectsCategory) ? 'Edit Project Category' : 'Create Project Category'"
+    :breadcrumbs="[
+        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+        ['label' => 'Admin'],
+        ['route' => 'admin.projects-category.index', 'label' => 'Project Categories'],
+        ['label' => isset($projectsCategory) ? 'Edit' : 'Create']
+    ]"
+/>
+
 
         <!-- Form Card -->
         <div class="card shadow-sm">
