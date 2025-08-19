@@ -64,8 +64,8 @@
                 <ul class="nav side-menu">
 
                     <!-- Dashboard -->
-                    <li class="{{ request()->routeIs('admin.dashboard.index') ? 'active' : '' }}">
-                        <a href="{{ route('admin.dashboard.index') }}"><i class="fa fa-home"></i> Dashboard</a>
+                    <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Dashboard</a>
                     </li>
 
                     <!-- Pages -->

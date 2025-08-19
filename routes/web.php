@@ -43,7 +43,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         ->group(function () {
             Route::resource('role_routes', RoleRouteController::class);
 
-            Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+          
 
             Route::resource('type-of-procurements', TypeOfProcurementController::class);
 
@@ -146,8 +146,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
             Route::resource('projects-category', ProjectsCategoryController::class);
             Route::resource('package-projects', PackageProjectController::class);
         });
-    Route::get('admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index2'])->name('admin.dashboard');
+
+
     // Dashboard main page
 });

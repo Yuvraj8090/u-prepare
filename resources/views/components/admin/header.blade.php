@@ -9,11 +9,24 @@
     <!--</div>-->
     
     <nav class="nav navbar-nav">
-    
+     @php
+                $nameParts = explode(' ', trim(auth()->user()->name));
+                $initials =
+                    count($nameParts) > 1
+                        ? strtoupper($nameParts[0][0] . $nameParts[1][0])
+                        : strtoupper(substr($nameParts[0], 0, 2));
+            @endphp
       <ul class="navbar-right">
         <li class="nav-item dropdown open" style="padding-left: 15px;">
           <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-            <img src="{{ asset('asset/build/images/user-icon-jpg.jpg') }}" alt=""> <b style="font-weight:500;" >{{ ucfirst(auth()->user()->name) }} (DEPARTMENT : {{auth()->user()->role->department}})</b>
+            <img src="{{ auth()->user()->profile_photo_url }}" alt="" onerror="this.style.display='none'; document.getElementById('initialsDiv2').style.display='flex';"> <b style="font-weight:500;" >
+                <div id="initialsDiv2"
+                style="height:50px; width:50px; background-color: #ADD8E6; color: white; border-radius: 50%; 
+                font-size: 15px; font-weight: bold; display: none; align-items: center; justify-content: center; 
+                margin: 0 auto; user-select:none;">
+                {{ $initials }}
+            </div>
+               {{ ucfirst(auth()->user()->name) }} (DEPARTMENT : {{auth()->user()->department?->name}})</b>
           </a>
           <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
             <!-- <a class="dropdown-item" href="javascript:;"> Profile</a> -->
