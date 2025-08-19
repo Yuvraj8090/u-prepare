@@ -458,7 +458,7 @@ select {
     background-repeat: no-repeat;
     background-size: 1.5em 1.5em;
     border-radius: 5px;
-    width: fit-content !important;
+    width: 95% !important;
     padding-right: 2.5rem;
     height:38.7px !important;
     -webkit-print-color-adjust: exact;
