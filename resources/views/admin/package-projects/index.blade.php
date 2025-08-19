@@ -119,7 +119,7 @@
 
                                     <div class="small">
                                         <span class="badge bg-warning">
-                                            {{ $project->procurementDetail->type_of_procurement }}
+                                            {{ $project->procurementDetail->typeOfProcurement?->name  }}
                                         </span>
                                     </div>
                                     @if ($project->procurementDetail->tender_fee)
