@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2025 at 08:53 AM
+-- Generation Time: Aug 19, 2025 at 09:53 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -244,6 +244,7 @@ INSERT INTO `contracts` (`id`, `contract_number`, `project_id`, `contract_value`
 CREATE TABLE `departments` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
+  `budget` decimal(15,2) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -252,12 +253,12 @@ CREATE TABLE `departments` (
 -- Dumping data for table `departments`
 --
 
-INSERT INTO `departments` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'PIU-PWD', '2025-08-04 22:56:09', '2025-08-04 22:57:29'),
-(2, 'PIU-RWD', '2025-08-04 22:56:19', '2025-08-04 22:57:41'),
-(3, 'PIU-USDMA', '2025-08-04 22:57:50', '2025-08-04 22:57:50'),
-(4, 'PIU-FOREST', '2025-08-04 22:58:01', '2025-08-04 22:58:01'),
-(8, 'PMU', '2025-08-04 23:20:13', '2025-08-04 23:20:13');
+INSERT INTO `departments` (`id`, `name`, `budget`, `created_at`, `updated_at`) VALUES
+(1, 'PIU-PWD', 3900000000.00, '2025-08-04 22:56:09', '2025-08-18 02:26:39'),
+(2, 'PIU-RWD', 3600000000.00, '2025-08-04 22:56:19', '2025-08-18 02:27:00'),
+(3, 'PIU-USDMA', 4350000000.00, '2025-08-04 22:57:50', '2025-08-18 02:27:37'),
+(4, 'PIU-FOREST', 830000000.00, '2025-08-04 22:58:01', '2025-08-18 02:25:51'),
+(8, 'PMU', 2120000000.00, '2025-08-04 23:20:13', '2025-08-18 02:26:23');
 
 -- --------------------------------------------------------
 
@@ -644,7 +645,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (56, '2025_08_14_095816_create_financial_progress_updates_table', 39),
 (57, '2025_04_03_165953_create_navbar_items_table', 40),
 (58, '2025_04_06_075536_create_pages_table', 41),
-(59, '2025_08_18_045723_update_pages_table_add_softdeletes_and_title_hi', 42);
+(59, '2025_08_18_045723_update_pages_table_add_softdeletes_and_title_hi', 42),
+(60, '2025_08_18_070622_create_package_components_table', 43),
+(61, '2025_08_18_070725_add_extra_columns_to_package_projects_table', 44),
+(62, '2025_08_18_075053_create_departments_table', 45),
+(63, '2025_08_19_070658_create_type_of_procurements_table', 46),
+(64, '2025_08_19_072712_add_type_of_procurement_id_to_procurement_details_table', 47),
+(65, '2025_08_19_073941_drop_type_of_procurement_from_procurement_details_table', 48);
 
 -- --------------------------------------------------------
 
@@ -698,11 +705,37 @@ INSERT INTO `navbar_items` (`id`, `title`, `slug`, `parent_id`, `is_dropdown`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `package_components`
+--
+
+CREATE TABLE `package_components` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `budget` decimal(15,2) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `package_components`
+--
+
+INSERT INTO `package_components` (`id`, `name`, `budget`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Enhancing Infrastructure Resilience', 4350000000.00, '2025-08-18 01:42:25', '2025-08-18 01:42:25', NULL),
+(2, 'Improving Emergency Preparedness & Response', 5050000000.00, '2025-08-18 01:42:57', '2025-08-18 01:42:57', NULL),
+(3, 'Preventing & Managing Forest & General Fires', 3730000000.00, '2025-08-18 01:43:20', '2025-08-18 01:43:20', NULL),
+(4, 'Project Management', 1670000000.00, '2025-08-18 01:43:38', '2025-08-18 01:43:38', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `package_projects`
 --
 
 CREATE TABLE `package_projects` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `package_component_id` bigint(20) UNSIGNED DEFAULT NULL,
   `project_id` bigint(20) UNSIGNED DEFAULT NULL,
   `package_category_id` bigint(20) UNSIGNED DEFAULT NULL,
   `package_sub_category_id` bigint(20) UNSIGNED DEFAULT NULL,
@@ -731,71 +764,71 @@ CREATE TABLE `package_projects` (
 -- Dumping data for table `package_projects`
 --
 
-INSERT INTO `package_projects` (`id`, `project_id`, `package_category_id`, `package_sub_category_id`, `department_id`, `package_name`, `package_number`, `estimated_budget_incl_gst`, `vidhan_sabha_id`, `lok_sabha_id`, `district_id`, `block_id`, `dec_approved`, `dec_approval_date`, `dec_letter_number`, `dec_document_path`, `hpc_approved`, `hpc_approval_date`, `hpc_letter_number`, `hpc_document_path`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(5, 1, 1, 5, 1, 'Construction of 84 M Span Motor Bridge over Kotigaad in Km 01 of Tikochi-Duchanu-Kiranu- Sirtoli Motor Road in District Uttarkashi', '24/BR/RFB-EPC/UGRIDP/2023', 147751097.00, NULL, NULL, 13, NULL, 1, '2022-11-11', '1397/III(3)/2022', 'package-projects/dec-documents/yN1vq876nU0XAJDEj1xJw68S7Vw2TZRiorXbMt9x.pdf', 1, '2023-05-03', '103/UDRP-AF/2023', 'package-projects/hpc-documents/hKS6mA5a00jNUwa9lhrLLxy5gBRwMxdSBDS1wCja.pdf', '2025-08-17 02:55:37', '2025-08-17 02:55:37', NULL),
-(6, 1, 1, 5, 1, 'Construction of 60 M Pedestrian bridge over Kosi river at village- Bedgaun near Kathautiya Temple at Someshwar.', '20/pro/bridge/uprepare/2025', 40000000.00, NULL, NULL, 1, NULL, 1, '2023-06-14', '763/2023/PWD-III', 'package-projects/dec-documents/MZQIMFYKYiRZFfgarq1fRzECUiwKB9hWBm32oOTz.pdf', 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', 'package-projects/hpc-documents/tk1fzDTfgKRQaWTtRbNxhWPaW8wL39tvFgCAXv3j.pdf', '2025-08-18 00:53:17', '2025-08-18 00:53:17', NULL),
-(7, 1, 1, 5, 1, 'Construction of 100 M Pedestrian Bridge at Bhikiasan Near Thapli', '19/pro/bridge/uprepare/2025', 120000000.00, 4, NULL, 1, NULL, 1, '2023-06-14', '763/2023/PWD-III', 'package-projects/dec-documents/4IcgdAQnUupPN4LQjQ41PdHRcc2FDiJLFnwfIFRX.pdf', 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun,', 'package-projects/hpc-documents/VxxgPKz9aU9PxdsYSyxiSr99PQAtqMACYUjdMaH2.pdf', '2025-08-18 00:58:18', '2025-08-18 00:58:18', NULL),
-(8, 1, 1, 5, 1, 'Construction of 30 M Pedestrian bridge at Devtoli inter college to village Simayal.', '18/pro/bridge/uprepare/2025', 30000000.00, 4, NULL, 2, NULL, 1, '2023-06-14', '763/2023/PWD-III', 'package-projects/dec-documents/8142UrwEEdfnSXfcvcxxZcj2dnaThcfBCpQ45ZFY.pdf', 1, '2023-06-30', '275/UDRP-AF/2023', 'package-projects/hpc-documents/i162nCMzPOjHtwEo3qRc7XXNbyoWU7L7GagTDCmX.pdf', '2025-08-18 01:00:59', '2025-08-18 01:00:59', NULL),
-(50, 1, 3, 1, 1, 'Multipurpose Fire Tender', '01A/FIRE/RFB/UPREPARE/2024', 120750000.00, NULL, NULL, NULL, NULL, 1, '2022-11-17', 'HS3-MISC/MISC/91/2022-XX-3-Home Department (1/77143/2022)', NULL, 1, '2023-01-16', '523/UDRP-AF/2022-23', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(51, 1, 3, 1, 1, 'Supply of Fire Entry Suits', '02/FIRE/RFB/UGRIDP/2023', 28200000.00, NULL, NULL, NULL, NULL, 1, '2022-11-17', 'HS3-MISC/MISC/91/2022-XX-3-HomeDepartment (1/77143/2022)', NULL, 1, '2023-01-16', '523/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(52, 1, 3, 1, 1, 'Supply of Breathing Apparatus', '03/FIRE/RFB/UGRIDP/2023', 136850000.00, NULL, NULL, NULL, NULL, 1, '2022-11-17', 'HS3-MISC/MISC-91/2022-XX-3-HomeDpartment (1/77143/2022)', NULL, 1, '2023-01-16', '523/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(53, 1, 3, 1, 1, 'Supply of Thermal Imaging Camera', '04A/FIRE/RFB/PREPARE/2024', 10400000.00, NULL, NULL, NULL, NULL, 1, '2017-11-22', 'HS3-MSC/MISC-91/2022-XX-3-Home Department (1/77143/2022)', NULL, 1, '2023-01-16', '523/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(54, 1, 3, 1, 1, 'Supply of Victim Location Camera', '05/FIRE/RFB/UGRIDP/2023', 15500000.00, NULL, NULL, NULL, NULL, 1, '2022-11-17', 'HS3/MISC/MISC-91-2022-XX-3-HomeDepartment (1/77143/2022)', NULL, 1, '2023-01-16', '523/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(55, 1, 3, 1, 1, 'Supply and Installation of Victim Locating Equipment & Air Lifting Bag Equipment', '05/SDRF/USDMA/UGRIDP/2022', 36160000.00, NULL, NULL, NULL, NULL, 1, '2022-11-04', 'I/77144/2022', NULL, 1, '2023-01-16', '523/UDRP-AF/2022-23', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(56, 1, 2, 1, 1, 'Multipurpose Disaster Shelter', '01/1-A/PIU/USDMA', 18200000.00, NULL, NULL, NULL, NULL, 1, '2024-01-01', 'dec/1/1/2024', NULL, 1, '2024-02-01', 'hpc/1/1/2024', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(57, 1, 1, 1, 1, 'Multi hazard shelter', 'Multi hazard shelter/test/test', 1000000000.00, NULL, NULL, NULL, NULL, 1, '2025-01-01', 'test/101', NULL, 1, '2025-01-03', 'trest/1/125', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(58, 1, 1, 5, 1, 'Construction of 50 M Intermediate Lane Steel Truss Motor Bridge in Uttarkashi- Lambgaon Ghansali- Tilwara Motor Road KM-98 near Hanuman Temple, Block-Bhilangna, District Tehri', '01/BR/RFB/UGRIDP/2023', 65468476.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(59, 1, 1, 5, 1, 'Construction of 84M Span Intermediate Lane motor bridge over Pinder river in Kulsari to Sunau motor road & its approach in District Chamoli', '07/BR/RFB-EPC/UGRIDP/2023', 125644157.00, NULL, NULL, NULL, NULL, 1, '2011-11-20', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(60, 1, 1, 5, 1, 'Construction of 4 No. Intermediate Lane RCC Bridge & Steel Truss Bridge in KM-3, KM-7, KM-11 & KM-14 at Nandprayag Ghat Motor Road, Block-Ghat, District Chamoli', '06/BR/RFB/UGRIDP/2023', 71741185.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(61, 1, 1, 5, 1, 'Construction of 30 M Span Single Lane Steel Girder Pedestrian Bridge Near Charbag over Lwani Gadera at Silwani Tok, Block-Ghat, District Chamoli', '02/BR/RFB/UGRIDP/2023', 20852191.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(62, 1, 1, 5, 1, 'Construction of 60 M Span  Intermediate Lane Steel Truss Bridge over Jimba River at Km-01 of Seraghat-Golpha-Bona Motor Road, Block-Munsyari, District Pithoragarh', '05/BR/RFB/UGRIDP/2023', 56530324.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(63, 1, 1, 5, 1, 'Construction of 150M Span Double lane  Motor Bridge over Ratmau River in Daluwala- Lalwala-Dhanauri Motor Road in District Haridwar', '08/BR/RFB-EPC/UGRIDP/2023', 132804307.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(64, 1, 1, 5, 1, '1. 24M Span Intermediate lane  motor bridge & its approach in Km-2 of Ujjawalpur to Gwad Dungri Jaspur Motor Road in Block Karnprayag; 2. Construction of 48M Span intermediate lane Motor Bridge & its approach over Meeng Gadera in Km-1 of Gadhani Motor Road in Block Narayanbagar and; 3.  Construction of 48M Span intermediate lane motor bridge & its approach in Km-2 of Gairsain to village Devalkot  Motor Road in Block Gairsain', '09/BR/RFB-EPC/UGRIDP/2023', 110969005.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(65, 1, 1, 5, 1, 'Construction of 65M Span single lane Steel Truss Pedestrian Bridge at GandaKhali village to Ucholigoth village in District Champawat', '11/BR/RFB/UGRIDP/2023', 26374847.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(66, 1, 1, 5, 1, 'Construction of 75M Span  single lane Steel Truss Pedestrian Bridge at gram panchayat Chauramehta to Gurudwara in District Champawat', '12/BR/RFB/UGRIDP/2023', 52905965.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(67, 1, 1, 5, 1, 'Construction of 120M span double lane R.C.C. Prestress concrete bridge over Sher Nala in Km 82 of Ramnagar - Kaladhungi - Haldwani - Kathgodam - Chorgalia - Sitarganj - Bijti  Motor Road in  District Nainital', '13/BR/RFB/UGRIDP/2023', 81770772.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(68, 1, 1, 5, 1, 'Construction of 90m Span   Pedestrian Bridge & its approach road over Kotigaad near Tikochi Market in District Uttarkashi', '14/BR/RFB-EPC/UGRIDP/2023', 86336288.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(69, 1, 1, 5, 1, 'Construction of 125M Span Single lane Suspension Pedestrian  Bridge over Pinder River for Odar village in District Chamoli', '21/BR/RFB/UGRIDP/2023', 62269581.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(70, 1, 1, 5, 1, 'Construction of 84M span single lane Steel Truss Pedestrian Bridge over Alaknanda River in District Pauri', '16A/BR/RFB/UPREPARE/2023', 50477312.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(71, 1, 1, 5, 1, 'Construction of 105M span  Intermediate lane  Motor Bridge over Saryu River in Bankot- Badgari- Sapteshwar Motor Road in District Pithoragarh', '19/BR/RFB-EPC/UGRIDP/2023', 125230251.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(72, 1, 1, 5, 1, 'Construction of 100M span  intermediate lane motor bridge over Dholi river at Sela village in District Pithoragarh', '20/BR/RFB-EPC/UGRIDP/2023', 121571517.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(73, 1, 1, 5, 1, 'Construction of 152M Span double lane Motor bridge over Bhagirathi River near Tamakhani in District Uttarkashi', '18/BR/RFB-EPC/UGRIDP/2023', 253424667.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(74, 1, 1, 5, 1, 'Construction of 240M Span  Double lane motor bridge over Suswa river in Bullawala to Sattiwala motor road in District Dehradun', '23/BR/RFB-EPC/UGRIDP/2023', 156034054.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(75, 1, 1, 5, 1, 'Construction of 4 No. Intermediate lane Steel Truss Motor Bridge in KM-4,  KM-8 (HM 2-4 & HM 8-10) & KM-12 at Nandprayag Ghat Motor Road, Block-Ghat, District Chamoli', '25/BR/RFB/UGRIDP/2023', 71712061.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(76, 1, 1, 5, 1, 'Construction of 150M span Intermediate lane Motor Bridge & its approach road over Nayar River for Badkholu village in District Pauri', '15/BR/RFB-EPC/UGRIDP/2023', 147223720.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(77, 1, 1, 5, 1, 'Construction of 120M Span  Pedestrian  Bridge over Mainagad in Pipalkoti-Math-Syun-Bemru Bridle Road in District Chamoli', '22/BR/RFB-EPC/UGRIDP/2023', 101600.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(78, 1, 1, 5, 1, 'Test Bridge For PIU PWD By Sr', '12/testingbridge/123/tewst', 120000000.00, NULL, NULL, NULL, NULL, 1, '2023-08-08', '123/test/testing', NULL, 1, '2024-01-09', '123/test/testing/123', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(79, 1, 1, 5, 1, 'Construction of 90 M Span Pedestrian Bridge & its approach over Kel river at Supligad in District Chamoli.', '10(1)/BR/RFB-IR/UPREPARE/2024', 75400000.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2024-04-18', '205807/U-PREPARE/2024', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(80, 1, 1, 5, 1, 'Construction of 80M Span Pedestrian Bridge& its approach on Paithani Garkot Bridle Road in District Chamoli.', '10(2)/BR/RFB-IR/ UPREPARE/2024', 57000000.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/III(3)/36(Gen)2022', NULL, 1, '2024-04-18', '205807/U-PREPARE/2024', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(81, 1, 1, 5, 1, 'Construction of 100 M span Intermediate Lane Steel Truss Motor Bridge over Dholi river at Sela village in District Pithoragarh (EPC Mode)', '02A/BR/RFB-EPC/U-PREPARE/2024', 148000000.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/III(3)/36/(Gen)2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(82, 1, 1, 5, 1, 'Construction of 54 M Span Pedestrian bridge over Badiyaar River in Kimdar block Purola.', '01/pro/bridge/upreprare/2025', 22000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(83, 1, 1, 5, 1, 'Construction of 42M Span Motor Bridge at, Devigaad- Dantola, Motor Road.', '02/pro/bridge/upreprare/2025', 45000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun,', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(84, 1, 1, 5, 1, 'Construction of 30 M Span Motor Bridge  at Km-4 of Pokhal-Karnashram Motor Road.', '03/pro/bridge/upreprare/2025', 20600000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(85, 1, 1, 5, 1, 'Construction of 100M Span Pedestrian  Bridge over Gola river at Danijala.', '04/pro/bridge/uprepare/2025', 75000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(86, 1, 1, 5, 1, 'Construction of 110M Span Pedstrian Bridge over Ladhiya river near Chalthi', '05/pro/bridge/uprepare/2025', 60000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(87, 1, 1, 5, 1, 'Reconstruction of 110M Span Motor Bridge at Bhakuna Nachni Over Ramganga River', '06/pro/bridge/uprepare/2025', 150000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(88, 1, 1, 5, 1, 'Construction of  60M Span Steel Motor Bridge in Almora-Sainar-Chan Motor Road.', '07/pro/bridge/uprepare/2025', 105000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(89, 1, 1, 5, 1, 'Construction of 30 M Span Pedestrian Bridge over Kweerala river at Adisera-Chatkot to Chandpur Kuwarsingh Bridle Road.', '08/pro/bridge/uprepare/2025', 30000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(90, 1, 1, 5, 1, 'Construction of 95M Span Motor Bridge (Nagrashu) over Alaknanda river.', '09/pro/bridge/uprepare/2025', 197500000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradu', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(91, 1, 1, 5, 1, 'Construction of 24M Span Steel Motor Bridge at KM-1 of Bichkhali-Pathari Motor Road.', '10/pro/bridge/uprepare/2025', 21900000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(92, 1, 1, 5, 1, 'Construction of  42 M Span steel Motor bridge over Khurmola Gaad at Km. 1 Manjgaon Motor Road', '11/pro/bridge/uprepare/2025', 38000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(93, 1, 1, 5, 1, 'Construction of  40M Span Motor Bridge over Kweerala river at Syuli Tok of village- Lafda.', '12/pro/bridge/uprepare/2025', 40000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradu', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(94, 1, 1, 5, 1, 'Construction of 30M Span Pedestrian bridge at Tyakot near Kapuri-Taknar.', '13/pro/bridge/uprepare/2025', 30000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(95, 1, 1, 5, 1, 'Reconstruction of 60 M Span Steel Motor bridge in Km 1 of Jagta motor Road in Block Mori.', '14/pro/bridge/uprepare/2025', 48000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun,', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(96, 1, 1, 5, 1, 'Construction of 24 M Span Steel Motor Bridge at Langaasu-Niwadi-Khet-Silangi Motor Road, Km-4.', '15/pro/bridge/uprepare/2025', 22000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(97, 1, 1, 5, 1, 'Construction of 78 M Span steel  Motor  bridge over Alaknanda River   langsi-dwing-tapon-Lanji, Pokhni Motor Road.', '16/pro/bridge/uprepare/2025', 129700000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(98, 1, 1, 5, 1, 'Construction of 70 M Span Pedestrian Bridle Bridge on Dhami Gaon motor Road km 8 over Sukaligad near tok Purej.', '17/pro/bridge/uprepare/2025', 30000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(99, 1, 1, 5, 1, 'Test Bridge', '007/BR/PWD/PMU', 10000000.00, NULL, NULL, NULL, NULL, 1, '2025-01-02', '007/BR/PWD/PMU/DEC', NULL, 1, '2025-02-01', '007/BR/PWD/PMU/HPC', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(100, 1, 1, 5, 1, 'Test Bridge by MIS Tester', '0007/IT/Test/MIS', 90000000.00, NULL, NULL, NULL, NULL, 1, '2024-11-01', '007/DEC/IT/Test/MIS', NULL, 1, '2024-12-01', '007/HPC/IT/Test/MIS', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(101, 1, 1, 7, 1, 'Slabilization of a slope nead karanpriyag', '12/007/U-prepare/2025', 40000000.00, NULL, NULL, NULL, NULL, 1, '2025-01-01', '007/1010/DEC/2025', NULL, 1, '2025-01-28', '007/1010/HPC/2025', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(102, 1, 1, 7, 1, 'Road Protection Work of Uttarkashi Ghansali Tilwara Motor Road at KM. 10.', '01/pro/slope/upreprare/2025', 70000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2024-04-18', '205807/U-PREPARE/2024 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(103, 1, 1, 7, 1, 'Road Protection Work of Uttarkashi Ghansali Tilwara Motor Road at KM. 16.', '02/pro/slope/upreprare/2025', 70000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(104, 1, 1, 7, 1, 'Road Protection Work of Guptkashi Kalimath Jaal chaumasi Motor Road at KM.16.', '03/pro/slope/upreprare/2025', 70000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(105, 1, 1, 7, 1, 'Road Protection Work of Guptkashi Kalimath Jaal chaumasi Motor Road at KM.17.', '04/pro/slope/upreprare/2025', 80000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(106, 1, 1, 7, 1, 'Road Protection Work of Mayali Guptkashi Motor Road at KM. 11', '05/pro/slope/upreprare/2025', 60000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(107, 1, 1, 7, 1, 'Road Protection Work of Nainital-Bhowali Motor Road at Km.9', '06/pro/slope/upreprare/2025', 50000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(108, 1, 1, 7, 1, 'Road Protection Work of Fatehpur-Lansdowne Motor Road at KM.15.', '07/pro/slope/upreprare/2025', 50000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
-(109, 1, 1, 7, 1, 'Road Protection Work of Fatehpur-Lansdowne Motor Road at KM.18.', '08/pro/slope/upreprare/2025', 50000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL);
+INSERT INTO `package_projects` (`id`, `package_component_id`, `project_id`, `package_category_id`, `package_sub_category_id`, `department_id`, `package_name`, `package_number`, `estimated_budget_incl_gst`, `vidhan_sabha_id`, `lok_sabha_id`, `district_id`, `block_id`, `dec_approved`, `dec_approval_date`, `dec_letter_number`, `dec_document_path`, `hpc_approved`, `hpc_approval_date`, `hpc_letter_number`, `hpc_document_path`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(5, 1, 1, 1, 5, 1, 'Construction of 84 M Span Motor Bridge over Kotigaad in Km 01 of Tikochi-Duchanu-Kiranu- Sirtoli Motor Road in District Uttarkashi', '24/BR/RFB-EPC/UGRIDP/2023', 147751097.00, NULL, NULL, 13, NULL, 1, '2022-11-11', '1397/III(3)/2022', 'package-projects/dec-documents/yN1vq876nU0XAJDEj1xJw68S7Vw2TZRiorXbMt9x.pdf', 1, '2023-05-03', '103/UDRP-AF/2023', 'package-projects/hpc-documents/hKS6mA5a00jNUwa9lhrLLxy5gBRwMxdSBDS1wCja.pdf', '2025-08-17 02:55:37', '2025-08-17 02:55:37', NULL),
+(6, 2, 1, 1, 5, 1, 'Construction of 60 M Pedestrian bridge over Kosi river at village- Bedgaun near Kathautiya Temple at Someshwar.', '20/pro/bridge/uprepare/2025', 40000000.00, NULL, NULL, 1, NULL, 1, '2023-06-14', '763/2023/PWD-III', 'package-projects/dec-documents/MZQIMFYKYiRZFfgarq1fRzECUiwKB9hWBm32oOTz.pdf', 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', 'package-projects/hpc-documents/tk1fzDTfgKRQaWTtRbNxhWPaW8wL39tvFgCAXv3j.pdf', '2025-08-18 00:53:17', '2025-08-18 00:53:17', NULL),
+(7, 3, 1, 1, 5, 1, 'Construction of 100 M Pedestrian Bridge at Bhikiasan Near Thapli', '19/pro/bridge/uprepare/2025', 120000000.00, 4, NULL, 1, NULL, 1, '2023-06-14', '763/2023/PWD-III', 'package-projects/dec-documents/4IcgdAQnUupPN4LQjQ41PdHRcc2FDiJLFnwfIFRX.pdf', 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun,', 'package-projects/hpc-documents/VxxgPKz9aU9PxdsYSyxiSr99PQAtqMACYUjdMaH2.pdf', '2025-08-18 00:58:18', '2025-08-18 00:58:18', NULL),
+(8, NULL, 1, 1, 5, 1, 'Construction of 30 M Pedestrian bridge at Devtoli inter college to village Simayal.', '18/pro/bridge/uprepare/2025', 30000000.00, 4, NULL, 2, NULL, 1, '2023-06-14', '763/2023/PWD-III', 'package-projects/dec-documents/8142UrwEEdfnSXfcvcxxZcj2dnaThcfBCpQ45ZFY.pdf', 1, '2023-06-30', '275/UDRP-AF/2023', 'package-projects/hpc-documents/i162nCMzPOjHtwEo3qRc7XXNbyoWU7L7GagTDCmX.pdf', '2025-08-18 01:00:59', '2025-08-18 01:00:59', NULL),
+(50, NULL, 1, 3, 1, 1, 'Multipurpose Fire Tender', '01A/FIRE/RFB/UPREPARE/2024', 120750000.00, NULL, NULL, NULL, NULL, 1, '2022-11-17', 'HS3-MISC/MISC/91/2022-XX-3-Home Department (1/77143/2022)', NULL, 1, '2023-01-16', '523/UDRP-AF/2022-23', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(51, NULL, 1, 3, 1, 1, 'Supply of Fire Entry Suits', '02/FIRE/RFB/UGRIDP/2023', 28200000.00, NULL, NULL, NULL, NULL, 1, '2022-11-17', 'HS3-MISC/MISC/91/2022-XX-3-HomeDepartment (1/77143/2022)', NULL, 1, '2023-01-16', '523/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(52, NULL, 1, 3, 1, 1, 'Supply of Breathing Apparatus', '03/FIRE/RFB/UGRIDP/2023', 136850000.00, NULL, NULL, NULL, NULL, 1, '2022-11-17', 'HS3-MISC/MISC-91/2022-XX-3-HomeDpartment (1/77143/2022)', NULL, 1, '2023-01-16', '523/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(53, NULL, 1, 3, 1, 1, 'Supply of Thermal Imaging Camera', '04A/FIRE/RFB/PREPARE/2024', 10400000.00, NULL, NULL, NULL, NULL, 1, '2017-11-22', 'HS3-MSC/MISC-91/2022-XX-3-Home Department (1/77143/2022)', NULL, 1, '2023-01-16', '523/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(54, NULL, 1, 3, 1, 1, 'Supply of Victim Location Camera', '05/FIRE/RFB/UGRIDP/2023', 15500000.00, NULL, NULL, NULL, NULL, 1, '2022-11-17', 'HS3/MISC/MISC-91-2022-XX-3-HomeDepartment (1/77143/2022)', NULL, 1, '2023-01-16', '523/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(55, NULL, 1, 3, 1, 1, 'Supply and Installation of Victim Locating Equipment & Air Lifting Bag Equipment', '05/SDRF/USDMA/UGRIDP/2022', 36160000.00, NULL, NULL, NULL, NULL, 1, '2022-11-04', 'I/77144/2022', NULL, 1, '2023-01-16', '523/UDRP-AF/2022-23', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(56, NULL, 1, 2, 1, 1, 'Multipurpose Disaster Shelter', '01/1-A/PIU/USDMA', 18200000.00, NULL, NULL, NULL, NULL, 1, '2024-01-01', 'dec/1/1/2024', NULL, 1, '2024-02-01', 'hpc/1/1/2024', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(57, NULL, 1, 1, 1, 1, 'Multi hazard shelter', 'Multi hazard shelter/test/test', 1000000000.00, NULL, NULL, NULL, NULL, 1, '2025-01-01', 'test/101', NULL, 1, '2025-01-03', 'trest/1/125', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(58, NULL, 1, 1, 5, 1, 'Construction of 50 M Intermediate Lane Steel Truss Motor Bridge in Uttarkashi- Lambgaon Ghansali- Tilwara Motor Road KM-98 near Hanuman Temple, Block-Bhilangna, District Tehri', '01/BR/RFB/UGRIDP/2023', 65468476.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(59, NULL, 1, 1, 5, 1, 'Construction of 84M Span Intermediate Lane motor bridge over Pinder river in Kulsari to Sunau motor road & its approach in District Chamoli', '07/BR/RFB-EPC/UGRIDP/2023', 125644157.00, NULL, NULL, NULL, NULL, 1, '2011-11-20', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(60, NULL, 1, 1, 5, 1, 'Construction of 4 No. Intermediate Lane RCC Bridge & Steel Truss Bridge in KM-3, KM-7, KM-11 & KM-14 at Nandprayag Ghat Motor Road, Block-Ghat, District Chamoli', '06/BR/RFB/UGRIDP/2023', 71741185.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(61, NULL, 1, 1, 5, 1, 'Construction of 30 M Span Single Lane Steel Girder Pedestrian Bridge Near Charbag over Lwani Gadera at Silwani Tok, Block-Ghat, District Chamoli', '02/BR/RFB/UGRIDP/2023', 20852191.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(62, NULL, 1, 1, 5, 1, 'Construction of 60 M Span  Intermediate Lane Steel Truss Bridge over Jimba River at Km-01 of Seraghat-Golpha-Bona Motor Road, Block-Munsyari, District Pithoragarh', '05/BR/RFB/UGRIDP/2023', 56530324.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(63, NULL, 1, 1, 5, 1, 'Construction of 150M Span Double lane  Motor Bridge over Ratmau River in Daluwala- Lalwala-Dhanauri Motor Road in District Haridwar', '08/BR/RFB-EPC/UGRIDP/2023', 132804307.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(64, 1, 1, 1, 5, 1, '1. 24M Span Intermediate lane  motor bridge & its approach in Km-2 of Ujjawalpur to Gwad Dungri Jaspur Motor Road in Block Karnprayag; 2. Construction of 48M Span intermediate lane Motor Bridge & its approach over Meeng Gadera in Km-1 of Gadhani Motor Road in Block Narayanbagar and; 3.  Construction of 48M Span intermediate lane motor bridge & its approach in Km-2 of Gairsain to village Devalkot  Motor Road in Block Gairsain', '09/BR/RFB-EPC/UGRIDP/2023', 110969005.00, NULL, NULL, NULL, NULL, 1, NULL, '1397/III(3)/2022', NULL, 1, NULL, '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 02:09:14', NULL),
+(65, NULL, 1, 1, 5, 1, 'Construction of 65M Span single lane Steel Truss Pedestrian Bridge at GandaKhali village to Ucholigoth village in District Champawat', '11/BR/RFB/UGRIDP/2023', 26374847.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(66, NULL, 1, 1, 5, 1, 'Construction of 75M Span  single lane Steel Truss Pedestrian Bridge at gram panchayat Chauramehta to Gurudwara in District Champawat', '12/BR/RFB/UGRIDP/2023', 52905965.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(67, NULL, 1, 1, 5, 1, 'Construction of 120M span double lane R.C.C. Prestress concrete bridge over Sher Nala in Km 82 of Ramnagar - Kaladhungi - Haldwani - Kathgodam - Chorgalia - Sitarganj - Bijti  Motor Road in  District Nainital', '13/BR/RFB/UGRIDP/2023', 81770772.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(68, NULL, 1, 1, 5, 1, 'Construction of 90m Span   Pedestrian Bridge & its approach road over Kotigaad near Tikochi Market in District Uttarkashi', '14/BR/RFB-EPC/UGRIDP/2023', 86336288.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(69, NULL, 1, 1, 5, 1, 'Construction of 125M Span Single lane Suspension Pedestrian  Bridge over Pinder River for Odar village in District Chamoli', '21/BR/RFB/UGRIDP/2023', 62269581.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(70, NULL, 1, 1, 5, 1, 'Construction of 84M span single lane Steel Truss Pedestrian Bridge over Alaknanda River in District Pauri', '16A/BR/RFB/UPREPARE/2023', 50477312.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(71, NULL, 1, 1, 5, 1, 'Construction of 105M span  Intermediate lane  Motor Bridge over Saryu River in Bankot- Badgari- Sapteshwar Motor Road in District Pithoragarh', '19/BR/RFB-EPC/UGRIDP/2023', 125230251.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(72, NULL, 1, 1, 5, 1, 'Construction of 100M span  intermediate lane motor bridge over Dholi river at Sela village in District Pithoragarh', '20/BR/RFB-EPC/UGRIDP/2023', 121571517.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(73, NULL, 1, 1, 5, 1, 'Construction of 152M Span double lane Motor bridge over Bhagirathi River near Tamakhani in District Uttarkashi', '18/BR/RFB-EPC/UGRIDP/2023', 253424667.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(74, NULL, 1, 1, 5, 1, 'Construction of 240M Span  Double lane motor bridge over Suswa river in Bullawala to Sattiwala motor road in District Dehradun', '23/BR/RFB-EPC/UGRIDP/2023', 156034054.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(75, NULL, 1, 1, 5, 1, 'Construction of 4 No. Intermediate lane Steel Truss Motor Bridge in KM-4,  KM-8 (HM 2-4 & HM 8-10) & KM-12 at Nandprayag Ghat Motor Road, Block-Ghat, District Chamoli', '25/BR/RFB/UGRIDP/2023', 71712061.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(76, NULL, 1, 1, 5, 1, 'Construction of 150M span Intermediate lane Motor Bridge & its approach road over Nayar River for Badkholu village in District Pauri', '15/BR/RFB-EPC/UGRIDP/2023', 147223720.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(77, NULL, 1, 1, 5, 1, 'Construction of 120M Span  Pedestrian  Bridge over Mainagad in Pipalkoti-Math-Syun-Bemru Bridle Road in District Chamoli', '22/BR/RFB-EPC/UGRIDP/2023', 101600.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(78, NULL, 1, 1, 5, 1, 'Test Bridge For PIU PWD By Sr', '12/testingbridge/123/tewst', 120000000.00, NULL, NULL, NULL, NULL, 1, '2023-08-08', '123/test/testing', NULL, 1, '2024-01-09', '123/test/testing/123', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(79, NULL, 1, 1, 5, 1, 'Construction of 90 M Span Pedestrian Bridge & its approach over Kel river at Supligad in District Chamoli.', '10(1)/BR/RFB-IR/UPREPARE/2024', 75400000.00, NULL, NULL, NULL, NULL, 1, '2022-11-11', '1397/III(3)/2022', NULL, 1, '2024-04-18', '205807/U-PREPARE/2024', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(80, NULL, 1, 1, 5, 1, 'Construction of 80M Span Pedestrian Bridge& its approach on Paithani Garkot Bridle Road in District Chamoli.', '10(2)/BR/RFB-IR/ UPREPARE/2024', 57000000.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/III(3)/36(Gen)2022', NULL, 1, '2024-04-18', '205807/U-PREPARE/2024', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(81, NULL, 1, 1, 5, 1, 'Construction of 100 M span Intermediate Lane Steel Truss Motor Bridge over Dholi river at Sela village in District Pithoragarh (EPC Mode)', '02A/BR/RFB-EPC/U-PREPARE/2024', 148000000.00, NULL, NULL, NULL, NULL, 1, '2022-12-23', '1515/III(3)/36/(Gen)2022', NULL, 1, '2023-05-03', '103/UDRP-AF/2023', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(82, NULL, 1, 1, 5, 1, 'Construction of 54 M Span Pedestrian bridge over Badiyaar River in Kimdar block Purola.', '01/pro/bridge/upreprare/2025', 22000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(83, NULL, 1, 1, 5, 1, 'Construction of 42M Span Motor Bridge at, Devigaad- Dantola, Motor Road.', '02/pro/bridge/upreprare/2025', 45000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun,', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(84, NULL, 1, 1, 5, 1, 'Construction of 30 M Span Motor Bridge  at Km-4 of Pokhal-Karnashram Motor Road.', '03/pro/bridge/upreprare/2025', 20600000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(85, NULL, 1, 1, 5, 1, 'Construction of 100M Span Pedestrian  Bridge over Gola river at Danijala.', '04/pro/bridge/uprepare/2025', 75000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(86, NULL, 1, 1, 5, 1, 'Construction of 110M Span Pedstrian Bridge over Ladhiya river near Chalthi', '05/pro/bridge/uprepare/2025', 60000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(87, NULL, 1, 1, 5, 1, 'Reconstruction of 110M Span Motor Bridge at Bhakuna Nachni Over Ramganga River', '06/pro/bridge/uprepare/2025', 150000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(88, NULL, 1, 1, 5, 1, 'Construction of  60M Span Steel Motor Bridge in Almora-Sainar-Chan Motor Road.', '07/pro/bridge/uprepare/2025', 105000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(89, NULL, 1, 1, 5, 1, 'Construction of 30 M Span Pedestrian Bridge over Kweerala river at Adisera-Chatkot to Chandpur Kuwarsingh Bridle Road.', '08/pro/bridge/uprepare/2025', 30000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(90, NULL, 1, 1, 5, 1, 'Construction of 95M Span Motor Bridge (Nagrashu) over Alaknanda river.', '09/pro/bridge/uprepare/2025', 197500000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradu', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(91, NULL, 1, 1, 5, 1, 'Construction of 24M Span Steel Motor Bridge at KM-1 of Bichkhali-Pathari Motor Road.', '10/pro/bridge/uprepare/2025', 21900000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(92, NULL, 1, 1, 5, 1, 'Construction of  42 M Span steel Motor bridge over Khurmola Gaad at Km. 1 Manjgaon Motor Road', '11/pro/bridge/uprepare/2025', 38000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(93, NULL, 1, 1, 5, 1, 'Construction of  40M Span Motor Bridge over Kweerala river at Syuli Tok of village- Lafda.', '12/pro/bridge/uprepare/2025', 40000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradu', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(94, NULL, 1, 1, 5, 1, 'Construction of 30M Span Pedestrian bridge at Tyakot near Kapuri-Taknar.', '13/pro/bridge/uprepare/2025', 30000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(95, NULL, 1, 1, 5, 1, 'Reconstruction of 60 M Span Steel Motor bridge in Km 1 of Jagta motor Road in Block Mori.', '14/pro/bridge/uprepare/2025', 48000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun,', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(96, NULL, 1, 1, 5, 1, 'Construction of 24 M Span Steel Motor Bridge at Langaasu-Niwadi-Khet-Silangi Motor Road, Km-4.', '15/pro/bridge/uprepare/2025', 22000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(97, NULL, 1, 1, 5, 1, 'Construction of 78 M Span steel  Motor  bridge over Alaknanda River   langsi-dwing-tapon-Lanji, Pokhni Motor Road.', '16/pro/bridge/uprepare/2025', 129700000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(98, NULL, 1, 1, 5, 1, 'Construction of 70 M Span Pedestrian Bridle Bridge on Dhami Gaon motor Road km 8 over Sukaligad near tok Purej.', '17/pro/bridge/uprepare/2025', 30000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(99, NULL, 1, 1, 5, 1, 'Test Bridge', '007/BR/PWD/PMU', 10000000.00, NULL, NULL, NULL, NULL, 1, '2025-01-02', '007/BR/PWD/PMU/DEC', NULL, 1, '2025-02-01', '007/BR/PWD/PMU/HPC', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(100, NULL, 1, 1, 5, 1, 'Test Bridge by MIS Tester', '0007/IT/Test/MIS', 90000000.00, NULL, NULL, NULL, NULL, 1, '2024-11-01', '007/DEC/IT/Test/MIS', NULL, 1, '2024-12-01', '007/HPC/IT/Test/MIS', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(101, NULL, 1, 1, 7, 1, 'Slabilization of a slope nead karanpriyag', '12/007/U-prepare/2025', 40000000.00, NULL, NULL, NULL, NULL, 1, '2025-01-01', '007/1010/DEC/2025', NULL, 1, '2025-01-28', '007/1010/HPC/2025', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(102, NULL, 1, 1, 7, 1, 'Road Protection Work of Uttarkashi Ghansali Tilwara Motor Road at KM. 10.', '01/pro/slope/upreprare/2025', 70000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2024-04-18', '205807/U-PREPARE/2024 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(103, NULL, 1, 1, 7, 1, 'Road Protection Work of Uttarkashi Ghansali Tilwara Motor Road at KM. 16.', '02/pro/slope/upreprare/2025', 70000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(104, NULL, 1, 1, 7, 1, 'Road Protection Work of Guptkashi Kalimath Jaal chaumasi Motor Road at KM.16.', '03/pro/slope/upreprare/2025', 70000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(105, NULL, 1, 1, 7, 1, 'Road Protection Work of Guptkashi Kalimath Jaal chaumasi Motor Road at KM.17.', '04/pro/slope/upreprare/2025', 80000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(106, NULL, 1, 1, 7, 1, 'Road Protection Work of Mayali Guptkashi Motor Road at KM. 11', '05/pro/slope/upreprare/2025', 60000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(107, NULL, 1, 1, 7, 1, 'Road Protection Work of Nainital-Bhowali Motor Road at Km.9', '06/pro/slope/upreprare/2025', 50000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(108, NULL, 1, 1, 7, 1, 'Road Protection Work of Fatehpur-Lansdowne Motor Road at KM.15.', '07/pro/slope/upreprare/2025', 50000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL),
+(109, NULL, 1, 1, 7, 1, 'Road Protection Work of Fatehpur-Lansdowne Motor Road at KM.18.', '08/pro/slope/upreprare/2025', 50000000.00, NULL, NULL, NULL, NULL, 1, '2023-06-14', '763/2023/PWD-III', NULL, 1, '2023-06-30', '275/UDRP-AF/2023 Dehradun', NULL, '2025-08-18 06:49:11', '2025-08-18 06:49:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -933,7 +966,6 @@ CREATE TABLE `procurement_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `package_project_id` bigint(20) UNSIGNED NOT NULL,
   `method_of_procurement` varchar(255) DEFAULT NULL,
-  `type_of_procurement` varchar(255) DEFAULT NULL,
   `publication_date` date DEFAULT NULL,
   `publication_document_path` varchar(255) DEFAULT NULL,
   `tender_fee` decimal(12,2) DEFAULT NULL,
@@ -942,17 +974,18 @@ CREATE TABLE `procurement_details` (
   `emd_validity_days` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `type_of_procurement_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `procurement_details`
 --
 
-INSERT INTO `procurement_details` (`id`, `package_project_id`, `method_of_procurement`, `type_of_procurement`, `publication_date`, `publication_document_path`, `tender_fee`, `earnest_money_deposit`, `bid_validity_days`, `emd_validity_days`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(8, 5, 'Request for Bids', 'EPC', NULL, 'procurement_docs/0y4HThMFSp49q5pgWaGTulbWBSi1hX7A4bvYyGKz.pdf', 5000.00, 3000000.00, 120, 540, '2025-08-17 03:04:25', '2025-08-17 03:04:25', NULL),
-(9, 6, 'Request for Proposals', 'EPC', NULL, NULL, 5000.00, 50000.00, 90, 180, '2025-08-18 00:54:50', '2025-08-18 00:54:50', NULL),
-(10, 7, 'Request for Proposals', 'EPC', NULL, NULL, 5000.00, 100000.00, 90, 120, '2025-08-18 00:59:07', '2025-08-18 00:59:07', NULL);
+INSERT INTO `procurement_details` (`id`, `package_project_id`, `method_of_procurement`, `publication_date`, `publication_document_path`, `tender_fee`, `earnest_money_deposit`, `bid_validity_days`, `emd_validity_days`, `created_at`, `updated_at`, `deleted_at`, `type_of_procurement_id`) VALUES
+(8, 5, 'Request for Bids', NULL, 'procurement_docs/0y4HThMFSp49q5pgWaGTulbWBSi1hX7A4bvYyGKz.pdf', 5000.00, 3000000.00, 120, 540, '2025-08-17 03:04:25', '2025-08-17 03:04:25', NULL, 1),
+(9, 6, 'Request for Proposals', NULL, NULL, 5000.00, 50000.00, 90, 180, '2025-08-18 00:54:50', '2025-08-18 00:54:50', NULL, 1),
+(10, 7, 'Request for Proposals', NULL, NULL, 5000.00, 100000.00, 90, 120, '2025-08-18 00:59:07', '2025-08-19 02:08:43', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -1099,6 +1132,30 @@ CREATE TABLE `safeguard_entries` (
   `is_validity` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `safeguard_entries`
+--
+
+INSERT INTO `safeguard_entries` (`id`, `sub_package_project_id`, `safeguard_compliance_id`, `contraction_phase_id`, `sl_no`, `item_description`, `created_at`, `updated_at`, `deleted_at`, `is_validity`) VALUES
+(15, 10, 1, 1, '1', 'Safety Helmet', '2025-08-18 04:54:24', '2025-08-18 04:54:24', NULL, 0),
+(16, 10, 1, 1, '1.1', 'High-Visibility Jacket', '2025-08-18 04:54:24', '2025-08-18 04:54:24', NULL, 0),
+(17, 10, 1, 1, '2', 'Protective Gloves', '2025-08-18 04:54:24', '2025-08-18 04:54:24', NULL, 0),
+(18, 10, 1, 2, '1', 'Safety Helmet', '2025-08-18 04:56:38', '2025-08-18 04:56:38', NULL, 0),
+(19, 10, 1, 2, '1.1', 'High-Visibility Jacket', '2025-08-18 04:56:38', '2025-08-18 04:56:38', NULL, 0),
+(20, 10, 1, 2, '2', 'Protective Gloves', '2025-08-18 04:56:38', '2025-08-18 04:56:38', NULL, 0),
+(21, 10, 1, 3, '1', 'Safety Helmet', '2025-08-18 04:56:55', '2025-08-18 04:56:55', NULL, 0),
+(22, 10, 1, 3, '1.1', 'High-Visibility Jacket', '2025-08-18 04:56:56', '2025-08-18 04:56:56', NULL, 0),
+(23, 10, 1, 3, '2', 'Protective Gloves', '2025-08-18 04:56:56', '2025-08-18 04:56:56', NULL, 0),
+(24, 10, 2, 1, '1', 'Safety Helmet', '2025-08-18 04:57:09', '2025-08-18 04:57:09', NULL, 0),
+(25, 10, 2, 1, '1.1', 'High-Visibility Jacket', '2025-08-18 04:57:09', '2025-08-18 04:57:09', NULL, 0),
+(26, 10, 2, 1, '2', 'Protective Gloves', '2025-08-18 04:57:09', '2025-08-18 04:57:09', NULL, 0),
+(27, 10, 2, 2, '1', 'Safety Helmet', '2025-08-18 04:57:19', '2025-08-18 04:57:19', NULL, 0),
+(28, 10, 2, 2, '1.1', 'High-Visibility Jacket', '2025-08-18 04:57:19', '2025-08-18 04:57:19', NULL, 0),
+(29, 10, 2, 2, '2', 'Protective Gloves', '2025-08-18 04:57:19', '2025-08-18 04:57:19', NULL, 0),
+(30, 10, 2, 3, '1', 'Safety Helmet', '2025-08-18 04:57:29', '2025-08-18 04:57:29', NULL, 0),
+(31, 10, 2, 3, '1.1', 'High-Visibility Jacket', '2025-08-18 04:57:29', '2025-08-18 04:57:29', NULL, 0),
+(32, 10, 2, 3, '2', 'Protective Gloves', '2025-08-18 04:57:29', '2025-08-18 04:57:29', NULL, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -1119,7 +1176,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('Lgcdv0MQZCDo9jJPtOXuKwqH1y2KvfUnmL7sQS0E', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoicmFodHo5Y1ZjaHlLVGdoNDZTYzZFQlc4a3RoOTFGMThRbnU4dVRxdCI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQ0OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWRtaW4vcGFja2FnZS1wcm9qZWN0cyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjM7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkSGFnOW9TMGIyMjZpdzlMYm8ySHZBZWVwVTlBTk14TkxwUjJqcmNYbW41dHFIRy9oOG5GdGkiO30=', 1755499956);
+('yDMR0XUG5jWwd7NaZNlxIA1VpkiOronoxbxCDzmD', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiNU0zb3NmSWU0c0IxaXlTcVJEVkJNWnJqWkNQcVVOMTZuVXN0bkVMWSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9wcm9jdXJlbWVudC1kZXRhaWxzLzEwIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MztzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMiRIYWc5b1MwYjIyNml3OUxibzJIdkFlZXBVOUFOTXhOTHBSMmpyY1htbjV0cUhHL2g4bkZ0aSI7fQ==', 1755589125);
 
 -- --------------------------------------------------------
 
@@ -1206,6 +1263,30 @@ INSERT INTO `sub_package_projects` (`id`, `project_id`, `name`, `contract_value`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `type_of_procurements`
+--
+
+CREATE TABLE `type_of_procurements` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `type_of_procurements`
+--
+
+INSERT INTO `type_of_procurements` (`id`, `name`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'EPC', 'In which We can define', '2025-08-19 01:43:35', '2025-08-19 01:43:35', NULL),
+(2, 'Item-Wise', 'in Which BOQ sheet need to upload', '2025-08-19 01:44:05', '2025-08-19 01:44:05', NULL),
+(3, 'Others', 'also same', '2025-08-19 01:44:21', '2025-08-19 01:44:21', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -1241,7 +1322,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `username`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`, `department_id`, `designation_id`, `gender`, `phone_no`, `status`, `district`, `deleted_at`) VALUES
 (1, 1, 'admin', 'admin@gmail.com', 'admin', NULL, '$2y$12$VzxX3jmvEG/0dKL4w5jbWe3PLWtM8cIz7eU3YUh0MV4k1uTP8uAlu', NULL, NULL, NULL, NULL, NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 06:58:54', '2025-08-04 06:58:54', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (2, 1, 'Test User 1', 'testuser1@example.com', 'test_user_1', '2025-08-04 11:12:57', '$2y$12$VzxX3jmvEG/0dKL4w5jbWe3PLWtM8cIz7eU3YUh0MV4k1uTP8uAlu', NULL, NULL, NULL, 'OjPV8Rf3S1', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-04 12:31:58', NULL, NULL, NULL, NULL, 'active', NULL, '2025-08-04 12:31:58'),
-(3, 3, 'Test User ', 'testuser2@example.com', 'test_user_', '2025-08-04 11:12:58', '$2y$12$Hag9oS0b226iw9Lbo2HvAeepU9ANMxNLpR2jrcXmn5tqHG/h8nFti', NULL, NULL, NULL, 'lVIgKKTMvP9XmN3fEWic72gBcPRDBkqWuDYyQq0GT6sW212p3eOC6EkEFbmk', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-11 05:56:59', 1, 10, 'male', '9090909090', 'active', 'Dehradun', NULL),
+(3, 3, 'Test User ', 'testuser2@example.com', 'test_user_', '2025-08-04 11:12:58', '$2y$12$Hag9oS0b226iw9Lbo2HvAeepU9ANMxNLpR2jrcXmn5tqHG/h8nFti', NULL, NULL, NULL, '24ThNUXznOexrqowtMpJSrJSIFkMpoAhPs0lTGbnMlpZ5FwE9rijC7xXzmcw', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-11 05:56:59', 1, 10, 'male', '9090909090', 'active', 'Dehradun', NULL),
 (4, 1, 'Test User 3', 'testuser3@example.com', 'test_user_3', '2025-08-04 11:12:58', '$2y$12$.WEudQx6rlE8IvXmtz3she.zKNd2NOA3FpF6.WGHv8QoqKV2yajUq', NULL, NULL, NULL, 'P7Kjy9dmBp', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-04 11:12:58', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (5, 1, 'Test User 4', 'testuser4@example.com', 'test_user_4', '2025-08-04 11:12:58', '$2y$12$OiQc5Mamqa0WO4SsmHzovOm520kqdi6hszqA6gXQYdycPHwsRJqYS', NULL, NULL, NULL, 'aI1TSgyKKG', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (6, 1, 'Test User 5', 'testuser5@example.com', 'test_user_5', '2025-08-04 11:12:59', '$2y$12$ArGPNhRO/EFR48OFxTVLPOpJgMl226X.RWfsAp.G6id8.JpKk8ege', NULL, NULL, NULL, 'XuV6KCkwjv', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
@@ -1294,7 +1375,7 @@ INSERT INTO `work_service` (`id`, `name`, `department_id`, `created_at`, `update
 (1, 'Bridge', 1, '2025-08-12 02:21:53', '2025-08-12 04:51:21'),
 (2, 'Road Works', 1, '2025-08-12 02:22:44', '2025-08-12 04:18:22'),
 (3, 'Slope Protection', 1, '2025-08-12 02:23:01', '2025-08-12 02:23:01'),
-(4, 'Tree Cutting', 4, '2025-08-12 02:23:21', '2025-08-12 02:23:29');
+(4, 'Consultancy Services', 8, '2025-08-12 02:23:21', '2025-08-18 02:48:02');
 
 --
 -- Indexes for dumped tables
@@ -1472,6 +1553,12 @@ ALTER TABLE `navbar_items`
   ADD KEY `navbar_items_parent_id_foreign` (`parent_id`);
 
 --
+-- Indexes for table `package_components`
+--
+ALTER TABLE `package_components`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `package_projects`
 --
 ALTER TABLE `package_projects`
@@ -1484,7 +1571,8 @@ ALTER TABLE `package_projects`
   ADD KEY `package_projects_vidhan_sabha_id_foreign` (`vidhan_sabha_id`),
   ADD KEY `package_projects_lok_sabha_id_foreign` (`lok_sabha_id`),
   ADD KEY `package_projects_district_id_foreign` (`district_id`),
-  ADD KEY `package_projects_block_id_foreign` (`block_id`);
+  ADD KEY `package_projects_block_id_foreign` (`block_id`),
+  ADD KEY `package_projects_package_component_id_foreign` (`package_component_id`);
 
 --
 -- Indexes for table `pages`
@@ -1528,7 +1616,8 @@ ALTER TABLE `physical_epc_progress`
 --
 ALTER TABLE `procurement_details`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `procurement_details_package_project_id_foreign` (`package_project_id`);
+  ADD KEY `procurement_details_package_project_id_foreign` (`package_project_id`),
+  ADD KEY `procurement_details_type_of_procurement_id_foreign` (`type_of_procurement_id`);
 
 --
 -- Indexes for table `procurement_work_programs`
@@ -1605,6 +1694,12 @@ ALTER TABLE `sub_package_projects`
   ADD KEY `sub_package_projects_project_id_name_index` (`project_id`,`name`),
   ADD KEY `sub_package_projects_name_index` (`name`),
   ADD KEY `sub_package_projects_contract_value_index` (`contract_value`);
+
+--
+-- Indexes for table `type_of_procurements`
+--
+ALTER TABLE `type_of_procurements`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -1747,13 +1842,19 @@ ALTER TABLE `media_files`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `navbar_items`
 --
 ALTER TABLE `navbar_items`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `package_components`
+--
+ALTER TABLE `package_components`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `package_projects`
@@ -1825,7 +1926,7 @@ ALTER TABLE `safeguard_compliances`
 -- AUTO_INCREMENT for table `safeguard_entries`
 --
 ALTER TABLE `safeguard_entries`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `social_safeguard_entries`
@@ -1844,6 +1945,12 @@ ALTER TABLE `sub_category`
 --
 ALTER TABLE `sub_package_projects`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `type_of_procurements`
+--
+ALTER TABLE `type_of_procurements`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1928,6 +2035,7 @@ ALTER TABLE `package_projects`
   ADD CONSTRAINT `package_projects_district_id_foreign` FOREIGN KEY (`district_id`) REFERENCES `geography_districts` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `package_projects_lok_sabha_id_foreign` FOREIGN KEY (`lok_sabha_id`) REFERENCES `constituencies` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `package_projects_package_category_id_foreign` FOREIGN KEY (`package_category_id`) REFERENCES `projects_category` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `package_projects_package_component_id_foreign` FOREIGN KEY (`package_component_id`) REFERENCES `package_components` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `package_projects_package_sub_category_id_foreign` FOREIGN KEY (`package_sub_category_id`) REFERENCES `sub_category` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `package_projects_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `package_projects_vidhan_sabha_id_foreign` FOREIGN KEY (`vidhan_sabha_id`) REFERENCES `constituencies` (`id`) ON DELETE SET NULL;
@@ -1949,7 +2057,8 @@ ALTER TABLE `physical_epc_progress`
 -- Constraints for table `procurement_details`
 --
 ALTER TABLE `procurement_details`
-  ADD CONSTRAINT `procurement_details_package_project_id_foreign` FOREIGN KEY (`package_project_id`) REFERENCES `package_projects` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `procurement_details_package_project_id_foreign` FOREIGN KEY (`package_project_id`) REFERENCES `package_projects` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `procurement_details_type_of_procurement_id_foreign` FOREIGN KEY (`type_of_procurement_id`) REFERENCES `type_of_procurements` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `procurement_work_programs`
