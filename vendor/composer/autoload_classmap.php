@@ -32,6 +32,7 @@ return array(
     'App\\Http\\Controllers\\ConstituencyController' => $baseDir . '/app/Http/Controllers/ConstituencyController.php',
     'App\\Http\\Controllers\\ContractorController' => $baseDir . '/app/Http/Controllers/ContractorController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
+    'App\\Http\\Controllers\\DashboardController' => $baseDir . '/app/Http/Controllers/DashboardController.php',
     'App\\Http\\Controllers\\DistrictController' => $baseDir . '/app/Http/Controllers/DistrictController.php',
     'App\\Http\\Controllers\\EpcEntryDataController' => $baseDir . '/app/Http/Controllers/EpcEntryDataController.php',
     'App\\Http\\Controllers\\FinancialProgressUpdateController' => $baseDir . '/app/Http/Controllers/FinancialProgressUpdateController.php',
@@ -64,17 +65,7 @@ return array(
     'App\\Models\\GeographyDivision' => $baseDir . '/app/Models/GeographyDivision.php',
     'App\\Models\\MediaFile' => $baseDir . '/app/Models/MediaFile.php',
     'App\\Models\\NavbarItem' => $baseDir . '/app/Models/NavbarItem.php',
-
-<<<<<<< Updated upstream
-=======
     'App\\Models\\PackageComponent' => $baseDir . '/app/Models/PackageComponent.php',
->>>>>>> Stashed changes
-=======
-    'App\\Models\\PackageComponent' => $baseDir . '/app/Models/PackageComponent.php',
->>>>>>> Stashed changes
-=======
-    'App\\Models\\PackageComponent' => $baseDir . '/app/Models/PackageComponent.php',
->>>>>>> Stashed changes
     'App\\Models\\PackageProject' => $baseDir . '/app/Models/PackageProject.php',
     'App\\Models\\Page' => $baseDir . '/app/Models/Page.php',
     'App\\Models\\PhysicalBoqProgress' => $baseDir . '/app/Models/PhysicalBoqProgress.php',
@@ -7292,6 +7283,27 @@ return array(
     'SebastianBergmann\\Type\\UnknownType' => $vendorDir . '/sebastian/type/src/type/UnknownType.php',
     'SebastianBergmann\\Type\\VoidType' => $vendorDir . '/sebastian/type/src/type/VoidType.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
+    'Staudenmeir\\EloquentHasManyDeepContracts\\Interfaces\\ConcatenableRelation' => $vendorDir . '/staudenmeir/eloquent-has-many-deep-contracts/src/Interfaces/ConcatenableRelation.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\CompositeKey' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/CompositeKey.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Relations\\Interfaces\\DeepRelation' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Relations/Interfaces/DeepRelation.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Relations\\ThirdParty\\LaravelHasManyMerged\\HasManyMerged' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Relations/ThirdParty/LaravelHasManyMerged/HasManyMerged.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Relations\\Traits\\ExecutesQueries' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Relations/Traits/ExecutesQueries.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Relations\\Traits\\HasExistenceQueries' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Relations/Traits/HasExistenceQueries.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Relations\\Traits\\IsConcatenable' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Relations/Traits/IsConcatenable.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Relations\\Traits\\IsCustomizable' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Relations/Traits/IsCustomizable.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Relations\\Traits\\IsOneOrManyDeepRelation' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Relations/Traits/IsOneOrManyDeepRelation.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Relations\\Traits\\JoinsThroughParents' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Relations/Traits/JoinsThroughParents.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Relations\\Traits\\RetrievesIntermediateTables' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Relations/Traits/RetrievesIntermediateTables.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Relations\\Traits\\SupportsCompositeKeys' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Relations/Traits/SupportsCompositeKeys.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Traits\\ConcatenatesNativeRelationships' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Traits/ConcatenatesNativeRelationships.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Traits\\ConcatenatesRelationships' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Traits/ConcatenatesRelationships.php',
+    'Staudenmeir\\EloquentHasManyDeep\\Eloquent\\Traits\\ReversesRelationships' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/Eloquent/Traits/ReversesRelationships.php',
+    'Staudenmeir\\EloquentHasManyDeep\\HasManyDeep' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/HasManyDeep.php',
+    'Staudenmeir\\EloquentHasManyDeep\\HasOneDeep' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/HasOneDeep.php',
+    'Staudenmeir\\EloquentHasManyDeep\\HasRelationships' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/HasRelationships.php',
+    'Staudenmeir\\EloquentHasManyDeep\\HasTableAlias' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/HasTableAlias.php',
+    'Staudenmeir\\EloquentHasManyDeep\\IdeHelperServiceProvider' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/IdeHelperServiceProvider.php',
+    'Staudenmeir\\EloquentHasManyDeep\\IdeHelper\\DeepRelationsHook' => $vendorDir . '/staudenmeir/eloquent-has-many-deep/src/IdeHelper/DeepRelationsHook.php',
     'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
     'Symfony\\Component\\Clock\\Clock' => $vendorDir . '/symfony/clock/Clock.php',
     'Symfony\\Component\\Clock\\ClockAwareTrait' => $vendorDir . '/symfony/clock/ClockAwareTrait.php',

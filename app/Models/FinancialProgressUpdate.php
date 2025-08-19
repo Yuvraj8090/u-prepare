@@ -16,7 +16,7 @@ class FinancialProgressUpdate extends Model
         'no_of_bills',
         'bill_serial_no',
         'submit_date',
-        'media',
+        'media'
     ];
 
     protected $casts = [
@@ -26,15 +26,32 @@ class FinancialProgressUpdate extends Model
         'finance_amount' => 'decimal:2',
     ];
 
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
     public function project()
     {
         return $this->belongsTo(SubPackageProject::class, 'project_id');
     }
-    public function scopeForProjectOnDate($query, int $projectId, string $date)
-{
-    return $query->where('project_id', $projectId)
-        ->whereDate('submit_date', $date)
-        ->orderBy('submit_date', 'desc');
-}
 
+    /*
+    |--------------------------------------------------------------------------
+    | Scopes
+    |--------------------------------------------------------------------------
+    */
+    public function scopeForProjectOnDate($query, int $projectId, string $date)
+    {
+        return $query->where('project_id', $projectId)
+                     ->whereDate('submit_date', $date)
+                     ->orderBy('submit_date', 'desc');
+    }
+
+    public function scopeForDepartment($query, int $departmentId)
+    {
+        return $query->whereHas('project.packageProject', fn($q) =>
+            $q->where('department_id', $departmentId)
+        );
+    }
 }

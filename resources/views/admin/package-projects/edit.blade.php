@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="container-fluid">
-        <!-- Breadcrumbs and Header -->
+
+        <!-- Breadcrumbs & Header -->
         <div class="row mb-4">
             <div class="col-md-12">
                 <div class="d-flex justify-content-between align-items-center">
@@ -10,11 +11,9 @@
                     </h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a>
-                            </li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
                             <li class="breadcrumb-item">Admin</li>
-                            <li class="breadcrumb-item"><a href="{{ route('admin.package-projects.index') }}">Package
-                                    Projects</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.package-projects.index') }}">Package Projects</a></li>
                             <li class="breadcrumb-item active">Edit</li>
                         </ol>
                     </nav>
@@ -22,30 +21,20 @@
             </div>
         </div>
 
-        <!-- Session Alerts -->
-        @if (session('success'))
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="fas fa-check-circle me-2"></i>
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <!-- Alerts -->
+        @foreach (['success', 'error'] as $msg)
+            @if(session($msg))
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <div class="alert alert-{{ $msg === 'success' ? 'success' : 'danger' }} alert-dismissible fade show" role="alert">
+                            <i class="fas fa-{{ $msg === 'success' ? 'check-circle' : 'exclamation-circle' }} me-2"></i>
+                            {{ session($msg) }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="fas fa-exclamation-circle me-2"></i>
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
-            </div>
-        @endif
+            @endif
+        @endforeach
 
         @if ($errors->any())
             <div class="row mb-3">
@@ -67,297 +56,179 @@
         <!-- Form Card -->
         <div class="card shadow-sm">
             <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
-                <h5 class="mb-0 text-primary">
-                    <i class="fas fa-edit me-2"></i>
-                    Edit Package Project Details
-                </h5>
+                <h5 class="mb-0 text-primary"><i class="fas fa-edit me-2"></i>Edit Package Project Details</h5>
                 <a href="{{ route('admin.package-projects.index') }}" class="btn btn-sm btn-outline-secondary">
                     <i class="fas fa-arrow-left me-1"></i> Back to List
                 </a>
             </div>
+
             <div class="card-body">
-                <form action="{{ route('admin.package-projects.update', $packageProject) }}" method="POST"
-                    enctype="multipart/form-data" class="needs-validation" novalidate>
+                <form action="{{ route('admin.package-projects.update', $packageProject) }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                     @csrf
                     @method('PUT')
 
-                    <!-- Basic Information Section -->
-                    <div class="mb-4">
-                        <h6 class="mb-3 text-muted border-bottom pb-2">
-                            <i class="fas fa-info-circle me-2"></i> Basic Information
-                        </h6>
-
-                        <div class="row">
-                            <div class="col-md-2 mb-3 ">
-
-                                <x-bootstrap.dropdown
-    name="project_id" 
-    label="Related Project"
-    :items="$projects->map(function($project) {
-        return [
-            'value' => $project->id,
-            'label' => $project->name
-        ];
-    })->toArray()"
-    :selected="old('project_id', $packageProject->project_id ?? null)"
-    placeholder="Select a project"
-    allowClear="true"
-    searchable="true"
-    class="w-100"
-/>
-                            </div>
-<div class="col-md-4 mb-3">
-    <x-bootstrap.dropdown
-        id="package_component_id"
-        name="package_component_id"
-        label="Package Component"
-        :items="$components->map(function($component) {
-            return [
-                'value' => $component->id,
-                'label' => $component->name
-            ];
-        })->toArray()"
-        :selected="old('package_component_id', $packageProject->package_component_id ?? null)"
-        placeholder="Select Package Component"
-        allowClear
-    />
-</div>
-
-                            <div class="col-md-4 mb-3">
-                                <label for="package_name" class="form-label">Package Name <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="package_name" name="package_name"
-                                    value="{{ old('package_name', $packageProject->package_name) }}" required>
-                                <div class="invalid-feedback">Please provide a package name.</div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="package_number" class="form-label">Package Number <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="package_number" name="package_number"
-                                    value="{{ old('package_number', $packageProject->package_number) }}" required>
-                                <div class="invalid-feedback">Please provide a package number.</div>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="estimated_budget_incl_gst" class="form-label">Estimated Budget (₹) <span
-                                        class="text-danger">*</span></label>
-                                <input type="number" step="0.01" class="form-control" id="estimated_budget_incl_gst"
-                                    name="estimated_budget_incl_gst"
-                                    value="{{ old('estimated_budget_incl_gst', $packageProject->estimated_budget_incl_gst) }}"
-                                    required>
-                                <div class="invalid-feedback">Please provide a valid budget amount.</div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            
-
-                            
-                        </div>
-                    </div>
-
-                    <!-- Category and Department Section -->
-                    <div class="mb-4">
-                        <h6 class="mb-3 text-muted border-bottom pb-2">
-                            <i class="fas fa-tags me-2"></i> Classification
-                        </h6>
-
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-    <x-bootstrap.dropdown
-        id="package_category_id"
-        name="package_category_id"
-        label="Category"
-        :items="$categories->map(function($category) {
-            return [
-                'value' => $category->id,
-                'label' => $category->name
-            ];
-        })->toArray()"
-        :selected="old('package_category_id', $packageProject->package_category_id ?? null)"
-        placeholder="Select Category"
-        allowClear
-    />
-</div>
-
-                            <div class="col-md-4 mb-3">
-                                <div class="col-md-4 mb-3">
-    <x-bootstrap.dropdown
-        id="package_sub_category_id"
-        name="package_sub_category_id"
-        label="Sub Category"
-        :items="$subCategories->map(function($subCategory) {
-            return [
-                'value' => $subCategory->id,
-                'label' => $subCategory->name
-            ];
-        })->toArray()"
-        :selected="old('package_sub_category_id', $packageProject->package_sub_category_id ?? null)"
-        placeholder="Select Sub Category"
-        allowClear
-    />
-</div>
-                            </div>
-
-                            <div class="col-md-4 mb-3">
-                                <label for="department_id" class="form-label">Department</label>
-                                <select name="department_id" id="department_id" class="form-select">
-                                    <option value="">Select Department</option>
-                                    @foreach ($departments as $department)
-                                        <option value="{{ $department->id }}" @selected(old('department_id', $packageProject->department_id) == $department->id)>
-                                            {{ $department->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Location Information -->
-                    <div class="mb-4">
-                        <h6 class="mb-3 text-muted border-bottom pb-2">
-                            <i class="fas fa-map-marker-alt me-2"></i> Location Information
-                        </h6>
-
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="district_id" class="form-label">District</label>
-                                <select name="district_id" id="district_id" class="form-select">
-                                    <option value="">Select District</option>
-                                    @foreach ($districts as $district)
-                                        <option value="{{ $district->id }}" @selected(old('district_id', $packageProject->district_id) == $district->id)>
-                                            {{ $district->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-md-4 mb-3">
-                                <label for="block_id" class="form-label">Block</label>
-                                <select name="block_id" id="block_id" class="form-select">
-                                    <option value="">Select Block</option>
-                                    @foreach ($blocks as $block)
-                                        <option value="{{ $block->id }}" @selected(old('block_id', $packageProject->block_id) == $block->id)>
-                                            {{ $block->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-md-4 mb-3">
-                                <label for="vidhan_sabha_id" class="form-label">Vidhan Sabha Constituency</label>
-                                <select name="vidhan_sabha_id" id="vidhan_sabha_id" class="form-select">
-                                    <option value="">Select Constituency</option>
-                                    @foreach ($constituencies as $constituency)
-                                        <option value="{{ $constituency->id }}" @selected(old('vidhan_sabha_id', $packageProject->vidhan_sabha_id) == $constituency->id)>
-                                            {{ $constituency->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Approval Sections -->
+                    <!-- Basic Information -->
+                    <h6 class="mb-3 text-muted border-bottom pb-2"><i class="fas fa-info-circle me-2"></i>Basic Information</h6>
                     <div class="row">
-                        <div class="col-md-6 mb-4">
-                            <div class="card h-100">
-                                <div class="card-header bg-light">
-                                    <h6 class="mb-0">
-                                        <i class="fas fa-check-circle me-2 text-primary"></i> DEC Approval
-                                    </h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-check form-switch mb-3">
-                                       <input type="hidden" name="dec_approved" value="0">
-<input class="form-check-input" type="checkbox" name="dec_approved"
-       id="dec_approved" value="1" @checked(old('dec_approved', $packageProject->dec_approved ?? false))>
+                        <div class="col-md-2 mb-3">
+                            <x-bootstrap.dropdown
+                                name="project_id" 
+                                label="Related Project"
+                                :items="$projects->map(fn($project) => ['value' => $project->id, 'label' => $project->name])->toArray()"
+                                :selected="old('project_id', $packageProject->project_id)"
+                                placeholder="Select a project"
+                                allowClear
+                                searchable
+                                class="w-100"
+                            />
+                        </div>
 
-                                        <label class="form-check-label" for="dec_approved">Approved</label>
+                        <div class="col-md-4 mb-3">
+                            <x-bootstrap.dropdown
+                                name="package_component_id"
+                                label="Package Component"
+                                :items="$components->map(fn($component) => ['value' => $component->id, 'label' => $component->name])->toArray()"
+                                :selected="old('package_component_id', $packageProject->package_component_id)"
+                                placeholder="Select Package Component"
+                                allowClear
+                            />
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="package_name" class="form-label">Package Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="package_name" name="package_name"
+                                value="{{ old('package_name', $packageProject->package_name) }}" required>
+                            <div class="invalid-feedback">Please provide a package name.</div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="package_number" class="form-label">Package Number <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="package_number" name="package_number"
+                                value="{{ old('package_number', $packageProject->package_number) }}" required>
+                            <div class="invalid-feedback">Please provide a package number.</div>
+                        </div>
+
+                        <div class="col-md-2 mb-3">
+                            <label for="estimated_budget_incl_gst" class="form-label">Estimated Budget (₹) <span class="text-danger">*</span></label>
+                            <input type="number" step="0.01" class="form-control" id="estimated_budget_incl_gst"
+                                name="estimated_budget_incl_gst" value="{{ old('estimated_budget_incl_gst', $packageProject->estimated_budget_incl_gst) }}" required>
+                            <div class="invalid-feedback">Please provide a valid budget amount.</div>
+                        </div>
+                    </div>
+
+                    <!-- Classification -->
+                    <h6 class="mb-3 text-muted border-bottom pb-2"><i class="fas fa-tags me-2"></i>Classification</h6>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <x-bootstrap.dropdown
+                                name="package_category_id"
+                                label="Category"
+                                :items="$categories->map(fn($category) => ['value' => $category->id, 'label' => $category->name])->toArray()"
+                                :selected="old('package_category_id', $packageProject->package_category_id)"
+                                placeholder="Select Category"
+                                allowClear
+                            />
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <x-bootstrap.dropdown
+                                name="package_sub_category_id"
+                                label="Sub Category"
+                                :items="$subCategories->map(fn($subCategory) => ['value' => $subCategory->id, 'label' => $subCategory->name])->toArray()"
+                                :selected="old('package_sub_category_id', $packageProject->package_sub_category_id)"
+                                placeholder="Select Sub Category"
+                                allowClear
+                            />
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="department_id" class="form-label">Department</label>
+                            <select name="department_id" id="department_id" class="form-select">
+                                <option value="">Select Department</option>
+                                @foreach ($departments as $department)
+                                    <option value="{{ $department->id }}" @selected(old('department_id', $packageProject->department_id) == $department->id)>
+                                        {{ $department->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <h6 class="mb-3 text-muted border-bottom pb-2"><i class="fas fa-map-marker-alt me-2"></i>Location Information</h6>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="district_id" class="form-label">District</label>
+                            <select name="district_id" id="district_id" class="form-select">
+                                <option value="">Select District</option>
+                                @foreach ($districts as $district)
+                                    <option value="{{ $district->id }}" @selected(old('district_id', $packageProject->district_id) == $district->id)>{{ $district->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="block_id" class="form-label">Block</label>
+                            <select name="block_id" id="block_id" class="form-select">
+                                <option value="">Select Block</option>
+                                @foreach ($blocks as $block)
+                                    <option value="{{ $block->id }}" @selected(old('block_id', $packageProject->block_id) == $block->id)>{{ $block->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="vidhan_sabha_id" class="form-label">Vidhan Sabha Constituency</label>
+                            <select name="vidhan_sabha_id" id="vidhan_sabha_id" class="form-select">
+                                <option value="">Select Constituency</option>
+                                @foreach ($constituencies as $constituency)
+                                    <option value="{{ $constituency->id }}" @selected(old('vidhan_sabha_id', $packageProject->vidhan_sabha_id) == $constituency->id)>{{ $constituency->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- DEC & HPC Approval Cards -->
+                    <div class="row">
+                        @foreach (['dec', 'hpc'] as $approval)
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0"><i class="fas fa-check-circle me-2 text-primary"></i> {{ strtoupper($approval) }} Approval</h6>
                                     </div>
+                                    <div class="card-body">
+                                        <div class="form-check form-switch mb-3">
+                                            <input type="hidden" name="{{ $approval }}_approved" value="0">
+                                            <input class="form-check-input" type="checkbox" name="{{ $approval }}_approved" id="{{ $approval }}_approved" value="1" @checked(old("{$approval}_approved", $packageProject->{$approval.'_approved'} ?? false))>
+                                            <label class="form-check-label" for="{{ $approval }}_approved">Approved</label>
+                                        </div>
 
-                                    <div class="mb-3">
-                                        <label for="dec_approval_date" class="form-label">Approval Date</label>
-                                        <input type="date" class="form-control" id="dec_approval_date"
-                                            name="dec_approval_date"
-                                            value="{{ old('dec_approval_date', $packageProject->dec_approval_date ?? '') }}">
-                                    </div>
+                                        <div class="mb-3">
+                                            <label for="{{ $approval }}_approval_date" class="form-label">Approval Date</label>
+                                            <input type="date" class="form-control" id="{{ $approval }}_approval_date" name="{{ $approval }}_approval_date" value="{{ old("{$approval}_approval_date", $packageProject->{$approval.'_approval_date'} ?? '') }}">
+                                        </div>
 
-                                    <div class="mb-3">
-                                        <label for="dec_letter_number" class="form-label">Letter Number</label>
-                                        <input type="text" class="form-control" id="dec_letter_number"
-                                            name="dec_letter_number"
-                                            value="{{ old('dec_letter_number', $packageProject->dec_letter_number ?? '') }}">
-                                    </div>
+                                        <div class="mb-3">
+                                            <label for="{{ $approval }}_letter_number" class="form-label">Letter Number</label>
+                                            <input type="text" class="form-control" id="{{ $approval }}_letter_number" name="{{ $approval }}_letter_number" value="{{ old("{$approval}_letter_number", $packageProject->{$approval.'_letter_number'} ?? '') }}">
+                                        </div>
 
-                                    <div class="mb-3">
-                                        <label for="dec_document_path" class="form-label">Approval Document
-                                            (PDF)</label>
-                                        <input type="file" class="form-control" id="dec_document_path"
-                                            name="dec_document_path" accept=".pdf">
-                                        @if (isset($packageProject) && $packageProject->dec_document_path)
-                                            <div class="mt-2">
-                                                <a href="{{ Storage::url($packageProject->dec_document_path) }}"
-                                                    target="_blank" class="btn btn-sm btn-outline-primary">
-                                                    <i class="fas fa-file-pdf me-1"></i> View Current Document
-                                                </a>
-                                            </div>
-                                        @endif
-                                        <small class="text-muted">Max 2MB PDF file</small>
+                                        <div class="mb-3">
+                                            <label for="{{ $approval }}_document_path" class="form-label">Approval Document (PDF)</label>
+                                            <input type="file" class="form-control" id="{{ $approval }}_document_path" name="{{ $approval }}_document_path" accept=".pdf">
+                                            @if (isset($packageProject) && $packageProject->{$approval.'_document_path'})
+                                                <div class="mt-2">
+                                                    <a href="{{ Storage::url($packageProject->{$approval.'_document_path'}) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-file-pdf me-1"></i> View Current Document
+                                                    </a>
+                                                </div>
+                                            @endif
+                                            <small class="text-muted">Max 2MB PDF file</small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- HPC Approval -->
-                        <div class="col-md-6 mb-4">
-                            <div class="card h-100">
-                                <div class="card-header bg-light">
-                                    <h6 class="mb-0">
-                                        <i class="fas fa-check-circle me-2 text-primary"></i> HPC Approval
-                                    </h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-check form-switch mb-3">
-                                        <input type="hidden" name="hpc_approved" value="0">
-<input class="form-check-input" type="checkbox" name="hpc_approved"
-       id="hpc_approved" value="1" @checked(old('hpc_approved', $packageProject->hpc_approved ?? false))>
-
-                                      
-                                        <label class="form-check-label" for="hpc_approved">Approved</label>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="hpc_approval_date" class="form-label">Approval Date</label>
-                                        <input type="date" class="form-control" id="hpc_approval_date"
-                                            name="hpc_approval_date"
-                                            value="{{ old('hpc_approval_date', $packageProject->hpc_approval_date ?? '') }}">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="hpc_letter_number" class="form-label">Letter Number</label>
-                                        <input type="text" class="form-control" id="hpc_letter_number"
-                                            name="hpc_letter_number"
-                                            value="{{ old('hpc_letter_number', $packageProject->hpc_letter_number ?? '') }}">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="hpc_document_path" class="form-label">Approval Document
-                                            (PDF)</label>
-                                        <input type="file" class="form-control" id="hpc_document_path"
-                                            name="hpc_document_path" accept=".pdf">
-                                        @if (isset($packageProject) && $packageProject->hpc_document_path)
-                                            <div class="mt-2">
-                                                <a href="{{ Storage::url($packageProject->hpc_document_path) }}"
-                                                    target="_blank" class="btn btn-sm btn-outline-primary">
-                                                    <i class="fas fa-file-pdf me-1"></i> View Current Document
-                                                </a>
-                                            </div>
-                                        @endif
-                                        <small class="text-muted">Max 2MB PDF file</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
 
                     <!-- Form Actions -->
@@ -374,26 +245,20 @@
         </div>
     </div>
 
-    <!-- Bootstrap Validation Script -->
+    <!-- Bootstrap Validation -->
     <script>
         (function() {
-            'use strict'
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll('.needs-validation')
-
-            // Loop over them and prevent submission
-            Array.prototype.slice.call(forms)
-                .forEach(function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })()
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
     </script>
 </x-app-layout>

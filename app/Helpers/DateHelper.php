@@ -1,8 +1,11 @@
 <?php
 if (!function_exists('formatDate')) {
-    function formatDate($date, $format = 'd M Y') {
-        if (empty($date)) return '';
-        
+    function formatDate($date, $format = 'd M Y')
+    {
+        if (empty($date)) {
+            return '';
+        }
+
         try {
             return \Carbon\Carbon::parse($date)->format($format);
         } catch (\Exception $e) {
@@ -11,7 +14,8 @@ if (!function_exists('formatDate')) {
     }
 }
 if (!function_exists('formatPrice')) {
-    function formatPrice($price) {
+    function formatPrice($price)
+    {
         if (empty($price) && $price !== 0 && $price !== '0') {
             return '';
         }
@@ -27,34 +31,37 @@ if (!function_exists('formatPrice')) {
     }
 }
 if (!function_exists('formatPriceToCR')) {
-    function formatPriceToCR($price) {
+    function formatPriceToCR($price)
+    {
+        // Convert null/empty string to 0
         if (empty($price) && $price !== 0 && $price !== '0') {
-            return '';
+            $price = 0;
         }
 
-        $priceStr = trim(strtoupper(strval($price)));
-        
-        if($priceStr > 100000 && $priceStr < 10000000)
-        {
-             
-            $rupee = '₹ ' . formatIndianCurrency($priceStr / 100000) . ' Lakhs';
-            return   $rupee;
-        }
-        
-        if($priceStr > 10000000)
-        { 
-            $rupee = '₹ ' . formatIndianCurrency($priceStr / 10000000) . ' CR';
-            return $rupee; 
+        $price = (float) $price;
+
+        if ($price >= 10000000) {
+            // Crores
+            return '₹ ' . number_format($price / 10000000, 2) . ' CR';
         }
 
-        return '₹ ' . formatIndianCurrency($priceStr);
+        if ($price >= 100000) {
+            // Lakhs
+            return '₹ ' . number_format($price / 100000, 2) . ' Lakhs';
+        }
+
+        // Always show 0 with ₹
+        return '₹ ' . number_format($price, 2);
     }
 }
+
+
 if (!function_exists('formatIndianCurrency')) {
-    function formatIndianCurrency($number) {
+    function formatIndianCurrency($number)
+    {
         $decimal = '';
         if (strpos($number, '.') !== false) {
-            list($number, $decimal) = explode('.', $number);
+            [$number, $decimal] = explode('.', $number);
             $decimal = '.' . $decimal;
         }
 

@@ -75,80 +75,113 @@ class ContractController extends Controller
         }
     }
     public function show($id)
-{
-    $contract = Contract::with(['project.procurementDetail', 'contractor', 'subProjects'])->findOrFail($id);
+    {
+        $contract = Contract::with(['project.procurementDetail.typeOfProcurement', 'contractor', 'subProjects'])->findOrFail($id);
 
-    // Format contract numbers and dates
-    $contract->formatted_value = number_format($contract->contract_value, 2);
-    $contract->formatted_security = number_format($contract->security ?? 0, 2);
-    $contract->formatted_signing_date = optional($contract->signing_date)->format('d M Y') ?? 'N/A';
-    $contract->formatted_commencement_date = optional($contract->commencement_date)->format('d M Y') ?? 'N/A';
-    $contract->formatted_initial_completion_date = optional($contract->initial_completion_date)->format('d M Y') ?? 'N/A';
-    $contract->formatted_revised_completion_date = optional($contract->revised_completion_date)->format('d M Y') ?? 'N/A';
+        // Format contract numbers and dates
+        $contract->formatted_value = number_format($contract->contract_value, 2);
+        $contract->formatted_security = number_format($contract->security ?? 0, 2);
+        $contract->formatted_signing_date = optional($contract->signing_date)->format('d M Y') ?? 'N/A';
+        $contract->formatted_commencement_date = optional($contract->commencement_date)->format('d M Y') ?? 'N/A';
+        $contract->formatted_initial_completion_date = optional($contract->initial_completion_date)->format('d M Y') ?? 'N/A';
+        $contract->formatted_revised_completion_date = optional($contract->revised_completion_date)->format('d M Y') ?? 'N/A';
 
-    $procurementType = strtolower(trim($contract->project->procurementDetail->type_of_procurement ?? ''));
+        // Get type name safely, default to 'EPC'
+        $procurementTypeName = $contract->project->procurementDetail->typeOfProcurement->name ?? 'EPC';
+        $procurementType = strtolower(trim($procurementTypeName));
 
-    $subProjectsData = $contract->subProjects->map(function ($sp) use ($procurementType) {
-        $actions = [];
+        $subProjectsData = $contract->subProjects->map(function ($sp) use ($procurementType) {
+            $actions = [];
 
-        /**
-         * 1. FINANCIAL PROGRESS
-         */
-        $financeTotal = \App\Models\FinancialProgressUpdate::where('project_id', $sp->id)->sum('finance_amount');
-        $financePercent = $sp->contract_value > 0
-            ? round(($financeTotal / $sp->contract_value) * 100, 2)
-            : 0;
+            // 1. FINANCIAL PROGRESS
+            $financeTotal = \App\Models\FinancialProgressUpdate::where('project_id', $sp->id)->sum('finance_amount');
+            $financePercent = $sp->contract_value > 0 ? round(($financeTotal / $sp->contract_value) * 100, 2) : 0;
 
-        /**
-         * 2. PHYSICAL PROGRESS
-         */
-        $physicalValue = 0;
-        $physicalPercent = 0;
+            // 2. PHYSICAL PROGRESS
+            $physicalValue = 0;
+            $physicalPercent = 0;
 
-        if ($procurementType === 'epc') {
-            $physicalValue = \App\Models\PhysicalEpcProgress::whereHas('epcentryData', function ($q) use ($sp) {
-                $q->where('sub_package_project_id', $sp->id);
-            })->sum('amount');
+            if ($procurementType === 'epc') {
+                $physicalValue = \App\Models\PhysicalEpcProgress::whereHas('epcentryData', function ($q) use ($sp) {
+                    $q->where('sub_package_project_id', $sp->id);
+                })->sum('amount');
 
-            $physicalPercent = $sp->contract_value > 0
-                ? round(($physicalValue / $sp->contract_value) * 100, 2)
-                : 0;
-        } elseif ($procurementType === 'item-wise') {
-            $physicalValue = \App\Models\PhysicalBoqProgress::where('sub_package_project_id', $sp->id)->sum('amount');
+                $physicalPercent = $sp->contract_value > 0 ? round(($physicalValue / $sp->contract_value) * 100, 2) : 0;
+            } elseif ($procurementType === 'item-wise') {
+                $physicalValue = \App\Models\PhysicalBoqProgress::where('sub_package_project_id', $sp->id)->sum('amount');
 
-            $physicalPercent = $sp->contract_value > 0
-                ? round(($physicalValue / $sp->contract_value) * 100, 2)
-                : 0;
-        }
+                $physicalPercent = $sp->contract_value > 0 ? round(($physicalValue / $sp->contract_value) * 100, 2) : 0;
+            }
 
-        /**
-         * 3. ACTION BUTTONS (your existing logic)
-         */
-        if ($procurementType === 'epc') {
-            $epcEntries = \App\Models\EpcEntryData::where('sub_package_project_id', $sp->id)->get();
-            $totalPercent = $epcEntries->sum('percent');
-            $totalAmount = $epcEntries->sum('amount');
+            // 3. ACTION BUTTONS
+            if ($procurementType === 'epc') {
+                $epcEntries = \App\Models\EpcEntryData::where('sub_package_project_id', $sp->id)->get();
+                $totalPercent = $epcEntries->sum('percent');
+                $totalAmount = $epcEntries->sum('amount');
 
-            $hasCompleteEpcEntries = $epcEntries->count() > 0 && $totalPercent == 100;
-            $amountMatchesContractValue = $totalAmount == $sp->contract_value;
+                $hasCompleteEpcEntries = $epcEntries->count() > 0 && $totalPercent == 100;
+                $amountMatchesContractValue = $totalAmount == $sp->contract_value;
 
-            if ($hasCompleteEpcEntries) {
-                $actions[] = [
-                    'label' => 'Update EPC Entry',
-                    'icon' => 'fas fa-industry',
-                    'class' => 'btn-success',
-                    'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id]),
-                ];
-
-                if ($amountMatchesContractValue) {
+                if ($hasCompleteEpcEntries) {
                     $actions[] = [
-                        'label' => 'Update Physical Progress',
-                        'icon' => 'fas fa-hard-hat',
-                        'class' => 'btn-info',
-                        'route' => route('admin.physical_epc_progress.index', ['sub_package_project_id' => $sp->id]),
+                        'label' => 'Update EPC Entry',
+                        'icon' => 'fas fa-industry',
+                        'class' => 'btn-success',
+                        'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id]),
+                    ];
+
+                    if ($amountMatchesContractValue) {
+                        $actions[] = [
+                            'label' => 'Update Physical Progress',
+                            'icon' => 'fas fa-hard-hat',
+                            'class' => 'btn-info',
+                            'route' => route('admin.physical_epc_progress.index', ['sub_package_project_id' => $sp->id]),
+                        ];
+                    }
+                } else {
+                    $actions[] = [
+                        'label' => 'Create EPC Entry',
+                        'icon' => 'fas fa-industry',
+                        'class' => 'btn-success',
+                        'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id]),
+                    ];
+                }
+            } elseif ($procurementType === 'item-wise') {
+                $boqEntries = \App\Models\BoqEntryData::where('sub_package_project_id', $sp->id)->get();
+                $totalAmount = $boqEntries->sum('amount');
+
+                if ($boqEntries->count() > 0) {
+                    $actions[] = [
+                        'label' => 'Update BOQ Sheet',
+                        'icon' => 'fas fa-file-invoice-dollar',
+                        'class' => 'btn-primary',
+                        'route' => route('admin.boqentry.index', ['sub_package_project_id' => $sp->id]),
+                    ];
+
+                    if ($totalAmount == $sp->contract_value) {
+                        $actions[] = [
+                            'label' => 'Update Physical Progress',
+                            'icon' => 'fas fa-hard-hat',
+                            'class' => 'btn-info',
+                            'route' => route('admin.physical_itemwise_progress.index', ['sub_package_project_id' => $sp->id]),
+                        ];
+                    }
+                } else {
+                    $actions[] = [
+                        'label' => 'Create BOQ Sheet',
+                        'icon' => 'fas fa-file-invoice-dollar',
+                        'class' => 'btn-primary',
+                        'route' => route('admin.boqentry.index', ['sub_package_project_id' => $sp->id]),
                     ];
                 }
             } else {
+                // Default actions if unknown type
+                $actions[] = [
+                    'label' => 'Create BOQ Sheet',
+                    'icon' => 'fas fa-file-invoice-dollar',
+                    'class' => 'btn-primary',
+                    'route' => route('admin.boqentry.index', ['sub_package_project_id' => $sp->id]),
+                ];
                 $actions[] = [
                     'label' => 'Create EPC Entry',
                     'icon' => 'fas fa-industry',
@@ -156,83 +189,40 @@ class ContractController extends Controller
                     'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id]),
                 ];
             }
-        } elseif ($procurementType === 'item-wise') {
-            $boqEntries = \App\Models\BoqEntryData::where('sub_package_project_id', $sp->id)->get();
-            $totalAmount = $boqEntries->sum('amount');
 
-            if ($boqEntries->count() > 0) {
-                $actions[] = [
-                    'label' => 'Update BOQ Sheet',
-                    'icon' => 'fas fa-file-invoice-dollar',
-                    'class' => 'btn-primary',
-                    'route' => route('admin.boqentry.index', ['sub_package_project_id' => $sp->id]),
-                ];
-
-                if ($totalAmount == $sp->contract_value) {
-                    $actions[] = [
-                        'label' => 'Update Physical Progress',
-                        'icon' => 'fas fa-hard-hat',
-                        'class' => 'btn-info',
-                        'route' => route('admin.physical_itemwise_progress.index', ['sub_package_project_id' => $sp->id]),
-                    ];
-                }
-            } else {
-                $actions[] = [
-                    'label' => 'Create BOQ Sheet',
-                    'icon' => 'fas fa-file-invoice-dollar',
-                    'class' => 'btn-primary',
-                    'route' => route('admin.boqentry.index', ['sub_package_project_id' => $sp->id]),
-                ];
-            }
-        } else {
+            // Always add Financial Progress Update
             $actions[] = [
-                'label' => 'Create BOQ Sheet',
+                'label' => 'Update Financial Progress',
                 'icon' => 'fas fa-file-invoice-dollar',
-                'class' => 'btn-primary',
-                'route' => route('admin.boqentry.index', ['sub_package_project_id' => $sp->id]),
+                'class' => 'btn-secondary',
+                'route' => route('admin.financial-progress-updates.index', ['sub_package_project_id' => $sp->id]),
             ];
+
+            // Always add Safe Guard Entry
             $actions[] = [
-                'label' => 'Create EPC Entry',
-                'icon' => 'fas fa-industry',
-                'class' => 'btn-success',
-                'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id]),
+                'label' => 'Create Safe Guard Entry',
+                'icon' => 'fas fa-shield-alt',
+                'class' => 'btn-warning',
+                'route' => route('admin.safeguard_entries.index', ['sub_package_project_id' => $sp->id]),
             ];
-        }
 
-        // Always add Financial Progress Update
-        $actions[] = [
-            'label' => 'Update Financial Progress',
-            'icon' => 'fas fa-file-invoice-dollar',
-            'class' => 'btn-secondary',
-            'route' => route('admin.financial-progress-updates.index', ['sub_package_project_id' => $sp->id]),
-        ];
+            return [
+                'id' => $sp->id,
+                'name' => $sp->name,
+                'contractValue' => number_format($sp->contract_value, 2),
+                'financeTotal' => number_format($financeTotal, 2),
+                'financePercent' => $financePercent,
+                'physicalValue' => number_format($physicalValue, 2),
+                'physicalPercent' => $physicalPercent,
+                'actions' => $actions,
+            ];
+        });
 
-        // Always add Safe Guard Entry
-        $actions[] = [
-            'label' => 'Create Safe Guard Entry',
-            'icon' => 'fas fa-shield-alt',
-            'class' => 'btn-warning',
-            'route' => route('admin.safeguard_entries.index', ['sub_package_project_id' => $sp->id]),
-        ];
-
-        return [
-            'id' => $sp->id,
-            'name' => $sp->name,
-            'contractValue' => number_format($sp->contract_value, 2),
-            'financeTotal' => number_format($financeTotal, 2),
-            'financePercent' => $financePercent,
-            'physicalValue' => number_format($physicalValue, 2),
-            'physicalPercent' => $physicalPercent,
-            'actions' => $actions,
-        ];
-    });
-
-    return view('admin.contracts.show', [
-        'contract' => $contract,
-        'subProjectsData' => $subProjectsData,
-    ]);
-}
-
+        return view('admin.contracts.show', [
+            'contract' => $contract,
+            'subProjectsData' => $subProjectsData,
+        ]);
+    }
 
     public function edit(Contract $contract)
     {

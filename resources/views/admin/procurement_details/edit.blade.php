@@ -52,18 +52,22 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="type_of_procurement" class="form-label">Type of Procurement *</label>
-                            <select class="form-select @error('type_of_procurement') is-invalid @enderror" 
-                                    id="type_of_procurement" name="type_of_procurement" required>
-                                <option value="">Select Type</option>
-                                <option value="Item-Wise" {{ old('type_of_procurement', $procurementDetail->type_of_procurement) == 'Item-Wise' ? 'selected' : '' }}>Item Wise</option>
-                                <option value="EPC" {{ old('type_of_procurement', $procurementDetail->type_of_procurement) == 'EPC' ? 'selected' : '' }}>EPC</option>
-                                <option value="Others" {{ old('type_of_procurement', $procurementDetail->type_of_procurement) == 'Others' ? 'selected' : '' }}>Others</option>
-                            </select>
-                            @error('type_of_procurement')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+    <label for="type_of_procurement_id" class="form-label">Type of Procurement *</label>
+    <select class="form-select @error('type_of_procurement_id') is-invalid @enderror" 
+            id="type_of_procurement_id" name="type_of_procurement_id" required>
+        <option value="">Select Type</option>
+        @foreach($typesOfProcurement as $type)
+            <option value="{{ $type->id }}" 
+                {{ old('type_of_procurement_id', $procurementDetail->type_of_procurement_id) == $type->id ? 'selected' : '' }}>
+                {{ $type->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('type_of_procurement_id')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
                     </div>
 
                     <div class="row mb-4">

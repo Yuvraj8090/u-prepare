@@ -54,13 +54,10 @@
                             <!-- Budget -->
                             <td class="align-middle text-success">
 
-                                ₹{{ formatPriceToCR($component->budget ) }}
-=======
-                                ₹{{ formatPriceToCR($component->budget ) }}
->>>>>>> Stashed changes
-=======
-                                ₹{{ formatPriceToCR($component->budget ) }}
->>>>>>> Stashed changes
+                                {{ formatPriceToCR($component->budget ) }}
+
+                                
+
                             </td>
 
                             <!-- Created At -->

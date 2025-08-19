@@ -11,8 +11,8 @@ class ProcurementDetail extends Model
 
     protected $fillable = [
         'package_project_id',
+        'type_of_procurement_id', // use foreign key here
         'method_of_procurement',
-        'type_of_procurement',
         'publication_date',
         'publication_document_path',
         'tender_fee',
@@ -23,14 +23,21 @@ class ProcurementDetail extends Model
 
     protected $casts = [
         'publication_date'       => 'date',
-        'tender_fee'             => 'decimal:2', // ensures numeric with 2 decimals
+        'tender_fee'             => 'decimal:2',
         'earnest_money_deposit'  => 'decimal:2',
         'bid_validity_days'      => 'integer',
         'emd_validity_days'      => 'integer',
     ];
 
+    // Relation to PackageProject
     public function packageProject()
     {
         return $this->belongsTo(PackageProject::class);
+    }
+
+    // Relation to TypeOfProcurement
+    public function typeOfProcurement()
+    {
+        return $this->belongsTo(TypeOfProcurement::class);
     }
 }

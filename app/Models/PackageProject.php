@@ -4,9 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany, HasOne};
 
 class PackageProject extends Model
 {
@@ -43,6 +41,11 @@ class PackageProject extends Model
         'hpc_approval_date' => 'datetime',
     ];
 
+    /*
+    |--------------------------------------------------------------------------
+    | Scopes
+    |--------------------------------------------------------------------------
+    */
     public function scopeBasicInfo($query)
     {
         return $query->select('id', 'package_name');
@@ -53,6 +56,11 @@ class PackageProject extends Model
         return $query->with(['procurementDetail', 'workPrograms']);
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
@@ -118,6 +126,11 @@ class PackageProject extends Model
         return $this->hasMany(Contract::class, 'project_id');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Accessors
+    |--------------------------------------------------------------------------
+    */
     public function getHasWorkProgramAttribute(): bool
     {
         return $this->workPrograms->isNotEmpty();

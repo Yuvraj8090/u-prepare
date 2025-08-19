@@ -252,7 +252,7 @@
                                 </div>
                                 <div class="col-6 mb-3">
                                     <p class="small text-muted mb-1">Type of Procurement</p>
-                                    <p class="fw-semibold">{{ $procurementDetail->type_of_procurement ?? 'Not specified' }}</p>
+                                    <p class="fw-semibold">{{ $procurementDetail->typeOfProcurement?->name ?? '-' }}</p>
                                 </div>
                                 <div class="col-6 mb-3">
                                     <p class="small text-muted mb-1">Publication Date</p>

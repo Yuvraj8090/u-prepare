@@ -10,7 +10,20 @@ class Contract extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['contract_number', 'project_id', 'contract_value', 'security', 'signing_date', 'commencement_date', 'initial_completion_date', 'revised_completion_date', 'actual_completion_date', 'contract_document', 'count_sub_project', 'contractor_id'];
+    protected $fillable = [
+        'contract_number',
+        'project_id',
+        'contract_value',
+        'security',
+        'signing_date',
+        'commencement_date',
+        'initial_completion_date',
+        'revised_completion_date',
+        'actual_completion_date',
+        'contract_document',
+        'count_sub_project',
+        'contractor_id'
+    ];
 
     protected $casts = [
         'signing_date' => 'datetime',
@@ -19,6 +32,12 @@ class Contract extends Model
         'revised_completion_date' => 'datetime',
         'actual_completion_date' => 'datetime',
     ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
 
     public function project()
     {
@@ -29,13 +48,24 @@ class Contract extends Model
     {
         return $this->belongsTo(Contractor::class, 'contractor_id');
     }
+
     public function subProjects()
     {
         return $this->hasMany(SubPackageProject::class, 'project_id', 'project_id');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Scopes
+    |--------------------------------------------------------------------------
+    */
+
     public function scopeWithBasicRelations($query)
     {
-        return $query->with(['project:id,package_name', 'contractor:id,company_name']);
+        return $query->with([
+            'project:id,package_name,department_id',
+            'project.department:id,name',
+            'contractor:id,company_name',
+        ]);
     }
 }

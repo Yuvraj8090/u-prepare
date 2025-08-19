@@ -13,4 +13,9 @@ class PackageComponent extends Model
         'name',
         'budget',
     ];
+    public function packageProjects()
+{
+    return $this->hasMany(PackageProject::class, 'package_component_id');
+}
+
 }

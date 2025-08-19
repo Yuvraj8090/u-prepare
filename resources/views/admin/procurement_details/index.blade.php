@@ -37,7 +37,7 @@
                     @forelse($packageProjects as $index => $project)
                         <tr>
                             <!-- Index -->
-                            <td>{{ $packageProjects->firstItem() + $index }}</td>
+                            <td>{{ $packageProjects instanceof \Illuminate\Pagination\LengthAwarePaginator ? $packageProjects->firstItem() + $index : $index + 1 }}</td>
 
                             <!-- Package Project -->
                             <td>
@@ -50,8 +50,7 @@
                             <td>{{ $project->procurementDetail?->method_of_procurement ?? '-' }}</td>
 
                             <!-- Type -->
-                            <td>{{ $project->procurementDetail?->type_of_procurement ?? '-' }}</td>
-
+                           <td>{{ $project->procurementDetail?->typeOfProcurement?->name ?? '-' }}</td>
                             <!-- Status -->
                             <td>
                                 @if($project->procurementDetail)
@@ -92,14 +91,16 @@
                 </x-admin.data-table>
 
                 <!-- Pagination Info -->
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                    <div class="text-muted small">
-                        Showing {{ $packageProjects->firstItem() }} to {{ $packageProjects->lastItem() }} of {{ $packageProjects->total() }} entries
+                @if($packageProjects instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="text-muted small">
+                            Showing {{ $packageProjects->firstItem() }} to {{ $packageProjects->lastItem() }} of {{ $packageProjects->total() }} entries
+                        </div>
+                        <div>
+                            {{ $packageProjects->links() }}
+                        </div>
                     </div>
-                    <div>
-                        {{ $packageProjects->links() }}
-                    </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>

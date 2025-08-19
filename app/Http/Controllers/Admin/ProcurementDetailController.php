@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ProcurementDetail;
 use App\Models\PackageProject;
+use App\Models\TypeOfProcurement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -25,47 +26,46 @@ class ProcurementDetailController extends Controller
             'vidhanSabha',
             'district',
             'block'
-        ])->latest()->paginate(10);
+        ])->latest()->get();
 
         return view('admin.procurement_details.index', compact('packageProjects'));
     }
 
     /**
-     * Show the form for creating procurement details for a specific package project.
+     * Show form for creating procurement details for a specific package project.
      */
     public function create(PackageProject $packageProject)
     {
-        // Check if procurement details already exist
-        if ($this->hasExistingProcurementDetails($packageProject)) {
+        if ($packageProject->procurementDetail()->exists()) {
             return redirect()
                 ->route('admin.procurement-details.show', $packageProject->procurementDetail)
                 ->with('warning', 'Procurement details already exist for this package project.');
         }
 
         $methodsOfProcurement = $packageProject->category?->methods_of_procurement ?? [];
+        $typesOfProcurement = TypeOfProcurement::all();
 
         return view('admin.procurement_details.create', [
             'packageProject' => $packageProject,
-            'methodsOfProcurement' => $methodsOfProcurement
+            'methodsOfProcurement' => $methodsOfProcurement,
+            'typesOfProcurement' => $typesOfProcurement
         ]);
     }
 
     /**
-     * Store new procurement details in the database.
+     * Store new procurement details.
      */
     public function store(Request $request, PackageProject $packageProject)
     {
-        // Double-check for existing procurement details (in case of race condition)
-        if ($this->hasExistingProcurementDetails($packageProject)) {
+        if ($packageProject->procurementDetail()->exists()) {
             return redirect()
                 ->route('admin.procurement-details.show', $packageProject->procurementDetail)
-                ->with('warning', 'Procurement details already exist for this package project.');
+                ->with('warning', 'Procurement details already exist.');
         }
 
         $validated = $this->validateProcurementDetails($request);
 
         try {
-            // Handle file upload if present
             if ($request->hasFile('publication_document')) {
                 $validated['publication_document_path'] = $this->storePublicationDocument($request);
             }
@@ -78,15 +78,12 @@ class ProcurementDetailController extends Controller
 
         } catch (\Exception $e) {
             Log::error('Failed to create procurement details: ' . $e->getMessage());
-            
-            return back()
-                ->withInput()
-                ->with('error', 'Failed to create procurement details. Please try again.');
+            return back()->withInput()->with('error', 'Failed to create procurement details. Please try again.');
         }
     }
 
     /**
-     * Display the specified procurement detail.
+     * Display a procurement detail.
      */
     public function show(ProcurementDetail $procurementDetail)
     {
@@ -97,34 +94,36 @@ class ProcurementDetailController extends Controller
             'packageProject.department',
             'packageProject.vidhanSabha',
             'packageProject.district',
-            'packageProject.block'
+            'packageProject.block',
+            'typeOfProcurement'
         ]);
 
         return view('admin.procurement_details.show', compact('procurementDetail'));
     }
 
     /**
-     * Show the form for editing the specified procurement detail.
+     * Show form for editing procurement details.
      */
     public function edit(ProcurementDetail $procurementDetail)
     {
         $methodsOfProcurement = $procurementDetail->packageProject->category?->methods_of_procurement ?? [];
+        $typesOfProcurement = TypeOfProcurement::all();
 
         return view('admin.procurement_details.edit', [
             'procurementDetail' => $procurementDetail,
-            'methodsOfProcurement' => $methodsOfProcurement
+            'methodsOfProcurement' => $methodsOfProcurement,
+            'typesOfProcurement' => $typesOfProcurement
         ]);
     }
 
     /**
-     * Update the specified procurement detail in storage.
+     * Update procurement details.
      */
     public function update(Request $request, ProcurementDetail $procurementDetail)
     {
         $validated = $this->validateProcurementDetails($request);
 
         try {
-            // Handle file upload if present
             if ($request->hasFile('publication_document')) {
                 $this->deleteExistingDocument($procurementDetail);
                 $validated['publication_document_path'] = $this->storePublicationDocument($request);
@@ -138,21 +137,18 @@ class ProcurementDetailController extends Controller
 
         } catch (\Exception $e) {
             Log::error('Failed to update procurement details: ' . $e->getMessage());
-            
-            return back()
-                ->withInput()
-                ->with('error', 'Failed to update procurement details. Please try again.');
+            return back()->withInput()->with('error', 'Failed to update procurement details. Please try again.');
         }
     }
 
     /**
-     * Remove the specified procurement detail from storage.
+     * Delete procurement details.
      */
     public function destroy(ProcurementDetail $procurementDetail)
     {
         try {
             $packageProjectId = $procurementDetail->package_project_id;
-            
+
             $this->deleteExistingDocument($procurementDetail);
             $procurementDetail->delete();
 
@@ -162,48 +158,37 @@ class ProcurementDetailController extends Controller
 
         } catch (\Exception $e) {
             Log::error('Failed to delete procurement details: ' . $e->getMessage());
-            
-            return back()
-                ->with('error', 'Failed to delete procurement details. Please try again.');
+            return back()->with('error', 'Failed to delete procurement details. Please try again.');
         }
     }
 
     /**
-     * Check if package project already has procurement details
-     */
-    protected function hasExistingProcurementDetails(PackageProject $packageProject): bool
-    {
-        return $packageProject->procurementDetail()->exists();
-    }
-
-    /**
-     * Validate procurement details request
+     * Validate procurement details request.
      */
     protected function validateProcurementDetails(Request $request): array
     {
         return $request->validate([
             'method_of_procurement'      => 'required|string|max:255',
-            'type_of_procurement'        => 'required|string|max:255',
+            'type_of_procurement_id'     => 'required|exists:type_of_procurements,id',
             'publication_date'           => 'nullable|date',
-            'publication_document'      => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'publication_document'       => 'nullable|file|mimes:pdf,doc,docx|max:2048',
             'tender_fee'                 => 'nullable|numeric|min:0',
             'earnest_money_deposit'      => 'nullable|numeric|min:0',
-            'bid_validity_days'         => 'nullable|integer|min:0',
+            'bid_validity_days'          => 'nullable|integer|min:0',
             'emd_validity_days'          => 'nullable|integer|min:0',
         ]);
     }
 
     /**
-     * Store publication document
+     * Store publication document.
      */
     protected function storePublicationDocument(Request $request): string
     {
-        return $request->file('publication_document')
-            ->store('procurement_docs', 'public');
+        return $request->file('publication_document')->store('procurement_docs', 'public');
     }
 
     /**
-     * Delete existing document if it exists
+     * Delete existing document.
      */
     protected function deleteExistingDocument(ProcurementDetail $procurementDetail): void
     {

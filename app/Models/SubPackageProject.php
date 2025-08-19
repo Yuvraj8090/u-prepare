@@ -10,52 +10,59 @@ class SubPackageProject extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'project_id',
         'name',
         'contract_value',
-        'lat',    // nullable latitude
-        'long',   // nullable longitude
+        'lat',
+        'long',
     ];
 
-    /**
-     * The attributes that should be cast.
-     * Make sure lat and long can be null or float.
-     *
-     * @var array
-     */
     protected $casts = [
         'lat' => 'float',
         'long' => 'float',
+        'contract_value' => 'decimal:2',
     ];
 
-    /**
-     * Get the package project that owns the sub package project.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
     public function packageProject()
     {
         return $this->belongsTo(PackageProject::class, 'project_id');
     }
 
-    /**
-     * Get the contract related to this sub package project.
-     * Assuming the relation is via the `project_id` field.
-     */
     public function contract()
     {
         return $this->belongsTo(Contract::class, 'project_id', 'project_id');
     }
 
-    /**
-     * Get all safeguard entries for this sub package project.
-     */
     public function safeguardEntries()
     {
         return $this->hasMany(SafeguardEntry::class);
+    }
+
+    public function financialProgressUpdates()
+    {
+        return $this->hasMany(FinancialProgressUpdate::class, 'project_id');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Accessors
+    |--------------------------------------------------------------------------
+    */
+    public function getTotalFinanceAmountAttribute(): float
+    {
+        return $this->financialProgressUpdates()->sum('finance_amount');
+    }
+
+    public function getFinancialProgressPercentageAttribute(): float
+    {
+        return $this->contract_value > 0
+            ? ($this->total_finance_amount / $this->contract_value) * 100
+            : 0;
     }
 }
