@@ -11,6 +11,7 @@ use App\Models\{
     ProjectsCategory,
     SubCategory,
     Department,
+    Assembly,
     Constituency,
     GeographyDistrict,
     GeographyBlock,
@@ -103,7 +104,8 @@ class PackageProjectController extends Controller
             $districts    = GeographyDistrict::all();
             $blocks      = GeographyBlock::all();
             $components     = PackageComponent::all();
-    return view('admin.package-projects.edit',compact('packageProject','projects','categories','subCategories','departments','constituencies','districts','blocks','components'));
+            $assembly = Assembly::all();
+    return view('admin.package-projects.edit',compact('assembly','packageProject','projects','categories','subCategories','departments','constituencies','districts','blocks','components'));
 }
 
 

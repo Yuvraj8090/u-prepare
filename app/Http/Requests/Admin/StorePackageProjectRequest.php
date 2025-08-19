@@ -22,7 +22,7 @@ class StorePackageProjectRequest extends FormRequest
         'package_number' => ['required', 'string', 'unique:package_projects'],
         'estimated_budget_incl_gst' => ['required', 'numeric', 'min:0'],
         'vidhan_sabha_id' => ['nullable', 'exists:constituencies,id'],
-        'lok_sabha_id' => ['nullable', 'exists:constituencies,id'],
+        'lok_sabha_id' => ['nullable', 'exists:assembly,id'],
         'district_id' => ['nullable', 'exists:geography_districts,id'],
         'block_id' => ['nullable', 'exists:geography_blocks,id'],
 
