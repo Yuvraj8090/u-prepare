@@ -18,18 +18,27 @@ class ProcurementWorkProgramController extends Controller
         return view('admin.procurement_work_programs.index', compact('packageProjects'));
     }
 
-    public function create(Request $request)
-    {
-        $packageProjects = PackageProject::all();
+ public function create(Request $request)
+{
+    // Get all projects for dropdown (basic info)
+    $packageProjects = PackageProject::basicInfo()->get();
 
-        $procurementDetails = ProcurementDetail::when($request->package_project_id, fn($query) => $query->where('package_project_id', $request->package_project_id))->get();
+    // Selected project (with procurementDetail + workPrograms)
+    $selectedPackageProject = null;
 
-        return view('admin.procurement_work_programs.create', [
-            'packageProjects' => $packageProjects,
-            'procurementDetails' => $procurementDetails,
-            'selectedPackageProjectId' => $request->package_project_id,
-        ]);
+    if ($request->package_project_id) {
+        $selectedPackageProject = PackageProject::withWorkProgramData()
+            ->find($request->package_project_id);
     }
+
+    return view('admin.procurement_work_programs.create', [
+        'packageProjects' => $packageProjects,                 // All projects for dropdown
+        'selectedPackageProject' => $selectedPackageProject,   // Full details of selected project
+        'procurementDetails' => $selectedPackageProject?->procurementDetail, // Single related detail
+        'procurementDetailsForm' => $selectedPackageProject?->procurementDetail, // Single related detail
+        'selectedPackageProjectId' => $request->package_project_id,
+    ]);
+}
 
     public function store(Request $request)
     {

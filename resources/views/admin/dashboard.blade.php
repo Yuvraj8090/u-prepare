@@ -12,7 +12,7 @@
                     $departments->map(fn($d) => [$d->name, formatPriceToCR($d->budget ?? 0)])->toArray(),
                     [['Total', formatPriceToCR($total_budget)]],
                 )"
-                    :labels="$departments->pluck('name')->push('Total')->toArray()" :data="$departments->pluck('budget')->map(fn($v) => $v ?? 0)->push($total_budget)->toArray()" type="pie" />
+                    :labels="$departments->pluck('name')->push('Total')->toArray()" :data="$departments->pluck('budget')->map(fn($v) => $v ?? 0)->toArray()" type="pie" />
 
             </div>
 
@@ -29,7 +29,6 @@
                     )" :labels="$components->pluck('name')->push('Total')->toArray()" :data="$components
                         ->pluck('budget')
                         ->map(fn($v) => $v ?? 0)
-                        ->push($total_component_budget)
                         ->toArray()" type="pie" />
 
             </div>
