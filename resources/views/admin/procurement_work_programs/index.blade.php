@@ -77,7 +77,13 @@
     ]) }}" 
         class="btn btn-sm btn-outline-primary">
         <i class="fas fa-edit me-1"></i> Edit
-    </a>
+    </a> <a href="{{ route('admin.procurement-work-programs.show.pack', [
+                     'package_project_id' => $project->id,
+        'procurement_details_id' => optional($project->procurementDetail)->id,
+                ]) }}"
+                class="btn btn-sm btn-outline-secondary">
+                <i class="fas fa-eye me-1"></i> View
+            </a>
 
 
                                     @else
