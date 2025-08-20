@@ -146,8 +146,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
             Route::resource('projects-category', ProjectsCategoryController::class);
             Route::resource('package-projects', PackageProjectController::class);
         });
-    Route::get('admin2/dashboard', function () {
-        return view('dashboard');
+    Route::get('admin/dashboard', function () {
+        return view('admin.dashboard');
     })->name('dashboard');
     // Dashboard main page
 });
