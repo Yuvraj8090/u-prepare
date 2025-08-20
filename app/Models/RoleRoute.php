@@ -11,15 +11,10 @@ class RoleRoute extends Model
 
     protected $table = 'role_routes';
 
-    // Mass assignable fields
-    protected $fillable = [
-        'role_id',
-        'route_name',
-    ];
+    protected $fillable = ['role_id', 'route_name'];
 
-    /**
-     * Relationship: A RoleRoute belongs to a Role
-     */
+    public $timestamps = false;
+
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id');

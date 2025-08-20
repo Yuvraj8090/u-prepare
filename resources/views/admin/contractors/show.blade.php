@@ -12,9 +12,6 @@
         ['label' => 'Details']
     ]"
 />
-
-
-        <!-- Details Card -->
         <x-admin.contractor-info :contractor="$contractor" />
     </div>
 </x-app-layout>

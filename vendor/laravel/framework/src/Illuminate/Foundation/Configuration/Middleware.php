@@ -781,6 +781,7 @@ class Middleware
         $aliases = [
             'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
             'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+            'role.routes' => \App\Http\Middleware\CheckRoleRoute::class,
             'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
             'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
             'can' => \Illuminate\Auth\Middleware\Authorize::class,

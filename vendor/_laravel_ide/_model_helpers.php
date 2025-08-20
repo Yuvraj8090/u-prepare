@@ -9090,8 +9090,8 @@ namespace App\Models {
     /**
      * App\Models\RoleRoute
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string|null $updated_at
+     * @property string|null $created_at
      * @property string $route_name
      * @property mixed $role_id
      * @property int $id

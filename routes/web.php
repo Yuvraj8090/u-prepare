@@ -37,7 +37,7 @@ Route::get('/', [PageController::class, 'showWelcomePage'])->name('welcome.defau
 Route::get('/{lang}/{slug}', [PageController::class, 'showLocalizedPage'])
     ->where(['lang' => 'en|hi'])
     ->name('pages.localized');
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', 'role.routes'])->group(function () {
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {

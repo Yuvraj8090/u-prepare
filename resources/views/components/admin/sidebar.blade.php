@@ -187,11 +187,13 @@
 
                     <!-- Admin Panel -->
                     <li
-                        class="{{ request()->routeIs('admin.users.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.departments.*') || request()->routeIs('admin.designations.*') || request()->routeIs('admin.projects-category.*') ? 'active' : '' }}">
+                        class="{{ request()->routeIs('admin.users.*') || request()->routeIs('admin.role_routes.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.departments.*') || request()->routeIs('admin.designations.*') || request()->routeIs('admin.projects-category.*') ? 'active' : '' }}">
                         <a><i class="fa fa-user-shield"></i> Admin Panel <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{{ route('admin.users.index') }}"><i class="fa fa-user"></i> Users</a></li>
                             <li><a href="{{ route('admin.roles.index') }}"><i class="fa fa-id-badge"></i> Roles</a>
+                            <li><a href="{{ route('admin.role_routes.index') }}"><i class="fa fa-id-badge"></i>
+                                    Permission Routes</a>
                             </li>
                             <li><a href="{{ route('admin.departments.index') }}"><i class="fa fa-building"></i>
                                     Departments</a></li>
@@ -201,6 +203,7 @@
                                     Project Categories</a></li>
                         </ul>
                     </li>
+
 
                     <!-- Navbar Items -->
                     <li class="{{ request()->routeIs('admin.navbar-items.*') ? 'active' : '' }}">
