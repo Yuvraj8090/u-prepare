@@ -1,4 +1,4 @@
- <div class="row">
+ <div class="row  mb-6">
      <div class="col-md-12">
          <h6 class="card-header bg-light text-secondary h2"><i class="fas fa-user-tie me-2"></i> Contractor Information</h6>
 
