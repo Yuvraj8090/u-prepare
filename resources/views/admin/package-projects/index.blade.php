@@ -51,8 +51,8 @@
 
                                 <div class="d-flex flex-column">
                                     <!-- Main Title -->
-                                    <a href="{{ route('admin.package-projects.show', $project->id) }}"
-                                        class="fw-bold text-primary mb-1">
+                                    <a href="{{ route('admin.package-projects.show', $project->id) }}" title="{{ $project->package_name }}"
+                                        class="fw-bold text-primary mb-1 text-truncate" style="max-width: 450px;">
                                         {{ $project->package_name }}
                                     </a>
 
