@@ -2,14 +2,11 @@
     <div class="container-fluid">
 
         <!-- Header & Breadcrumb -->
-        <x-admin.breadcrumb-header
-    icon="fas fa-edit text-primary"
-    title="Edit Procurement Work Programs"
-    :breadcrumbs="[
-        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i> Dashboard'],
-        ['label' => 'Procurement Work Programs']
-    ]"
-/>
+        <x-admin.breadcrumb-header icon="fas fa-edit text-primary" title="Edit Procurement Work Programs"
+            :breadcrumbs="[
+                ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i> Dashboard'],
+                ['label' => 'Procurement Work Programs'],
+            ]" />
 
 
         <!-- Server & Validation Errors -->
@@ -23,57 +20,63 @@
                     value="{{ optional($workPrograms->first()->start_date)->format('Y-m-d') }}">
             </div>
             <div class="col-sm-6 d-flex justify-content-end">
-                 <a href="{{ route('admin.procurement-work-programs.index') }}" class="btn btn-secondary me-2">
-        <i class="fas fa-arrow-left me-1"></i> Back
-    </a>
+                <a href="{{ route('admin.procurement-work-programs.index') }}" class="btn btn-secondary me-2">
+                    <i class="fas fa-arrow-left me-1"></i> Back
+                </a>
                 <button id="saveAll" class="btn btn-primary me-2" disabled>Save All (optional)</button>
                 <button id="addRow" class="btn btn-success"><i class="fas fa-plus-circle me-1"></i> Add Row</button>
             </div>
-            
-        </div>
-<form action="{{ route('admin.procurement-work-programs.upload-documents', [$procurementWorkProgram->package_project_id, $procurementWorkProgram->procurement_details_id]) }}" method="POST" enctype="multipart/form-data">
-    @csrf
 
-    <div class="row mb-3 align-items-center">
-        <label class="col-sm-2 col-form-label fw-semibold">Procurement Bid Document</label>
-        <div class="col-sm-4">
-            <input type="file" name="procurement_bid_document" accept=".pdf,.doc,.docx,.jpg,.png" class="form-control">
         </div>
-        <div class="col-sm-6">
-            @if($procurementWorkProgram->procurement_bid_document)
-                <a href="{{ asset('storage/' . $procurementWorkProgram->procurement_bid_document) }}" target="_blank" class="me-3">
-                    <i class="fas fa-file-alt"></i> View
-                </a>
-                <a href="{{ asset('storage/' . $procurementWorkProgram->procurement_bid_document) }}" download>
-                    <i class="fas fa-download"></i> Download
-                </a>
-            @else
-                <span class="text-muted">No document uploaded.</span>
-            @endif
-        </div>
-    </div>
+        <form
+            action="{{ route('admin.procurement-work-programs.upload-documents', [$procurementWorkProgram->package_project_id, $procurementWorkProgram->procurement_details_id]) }}"
+            method="POST" enctype="multipart/form-data">
+            @csrf
 
-    <div class="row mb-4 align-items-center">
-        <label class="col-sm-2 col-form-label fw-semibold">Pre-Bid Minutes Document</label>
-        <div class="col-sm-4">
-            <input type="file" name="pre_bid_minutes_document" accept=".pdf,.doc,.docx,.jpg,.png" class="form-control">
-        </div>
-        <div class="col-sm-6">
-            @if($procurementWorkProgram->pre_bid_minutes_document)
-                <a href="{{ asset('storage/' . $procurementWorkProgram->pre_bid_minutes_document) }}" target="_blank" class="me-3">
-                    <i class="fas fa-file-alt"></i> View
-                </a>
-                <a href="{{ asset('storage/' . $procurementWorkProgram->pre_bid_minutes_document) }}" download>
-                    <i class="fas fa-download"></i> Download
-                </a>
-            @else
-                <span class="text-muted">No document uploaded.</span>
-            @endif
-        </div>
-    </div>
+            <div class="row mb-3 align-items-center">
+                <label class="col-sm-2 col-form-label fw-semibold">Procurement Bid Document</label>
+                <div class="col-sm-4">
+                    <input type="file" name="procurement_bid_document" accept=".pdf,.doc,.docx,.jpg,.png"
+                        class="form-control">
+                </div>
+                <div class="col-sm-6">
+                    @if ($procurementWorkProgram->procurement_bid_document)
+                        <a href="{{ asset('storage/' . $procurementWorkProgram->procurement_bid_document) }}"
+                            target="_blank" class="me-3">
+                            <i class="fas fa-file-alt"></i> View
+                        </a>
+                        <a href="{{ asset('storage/' . $procurementWorkProgram->procurement_bid_document) }}" download>
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    @else
+                        <span class="text-muted">No document uploaded.</span>
+                    @endif
+                </div>
+            </div>
 
-    <button type="submit" class="btn btn-primary">Upload Documents</button>
-</form>
+            <div class="row mb-4 align-items-center">
+                <label class="col-sm-2 col-form-label fw-semibold">Pre-Bid Minutes Document</label>
+                <div class="col-sm-4">
+                    <input type="file" name="pre_bid_minutes_document" accept=".pdf,.doc,.docx,.jpg,.png"
+                        class="form-control">
+                </div>
+                <div class="col-sm-6">
+                    @if ($procurementWorkProgram->pre_bid_minutes_document)
+                        <a href="{{ asset('storage/' . $procurementWorkProgram->pre_bid_minutes_document) }}"
+                            target="_blank" class="me-3">
+                            <i class="fas fa-file-alt"></i> View
+                        </a>
+                        <a href="{{ asset('storage/' . $procurementWorkProgram->pre_bid_minutes_document) }}" download>
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    @else
+                        <span class="text-muted">No document uploaded.</span>
+                    @endif
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Upload Documents</button>
+        </form>
 
 
         <!-- Card -->
@@ -106,7 +109,8 @@
                                 </td>
                                 <td>
                                     <input type="number" name="weightage" step="0.01" min="0" max="100"
-                                        class="form-control weightage-input text-end" value="{{ $program->weightage }}">
+                                        class="form-control weightage-input text-end"
+                                        value="{{ $program->weightage }}">
                                 </td>
                                 <td>
                                     <input type="number" name="days" min="0" class="form-control days-input"
@@ -148,12 +152,9 @@
             </div>
         </div>
     </div>
-
-    <!-- Toast container -->
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080;">
         <div id="toastContainer"></div>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // === CONSTANTS & ELEMENTS ===
@@ -305,75 +306,76 @@
 
             // === SAVE SINGLE ROW ===
             function handleSaveRow(row, actionUrl) {
-    const id = row.dataset.id;
-    const name = row.querySelector('.name-input').value.trim();
-    const weightage = row.querySelector('.weightage-input').value;
-    const days = row.querySelector('.days-input').value || null;
-    const planned_date = row.querySelector('.planned-date-input').value || null;
-    const packageProjectId = row.querySelector('.package_project_id').value;
-    const procurementDetailsId = row.querySelector('.procurement_details_id').value;
+                const id = row.dataset.id;
+                const name = row.querySelector('.name-input').value.trim();
+                const weightage = row.querySelector('.weightage-input').value;
+                const days = row.querySelector('.days-input').value || null;
+                const planned_date = row.querySelector('.planned-date-input').value || null;
+                const packageProjectId = row.querySelector('.package_project_id').value;
+                const procurementDetailsId = row.querySelector('.procurement_details_id').value;
 
-    if (!name) {
-        showToast('Name is required.', 'Validation', false);
-        return;
-    }
-    const w = parseFloat(weightage);
-    if (isNaN(w) || w < 0 || w > 100) {
-        showToast('Weightage must be between 0 and 100.', 'Validation', false);
-        return;
-    }
-
-    // Detect if it's a NEW row (no DB ID yet)
-    let method = 'PUT';
-    let url = actionUrl;
-    let postData = {
-        _token: csrfToken,
-        name_work_program: name,
-        weightage: weightage,
-        days: days,
-        planned_date: planned_date
-    };
-
-    if (id.startsWith('temp-')) {
-        // NEW — use storeSingle route
-        method = 'POST';
-        url = "{{ route('admin.procurement-work-programs.store-single') }}";
-        postData.package_project_id = packageProjectId;
-        postData.procurement_details_id = procurementDetailsId;
-    } else {
-        // EXISTING — use update
-        postData._method = 'PUT';
-    }
-
-    $.ajax({
-        url: url,
-        method: 'POST', // Always POST; Laravel will handle _method for PUT
-        data: postData,
-        success: function(response) {
-            if (response.success) {
-                showToast(response.message || 'Saved successfully', 'Success', true);
-
-                if (id.startsWith('temp-') && response.data?.id) {
-                    // Replace temp ID with DB ID and set correct URLs
-                    row.dataset.id = response.data.id;
-                    row.querySelector('.save-row').dataset.action =
-                        "{{ url('procurement-work-programs/update-single') }}/" + response.data.id;
-                    row.querySelector('.delete-row').dataset.action =
-                        "{{ url('procurement-work-programs') }}/" + response.data.id;
+                if (!name) {
+                    showToast('Name is required.', 'Validation', false);
+                    return;
                 }
-            } else {
-                showToast(response.message || 'Unable to save', 'Error', false);
+                const w = parseFloat(weightage);
+                if (isNaN(w) || w < 0 || w > 100) {
+                    showToast('Weightage must be between 0 and 100.', 'Validation', false);
+                    return;
+                }
+
+                // Detect if it's a NEW row (no DB ID yet)
+                let method = 'PUT';
+                let url = actionUrl;
+                let postData = {
+                    _token: csrfToken,
+                    name_work_program: name,
+                    weightage: weightage,
+                    days: days,
+                    planned_date: planned_date
+                };
+
+                if (id.startsWith('temp-')) {
+                    // NEW — use storeSingle route
+                    method = 'POST';
+                    url = "{{ route('admin.procurement-work-programs.store-single') }}";
+                    postData.package_project_id = packageProjectId;
+                    postData.procurement_details_id = procurementDetailsId;
+                } else {
+                    // EXISTING — use update
+                    postData._method = 'PUT';
+                }
+
+                $.ajax({
+                    url: url,
+                    method: 'POST', // Always POST; Laravel will handle _method for PUT
+                    data: postData,
+                    success: function(response) {
+                        if (response.success) {
+                            showToast(response.message || 'Saved successfully', 'Success', true);
+
+                            if (id.startsWith('temp-') && response.data?.id) {
+                                // Replace temp ID with DB ID and set correct URLs
+                                row.dataset.id = response.data.id;
+                                row.querySelector('.save-row').dataset.action =
+                                    "{{ url('procurement-work-programs/update-single') }}/" + response
+                                    .data.id;
+                                row.querySelector('.delete-row').dataset.action =
+                                    "{{ url('procurement-work-programs') }}/" + response.data.id;
+                            }
+                        } else {
+                            showToast(response.message || 'Unable to save', 'Error', false);
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422 && xhr.responseJSON) {
+                            displayAlertHtml(buildAlertHtml(extractValidationErrors(xhr.responseJSON)));
+                        } else {
+                            showToast(xhr.responseJSON?.message || 'Server error.', 'Error', false);
+                        }
+                    }
+                });
             }
-        },
-        error: function(xhr) {
-            if (xhr.status === 422 && xhr.responseJSON) {
-                displayAlertHtml(buildAlertHtml(extractValidationErrors(xhr.responseJSON)));
-            } else {
-                showToast(xhr.responseJSON?.message || 'Server error.', 'Error', false);
-            }
-        }
-    });
-}
 
 
             // === DELETE ROW ===

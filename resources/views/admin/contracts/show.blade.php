@@ -24,7 +24,7 @@
                 <x-admin.contract-details :contract="$contract" />
 
                 {{-- Contractor Info --}}
-                <x-admin.contractor-info :contract="$contract" />
+                <x-admin.contractor-info :contractor="$contract->contractor" />
 
             </div>
 
@@ -174,15 +174,9 @@
                                 </x-admin.data-table>
                             @endif
                         </div>
-
-
-
                     </div>
-
                 </div>
-
             </div>
         </div>
-
     </div>
 </x-app-layout>

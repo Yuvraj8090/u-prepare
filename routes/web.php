@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\ProjectsCategoryController;
 use App\Http\Controllers\Admin\PhysicalEpcProgressController;
 use App\Http\Controllers\Admin\WorkServiceController;
 use App\Http\Controllers\MediaFileController;
+use App\Http\Controllers\Admin\RoleRouteController;
 use App\Http\Controllers\Admin\ProcurementDetailController;
 use App\Http\Controllers\Admin\PackageComponentController;
 use App\Http\Controllers\Admin\ProcurementWorkProgramController;
@@ -40,6 +41,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+            Route::resource('role_routes', RoleRouteController::class);
+
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
             Route::resource('type-of-procurements', TypeOfProcurementController::class);
