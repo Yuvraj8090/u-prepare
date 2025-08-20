@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2025 at 09:53 AM
+-- Generation Time: Aug 20, 2025 at 10:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -75,10 +75,76 @@ CREATE TABLE `assembly` (
 --
 
 INSERT INTO `assembly` (`id`, `district_id`, `constituency_id`, `name`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 13, 1, 'Purola', 1, '2025-08-05 05:21:17', '2025-08-05 05:21:17', NULL),
-(2, 13, 1, 'Yamunotri', 1, '2025-08-05 05:21:17', '2025-08-05 05:21:17', NULL),
-(3, 13, 1, 'Gangotri', 1, '2025-08-05 05:21:17', '2025-08-05 05:21:17', NULL),
-(70, 12, 5, 'Khatima', 1, '2025-08-05 05:21:17', '2025-08-05 05:21:17', NULL);
+(1, 13, 1, 'Purola', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(2, 13, 1, 'Yamunotri', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(3, 13, 1, 'Gangotri', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(4, 3, 2, 'Badrinath', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(5, 3, 2, 'Tharali', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(6, 3, 2, 'Karnaprayag', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(7, 10, 2, 'Kedarnath', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(8, 10, 2, 'Rudraprayag', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(9, 11, 1, 'Ghansali', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(10, 11, 2, 'Devprayag', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(11, 11, 2, 'Narendranagar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(12, 11, 1, 'Pratapnagar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(13, 11, 1, 'Tehri', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(14, 11, 1, 'Dhanaulti', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(15, 5, 1, 'Chakrata', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(16, 5, 1, 'Vikasnagar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(17, 5, 1, 'Sahaspur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(18, 5, 3, 'Dharampur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(19, 5, 1, 'Raipur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(20, 5, 1, 'Rajpur Road', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(21, 5, 1, 'Dehradun Cantonment', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(22, 5, 1, 'Mussoorie', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(23, 5, 3, 'Doiwala', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(24, 5, 3, 'Rishikesh', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(25, 6, 3, 'Haridwar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(26, 6, 3, 'BHEL Ranipur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(27, 6, 3, 'Jwalapur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(28, 6, 3, 'Bhagwanpur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(29, 6, 3, 'Jhabrera', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(30, 6, 3, 'Piran Kaliyar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(31, 6, 3, 'Roorkee', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(32, 6, 3, 'Khanpur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(33, 6, 3, 'Manglaur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(34, 6, 3, 'Laksar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(35, 6, 3, 'Haridwar Rural', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(36, 8, 2, 'Yamkeshwar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(37, 8, 2, 'Pauri', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(38, 8, 2, 'Srinagar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(39, 8, 2, 'Chaubattakhal', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(40, 8, 2, 'Lansdowne', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(41, 8, 2, 'Kotdwar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(42, 9, 4, 'Dharchula', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(43, 9, 4, 'Didihat', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(44, 9, 4, 'Pithoragarh', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(45, 9, 4, 'Gangolihat', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(46, 2, 4, 'Kapkot', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(47, 2, 4, 'Bageshwar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(48, 1, 4, 'Dwarahat', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(49, 1, 4, 'Salt', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(50, 1, 4, 'Ranikhet', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(51, 1, 4, 'Someshwar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(52, 1, 4, 'Almora', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(53, 1, 4, 'Jageshwar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(54, 4, 4, 'Lohaghat', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(55, 4, 4, 'Champawat', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(56, 7, 5, 'Lalkuan', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(57, 7, 5, 'Bhimtal', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(58, 7, 5, 'Nainital', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(59, 7, 5, 'Haldwani', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(60, 7, 5, 'Kaladhungi', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(61, 7, 2, 'Ramnagar', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(62, 12, 5, 'Jaspur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(63, 12, 5, 'Kashipur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(64, 12, 5, 'Bajpur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(65, 12, 5, 'Gadarpur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(66, 12, 5, 'Rudrapur', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(67, 12, 5, 'Kichha', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(68, 12, 5, 'Sitarganj', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(69, 12, 5, 'Nanakmatta', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL),
+(70, 12, 5, 'Khatima', 1, '2024-03-27 18:54:12', '2024-03-27 18:54:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -111,6 +177,13 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cache`
+--
+
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('role_routes_1', 'a:200:{i:0;s:31:\"admin.already_define_epc.create\";i:1;s:32:\"admin.already_define_epc.destroy\";i:2;s:29:\"admin.already_define_epc.edit\";i:3;s:30:\"admin.already_define_epc.index\";i:4;s:29:\"admin.already_define_epc.show\";i:5;s:30:\"admin.already_define_epc.store\";i:6;s:31:\"admin.already_define_epc.update\";i:7;s:26:\"admin.boqentry.bulk-delete\";i:8;s:21:\"admin.boqentry.create\";i:9;s:22:\"admin.boqentry.destroy\";i:10;s:19:\"admin.boqentry.edit\";i:11;s:20:\"admin.boqentry.index\";i:12;s:32:\"admin.boqentry.physical-progress\";i:13;s:37:\"admin.boqentry.save-physical-progress\";i:14;s:20:\"admin.boqentry.store\";i:15;s:21:\"admin.boqentry.update\";i:16;s:21:\"admin.boqentry.upload\";i:17;s:31:\"admin.contraction-phases.create\";i:18;s:32:\"admin.contraction-phases.destroy\";i:19;s:29:\"admin.contraction-phases.edit\";i:20;s:30:\"admin.contraction-phases.index\";i:21;s:29:\"admin.contraction-phases.show\";i:22;s:30:\"admin.contraction-phases.store\";i:23;s:31:\"admin.contraction-phases.update\";i:24;s:24:\"admin.contractors.create\";i:25;s:25:\"admin.contractors.destroy\";i:26;s:22:\"admin.contractors.edit\";i:27;s:23:\"admin.contractors.index\";i:28;s:22:\"admin.contractors.show\";i:29;s:23:\"admin.contractors.store\";i:30;s:24:\"admin.contractors.update\";i:31;s:22:\"admin.contracts.create\";i:32;s:23:\"admin.contracts.destroy\";i:33;s:20:\"admin.contracts.edit\";i:34;s:21:\"admin.contracts.index\";i:35;s:20:\"admin.contracts.show\";i:36;s:21:\"admin.contracts.store\";i:37;s:22:\"admin.contracts.update\";i:38;s:24:\"admin.departments.create\";i:39;s:25:\"admin.departments.destroy\";i:40;s:22:\"admin.departments.edit\";i:41;s:23:\"admin.departments.index\";i:42;s:22:\"admin.departments.show\";i:43;s:23:\"admin.departments.store\";i:44;s:24:\"admin.departments.update\";i:45;s:25:\"admin.designations.create\";i:46;s:26:\"admin.designations.destroy\";i:47;s:23:\"admin.designations.edit\";i:48;s:24:\"admin.designations.index\";i:49;s:23:\"admin.designations.show\";i:50;s:24:\"admin.designations.store\";i:51;s:25:\"admin.designations.update\";i:52;s:31:\"admin.epcentry_data.bulkDestroy\";i:53;s:26:\"admin.epcentry_data.create\";i:54;s:27:\"admin.epcentry_data.destroy\";i:55;s:24:\"admin.epcentry_data.edit\";i:56;s:25:\"admin.epcentry_data.index\";i:57;s:25:\"admin.epcentry_data.store\";i:58;s:36:\"admin.epcentry_data.storeFromDefined\";i:59;s:26:\"admin.epcentry_data.update\";i:60;s:39:\"admin.financial-progress-updates.create\";i:61;s:40:\"admin.financial-progress-updates.destroy\";i:62;s:37:\"admin.financial-progress-updates.edit\";i:63;s:38:\"admin.financial-progress-updates.index\";i:64;s:37:\"admin.financial-progress-updates.show\";i:65;s:38:\"admin.financial-progress-updates.store\";i:66;s:39:\"admin.financial-progress-updates.update\";i:67;s:31:\"admin.financial-progress.upload\";i:68;s:19:\"admin.media.gallery\";i:69;s:17:\"admin.media.index\";i:70;s:24:\"admin.media_files.upload\";i:71;s:25:\"admin.navbar-items.create\";i:72;s:26:\"admin.navbar-items.destroy\";i:73;s:23:\"admin.navbar-items.edit\";i:74;s:24:\"admin.navbar-items.index\";i:75;s:23:\"admin.navbar-items.show\";i:76;s:24:\"admin.navbar-items.store\";i:77;s:25:\"admin.navbar-items.update\";i:78;s:31:\"admin.navbar-items.update-order\";i:79;s:31:\"admin.package-components.create\";i:80;s:32:\"admin.package-components.destroy\";i:81;s:29:\"admin.package-components.edit\";i:82;s:30:\"admin.package-components.index\";i:83;s:29:\"admin.package-components.show\";i:84;s:30:\"admin.package-components.store\";i:85;s:31:\"admin.package-components.update\";i:86;s:29:\"admin.package-projects.create\";i:87;s:30:\"admin.package-projects.destroy\";i:88;s:27:\"admin.package-projects.edit\";i:89;s:28:\"admin.package-projects.index\";i:90;s:27:\"admin.package-projects.show\";i:91;s:28:\"admin.package-projects.store\";i:92;s:29:\"admin.package-projects.update\";i:93;s:18:\"admin.pages.create\";i:94;s:23:\"admin.pages.create.form\";i:95;s:18:\"admin.pages.delete\";i:96;s:21:\"admin.pages.edit.form\";i:97;s:16:\"admin.pages.list\";i:98;s:18:\"admin.pages.update\";i:99;s:39:\"admin.physical_boq_progress.bulk-delete\";i:100;s:34:\"admin.physical_boq_progress.create\";i:101;s:35:\"admin.physical_boq_progress.destroy\";i:102;s:32:\"admin.physical_boq_progress.edit\";i:103;s:33:\"admin.physical_boq_progress.index\";i:104;s:33:\"admin.physical_boq_progress.store\";i:105;s:34:\"admin.physical_boq_progress.update\";i:106;s:39:\"admin.physical_epc_progress.bulkDestroy\";i:107;s:34:\"admin.physical_epc_progress.create\";i:108;s:35:\"admin.physical_epc_progress.destroy\";i:109;s:32:\"admin.physical_epc_progress.edit\";i:110;s:33:\"admin.physical_epc_progress.index\";i:111;s:32:\"admin.physical_epc_progress.show\";i:112;s:33:\"admin.physical_epc_progress.store\";i:113;s:34:\"admin.physical_epc_progress.update\";i:114;s:32:\"admin.procurement-details.create\";i:115;s:33:\"admin.procurement-details.destroy\";i:116;s:30:\"admin.procurement-details.edit\";i:117;s:31:\"admin.procurement-details.index\";i:118;s:30:\"admin.procurement-details.show\";i:119;s:31:\"admin.procurement-details.store\";i:120;s:32:\"admin.procurement-details.update\";i:121;s:38:\"admin.procurement-work-programs.create\";i:122;s:39:\"admin.procurement-work-programs.destroy\";i:123;s:36:\"admin.procurement-work-programs.edit\";i:124;s:47:\"admin.procurement-work-programs.edit-by-package\";i:125;s:37:\"admin.procurement-work-programs.index\";i:126;s:36:\"admin.procurement-work-programs.show\";i:127;s:37:\"admin.procurement-work-programs.store\";i:128;s:44:\"admin.procurement-work-programs.store-single\";i:129;s:38:\"admin.procurement-work-programs.update\";i:130;s:45:\"admin.procurement-work-programs.update-single\";i:131;s:48:\"admin.procurement-work-programs.upload-documents\";i:132;s:20:\"admin.project.create\";i:133;s:21:\"admin.project.destroy\";i:134;s:18:\"admin.project.edit\";i:135;s:19:\"admin.project.index\";i:136;s:18:\"admin.project.show\";i:137;s:19:\"admin.project.store\";i:138;s:20:\"admin.project.update\";i:139;s:30:\"admin.projects-category.create\";i:140;s:31:\"admin.projects-category.destroy\";i:141;s:28:\"admin.projects-category.edit\";i:142;s:29:\"admin.projects-category.index\";i:143;s:28:\"admin.projects-category.show\";i:144;s:29:\"admin.projects-category.store\";i:145;s:30:\"admin.projects-category.update\";i:146;s:24:\"admin.role_routes.create\";i:147;s:25:\"admin.role_routes.destroy\";i:148;s:22:\"admin.role_routes.edit\";i:149;s:23:\"admin.role_routes.index\";i:150;s:22:\"admin.role_routes.show\";i:151;s:23:\"admin.role_routes.store\";i:152;s:24:\"admin.role_routes.update\";i:153;s:18:\"admin.roles.create\";i:154;s:19:\"admin.roles.destroy\";i:155;s:16:\"admin.roles.edit\";i:156;s:17:\"admin.roles.index\";i:157;s:16:\"admin.roles.show\";i:158;s:17:\"admin.roles.store\";i:159;s:18:\"admin.roles.update\";i:160;s:34:\"admin.safeguard-compliances.create\";i:161;s:35:\"admin.safeguard-compliances.destroy\";i:162;s:32:\"admin.safeguard-compliances.edit\";i:163;s:33:\"admin.safeguard-compliances.index\";i:164;s:32:\"admin.safeguard-compliances.show\";i:165;s:33:\"admin.safeguard-compliances.store\";i:166;s:34:\"admin.safeguard-compliances.update\";i:167;s:35:\"admin.safeguard_entries.bulk-delete\";i:168;s:30:\"admin.safeguard_entries.create\";i:169;s:31:\"admin.safeguard_entries.destroy\";i:170;s:28:\"admin.safeguard_entries.edit\";i:171;s:30:\"admin.safeguard_entries.import\";i:172;s:29:\"admin.safeguard_entries.index\";i:173;s:28:\"admin.safeguard_entries.show\";i:174;s:29:\"admin.safeguard_entries.store\";i:175;s:30:\"admin.safeguard_entries.update\";i:176;s:36:\"admin.social_safeguard_entries.index\";i:177;s:53:\"admin.social_safeguard_entries.storeOrUpdateFromIndex\";i:178;s:33:\"admin.type-of-procurements.create\";i:179;s:34:\"admin.type-of-procurements.destroy\";i:180;s:31:\"admin.type-of-procurements.edit\";i:181;s:32:\"admin.type-of-procurements.index\";i:182;s:34:\"admin.type-of-procurements.restore\";i:183;s:31:\"admin.type-of-procurements.show\";i:184;s:32:\"admin.type-of-procurements.store\";i:185;s:33:\"admin.type-of-procurements.update\";i:186;s:18:\"admin.users.create\";i:187;s:19:\"admin.users.destroy\";i:188;s:16:\"admin.users.edit\";i:189;s:17:\"admin.users.index\";i:190;s:16:\"admin.users.show\";i:191;s:17:\"admin.users.store\";i:192;s:18:\"admin.users.update\";i:193;s:26:\"admin.work_services.create\";i:194;s:27:\"admin.work_services.destroy\";i:195;s:24:\"admin.work_services.edit\";i:196;s:25:\"admin.work_services.index\";i:197;s:24:\"admin.work_services.show\";i:198;s:25:\"admin.work_services.store\";i:199;s:26:\"admin.work_services.update\";}', 1755678883);
 
 -- --------------------------------------------------------
 
@@ -651,7 +724,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (62, '2025_08_18_075053_create_departments_table', 45),
 (63, '2025_08_19_070658_create_type_of_procurements_table', 46),
 (64, '2025_08_19_072712_add_type_of_procurement_id_to_procurement_details_table', 47),
-(65, '2025_08_19_073941_drop_type_of_procurement_from_procurement_details_table', 48);
+(65, '2025_08_19_073941_drop_type_of_procurement_from_procurement_details_table', 48),
+(66, '2025_08_19_121007_change_lok_sabha_fk_to_assembly', 49),
+(67, '2025_08_20_054540_create_role_routes_table', 50);
 
 -- --------------------------------------------------------
 
@@ -765,7 +840,7 @@ CREATE TABLE `package_projects` (
 --
 
 INSERT INTO `package_projects` (`id`, `package_component_id`, `project_id`, `package_category_id`, `package_sub_category_id`, `department_id`, `package_name`, `package_number`, `estimated_budget_incl_gst`, `vidhan_sabha_id`, `lok_sabha_id`, `district_id`, `block_id`, `dec_approved`, `dec_approval_date`, `dec_letter_number`, `dec_document_path`, `hpc_approved`, `hpc_approval_date`, `hpc_letter_number`, `hpc_document_path`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(5, 1, 1, 1, 5, 1, 'Construction of 84 M Span Motor Bridge over Kotigaad in Km 01 of Tikochi-Duchanu-Kiranu- Sirtoli Motor Road in District Uttarkashi', '24/BR/RFB-EPC/UGRIDP/2023', 147751097.00, NULL, NULL, 13, NULL, 1, '2022-11-11', '1397/III(3)/2022', 'package-projects/dec-documents/yN1vq876nU0XAJDEj1xJw68S7Vw2TZRiorXbMt9x.pdf', 1, '2023-05-03', '103/UDRP-AF/2023', 'package-projects/hpc-documents/hKS6mA5a00jNUwa9lhrLLxy5gBRwMxdSBDS1wCja.pdf', '2025-08-17 02:55:37', '2025-08-17 02:55:37', NULL),
+(5, 1, 1, 1, 5, 1, 'Construction of 84 M Span Motor Bridge over Kotigaad in Km 01 of Tikochi-Duchanu-Kiranu- Sirtoli Motor Road in District Uttarkashi', '24/BR/RFB-EPC/UGRIDP/2023', 147751097.00, NULL, 18, 13, 2, 1, '2022-11-11', '1397/III(3)/2022', 'package-projects/dec-documents/yN1vq876nU0XAJDEj1xJw68S7Vw2TZRiorXbMt9x.pdf', 1, '2023-05-03', '103/UDRP-AF/2023', 'package-projects/hpc-documents/hKS6mA5a00jNUwa9lhrLLxy5gBRwMxdSBDS1wCja.pdf', '2025-08-17 02:55:37', '2025-08-19 06:40:28', NULL),
 (6, 2, 1, 1, 5, 1, 'Construction of 60 M Pedestrian bridge over Kosi river at village- Bedgaun near Kathautiya Temple at Someshwar.', '20/pro/bridge/uprepare/2025', 40000000.00, NULL, NULL, 1, NULL, 1, '2023-06-14', '763/2023/PWD-III', 'package-projects/dec-documents/MZQIMFYKYiRZFfgarq1fRzECUiwKB9hWBm32oOTz.pdf', 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun', 'package-projects/hpc-documents/tk1fzDTfgKRQaWTtRbNxhWPaW8wL39tvFgCAXv3j.pdf', '2025-08-18 00:53:17', '2025-08-18 00:53:17', NULL),
 (7, 3, 1, 1, 5, 1, 'Construction of 100 M Pedestrian Bridge at Bhikiasan Near Thapli', '19/pro/bridge/uprepare/2025', 120000000.00, 4, NULL, 1, NULL, 1, '2023-06-14', '763/2023/PWD-III', 'package-projects/dec-documents/4IcgdAQnUupPN4LQjQ41PdHRcc2FDiJLFnwfIFRX.pdf', 1, '2023-06-30', '275/UDRP-AF/2023, Dehradun,', 'package-projects/hpc-documents/VxxgPKz9aU9PxdsYSyxiSr99PQAtqMACYUjdMaH2.pdf', '2025-08-18 00:58:18', '2025-08-18 00:58:18', NULL),
 (8, NULL, 1, 1, 5, 1, 'Construction of 30 M Pedestrian bridge at Devtoli inter college to village Simayal.', '18/pro/bridge/uprepare/2025', 30000000.00, 4, NULL, 2, NULL, 1, '2023-06-14', '763/2023/PWD-III', 'package-projects/dec-documents/8142UrwEEdfnSXfcvcxxZcj2dnaThcfBCpQ45ZFY.pdf', 1, '2023-06-30', '275/UDRP-AF/2023', 'package-projects/hpc-documents/i162nCMzPOjHtwEo3qRc7XXNbyoWU7L7GagTDCmX.pdf', '2025-08-18 01:00:59', '2025-08-18 01:00:59', NULL),
@@ -984,7 +1059,7 @@ CREATE TABLE `procurement_details` (
 
 INSERT INTO `procurement_details` (`id`, `package_project_id`, `method_of_procurement`, `publication_date`, `publication_document_path`, `tender_fee`, `earnest_money_deposit`, `bid_validity_days`, `emd_validity_days`, `created_at`, `updated_at`, `deleted_at`, `type_of_procurement_id`) VALUES
 (8, 5, 'Request for Bids', NULL, 'procurement_docs/0y4HThMFSp49q5pgWaGTulbWBSi1hX7A4bvYyGKz.pdf', 5000.00, 3000000.00, 120, 540, '2025-08-17 03:04:25', '2025-08-17 03:04:25', NULL, 1),
-(9, 6, 'Request for Proposals', NULL, NULL, 5000.00, 50000.00, 90, 180, '2025-08-18 00:54:50', '2025-08-18 00:54:50', NULL, 1),
+(9, 6, 'Request for Proposals ', NULL, NULL, 5000.00, 50000.00, 90, 180, '2025-08-18 00:54:50', '2025-08-18 00:54:50', NULL, 1),
 (10, 7, 'Request for Proposals', NULL, NULL, 5000.00, 100000.00, 90, 120, '2025-08-18 00:59:07', '2025-08-19 02:08:43', NULL, 2);
 
 -- --------------------------------------------------------
@@ -1089,7 +1164,236 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (1, 'admin', NULL, '2025-08-04 10:54:25'),
 (2, 'PMU', '2025-08-04 11:53:03', '2025-08-04 11:53:03'),
-(3, 'Senior-Manager', '2025-08-04 11:53:21', '2025-08-04 11:53:21');
+(3, 'Senior-Manager', '2025-08-04 11:53:21', '2025-08-04 11:53:21'),
+(4, 'It Admin', '2025-08-20 01:02:27', '2025-08-20 01:02:27'),
+(5, 'Procurement', '2025-08-20 01:03:10', '2025-08-20 01:03:10'),
+(6, 'Field Officer', '2025-08-20 01:03:23', '2025-08-20 01:03:23'),
+(7, 'Social Officer', '2025-08-20 01:05:06', '2025-08-20 01:05:06'),
+(8, 'Social Field  Officer', '2025-08-20 01:05:31', '2025-08-20 01:05:31'),
+(9, 'Environmental Officer', '2025-08-20 01:14:57', '2025-08-20 01:14:57'),
+(10, 'Environmental Field Officer', '2025-08-20 01:16:16', '2025-08-20 01:16:16'),
+(11, 'Safeguard Officer', '2025-08-20 01:17:01', '2025-08-20 01:17:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_routes`
+--
+
+CREATE TABLE `role_routes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `route_name` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `role_routes`
+--
+
+INSERT INTO `role_routes` (`id`, `role_id`, `route_name`, `created_at`, `updated_at`) VALUES
+(203, 2, 'admin.already_define_epc.create', '2025-08-20 01:00:26', '2025-08-20 01:00:26'),
+(808, 1, 'admin.already_define_epc.create', NULL, NULL),
+(809, 1, 'admin.already_define_epc.destroy', NULL, NULL),
+(810, 1, 'admin.already_define_epc.edit', NULL, NULL),
+(811, 1, 'admin.already_define_epc.index', NULL, NULL),
+(812, 1, 'admin.already_define_epc.show', NULL, NULL),
+(813, 1, 'admin.already_define_epc.store', NULL, NULL),
+(814, 1, 'admin.already_define_epc.update', NULL, NULL),
+(815, 1, 'admin.boqentry.bulk-delete', NULL, NULL),
+(816, 1, 'admin.boqentry.create', NULL, NULL),
+(817, 1, 'admin.boqentry.destroy', NULL, NULL),
+(818, 1, 'admin.boqentry.edit', NULL, NULL),
+(819, 1, 'admin.boqentry.index', NULL, NULL),
+(820, 1, 'admin.boqentry.physical-progress', NULL, NULL),
+(821, 1, 'admin.boqentry.save-physical-progress', NULL, NULL),
+(822, 1, 'admin.boqentry.store', NULL, NULL),
+(823, 1, 'admin.boqentry.update', NULL, NULL),
+(824, 1, 'admin.boqentry.upload', NULL, NULL),
+(825, 1, 'admin.contraction-phases.create', NULL, NULL),
+(826, 1, 'admin.contraction-phases.destroy', NULL, NULL),
+(827, 1, 'admin.contraction-phases.edit', NULL, NULL),
+(828, 1, 'admin.contraction-phases.index', NULL, NULL),
+(829, 1, 'admin.contraction-phases.show', NULL, NULL),
+(830, 1, 'admin.contraction-phases.store', NULL, NULL),
+(831, 1, 'admin.contraction-phases.update', NULL, NULL),
+(832, 1, 'admin.contractors.create', NULL, NULL),
+(833, 1, 'admin.contractors.destroy', NULL, NULL),
+(834, 1, 'admin.contractors.edit', NULL, NULL),
+(835, 1, 'admin.contractors.index', NULL, NULL),
+(836, 1, 'admin.contractors.show', NULL, NULL),
+(837, 1, 'admin.contractors.store', NULL, NULL),
+(838, 1, 'admin.contractors.update', NULL, NULL),
+(839, 1, 'admin.contracts.create', NULL, NULL),
+(840, 1, 'admin.contracts.destroy', NULL, NULL),
+(841, 1, 'admin.contracts.edit', NULL, NULL),
+(842, 1, 'admin.contracts.index', NULL, NULL),
+(843, 1, 'admin.contracts.show', NULL, NULL),
+(844, 1, 'admin.contracts.store', NULL, NULL),
+(845, 1, 'admin.contracts.update', NULL, NULL),
+(846, 1, 'admin.departments.create', NULL, NULL),
+(847, 1, 'admin.departments.destroy', NULL, NULL),
+(848, 1, 'admin.departments.edit', NULL, NULL),
+(849, 1, 'admin.departments.index', NULL, NULL),
+(850, 1, 'admin.departments.show', NULL, NULL),
+(851, 1, 'admin.departments.store', NULL, NULL),
+(852, 1, 'admin.departments.update', NULL, NULL),
+(853, 1, 'admin.designations.create', NULL, NULL),
+(854, 1, 'admin.designations.destroy', NULL, NULL),
+(855, 1, 'admin.designations.edit', NULL, NULL),
+(856, 1, 'admin.designations.index', NULL, NULL),
+(857, 1, 'admin.designations.show', NULL, NULL),
+(858, 1, 'admin.designations.store', NULL, NULL),
+(859, 1, 'admin.designations.update', NULL, NULL),
+(860, 1, 'admin.epcentry_data.bulkDestroy', NULL, NULL),
+(861, 1, 'admin.epcentry_data.create', NULL, NULL),
+(862, 1, 'admin.epcentry_data.destroy', NULL, NULL),
+(863, 1, 'admin.epcentry_data.edit', NULL, NULL),
+(864, 1, 'admin.epcentry_data.index', NULL, NULL),
+(865, 1, 'admin.epcentry_data.store', NULL, NULL),
+(866, 1, 'admin.epcentry_data.storeFromDefined', NULL, NULL),
+(867, 1, 'admin.epcentry_data.update', NULL, NULL),
+(868, 1, 'admin.financial-progress-updates.create', NULL, NULL),
+(869, 1, 'admin.financial-progress-updates.destroy', NULL, NULL),
+(870, 1, 'admin.financial-progress-updates.edit', NULL, NULL),
+(871, 1, 'admin.financial-progress-updates.index', NULL, NULL),
+(872, 1, 'admin.financial-progress-updates.show', NULL, NULL),
+(873, 1, 'admin.financial-progress-updates.store', NULL, NULL),
+(874, 1, 'admin.financial-progress-updates.update', NULL, NULL),
+(875, 1, 'admin.financial-progress.upload', NULL, NULL),
+(876, 1, 'admin.media.gallery', NULL, NULL),
+(877, 1, 'admin.media.index', NULL, NULL),
+(878, 1, 'admin.media_files.upload', NULL, NULL),
+(879, 1, 'admin.navbar-items.create', NULL, NULL),
+(880, 1, 'admin.navbar-items.destroy', NULL, NULL),
+(881, 1, 'admin.navbar-items.edit', NULL, NULL),
+(882, 1, 'admin.navbar-items.index', NULL, NULL),
+(883, 1, 'admin.navbar-items.show', NULL, NULL),
+(884, 1, 'admin.navbar-items.store', NULL, NULL),
+(885, 1, 'admin.navbar-items.update', NULL, NULL),
+(886, 1, 'admin.navbar-items.update-order', NULL, NULL),
+(887, 1, 'admin.package-components.create', NULL, NULL),
+(888, 1, 'admin.package-components.destroy', NULL, NULL),
+(889, 1, 'admin.package-components.edit', NULL, NULL),
+(890, 1, 'admin.package-components.index', NULL, NULL),
+(891, 1, 'admin.package-components.show', NULL, NULL),
+(892, 1, 'admin.package-components.store', NULL, NULL),
+(893, 1, 'admin.package-components.update', NULL, NULL),
+(894, 1, 'admin.package-projects.create', NULL, NULL),
+(895, 1, 'admin.package-projects.destroy', NULL, NULL),
+(896, 1, 'admin.package-projects.edit', NULL, NULL),
+(897, 1, 'admin.package-projects.index', NULL, NULL),
+(898, 1, 'admin.package-projects.show', NULL, NULL),
+(899, 1, 'admin.package-projects.store', NULL, NULL),
+(900, 1, 'admin.package-projects.update', NULL, NULL),
+(901, 1, 'admin.pages.create', NULL, NULL),
+(902, 1, 'admin.pages.create.form', NULL, NULL),
+(903, 1, 'admin.pages.delete', NULL, NULL),
+(904, 1, 'admin.pages.edit.form', NULL, NULL),
+(905, 1, 'admin.pages.list', NULL, NULL),
+(906, 1, 'admin.pages.update', NULL, NULL),
+(907, 1, 'admin.physical_boq_progress.bulk-delete', NULL, NULL),
+(908, 1, 'admin.physical_boq_progress.create', NULL, NULL),
+(909, 1, 'admin.physical_boq_progress.destroy', NULL, NULL),
+(910, 1, 'admin.physical_boq_progress.edit', NULL, NULL),
+(911, 1, 'admin.physical_boq_progress.index', NULL, NULL),
+(912, 1, 'admin.physical_boq_progress.store', NULL, NULL),
+(913, 1, 'admin.physical_boq_progress.update', NULL, NULL),
+(914, 1, 'admin.physical_epc_progress.bulkDestroy', NULL, NULL),
+(915, 1, 'admin.physical_epc_progress.create', NULL, NULL),
+(916, 1, 'admin.physical_epc_progress.destroy', NULL, NULL),
+(917, 1, 'admin.physical_epc_progress.edit', NULL, NULL),
+(918, 1, 'admin.physical_epc_progress.index', NULL, NULL),
+(919, 1, 'admin.physical_epc_progress.show', NULL, NULL),
+(920, 1, 'admin.physical_epc_progress.store', NULL, NULL),
+(921, 1, 'admin.physical_epc_progress.update', NULL, NULL),
+(922, 1, 'admin.procurement-details.create', NULL, NULL),
+(923, 1, 'admin.procurement-details.destroy', NULL, NULL),
+(924, 1, 'admin.procurement-details.edit', NULL, NULL),
+(925, 1, 'admin.procurement-details.index', NULL, NULL),
+(926, 1, 'admin.procurement-details.show', NULL, NULL),
+(927, 1, 'admin.procurement-details.store', NULL, NULL),
+(928, 1, 'admin.procurement-details.update', NULL, NULL),
+(929, 1, 'admin.procurement-work-programs.create', NULL, NULL),
+(930, 1, 'admin.procurement-work-programs.destroy', NULL, NULL),
+(931, 1, 'admin.procurement-work-programs.edit', NULL, NULL),
+(932, 1, 'admin.procurement-work-programs.edit-by-package', NULL, NULL),
+(933, 1, 'admin.procurement-work-programs.index', NULL, NULL),
+(934, 1, 'admin.procurement-work-programs.show', NULL, NULL),
+(935, 1, 'admin.procurement-work-programs.store', NULL, NULL),
+(936, 1, 'admin.procurement-work-programs.store-single', NULL, NULL),
+(937, 1, 'admin.procurement-work-programs.update', NULL, NULL),
+(938, 1, 'admin.procurement-work-programs.update-single', NULL, NULL),
+(939, 1, 'admin.procurement-work-programs.upload-documents', NULL, NULL),
+(940, 1, 'admin.project.create', NULL, NULL),
+(941, 1, 'admin.project.destroy', NULL, NULL),
+(942, 1, 'admin.project.edit', NULL, NULL),
+(943, 1, 'admin.project.index', NULL, NULL),
+(944, 1, 'admin.project.show', NULL, NULL),
+(945, 1, 'admin.project.store', NULL, NULL),
+(946, 1, 'admin.project.update', NULL, NULL),
+(947, 1, 'admin.projects-category.create', NULL, NULL),
+(948, 1, 'admin.projects-category.destroy', NULL, NULL),
+(949, 1, 'admin.projects-category.edit', NULL, NULL),
+(950, 1, 'admin.projects-category.index', NULL, NULL),
+(951, 1, 'admin.projects-category.show', NULL, NULL),
+(952, 1, 'admin.projects-category.store', NULL, NULL),
+(953, 1, 'admin.projects-category.update', NULL, NULL),
+(954, 1, 'admin.role_routes.create', NULL, NULL),
+(955, 1, 'admin.role_routes.destroy', NULL, NULL),
+(956, 1, 'admin.role_routes.edit', NULL, NULL),
+(957, 1, 'admin.role_routes.index', NULL, NULL),
+(958, 1, 'admin.role_routes.show', NULL, NULL),
+(959, 1, 'admin.role_routes.store', NULL, NULL),
+(960, 1, 'admin.role_routes.update', NULL, NULL),
+(961, 1, 'admin.roles.create', NULL, NULL),
+(962, 1, 'admin.roles.destroy', NULL, NULL),
+(963, 1, 'admin.roles.edit', NULL, NULL),
+(964, 1, 'admin.roles.index', NULL, NULL),
+(965, 1, 'admin.roles.show', NULL, NULL),
+(966, 1, 'admin.roles.store', NULL, NULL),
+(967, 1, 'admin.roles.update', NULL, NULL),
+(968, 1, 'admin.safeguard-compliances.create', NULL, NULL),
+(969, 1, 'admin.safeguard-compliances.destroy', NULL, NULL),
+(970, 1, 'admin.safeguard-compliances.edit', NULL, NULL),
+(971, 1, 'admin.safeguard-compliances.index', NULL, NULL),
+(972, 1, 'admin.safeguard-compliances.show', NULL, NULL),
+(973, 1, 'admin.safeguard-compliances.store', NULL, NULL),
+(974, 1, 'admin.safeguard-compliances.update', NULL, NULL),
+(975, 1, 'admin.safeguard_entries.bulk-delete', NULL, NULL),
+(976, 1, 'admin.safeguard_entries.create', NULL, NULL),
+(977, 1, 'admin.safeguard_entries.destroy', NULL, NULL),
+(978, 1, 'admin.safeguard_entries.edit', NULL, NULL),
+(979, 1, 'admin.safeguard_entries.import', NULL, NULL),
+(980, 1, 'admin.safeguard_entries.index', NULL, NULL),
+(981, 1, 'admin.safeguard_entries.show', NULL, NULL),
+(982, 1, 'admin.safeguard_entries.store', NULL, NULL),
+(983, 1, 'admin.safeguard_entries.update', NULL, NULL),
+(984, 1, 'admin.social_safeguard_entries.index', NULL, NULL),
+(985, 1, 'admin.social_safeguard_entries.storeOrUpdateFromIndex', NULL, NULL),
+(986, 1, 'admin.type-of-procurements.create', NULL, NULL),
+(987, 1, 'admin.type-of-procurements.destroy', NULL, NULL),
+(988, 1, 'admin.type-of-procurements.edit', NULL, NULL),
+(989, 1, 'admin.type-of-procurements.index', NULL, NULL),
+(990, 1, 'admin.type-of-procurements.restore', NULL, NULL),
+(991, 1, 'admin.type-of-procurements.show', NULL, NULL),
+(992, 1, 'admin.type-of-procurements.store', NULL, NULL),
+(993, 1, 'admin.type-of-procurements.update', NULL, NULL),
+(994, 1, 'admin.users.create', NULL, NULL),
+(995, 1, 'admin.users.destroy', NULL, NULL),
+(996, 1, 'admin.users.edit', NULL, NULL),
+(997, 1, 'admin.users.index', NULL, NULL),
+(998, 1, 'admin.users.show', NULL, NULL),
+(999, 1, 'admin.users.store', NULL, NULL),
+(1000, 1, 'admin.users.update', NULL, NULL),
+(1001, 1, 'admin.work_services.create', NULL, NULL),
+(1002, 1, 'admin.work_services.destroy', NULL, NULL),
+(1003, 1, 'admin.work_services.edit', NULL, NULL),
+(1004, 1, 'admin.work_services.index', NULL, NULL),
+(1005, 1, 'admin.work_services.show', NULL, NULL),
+(1006, 1, 'admin.work_services.store', NULL, NULL),
+(1007, 1, 'admin.work_services.update', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1176,7 +1480,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('yDMR0XUG5jWwd7NaZNlxIA1VpkiOronoxbxCDzmD', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiNU0zb3NmSWU0c0IxaXlTcVJEVkJNWnJqWkNQcVVOMTZuVXN0bkVMWSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9wcm9jdXJlbWVudC1kZXRhaWxzLzEwIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MztzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMiRIYWc5b1MwYjIyNml3OUxibzJIdkFlZXBVOUFOTXhOTHBSMmpyY1htbjV0cUhHL2g4bkZ0aSI7fQ==', 1755589125);
+('poKnWz3YEa743C0W6zySMBSRyBnZM44xjEz9JNVm', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiUm1XRlZuQ3k0YjBaU3BtMDQwa1AwVXdSaFc5RTNVaW5KZThjR1F0eiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9wYWdlcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjM7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkSGFnOW9TMGIyMjZpdzlMYm8ySHZBZWVwVTlBTk14TkxwUjJqcmNYbW41dHFIRy9oOG5GdGkiO30=', 1755678294);
 
 -- --------------------------------------------------------
 
@@ -1322,7 +1626,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `username`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`, `department_id`, `designation_id`, `gender`, `phone_no`, `status`, `district`, `deleted_at`) VALUES
 (1, 1, 'admin', 'admin@gmail.com', 'admin', NULL, '$2y$12$VzxX3jmvEG/0dKL4w5jbWe3PLWtM8cIz7eU3YUh0MV4k1uTP8uAlu', NULL, NULL, NULL, NULL, NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 06:58:54', '2025-08-04 06:58:54', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (2, 1, 'Test User 1', 'testuser1@example.com', 'test_user_1', '2025-08-04 11:12:57', '$2y$12$VzxX3jmvEG/0dKL4w5jbWe3PLWtM8cIz7eU3YUh0MV4k1uTP8uAlu', NULL, NULL, NULL, 'OjPV8Rf3S1', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-04 12:31:58', NULL, NULL, NULL, NULL, 'active', NULL, '2025-08-04 12:31:58'),
-(3, 3, 'Test User ', 'testuser2@example.com', 'test_user_', '2025-08-04 11:12:58', '$2y$12$Hag9oS0b226iw9Lbo2HvAeepU9ANMxNLpR2jrcXmn5tqHG/h8nFti', NULL, NULL, NULL, '24ThNUXznOexrqowtMpJSrJSIFkMpoAhPs0lTGbnMlpZ5FwE9rijC7xXzmcw', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-11 05:56:59', 1, 10, 'male', '9090909090', 'active', 'Dehradun', NULL),
+(3, 1, 'Test User ', 'testuser2@example.com', 'test_user_', '2025-08-04 11:12:58', '$2y$12$Hag9oS0b226iw9Lbo2HvAeepU9ANMxNLpR2jrcXmn5tqHG/h8nFti', NULL, NULL, NULL, '24ThNUXznOexrqowtMpJSrJSIFkMpoAhPs0lTGbnMlpZ5FwE9rijC7xXzmcw', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-11 05:56:59', 1, 10, 'male', '9090909090', 'active', 'Dehradun', NULL),
 (4, 1, 'Test User 3', 'testuser3@example.com', 'test_user_3', '2025-08-04 11:12:58', '$2y$12$.WEudQx6rlE8IvXmtz3she.zKNd2NOA3FpF6.WGHv8QoqKV2yajUq', NULL, NULL, NULL, 'P7Kjy9dmBp', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-04 11:12:58', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (5, 1, 'Test User 4', 'testuser4@example.com', 'test_user_4', '2025-08-04 11:12:58', '$2y$12$OiQc5Mamqa0WO4SsmHzovOm520kqdi6hszqA6gXQYdycPHwsRJqYS', NULL, NULL, NULL, 'aI1TSgyKKG', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (6, 1, 'Test User 5', 'testuser5@example.com', 'test_user_5', '2025-08-04 11:12:59', '$2y$12$ArGPNhRO/EFR48OFxTVLPOpJgMl226X.RWfsAp.G6id8.JpKk8ege', NULL, NULL, NULL, 'XuV6KCkwjv', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
@@ -1351,7 +1655,8 @@ INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `username`, `email_verifi
 (29, 1, 'Test User 28', 'testuser28@example.com', 'test_user_28', '2025-08-04 11:13:07', '$2y$12$fGkVjaT62x77WKFRB/9.HelSkLA08yX8OHtJ7QVO0Mh/V9iBTB.dK', NULL, NULL, NULL, 'xPilcRiC1D', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:08', '2025-08-04 11:13:08', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (30, 1, 'Test User 29', 'testuser29@example.com', 'test_user_29', '2025-08-04 11:13:08', '$2y$12$xFZCbuYY4AcayMYYIyutqew6MGDr1hZvcJ7gsX8Fe7bfpnHy3ER9K', NULL, NULL, NULL, 'oXRMO2xbZy', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:08', '2025-08-04 11:13:08', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (31, 1, 'Test User 30', 'testuser30@example.com', 'test_user_30', '2025-08-04 11:13:08', '$2y$12$Y37eb8s.TfJ77jRRAOeaROBNLI6wX9jDDFzdY5hUe6yy4ES1KS6ry', NULL, NULL, NULL, '4kU4YQZwfR', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:08', '2025-08-04 11:13:08', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(32, 2, 'Yuvraj Kohli', 'Yuvrajkohli8090ylt@gmail.com', 'yuvraj_kohli', NULL, '$2y$12$Cw97ve07IYTo3nIjcmR8TeeQNN85kAOFb8.qYZRhDlGT9F1eBoOGy', NULL, NULL, NULL, NULL, NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:55:58', '2025-08-04 11:55:58', NULL, NULL, NULL, NULL, 'active', NULL, NULL);
+(32, 2, 'Yuvraj Kohli', 'Yuvrajkohli8090ylt@gmail.com', 'yuvraj_kohli', NULL, '$2y$12$Cw97ve07IYTo3nIjcmR8TeeQNN85kAOFb8.qYZRhDlGT9F1eBoOGy', NULL, NULL, NULL, NULL, NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:55:58', '2025-08-04 11:55:58', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(33, 2, 'Dr Anju Panwar', 'anju.panwar@gmail.com', 'env-pmu', NULL, '$2y$12$N6ItL5DqK9Zb85YnIEVyHetXPMwwkzUGc2EgXb83ehWVmyi13f6VK', NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-20 02:46:07', '2025-08-20 02:46:07', 1, 1, 'female', '6397157703', 'active', 'test_user_', NULL);
 
 -- --------------------------------------------------------
 
@@ -1569,10 +1874,10 @@ ALTER TABLE `package_projects`
   ADD KEY `package_projects_package_sub_category_id_foreign` (`package_sub_category_id`),
   ADD KEY `package_projects_department_id_foreign` (`department_id`),
   ADD KEY `package_projects_vidhan_sabha_id_foreign` (`vidhan_sabha_id`),
-  ADD KEY `package_projects_lok_sabha_id_foreign` (`lok_sabha_id`),
   ADD KEY `package_projects_district_id_foreign` (`district_id`),
   ADD KEY `package_projects_block_id_foreign` (`block_id`),
-  ADD KEY `package_projects_package_component_id_foreign` (`package_component_id`);
+  ADD KEY `package_projects_package_component_id_foreign` (`package_component_id`),
+  ADD KEY `package_projects_lok_sabha_id_foreign` (`lok_sabha_id`);
 
 --
 -- Indexes for table `pages`
@@ -1645,6 +1950,13 @@ ALTER TABLE `projects_category`
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `roles_name_unique` (`name`);
+
+--
+-- Indexes for table `role_routes`
+--
+ALTER TABLE `role_routes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `role_routes_role_id_foreign` (`role_id`);
 
 --
 -- Indexes for table `safeguard_compliances`
@@ -1842,7 +2154,7 @@ ALTER TABLE `media_files`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `navbar_items`
@@ -1914,7 +2226,13 @@ ALTER TABLE `projects_category`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `role_routes`
+--
+ALTER TABLE `role_routes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1008;
 
 --
 -- AUTO_INCREMENT for table `safeguard_compliances`
@@ -1956,7 +2274,7 @@ ALTER TABLE `type_of_procurements`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `work_service`
@@ -2033,7 +2351,7 @@ ALTER TABLE `package_projects`
   ADD CONSTRAINT `package_projects_block_id_foreign` FOREIGN KEY (`block_id`) REFERENCES `geography_blocks` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `package_projects_department_id_foreign` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `package_projects_district_id_foreign` FOREIGN KEY (`district_id`) REFERENCES `geography_districts` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `package_projects_lok_sabha_id_foreign` FOREIGN KEY (`lok_sabha_id`) REFERENCES `constituencies` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `package_projects_lok_sabha_id_foreign` FOREIGN KEY (`lok_sabha_id`) REFERENCES `assembly` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `package_projects_package_category_id_foreign` FOREIGN KEY (`package_category_id`) REFERENCES `projects_category` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `package_projects_package_component_id_foreign` FOREIGN KEY (`package_component_id`) REFERENCES `package_components` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `package_projects_package_sub_category_id_foreign` FOREIGN KEY (`package_sub_category_id`) REFERENCES `sub_category` (`id`) ON DELETE SET NULL,
@@ -2066,6 +2384,12 @@ ALTER TABLE `procurement_details`
 ALTER TABLE `procurement_work_programs`
   ADD CONSTRAINT `procurement_work_programs_package_project_id_foreign` FOREIGN KEY (`package_project_id`) REFERENCES `package_projects` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `procurement_work_programs_procurement_details_id_foreign` FOREIGN KEY (`procurement_details_id`) REFERENCES `procurement_details` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `role_routes`
+--
+ALTER TABLE `role_routes`
+  ADD CONSTRAINT `role_routes_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `safeguard_entries`
