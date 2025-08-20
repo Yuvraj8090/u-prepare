@@ -314,10 +314,23 @@ class ProcurementWorkProgramController extends Controller
         return redirect()->route('admin.procurement-work-programs.index')->with('success', 'Work program deleted successfully.');
     }
 
-    public function show($id)
-    {
-        $workProgram = ProcurementWorkProgram::with(['packageProject', 'procurementDetail'])->findOrFail($id);
+    public function show($package_project_id, $procurement_details_id)
+{
+    $workPrograms = ProcurementWorkProgram::with(['packageProject', 'procurementDetail'])
+        ->where('package_project_id', $package_project_id)
+        ->where('procurement_details_id', $procurement_details_id)
+        ->get();
 
-        return view('admin.procurement_work_programs.show', compact('workProgram'));
-    }
+    $workProgram = $workPrograms->first(); // may be null if none exist
+
+    return view('admin.procurement_work_programs.show', [
+        'workProgram' => $workProgram,
+        'workPrograms' => $workPrograms,
+        'packageProjects' => PackageProject::all(['id', 'package_name']),
+        'procurementDetails' => ProcurementDetail::all(['id', 'method_of_procurement']),
+        'packageProjectId' => $package_project_id,
+        'procurementDetailsId' => $procurement_details_id,
+    ]);
+}
+
 }

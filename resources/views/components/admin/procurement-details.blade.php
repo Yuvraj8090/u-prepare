@@ -18,7 +18,7 @@
                             <div class="mt-3 pull-right">
                                 <a href="{{ asset('storage/' . $procurementDetail->publication_document_path) }}"
                                     target="_blank" class="btn btn-outline-primary">
-                                    <i class="fas fa-file-pdf me-2"></i> View Bid Publication Document
+                                    <i class="fas fa-file-pdf me-2"></i> View Document of Publication 
                                 </a>
                             </div>
                         @endif

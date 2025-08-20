@@ -4,22 +4,49 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany, HasOne};
 
 class PackageProject extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['project_id', 'package_category_id', 'package_sub_category_id', 'department_id', 'package_component_id', 'package_name', 'package_number', 'estimated_budget_incl_gst', 'vidhan_sabha_id', 'lok_sabha_id', 'district_id', 'block_id', 'dec_approved', 'dec_approval_date', 'dec_letter_number', 'dec_document_path', 'hpc_approved', 'hpc_approval_date', 'hpc_letter_number', 'hpc_document_path'];
+    protected $fillable = [
+        'project_id', 'package_category_id', 'package_sub_category_id',
+        'department_id', 'package_component_id', 'package_name',
+        'package_number', 'estimated_budget_incl_gst', 'vidhan_sabha_id',
+        'lok_sabha_id', 'district_id', 'block_id',
+        'dec_approved', 'dec_approval_date', 'dec_letter_number', 'dec_document_path',
+        'hpc_approved', 'hpc_approval_date', 'hpc_letter_number', 'hpc_document_path'
+    ];
 
     protected $casts = [
         'dec_approved' => 'boolean',
         'hpc_approved' => 'boolean',
         'estimated_budget_incl_gst' => 'decimal:2',
-
         'dec_approval_date' => 'date',
-        'hpc_approval_date' => 'date', // not datetime
+        'hpc_approval_date' => 'date',
     ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global Scope: Restrict data based on role
+    |--------------------------------------------------------------------------
+    */
+    protected static function booted()
+    {
+        static::addGlobalScope('userAssignments', function (Builder $builder) {
+            if (auth()->check()) {
+                // If user is NOT admin (role_id != 1), restrict to their assignments
+                if (auth()->user()->role_id !== 2) {
+                    $builder->whereHas('assignments', function ($q) {
+                        $q->where('assigned_to', auth()->id());
+                    });
+                }
+                // else role_id == 1 → show all projects (no restriction)
+            }
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -29,11 +56,6 @@ class PackageProject extends Model
     public function scopeBasicInfo($query)
     {
         return $query->select('id', 'package_name');
-    }
-
-    public function scopeWithWorkProgramData($query)
-    {
-        return $query->with(['procurementDetail', 'workPrograms']);
     }
 
     /*
@@ -49,6 +71,11 @@ class PackageProject extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(ProjectsCategory::class, 'package_category_id');
+    }
+
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(PackageProjectAssignment::class, 'package_project_id');
     }
 
     public function subCategory(): BelongsTo

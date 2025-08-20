@@ -8,6 +8,7 @@ use App\Http\Controllers\NavbarItemController;
 use App\Http\Controllers\BoqentryDataController;
 use App\Http\Controllers\ContractorController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PackageProjectAssignmentController;
 use App\Http\Controllers\Admin\ContractController;
 use App\Http\Controllers\EpcEntryDataController;
 use App\Http\Controllers\SafeguardEntryController;
@@ -41,9 +42,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
-            Route::resource('role_routes', RoleRouteController::class);
+            Route::resource('package-project-assignments', PackageProjectAssignmentController::class);
 
-          
+            Route::resource('role_routes', RoleRouteController::class);
 
             Route::resource('type-of-procurements', TypeOfProcurementController::class);
 
@@ -97,6 +98,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
             Route::get('/procurement-work-programs/{package_project_id}/edit-by-package/{procurement_details_id}', [ProcurementWorkProgramController::class, 'editByPackage'])->name('procurement-work-programs.edit-by-package');
             Route::post('/procurement-work-programs/{package_project_id}/{procurement_details_id}/upload-documents', [ProcurementWorkProgramController::class, 'uploadDocumentsAndUpdate'])->name('procurement-work-programs.upload-documents');
             Route::resource('procurement-work-programs', ProcurementWorkProgramController::class);
+            Route::get('procurement-work-programs/{package_project_id}/{procurement_details_id}', [ProcurementWorkProgramController::class, 'show'])->name('procurement-work-programs.show.pack');
             Route::post('/procurement-work-programs/store-single', [ProcurementWorkProgramController::class, 'storeSingle'])->name('procurement-work-programs.store-single');
             Route::put('/procurement-work-programs/update-single/{id}', [ProcurementWorkProgramController::class, 'updateSingle'])->name('procurement-work-programs.update-single');
             Route::resource('contractors', ContractorController::class);
@@ -148,7 +150,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         });
     Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index2'])->name('admin.dashboard');
-
 
     // Dashboard main page
 });
