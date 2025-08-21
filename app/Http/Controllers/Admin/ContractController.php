@@ -107,7 +107,7 @@ class ContractController extends Controller
                 })->sum('amount');
 
                 $physicalPercent = $sp->contract_value > 0 ? round(($physicalValue / $sp->contract_value) * 100, 2) : 0;
-            } elseif ($procurementType === 'item-wise') {
+            } elseif ($procurementType === 'item-rate') {
                 $physicalValue = \App\Models\PhysicalBoqProgress::where('sub_package_project_id', $sp->id)->sum('amount');
 
                 $physicalPercent = $sp->contract_value > 0 ? round(($physicalValue / $sp->contract_value) * 100, 2) : 0;
@@ -146,7 +146,7 @@ class ContractController extends Controller
                         'route' => route('admin.epcentry_data.index', ['sub_package_project_id' => $sp->id]),
                     ];
                 }
-            } elseif ($procurementType === 'item-wise') {
+            } elseif ($procurementType === 'item-rate') {
                 $boqEntries = \App\Models\BoqEntryData::where('sub_package_project_id', $sp->id)->get();
                 $totalAmount = $boqEntries->sum('amount');
 
@@ -191,12 +191,7 @@ class ContractController extends Controller
             }
 
             // Always add Financial Progress Update
-            $actions[] = [
-                'label' => 'Update Financial Progress',
-                'icon' => 'fas fa-file-invoice-dollar',
-                'class' => 'btn-secondary',
-                'route' => route('admin.financial-progress-updates.index', ['sub_package_project_id' => $sp->id]),
-            ];
+            
 
             // Always add Safe Guard Entry
             $actions[] = [

@@ -38,6 +38,9 @@
                 <x-admin.work-program :workPrograms="$contract->project->workPrograms" />
                 {{-- Yuvraj Add Procurement Work Program   --}}
 
+         
+
+
                 <div class="card shadow-sm mb-4">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center border-0">
                         <h6 class="text-secondary mb-3 h2">
@@ -55,8 +58,7 @@
                                     '#',
                                     'Name',
                                     'Contract Value (₹)',
-                                    'Financial Progress',
-                                    'Physical Progress',
+                                    
                                     'Actions',
                                 ]" :excel="true"
                                     :print="true" :pageLength="10" :resourceName="'sub-projects'">
@@ -68,35 +70,7 @@
                                             <td class="text-end">₹{{ $sp['contractValue'] }}</td>
 
                                             <!-- Financial Progress -->
-                                            <td>
-                                                <div class="mb-1">
-                                                    <small>₹{{ $sp['financeTotal'] }}
-                                                        ({{ $sp['financePercent'] }}%)
-                                                    </small>
-                                                </div>
-                                                <div class="progress" style="height: 12px;">
-                                                    <div class="progress-bar bg-secondary" role="progressbar"
-                                                        style="width: {{ $sp['financePercent'] }}%;"
-                                                        aria-valuenow="{{ $sp['financePercent'] }}" aria-valuemin="0"
-                                                        aria-valuemax="100">
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            <!-- Physical Progress -->
-                                            <td>
-                                                <div class="mb-1">
-                                                    <small>₹{{ $sp['physicalValue'] }}
-                                                        ({{ $sp['physicalPercent'] }}%)</small>
-                                                </div>
-                                                <div class="progress" style="height: 12px;">
-                                                    <div class="progress-bar bg-info" role="progressbar"
-                                                        style="width: {{ $sp['physicalPercent'] }}%;"
-                                                        aria-valuenow="{{ $sp['physicalPercent'] }}" aria-valuemin="0"
-                                                        aria-valuemax="100">
-                                                    </div>
-                                                </div>
-                                            </td>
+                                           
 
                                             <!-- Actions -->
                                             <td>
