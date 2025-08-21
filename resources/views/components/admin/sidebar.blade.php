@@ -184,6 +184,18 @@
                         <a href="{{ route('admin.contraction-phases.index') }}"><i class="fa fa-project-diagram"></i>
                             Contraction Phases</a>
                     </li>
+                    <!-- Sub Departments -->
+                    <li class="{{ request()->routeIs('admin.sub-departments.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.sub-departments.index') }}"><i class="fa fa-sitemap"></i> Sub
+                            Departments</a>
+                    </li>
+
+                    <!-- Package Project Assignments -->
+                    <li class="{{ request()->routeIs('admin.package-project-assignments.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.package-project-assignments.index') }}"><i class="fa fa-tasks"></i>
+                            Package Project Assignments</a>
+                    </li>
+
 
                     <!-- Admin Panel -->
                     <li

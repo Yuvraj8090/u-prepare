@@ -28,6 +28,7 @@ use App\Http\Controllers\MediaFileController;
 use App\Http\Controllers\Admin\RoleRouteController;
 use App\Http\Controllers\Admin\ProcurementDetailController;
 use App\Http\Controllers\Admin\PackageComponentController;
+use App\Http\Controllers\Admin\SubDepartmentController;
 use App\Http\Controllers\Admin\ProcurementWorkProgramController;
 use App\Http\Controllers\Admin\TypeOfProcurementController;
 use App\Http\Controllers\DashboardController;
@@ -42,6 +43,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+            Route::resource('sub-departments', SubDepartmentController::class);
+
             Route::resource('package-project-assignments', PackageProjectAssignmentController::class);
 
             Route::resource('role_routes', RoleRouteController::class);

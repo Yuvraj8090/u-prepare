@@ -38,7 +38,7 @@ class PackageProject extends Model
         static::addGlobalScope('userAssignments', function (Builder $builder) {
             if (auth()->check()) {
                 // If user is NOT admin (role_id != 1), restrict to their assignments
-                if (auth()->user()->role_id !== 2) {
+                if (auth()->user()->role_id !== 1) {
                     $builder->whereHas('assignments', function ($q) {
                         $q->where('assigned_to', auth()->id());
                     });

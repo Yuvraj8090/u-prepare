@@ -2,15 +2,16 @@
     <div class="container-fluid">
         <!-- Breadcrumb -->
         <x-admin.breadcrumb-header
-    icon="fas fa-users text-primary"
-    title="Users Management"
-    :breadcrumbs="[
-        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
-        ['label' => 'Admin'],
-        ['label' => 'Users']
-    ]"
-/>
+            icon="fas fa-users text-primary"
+            title="Users Management"
+            :breadcrumbs="[
+                ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+                ['label' => 'Admin'],
+                ['label' => 'Users']
+            ]"
+        />
 
+        <!-- Alerts -->
         @if (session('success'))
             <div class="row mb-3">
                 <div class="col-md-12">
@@ -26,6 +27,7 @@
                 </div>
             </div>
         @endif
+
         <!-- Users Table -->
         <div class="card shadow-sm">
             <div class="card-header bg-white d-flex justify-content-between align-items-center">
@@ -38,22 +40,36 @@
             </div>
 
             <div class="card-body">
-                <x-admin.data-table id="users-table" :headers="['ID', 'Photo', 'Name', 'Email', 'Role', 'Department', 'Designation', 'Status', 'Actions']" :excel="true" :print="true"
-                    title="Users Export" searchPlaceholder="Search users..." resourceName="users" :pageLength="10">
+                <x-admin.data-table 
+                    id="users-table"
+                    :headers="[
+                        'ID', 'Photo', 'Name', 'Email', 'Role',
+                        'Department', 'Sub Department', 'Designation',
+                        'Status', 'Actions'
+                    ]"
+                    :excel="true"
+                    :print="true"
+                    title="Users Export"
+                    searchPlaceholder="Search users..."
+                    resourceName="users"
+                    :pageLength="10"
+                >
                     @foreach ($users as $user)
                         <tr>
                             <td>{{ $user->id }}</td>
 
                             <!-- Profile Photo -->
                             <td>
-                                <img src="{{ $user->profile_photo_url }}" alt="Photo" class="rounded-circle"
-                                    width="40" height="40">
+                                <img src="{{ $user->profile_photo_url }}" 
+                                     alt="Photo" 
+                                     class="rounded-circle"
+                                     width="40" height="40">
                             </td>
 
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
 
-                            <!-- Role Badge -->
+                            <!-- Role -->
                             <td>
                                 <span class="badge bg-light text-primary">
                                     {{ $user->role->name ?? 'N/A' }}
@@ -64,6 +80,13 @@
                             <td>
                                 <span class="badge bg-light text-dark">
                                     {{ $user->department->name ?? '—' }}
+                                </span>
+                            </td>
+
+                            <!-- Sub Department -->
+                            <td>
+                                <span class="badge bg-light text-info">
+                                    {{ $user->subDepartment->name ?? '—' }}
                                 </span>
                             </td>
 
@@ -84,13 +107,14 @@
                             <!-- Actions -->
                             <td>
                                 <div class="d-flex justify-content-end gap-2">
-                                    <a href="{{ route('admin.users.edit', $user) }}"
-                                        class="btn btn-sm btn-outline-primary">
+                                    <a href="{{ route('admin.users.edit', $user) }}" 
+                                       class="btn btn-sm btn-outline-primary">
                                         <i class="fas fa-edit me-1"></i> Edit
                                     </a>
 
-                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
-                                        onsubmit="return confirm('Are you sure you want to delete this user?')">
+                                    <form action="{{ route('admin.users.destroy', $user) }}" 
+                                          method="POST"
+                                          onsubmit="return confirm('Are you sure you want to delete this user?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger">

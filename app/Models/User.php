@@ -21,6 +21,7 @@ class User extends Authenticatable
         'username',
         'role_id',
         'department_id',
+        'sub_department_id',
         'designation_id',
         'gender',
         'phone_no',
@@ -40,13 +41,6 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function getProfilePhotoUrlAttribute()
-    {
-        return $this->profile_photo_path
-            ? asset('storage/' . $this->profile_photo_path)
-            : asset('images/demo-user.png');
-    }
-
     protected function casts(): array
     {
         return [
@@ -55,9 +49,19 @@ class User extends Authenticatable
         ];
     }
 
+    /** ------------------------------
+     *  Relationships
+     *  ------------------------------
+     */
+
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function subDepartment()
+    {
+        return $this->belongsTo(SubDepartment::class, 'sub_department_id');
     }
 
     public function designation()
@@ -68,6 +72,18 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    /** ------------------------------
+     *  Helpers
+     *  ------------------------------
+     */
+
+    public function getProfilePhotoUrlAttribute()
+    {
+        return $this->profile_photo_path
+            ? asset('storage/' . $this->profile_photo_path)
+            : asset('images/demo-user.png');
     }
 
     public function hasRole(string $roleName): bool
