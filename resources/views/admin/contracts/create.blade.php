@@ -62,25 +62,23 @@
                         </div>
 
                         <div class="col-md-6">
-    <label class="form-label">Project <span class="text-danger">*</span></label>
+                            <label class="form-label">Project <span class="text-danger">*</span></label>
 
-   
-    <select name="project_id" 
-        class="form-select @error('project_id') is-invalid @enderror"
-        required disabled>
-        <option value="">Select Project</option>
-        @foreach ($projects as $project)
-            <option value="{{ $project->id }}" 
-                @selected(old('project_id', $selectedPackageProjectId->id) == $project->id)>
-                {{ $project->package_name }} ({{ $project->package_number }})
-            </option>
-        @endforeach
-    </select>
 
-    @error('project_id')
-        <div class="invalid-feedback">{{ $message }}</div>
-    @enderror
-</div>
+                            <select name="project_id" class="form-select @error('project_id') is-invalid @enderror"
+                                required>
+                                <option value="">Select Project</option>
+                                @foreach ($projects as $project)
+                                    <option value="{{ $project->id }}" @selected(old('project_id', $selectedPackageProjectId->id) == $project->id)>
+                                        {{ $project->package_name }} ({{ $project->package_number }})
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            @error('project_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
 
                         <div class="col-md-6">
