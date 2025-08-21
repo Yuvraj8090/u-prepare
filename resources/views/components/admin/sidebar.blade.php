@@ -68,56 +68,46 @@
                         <a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Dashboard</a>
                     </li>
 
-                    <!-- Pages -->
-                    <li class="{{ request()->routeIs('admin.pages.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.pages.list') }}"><i class="fa fa-file-alt"></i> Pages</a>
-                    </li>
 
-                    <!-- Projects -->
-                    <li class="{{ request()->routeIs('admin.project.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.project.index') }}"><i class="fa fa-tasks"></i> Projects</a>
-                    </li>
 
-                    <!-- Package Projects -->
-                    <li class="{{ request()->routeIs('admin.package-projects.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.package-projects.index') }}"><i class="fa fa-archive"></i> Package
-                            Projects</a>
-                    </li>
 
-                    <!-- Type of Procurements -->
-                    <li class="{{ request()->routeIs('admin.type-of-procurements.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.type-of-procurements.index') }}"><i class="fa fa-list-alt"></i> Type
-                            of Procurements</a>
-                    </li>
 
-                    <!-- Package Components -->
-                    <li class="{{ request()->routeIs('admin.package-components.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.package-components.index') }}"><i class="fa fa-cubes"></i> Package
-                            Components</a>
-                    </li>
+
+
+
+
 
                     <!-- Procurement -->
                     <li
-                        class="{{ request()->routeIs('admin.procurement-details.*') || request()->routeIs('admin.procurement-work-programs.*') ? 'active' : '' }}">
-                        <a><i class="fa fa-book"></i> Procurement <span class="fa fa-chevron-down"></span></a>
+                        class="{{ request()->routeIs('admin.procurement-details.*') ||
+                        request()->routeIs('admin.package-projects.*') ||
+                        request()->routeIs('admin.procurement-work-programs.*')
+                            ? 'active'
+                            : '' }}">
+
+                        <a><i class="fa fa-book"></i> Packages <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ route('admin.procurement-details.index') }}"><i class="fa fa-list"></i>
-                                    Procurement Details</a></li>
-                            <li><a href="{{ route('admin.procurement-work-programs.index') }}"><i
-                                        class="fa fa-calendar"></i> Work Programs</a></li>
+
+                            <!-- Package Projects -->
+                            <li>
+                                <a href="{{ route('admin.package-projects.index') }}"><i class="fa fa-archive"></i>
+                                    Create Packages </a>
+                            </li>
+
+                            <li >
+
+                                <a href="{{ route('admin.procurement-details.index') }}"><i class="fa fa-list"></i>
+                                    Procurement Details</a>
+                            </li>
+ <li><a href="{{ route('admin.contracts.index') }}"><i class="fa fa-list"></i> Manage
+                                    Contracts</a></li>
                         </ul>
                     </li>
 
                     <!-- Contracts -->
                     <li
                         class="{{ request()->routeIs('admin.contracts.*') || request()->routeIs('admin.contractors.*') ? 'active' : '' }}">
-                        <a><i class="fa fa-file-contract"></i> Contracts <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{{ route('admin.contracts.index') }}"><i class="fa fa-list"></i> Manage
-                                    Contracts</a></li>
-                            <li><a href="{{ route('admin.contractors.index') }}"><i class="fa fa-user-tie"></i>
-                                    Contractors</a></li>
-                        </ul>
+                        
                     </li>
 
                     <!-- Progress Updates -->
@@ -184,22 +174,20 @@
                         <a href="{{ route('admin.contraction-phases.index') }}"><i class="fa fa-project-diagram"></i>
                             Contraction Phases</a>
                     </li>
-                    <!-- Sub Departments -->
-                    <li class="{{ request()->routeIs('admin.sub-departments.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.sub-departments.index') }}"><i class="fa fa-sitemap"></i> Sub
-                            Departments</a>
-                    </li>
-
-                    <!-- Package Project Assignments -->
-                    <li class="{{ request()->routeIs('admin.package-project-assignments.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.package-project-assignments.index') }}"><i class="fa fa-tasks"></i>
-                            Package Project Assignments</a>
-                    </li>
-
 
                     <!-- Admin Panel -->
                     <li
-                        class="{{ request()->routeIs('admin.users.*') || request()->routeIs('admin.role_routes.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.departments.*') || request()->routeIs('admin.designations.*') || request()->routeIs('admin.projects-category.*') ? 'active' : '' }}">
+                        class="{{ request()->routeIs('admin.users.*') ||
+                        request()->routeIs('admin.role_routes.*') ||
+                        request()->routeIs('admin.roles.*') ||
+                        request()->routeIs('admin.departments.*') ||
+                        request()->routeIs('admin.package-components.*') ||
+                        request()->routeIs('admin.designations.*') ||
+                        request()->routeIs('admin.projects-category.*')
+                        ||
+                        request()->routeIs('admin.contractors.*')
+                            ? 'active'
+                            : '' }}">
                         <a><i class="fa fa-user-shield"></i> Admin Panel <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{{ route('admin.users.index') }}"><i class="fa fa-user"></i> Users</a></li>
@@ -207,20 +195,28 @@
                             <li><a href="{{ route('admin.role_routes.index') }}"><i class="fa fa-id-badge"></i>
                                     Permission Routes</a>
                             </li>
-                            <li><a href="{{ route('admin.departments.index') }}"><i class="fa fa-building"></i>
-                                    Departments</a></li>
                             <li><a href="{{ route('admin.designations.index') }}"><i class="fa fa-briefcase"></i>
                                     Designations</a></li>
                             <li><a href="{{ route('admin.projects-category.index') }}"><i class="fa fa-tags"></i>
                                     Project Categories</a></li>
+
+                            <li><a href="{{ route('admin.departments.index') }}"><i class="fa fa-building"></i>
+                                    Departments</a></li>
+
+                            <li>
+                                <a href="{{ route('admin.package-components.index') }}"><i class="fa fa-cubes"></i>
+                                    Components</a>
+                            </li>
+<li>
+
+    <a href="{{ route('admin.contractors.index') }}"><i class="fa fa-user-tie"></i>
+                                    Contractors</a>
+</li>
                         </ul>
                     </li>
 
 
-                    <!-- Navbar Items -->
-                    <li class="{{ request()->routeIs('admin.navbar-items.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.navbar-items.index') }}"><i class="fa fa-bars"></i> Navbar Items</a>
-                    </li>
+
 
                     <!-- Media -->
                     <li class="{{ request()->routeIs('admin.media.*') ? 'active' : '' }}">
@@ -232,6 +228,48 @@
                             </li>
                         </ul>
                     </li>
+
+                    <!-- Type of Procurements -->
+                    <li class="{{ request()->routeIs('admin.type-of-procurements.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.type-of-procurements.index') }}"><i class="fa fa-list-alt"></i>
+                            Packages Type </a>
+                    </li>
+
+
+
+
+                    <!-- Super Admin -->
+                    <li
+                        class="{{ request()->routeIs('admin.project.*') || request()->routeIs('') ? 'active' : '' }}">
+                        <a><i class="fa fa-industry"></i> Super Admin <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+
+                            <!-- Project U-Prepare -->
+                            <li class="{{ request()->routeIs('admin.project.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.project.index') }}"><i class="fa fa-tasks"></i> Projects</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li
+                        class="{{ request()->routeIs('admin.pages.*') || request()->routeIs('admin.navbar-items.*') ? 'active' : '' }}">
+                        <a><i class="fa fa-industry"></i> Website Management <span
+                                class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <!-- Pages -->
+                            <li>
+                                <a href="{{ route('admin.pages.list') }}"><i class="fa fa-file-alt"></i> Pages</a>
+                            </li>
+
+                            <!-- Navbar Items -->
+                            <li>
+                                <a href="{{ route('admin.navbar-items.index') }}"><i class="fa fa-bars"></i> Navbar
+                                    Items</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
 
                 </ul>
             </div>
