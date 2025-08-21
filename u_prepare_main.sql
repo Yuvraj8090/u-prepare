@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2025 at 02:29 PM
+-- Generation Time: Aug 21, 2025 at 07:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -183,7 +183,7 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('role_routes_1', 'a:210:{i:0;s:31:\"admin.already_define_epc.create\";i:1;s:32:\"admin.already_define_epc.destroy\";i:2;s:29:\"admin.already_define_epc.edit\";i:3;s:30:\"admin.already_define_epc.index\";i:4;s:29:\"admin.already_define_epc.show\";i:5;s:30:\"admin.already_define_epc.store\";i:6;s:31:\"admin.already_define_epc.update\";i:7;s:26:\"admin.boqentry.bulk-delete\";i:8;s:21:\"admin.boqentry.create\";i:9;s:22:\"admin.boqentry.destroy\";i:10;s:19:\"admin.boqentry.edit\";i:11;s:20:\"admin.boqentry.index\";i:12;s:32:\"admin.boqentry.physical-progress\";i:13;s:37:\"admin.boqentry.save-physical-progress\";i:14;s:20:\"admin.boqentry.store\";i:15;s:21:\"admin.boqentry.update\";i:16;s:21:\"admin.boqentry.upload\";i:17;s:31:\"admin.contraction-phases.create\";i:18;s:32:\"admin.contraction-phases.destroy\";i:19;s:29:\"admin.contraction-phases.edit\";i:20;s:30:\"admin.contraction-phases.index\";i:21;s:29:\"admin.contraction-phases.show\";i:22;s:30:\"admin.contraction-phases.store\";i:23;s:31:\"admin.contraction-phases.update\";i:24;s:24:\"admin.contractors.create\";i:25;s:25:\"admin.contractors.destroy\";i:26;s:22:\"admin.contractors.edit\";i:27;s:23:\"admin.contractors.index\";i:28;s:22:\"admin.contractors.show\";i:29;s:23:\"admin.contractors.store\";i:30;s:24:\"admin.contractors.update\";i:31;s:22:\"admin.contracts.create\";i:32;s:23:\"admin.contracts.destroy\";i:33;s:20:\"admin.contracts.edit\";i:34;s:21:\"admin.contracts.index\";i:35;s:20:\"admin.contracts.show\";i:36;s:21:\"admin.contracts.store\";i:37;s:22:\"admin.contracts.update\";i:38;s:15:\"admin.dashboard\";i:39;s:24:\"admin.departments.create\";i:40;s:25:\"admin.departments.destroy\";i:41;s:22:\"admin.departments.edit\";i:42;s:23:\"admin.departments.index\";i:43;s:22:\"admin.departments.show\";i:44;s:23:\"admin.departments.store\";i:45;s:24:\"admin.departments.update\";i:46;s:25:\"admin.designations.create\";i:47;s:26:\"admin.designations.destroy\";i:48;s:23:\"admin.designations.edit\";i:49;s:24:\"admin.designations.index\";i:50;s:23:\"admin.designations.show\";i:51;s:24:\"admin.designations.store\";i:52;s:25:\"admin.designations.update\";i:53;s:31:\"admin.epcentry_data.bulkDestroy\";i:54;s:26:\"admin.epcentry_data.create\";i:55;s:27:\"admin.epcentry_data.destroy\";i:56;s:24:\"admin.epcentry_data.edit\";i:57;s:25:\"admin.epcentry_data.index\";i:58;s:25:\"admin.epcentry_data.store\";i:59;s:36:\"admin.epcentry_data.storeFromDefined\";i:60;s:26:\"admin.epcentry_data.update\";i:61;s:39:\"admin.financial-progress-updates.create\";i:62;s:40:\"admin.financial-progress-updates.destroy\";i:63;s:37:\"admin.financial-progress-updates.edit\";i:64;s:38:\"admin.financial-progress-updates.index\";i:65;s:37:\"admin.financial-progress-updates.show\";i:66;s:38:\"admin.financial-progress-updates.store\";i:67;s:39:\"admin.financial-progress-updates.update\";i:68;s:31:\"admin.financial-progress.upload\";i:69;s:19:\"admin.media.gallery\";i:70;s:17:\"admin.media.index\";i:71;s:24:\"admin.media_files.upload\";i:72;s:25:\"admin.navbar-items.create\";i:73;s:26:\"admin.navbar-items.destroy\";i:74;s:23:\"admin.navbar-items.edit\";i:75;s:24:\"admin.navbar-items.index\";i:76;s:23:\"admin.navbar-items.show\";i:77;s:24:\"admin.navbar-items.store\";i:78;s:25:\"admin.navbar-items.update\";i:79;s:31:\"admin.navbar-items.update-order\";i:80;s:31:\"admin.package-components.create\";i:81;s:32:\"admin.package-components.destroy\";i:82;s:29:\"admin.package-components.edit\";i:83;s:30:\"admin.package-components.index\";i:84;s:29:\"admin.package-components.show\";i:85;s:30:\"admin.package-components.store\";i:86;s:31:\"admin.package-components.update\";i:87;s:40:\"admin.package-project-assignments.create\";i:88;s:41:\"admin.package-project-assignments.destroy\";i:89;s:38:\"admin.package-project-assignments.edit\";i:90;s:39:\"admin.package-project-assignments.index\";i:91;s:38:\"admin.package-project-assignments.show\";i:92;s:39:\"admin.package-project-assignments.store\";i:93;s:40:\"admin.package-project-assignments.update\";i:94;s:29:\"admin.package-projects.create\";i:95;s:30:\"admin.package-projects.destroy\";i:96;s:27:\"admin.package-projects.edit\";i:97;s:28:\"admin.package-projects.index\";i:98;s:27:\"admin.package-projects.show\";i:99;s:28:\"admin.package-projects.store\";i:100;s:29:\"admin.package-projects.update\";i:101;s:18:\"admin.pages.create\";i:102;s:23:\"admin.pages.create.form\";i:103;s:18:\"admin.pages.delete\";i:104;s:21:\"admin.pages.edit.form\";i:105;s:16:\"admin.pages.list\";i:106;s:18:\"admin.pages.update\";i:107;s:39:\"admin.physical_boq_progress.bulk-delete\";i:108;s:34:\"admin.physical_boq_progress.create\";i:109;s:35:\"admin.physical_boq_progress.destroy\";i:110;s:32:\"admin.physical_boq_progress.edit\";i:111;s:33:\"admin.physical_boq_progress.index\";i:112;s:33:\"admin.physical_boq_progress.store\";i:113;s:34:\"admin.physical_boq_progress.update\";i:114;s:39:\"admin.physical_epc_progress.bulkDestroy\";i:115;s:34:\"admin.physical_epc_progress.create\";i:116;s:35:\"admin.physical_epc_progress.destroy\";i:117;s:32:\"admin.physical_epc_progress.edit\";i:118;s:33:\"admin.physical_epc_progress.index\";i:119;s:32:\"admin.physical_epc_progress.show\";i:120;s:33:\"admin.physical_epc_progress.store\";i:121;s:34:\"admin.physical_epc_progress.update\";i:122;s:32:\"admin.procurement-details.create\";i:123;s:33:\"admin.procurement-details.destroy\";i:124;s:30:\"admin.procurement-details.edit\";i:125;s:31:\"admin.procurement-details.index\";i:126;s:30:\"admin.procurement-details.show\";i:127;s:31:\"admin.procurement-details.store\";i:128;s:32:\"admin.procurement-details.update\";i:129;s:38:\"admin.procurement-work-programs.create\";i:130;s:39:\"admin.procurement-work-programs.destroy\";i:131;s:36:\"admin.procurement-work-programs.edit\";i:132;s:47:\"admin.procurement-work-programs.edit-by-package\";i:133;s:37:\"admin.procurement-work-programs.index\";i:134;s:36:\"admin.procurement-work-programs.show\";i:135;s:41:\"admin.procurement-work-programs.show.pack\";i:136;s:37:\"admin.procurement-work-programs.store\";i:137;s:44:\"admin.procurement-work-programs.store-single\";i:138;s:38:\"admin.procurement-work-programs.update\";i:139;s:45:\"admin.procurement-work-programs.update-single\";i:140;s:48:\"admin.procurement-work-programs.upload-documents\";i:141;s:20:\"admin.project.create\";i:142;s:21:\"admin.project.destroy\";i:143;s:18:\"admin.project.edit\";i:144;s:19:\"admin.project.index\";i:145;s:18:\"admin.project.show\";i:146;s:19:\"admin.project.store\";i:147;s:20:\"admin.project.update\";i:148;s:30:\"admin.projects-category.create\";i:149;s:31:\"admin.projects-category.destroy\";i:150;s:28:\"admin.projects-category.edit\";i:151;s:29:\"admin.projects-category.index\";i:152;s:28:\"admin.projects-category.show\";i:153;s:29:\"admin.projects-category.store\";i:154;s:30:\"admin.projects-category.update\";i:155;s:24:\"admin.role_routes.create\";i:156;s:25:\"admin.role_routes.destroy\";i:157;s:22:\"admin.role_routes.edit\";i:158;s:23:\"admin.role_routes.index\";i:159;s:22:\"admin.role_routes.show\";i:160;s:23:\"admin.role_routes.store\";i:161;s:24:\"admin.role_routes.update\";i:162;s:18:\"admin.roles.create\";i:163;s:19:\"admin.roles.destroy\";i:164;s:16:\"admin.roles.edit\";i:165;s:17:\"admin.roles.index\";i:166;s:16:\"admin.roles.show\";i:167;s:17:\"admin.roles.store\";i:168;s:18:\"admin.roles.update\";i:169;s:34:\"admin.safeguard-compliances.create\";i:170;s:35:\"admin.safeguard-compliances.destroy\";i:171;s:32:\"admin.safeguard-compliances.edit\";i:172;s:33:\"admin.safeguard-compliances.index\";i:173;s:32:\"admin.safeguard-compliances.show\";i:174;s:33:\"admin.safeguard-compliances.store\";i:175;s:34:\"admin.safeguard-compliances.update\";i:176;s:35:\"admin.safeguard_entries.bulk-delete\";i:177;s:30:\"admin.safeguard_entries.create\";i:178;s:31:\"admin.safeguard_entries.destroy\";i:179;s:28:\"admin.safeguard_entries.edit\";i:180;s:30:\"admin.safeguard_entries.import\";i:181;s:29:\"admin.safeguard_entries.index\";i:182;s:28:\"admin.safeguard_entries.show\";i:183;s:29:\"admin.safeguard_entries.store\";i:184;s:30:\"admin.safeguard_entries.update\";i:185;s:36:\"admin.social_safeguard_entries.index\";i:186;s:53:\"admin.social_safeguard_entries.storeOrUpdateFromIndex\";i:187;s:33:\"admin.type-of-procurements.create\";i:188;s:34:\"admin.type-of-procurements.destroy\";i:189;s:31:\"admin.type-of-procurements.edit\";i:190;s:32:\"admin.type-of-procurements.index\";i:191;s:34:\"admin.type-of-procurements.restore\";i:192;s:31:\"admin.type-of-procurements.show\";i:193;s:32:\"admin.type-of-procurements.store\";i:194;s:33:\"admin.type-of-procurements.update\";i:195;s:18:\"admin.users.create\";i:196;s:19:\"admin.users.destroy\";i:197;s:16:\"admin.users.edit\";i:198;s:17:\"admin.users.index\";i:199;s:16:\"admin.users.show\";i:200;s:17:\"admin.users.store\";i:201;s:18:\"admin.users.update\";i:202;s:26:\"admin.work_services.create\";i:203;s:27:\"admin.work_services.destroy\";i:204;s:24:\"admin.work_services.edit\";i:205;s:25:\"admin.work_services.index\";i:206;s:24:\"admin.work_services.show\";i:207;s:25:\"admin.work_services.store\";i:208;s:26:\"admin.work_services.update\";i:209;s:9:\"dashboard\";}', 1755692946);
+('role_routes_1', 'a:217:{i:0;s:31:\"admin.already_define_epc.create\";i:1;s:32:\"admin.already_define_epc.destroy\";i:2;s:29:\"admin.already_define_epc.edit\";i:3;s:30:\"admin.already_define_epc.index\";i:4;s:29:\"admin.already_define_epc.show\";i:5;s:30:\"admin.already_define_epc.store\";i:6;s:31:\"admin.already_define_epc.update\";i:7;s:26:\"admin.boqentry.bulk-delete\";i:8;s:21:\"admin.boqentry.create\";i:9;s:22:\"admin.boqentry.destroy\";i:10;s:19:\"admin.boqentry.edit\";i:11;s:20:\"admin.boqentry.index\";i:12;s:32:\"admin.boqentry.physical-progress\";i:13;s:37:\"admin.boqentry.save-physical-progress\";i:14;s:20:\"admin.boqentry.store\";i:15;s:21:\"admin.boqentry.update\";i:16;s:21:\"admin.boqentry.upload\";i:17;s:31:\"admin.contraction-phases.create\";i:18;s:32:\"admin.contraction-phases.destroy\";i:19;s:29:\"admin.contraction-phases.edit\";i:20;s:30:\"admin.contraction-phases.index\";i:21;s:29:\"admin.contraction-phases.show\";i:22;s:30:\"admin.contraction-phases.store\";i:23;s:31:\"admin.contraction-phases.update\";i:24;s:24:\"admin.contractors.create\";i:25;s:25:\"admin.contractors.destroy\";i:26;s:22:\"admin.contractors.edit\";i:27;s:23:\"admin.contractors.index\";i:28;s:22:\"admin.contractors.show\";i:29;s:23:\"admin.contractors.store\";i:30;s:24:\"admin.contractors.update\";i:31;s:22:\"admin.contracts.create\";i:32;s:23:\"admin.contracts.destroy\";i:33;s:20:\"admin.contracts.edit\";i:34;s:21:\"admin.contracts.index\";i:35;s:20:\"admin.contracts.show\";i:36;s:21:\"admin.contracts.store\";i:37;s:22:\"admin.contracts.update\";i:38;s:15:\"admin.dashboard\";i:39;s:24:\"admin.departments.create\";i:40;s:25:\"admin.departments.destroy\";i:41;s:22:\"admin.departments.edit\";i:42;s:23:\"admin.departments.index\";i:43;s:22:\"admin.departments.show\";i:44;s:23:\"admin.departments.store\";i:45;s:24:\"admin.departments.update\";i:46;s:25:\"admin.designations.create\";i:47;s:26:\"admin.designations.destroy\";i:48;s:23:\"admin.designations.edit\";i:49;s:24:\"admin.designations.index\";i:50;s:23:\"admin.designations.show\";i:51;s:24:\"admin.designations.store\";i:52;s:25:\"admin.designations.update\";i:53;s:31:\"admin.epcentry_data.bulkDestroy\";i:54;s:26:\"admin.epcentry_data.create\";i:55;s:27:\"admin.epcentry_data.destroy\";i:56;s:24:\"admin.epcentry_data.edit\";i:57;s:25:\"admin.epcentry_data.index\";i:58;s:25:\"admin.epcentry_data.store\";i:59;s:36:\"admin.epcentry_data.storeFromDefined\";i:60;s:26:\"admin.epcentry_data.update\";i:61;s:39:\"admin.financial-progress-updates.create\";i:62;s:40:\"admin.financial-progress-updates.destroy\";i:63;s:37:\"admin.financial-progress-updates.edit\";i:64;s:38:\"admin.financial-progress-updates.index\";i:65;s:37:\"admin.financial-progress-updates.show\";i:66;s:38:\"admin.financial-progress-updates.store\";i:67;s:39:\"admin.financial-progress-updates.update\";i:68;s:31:\"admin.financial-progress.upload\";i:69;s:19:\"admin.media.gallery\";i:70;s:17:\"admin.media.index\";i:71;s:24:\"admin.media_files.upload\";i:72;s:25:\"admin.navbar-items.create\";i:73;s:26:\"admin.navbar-items.destroy\";i:74;s:23:\"admin.navbar-items.edit\";i:75;s:24:\"admin.navbar-items.index\";i:76;s:23:\"admin.navbar-items.show\";i:77;s:24:\"admin.navbar-items.store\";i:78;s:25:\"admin.navbar-items.update\";i:79;s:31:\"admin.navbar-items.update-order\";i:80;s:31:\"admin.package-components.create\";i:81;s:32:\"admin.package-components.destroy\";i:82;s:29:\"admin.package-components.edit\";i:83;s:30:\"admin.package-components.index\";i:84;s:29:\"admin.package-components.show\";i:85;s:30:\"admin.package-components.store\";i:86;s:31:\"admin.package-components.update\";i:87;s:40:\"admin.package-project-assignments.create\";i:88;s:41:\"admin.package-project-assignments.destroy\";i:89;s:38:\"admin.package-project-assignments.edit\";i:90;s:39:\"admin.package-project-assignments.index\";i:91;s:38:\"admin.package-project-assignments.show\";i:92;s:39:\"admin.package-project-assignments.store\";i:93;s:40:\"admin.package-project-assignments.update\";i:94;s:29:\"admin.package-projects.create\";i:95;s:30:\"admin.package-projects.destroy\";i:96;s:27:\"admin.package-projects.edit\";i:97;s:28:\"admin.package-projects.index\";i:98;s:27:\"admin.package-projects.show\";i:99;s:28:\"admin.package-projects.store\";i:100;s:29:\"admin.package-projects.update\";i:101;s:18:\"admin.pages.create\";i:102;s:23:\"admin.pages.create.form\";i:103;s:18:\"admin.pages.delete\";i:104;s:21:\"admin.pages.edit.form\";i:105;s:16:\"admin.pages.list\";i:106;s:18:\"admin.pages.update\";i:107;s:39:\"admin.physical_boq_progress.bulk-delete\";i:108;s:34:\"admin.physical_boq_progress.create\";i:109;s:35:\"admin.physical_boq_progress.destroy\";i:110;s:32:\"admin.physical_boq_progress.edit\";i:111;s:33:\"admin.physical_boq_progress.index\";i:112;s:33:\"admin.physical_boq_progress.store\";i:113;s:34:\"admin.physical_boq_progress.update\";i:114;s:39:\"admin.physical_epc_progress.bulkDestroy\";i:115;s:34:\"admin.physical_epc_progress.create\";i:116;s:35:\"admin.physical_epc_progress.destroy\";i:117;s:32:\"admin.physical_epc_progress.edit\";i:118;s:33:\"admin.physical_epc_progress.index\";i:119;s:32:\"admin.physical_epc_progress.show\";i:120;s:33:\"admin.physical_epc_progress.store\";i:121;s:34:\"admin.physical_epc_progress.update\";i:122;s:32:\"admin.procurement-details.create\";i:123;s:33:\"admin.procurement-details.destroy\";i:124;s:30:\"admin.procurement-details.edit\";i:125;s:31:\"admin.procurement-details.index\";i:126;s:30:\"admin.procurement-details.show\";i:127;s:31:\"admin.procurement-details.store\";i:128;s:32:\"admin.procurement-details.update\";i:129;s:38:\"admin.procurement-work-programs.create\";i:130;s:39:\"admin.procurement-work-programs.destroy\";i:131;s:36:\"admin.procurement-work-programs.edit\";i:132;s:47:\"admin.procurement-work-programs.edit-by-package\";i:133;s:37:\"admin.procurement-work-programs.index\";i:134;s:36:\"admin.procurement-work-programs.show\";i:135;s:41:\"admin.procurement-work-programs.show.pack\";i:136;s:37:\"admin.procurement-work-programs.store\";i:137;s:44:\"admin.procurement-work-programs.store-single\";i:138;s:38:\"admin.procurement-work-programs.update\";i:139;s:45:\"admin.procurement-work-programs.update-single\";i:140;s:48:\"admin.procurement-work-programs.upload-documents\";i:141;s:20:\"admin.project.create\";i:142;s:21:\"admin.project.destroy\";i:143;s:18:\"admin.project.edit\";i:144;s:19:\"admin.project.index\";i:145;s:18:\"admin.project.show\";i:146;s:19:\"admin.project.store\";i:147;s:20:\"admin.project.update\";i:148;s:30:\"admin.projects-category.create\";i:149;s:31:\"admin.projects-category.destroy\";i:150;s:28:\"admin.projects-category.edit\";i:151;s:29:\"admin.projects-category.index\";i:152;s:28:\"admin.projects-category.show\";i:153;s:29:\"admin.projects-category.store\";i:154;s:30:\"admin.projects-category.update\";i:155;s:24:\"admin.role_routes.create\";i:156;s:25:\"admin.role_routes.destroy\";i:157;s:22:\"admin.role_routes.edit\";i:158;s:23:\"admin.role_routes.index\";i:159;s:22:\"admin.role_routes.show\";i:160;s:23:\"admin.role_routes.store\";i:161;s:24:\"admin.role_routes.update\";i:162;s:18:\"admin.roles.create\";i:163;s:19:\"admin.roles.destroy\";i:164;s:16:\"admin.roles.edit\";i:165;s:17:\"admin.roles.index\";i:166;s:16:\"admin.roles.show\";i:167;s:17:\"admin.roles.store\";i:168;s:18:\"admin.roles.update\";i:169;s:34:\"admin.safeguard-compliances.create\";i:170;s:35:\"admin.safeguard-compliances.destroy\";i:171;s:32:\"admin.safeguard-compliances.edit\";i:172;s:33:\"admin.safeguard-compliances.index\";i:173;s:32:\"admin.safeguard-compliances.show\";i:174;s:33:\"admin.safeguard-compliances.store\";i:175;s:34:\"admin.safeguard-compliances.update\";i:176;s:35:\"admin.safeguard_entries.bulk-delete\";i:177;s:30:\"admin.safeguard_entries.create\";i:178;s:31:\"admin.safeguard_entries.destroy\";i:179;s:28:\"admin.safeguard_entries.edit\";i:180;s:30:\"admin.safeguard_entries.import\";i:181;s:29:\"admin.safeguard_entries.index\";i:182;s:28:\"admin.safeguard_entries.show\";i:183;s:29:\"admin.safeguard_entries.store\";i:184;s:30:\"admin.safeguard_entries.update\";i:185;s:36:\"admin.social_safeguard_entries.index\";i:186;s:53:\"admin.social_safeguard_entries.storeOrUpdateFromIndex\";i:187;s:28:\"admin.sub-departments.create\";i:188;s:29:\"admin.sub-departments.destroy\";i:189;s:26:\"admin.sub-departments.edit\";i:190;s:27:\"admin.sub-departments.index\";i:191;s:26:\"admin.sub-departments.show\";i:192;s:27:\"admin.sub-departments.store\";i:193;s:28:\"admin.sub-departments.update\";i:194;s:33:\"admin.type-of-procurements.create\";i:195;s:34:\"admin.type-of-procurements.destroy\";i:196;s:31:\"admin.type-of-procurements.edit\";i:197;s:32:\"admin.type-of-procurements.index\";i:198;s:34:\"admin.type-of-procurements.restore\";i:199;s:31:\"admin.type-of-procurements.show\";i:200;s:32:\"admin.type-of-procurements.store\";i:201;s:33:\"admin.type-of-procurements.update\";i:202;s:18:\"admin.users.create\";i:203;s:19:\"admin.users.destroy\";i:204;s:16:\"admin.users.edit\";i:205;s:17:\"admin.users.index\";i:206;s:16:\"admin.users.show\";i:207;s:17:\"admin.users.store\";i:208;s:18:\"admin.users.update\";i:209;s:26:\"admin.work_services.create\";i:210;s:27:\"admin.work_services.destroy\";i:211;s:24:\"admin.work_services.edit\";i:212;s:25:\"admin.work_services.index\";i:213;s:24:\"admin.work_services.show\";i:214;s:25:\"admin.work_services.store\";i:215;s:26:\"admin.work_services.update\";i:216;s:9:\"dashboard\";}', 1755756140);
 
 -- --------------------------------------------------------
 
@@ -727,7 +727,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (65, '2025_08_19_073941_drop_type_of_procurement_from_procurement_details_table', 48),
 (66, '2025_08_19_121007_change_lok_sabha_fk_to_assembly', 49),
 (67, '2025_08_20_054540_create_role_routes_table', 50),
-(68, '2025_08_20_104756_create_package_project_assignments_table', 51);
+(68, '2025_08_20_104756_create_package_project_assignments_table', 51),
+(69, '2025_08_21_041813_create_sub_departments_table', 52);
 
 -- --------------------------------------------------------
 
@@ -926,8 +927,8 @@ CREATE TABLE `package_project_assignments` (
 --
 
 INSERT INTO `package_project_assignments` (`id`, `package_project_id`, `assigned_to`, `assigned_by`, `created_at`, `updated_at`) VALUES
-(1, 54, 3, 3, '2025-08-20 05:55:55', '2025-08-20 05:55:55'),
-(2, 5, 32, 3, '2025-08-20 06:21:10', '2025-08-20 06:21:10');
+(3, 5, 1, 3, '2025-08-20 23:27:47', '2025-08-20 23:27:47'),
+(4, 5, 3, 3, '2025-08-20 23:27:47', '2025-08-20 23:27:47');
 
 -- --------------------------------------------------------
 
@@ -1217,216 +1218,6 @@ CREATE TABLE `role_routes` (
 --
 
 INSERT INTO `role_routes` (`id`, `role_id`, `route_name`, `created_at`, `updated_at`) VALUES
-(1615, 1, 'admin.already_define_epc.create', NULL, NULL),
-(1616, 1, 'admin.already_define_epc.destroy', NULL, NULL),
-(1617, 1, 'admin.already_define_epc.edit', NULL, NULL),
-(1618, 1, 'admin.already_define_epc.index', NULL, NULL),
-(1619, 1, 'admin.already_define_epc.show', NULL, NULL),
-(1620, 1, 'admin.already_define_epc.store', NULL, NULL),
-(1621, 1, 'admin.already_define_epc.update', NULL, NULL),
-(1622, 1, 'admin.boqentry.bulk-delete', NULL, NULL),
-(1623, 1, 'admin.boqentry.create', NULL, NULL),
-(1624, 1, 'admin.boqentry.destroy', NULL, NULL),
-(1625, 1, 'admin.boqentry.edit', NULL, NULL),
-(1626, 1, 'admin.boqentry.index', NULL, NULL),
-(1627, 1, 'admin.boqentry.physical-progress', NULL, NULL),
-(1628, 1, 'admin.boqentry.save-physical-progress', NULL, NULL),
-(1629, 1, 'admin.boqentry.store', NULL, NULL),
-(1630, 1, 'admin.boqentry.update', NULL, NULL),
-(1631, 1, 'admin.boqentry.upload', NULL, NULL),
-(1632, 1, 'admin.contraction-phases.create', NULL, NULL),
-(1633, 1, 'admin.contraction-phases.destroy', NULL, NULL),
-(1634, 1, 'admin.contraction-phases.edit', NULL, NULL),
-(1635, 1, 'admin.contraction-phases.index', NULL, NULL),
-(1636, 1, 'admin.contraction-phases.show', NULL, NULL),
-(1637, 1, 'admin.contraction-phases.store', NULL, NULL),
-(1638, 1, 'admin.contraction-phases.update', NULL, NULL),
-(1639, 1, 'admin.contractors.create', NULL, NULL),
-(1640, 1, 'admin.contractors.destroy', NULL, NULL),
-(1641, 1, 'admin.contractors.edit', NULL, NULL),
-(1642, 1, 'admin.contractors.index', NULL, NULL),
-(1643, 1, 'admin.contractors.show', NULL, NULL),
-(1644, 1, 'admin.contractors.store', NULL, NULL),
-(1645, 1, 'admin.contractors.update', NULL, NULL),
-(1646, 1, 'admin.contracts.create', NULL, NULL),
-(1647, 1, 'admin.contracts.destroy', NULL, NULL),
-(1648, 1, 'admin.contracts.edit', NULL, NULL),
-(1649, 1, 'admin.contracts.index', NULL, NULL),
-(1650, 1, 'admin.contracts.show', NULL, NULL),
-(1651, 1, 'admin.contracts.store', NULL, NULL),
-(1652, 1, 'admin.contracts.update', NULL, NULL),
-(1653, 1, 'admin.dashboard', NULL, NULL),
-(1654, 1, 'admin.departments.create', NULL, NULL),
-(1655, 1, 'admin.departments.destroy', NULL, NULL),
-(1656, 1, 'admin.departments.edit', NULL, NULL),
-(1657, 1, 'admin.departments.index', NULL, NULL),
-(1658, 1, 'admin.departments.show', NULL, NULL),
-(1659, 1, 'admin.departments.store', NULL, NULL),
-(1660, 1, 'admin.departments.update', NULL, NULL),
-(1661, 1, 'admin.designations.create', NULL, NULL),
-(1662, 1, 'admin.designations.destroy', NULL, NULL),
-(1663, 1, 'admin.designations.edit', NULL, NULL),
-(1664, 1, 'admin.designations.index', NULL, NULL),
-(1665, 1, 'admin.designations.show', NULL, NULL),
-(1666, 1, 'admin.designations.store', NULL, NULL),
-(1667, 1, 'admin.designations.update', NULL, NULL),
-(1668, 1, 'admin.epcentry_data.bulkDestroy', NULL, NULL),
-(1669, 1, 'admin.epcentry_data.create', NULL, NULL),
-(1670, 1, 'admin.epcentry_data.destroy', NULL, NULL),
-(1671, 1, 'admin.epcentry_data.edit', NULL, NULL),
-(1672, 1, 'admin.epcentry_data.index', NULL, NULL),
-(1673, 1, 'admin.epcentry_data.store', NULL, NULL),
-(1674, 1, 'admin.epcentry_data.storeFromDefined', NULL, NULL),
-(1675, 1, 'admin.epcentry_data.update', NULL, NULL),
-(1676, 1, 'admin.financial-progress-updates.create', NULL, NULL),
-(1677, 1, 'admin.financial-progress-updates.destroy', NULL, NULL),
-(1678, 1, 'admin.financial-progress-updates.edit', NULL, NULL),
-(1679, 1, 'admin.financial-progress-updates.index', NULL, NULL),
-(1680, 1, 'admin.financial-progress-updates.show', NULL, NULL),
-(1681, 1, 'admin.financial-progress-updates.store', NULL, NULL),
-(1682, 1, 'admin.financial-progress-updates.update', NULL, NULL),
-(1683, 1, 'admin.financial-progress.upload', NULL, NULL),
-(1684, 1, 'admin.media.gallery', NULL, NULL),
-(1685, 1, 'admin.media.index', NULL, NULL),
-(1686, 1, 'admin.media_files.upload', NULL, NULL),
-(1687, 1, 'admin.navbar-items.create', NULL, NULL),
-(1688, 1, 'admin.navbar-items.destroy', NULL, NULL),
-(1689, 1, 'admin.navbar-items.edit', NULL, NULL),
-(1690, 1, 'admin.navbar-items.index', NULL, NULL),
-(1691, 1, 'admin.navbar-items.show', NULL, NULL),
-(1692, 1, 'admin.navbar-items.store', NULL, NULL),
-(1693, 1, 'admin.navbar-items.update', NULL, NULL),
-(1694, 1, 'admin.navbar-items.update-order', NULL, NULL),
-(1695, 1, 'admin.package-components.create', NULL, NULL),
-(1696, 1, 'admin.package-components.destroy', NULL, NULL),
-(1697, 1, 'admin.package-components.edit', NULL, NULL),
-(1698, 1, 'admin.package-components.index', NULL, NULL),
-(1699, 1, 'admin.package-components.show', NULL, NULL),
-(1700, 1, 'admin.package-components.store', NULL, NULL),
-(1701, 1, 'admin.package-components.update', NULL, NULL),
-(1702, 1, 'admin.package-project-assignments.create', NULL, NULL),
-(1703, 1, 'admin.package-project-assignments.destroy', NULL, NULL),
-(1704, 1, 'admin.package-project-assignments.edit', NULL, NULL),
-(1705, 1, 'admin.package-project-assignments.index', NULL, NULL),
-(1706, 1, 'admin.package-project-assignments.show', NULL, NULL),
-(1707, 1, 'admin.package-project-assignments.store', NULL, NULL),
-(1708, 1, 'admin.package-project-assignments.update', NULL, NULL),
-(1709, 1, 'admin.package-projects.create', NULL, NULL),
-(1710, 1, 'admin.package-projects.destroy', NULL, NULL),
-(1711, 1, 'admin.package-projects.edit', NULL, NULL),
-(1712, 1, 'admin.package-projects.index', NULL, NULL),
-(1713, 1, 'admin.package-projects.show', NULL, NULL),
-(1714, 1, 'admin.package-projects.store', NULL, NULL),
-(1715, 1, 'admin.package-projects.update', NULL, NULL),
-(1716, 1, 'admin.pages.create', NULL, NULL),
-(1717, 1, 'admin.pages.create.form', NULL, NULL),
-(1718, 1, 'admin.pages.delete', NULL, NULL),
-(1719, 1, 'admin.pages.edit.form', NULL, NULL),
-(1720, 1, 'admin.pages.list', NULL, NULL),
-(1721, 1, 'admin.pages.update', NULL, NULL),
-(1722, 1, 'admin.physical_boq_progress.bulk-delete', NULL, NULL),
-(1723, 1, 'admin.physical_boq_progress.create', NULL, NULL),
-(1724, 1, 'admin.physical_boq_progress.destroy', NULL, NULL),
-(1725, 1, 'admin.physical_boq_progress.edit', NULL, NULL),
-(1726, 1, 'admin.physical_boq_progress.index', NULL, NULL),
-(1727, 1, 'admin.physical_boq_progress.store', NULL, NULL),
-(1728, 1, 'admin.physical_boq_progress.update', NULL, NULL),
-(1729, 1, 'admin.physical_epc_progress.bulkDestroy', NULL, NULL),
-(1730, 1, 'admin.physical_epc_progress.create', NULL, NULL),
-(1731, 1, 'admin.physical_epc_progress.destroy', NULL, NULL),
-(1732, 1, 'admin.physical_epc_progress.edit', NULL, NULL),
-(1733, 1, 'admin.physical_epc_progress.index', NULL, NULL),
-(1734, 1, 'admin.physical_epc_progress.show', NULL, NULL),
-(1735, 1, 'admin.physical_epc_progress.store', NULL, NULL),
-(1736, 1, 'admin.physical_epc_progress.update', NULL, NULL),
-(1737, 1, 'admin.procurement-details.create', NULL, NULL),
-(1738, 1, 'admin.procurement-details.destroy', NULL, NULL),
-(1739, 1, 'admin.procurement-details.edit', NULL, NULL),
-(1740, 1, 'admin.procurement-details.index', NULL, NULL),
-(1741, 1, 'admin.procurement-details.show', NULL, NULL),
-(1742, 1, 'admin.procurement-details.store', NULL, NULL),
-(1743, 1, 'admin.procurement-details.update', NULL, NULL),
-(1744, 1, 'admin.procurement-work-programs.create', NULL, NULL),
-(1745, 1, 'admin.procurement-work-programs.destroy', NULL, NULL),
-(1746, 1, 'admin.procurement-work-programs.edit', NULL, NULL),
-(1747, 1, 'admin.procurement-work-programs.edit-by-package', NULL, NULL),
-(1748, 1, 'admin.procurement-work-programs.index', NULL, NULL),
-(1749, 1, 'admin.procurement-work-programs.show', NULL, NULL),
-(1750, 1, 'admin.procurement-work-programs.show.pack', NULL, NULL),
-(1751, 1, 'admin.procurement-work-programs.store', NULL, NULL),
-(1752, 1, 'admin.procurement-work-programs.store-single', NULL, NULL),
-(1753, 1, 'admin.procurement-work-programs.update', NULL, NULL),
-(1754, 1, 'admin.procurement-work-programs.update-single', NULL, NULL),
-(1755, 1, 'admin.procurement-work-programs.upload-documents', NULL, NULL),
-(1756, 1, 'admin.project.create', NULL, NULL),
-(1757, 1, 'admin.project.destroy', NULL, NULL),
-(1758, 1, 'admin.project.edit', NULL, NULL),
-(1759, 1, 'admin.project.index', NULL, NULL),
-(1760, 1, 'admin.project.show', NULL, NULL),
-(1761, 1, 'admin.project.store', NULL, NULL),
-(1762, 1, 'admin.project.update', NULL, NULL),
-(1763, 1, 'admin.projects-category.create', NULL, NULL),
-(1764, 1, 'admin.projects-category.destroy', NULL, NULL),
-(1765, 1, 'admin.projects-category.edit', NULL, NULL),
-(1766, 1, 'admin.projects-category.index', NULL, NULL),
-(1767, 1, 'admin.projects-category.show', NULL, NULL),
-(1768, 1, 'admin.projects-category.store', NULL, NULL),
-(1769, 1, 'admin.projects-category.update', NULL, NULL),
-(1770, 1, 'admin.role_routes.create', NULL, NULL),
-(1771, 1, 'admin.role_routes.destroy', NULL, NULL),
-(1772, 1, 'admin.role_routes.edit', NULL, NULL),
-(1773, 1, 'admin.role_routes.index', NULL, NULL),
-(1774, 1, 'admin.role_routes.show', NULL, NULL),
-(1775, 1, 'admin.role_routes.store', NULL, NULL),
-(1776, 1, 'admin.role_routes.update', NULL, NULL),
-(1777, 1, 'admin.roles.create', NULL, NULL),
-(1778, 1, 'admin.roles.destroy', NULL, NULL),
-(1779, 1, 'admin.roles.edit', NULL, NULL),
-(1780, 1, 'admin.roles.index', NULL, NULL),
-(1781, 1, 'admin.roles.show', NULL, NULL),
-(1782, 1, 'admin.roles.store', NULL, NULL),
-(1783, 1, 'admin.roles.update', NULL, NULL),
-(1784, 1, 'admin.safeguard-compliances.create', NULL, NULL),
-(1785, 1, 'admin.safeguard-compliances.destroy', NULL, NULL),
-(1786, 1, 'admin.safeguard-compliances.edit', NULL, NULL),
-(1787, 1, 'admin.safeguard-compliances.index', NULL, NULL),
-(1788, 1, 'admin.safeguard-compliances.show', NULL, NULL),
-(1789, 1, 'admin.safeguard-compliances.store', NULL, NULL),
-(1790, 1, 'admin.safeguard-compliances.update', NULL, NULL),
-(1791, 1, 'admin.safeguard_entries.bulk-delete', NULL, NULL),
-(1792, 1, 'admin.safeguard_entries.create', NULL, NULL),
-(1793, 1, 'admin.safeguard_entries.destroy', NULL, NULL),
-(1794, 1, 'admin.safeguard_entries.edit', NULL, NULL),
-(1795, 1, 'admin.safeguard_entries.import', NULL, NULL),
-(1796, 1, 'admin.safeguard_entries.index', NULL, NULL),
-(1797, 1, 'admin.safeguard_entries.show', NULL, NULL),
-(1798, 1, 'admin.safeguard_entries.store', NULL, NULL),
-(1799, 1, 'admin.safeguard_entries.update', NULL, NULL),
-(1800, 1, 'admin.social_safeguard_entries.index', NULL, NULL),
-(1801, 1, 'admin.social_safeguard_entries.storeOrUpdateFromIndex', NULL, NULL),
-(1802, 1, 'admin.type-of-procurements.create', NULL, NULL),
-(1803, 1, 'admin.type-of-procurements.destroy', NULL, NULL),
-(1804, 1, 'admin.type-of-procurements.edit', NULL, NULL),
-(1805, 1, 'admin.type-of-procurements.index', NULL, NULL),
-(1806, 1, 'admin.type-of-procurements.restore', NULL, NULL),
-(1807, 1, 'admin.type-of-procurements.show', NULL, NULL),
-(1808, 1, 'admin.type-of-procurements.store', NULL, NULL),
-(1809, 1, 'admin.type-of-procurements.update', NULL, NULL),
-(1810, 1, 'admin.users.create', NULL, NULL),
-(1811, 1, 'admin.users.destroy', NULL, NULL),
-(1812, 1, 'admin.users.edit', NULL, NULL),
-(1813, 1, 'admin.users.index', NULL, NULL),
-(1814, 1, 'admin.users.show', NULL, NULL),
-(1815, 1, 'admin.users.store', NULL, NULL),
-(1816, 1, 'admin.users.update', NULL, NULL),
-(1817, 1, 'admin.work_services.create', NULL, NULL),
-(1818, 1, 'admin.work_services.destroy', NULL, NULL),
-(1819, 1, 'admin.work_services.edit', NULL, NULL),
-(1820, 1, 'admin.work_services.index', NULL, NULL),
-(1821, 1, 'admin.work_services.show', NULL, NULL),
-(1822, 1, 'admin.work_services.store', NULL, NULL),
-(1823, 1, 'admin.work_services.update', NULL, NULL),
-(1824, 1, 'dashboard', NULL, NULL),
 (1825, 2, 'admin.already_define_epc.create', NULL, NULL),
 (1826, 2, 'admin.already_define_epc.destroy', NULL, NULL),
 (1827, 2, 'admin.already_define_epc.edit', NULL, NULL),
@@ -1636,7 +1427,224 @@ INSERT INTO `role_routes` (`id`, `role_id`, `route_name`, `created_at`, `updated
 (2031, 2, 'admin.work_services.show', NULL, NULL),
 (2032, 2, 'admin.work_services.store', NULL, NULL),
 (2033, 2, 'admin.work_services.update', NULL, NULL),
-(2034, 2, 'dashboard', NULL, NULL);
+(2034, 2, 'dashboard', NULL, NULL),
+(2035, 1, 'admin.already_define_epc.create', NULL, NULL),
+(2036, 1, 'admin.already_define_epc.destroy', NULL, NULL),
+(2037, 1, 'admin.already_define_epc.edit', NULL, NULL),
+(2038, 1, 'admin.already_define_epc.index', NULL, NULL),
+(2039, 1, 'admin.already_define_epc.show', NULL, NULL),
+(2040, 1, 'admin.already_define_epc.store', NULL, NULL),
+(2041, 1, 'admin.already_define_epc.update', NULL, NULL),
+(2042, 1, 'admin.boqentry.bulk-delete', NULL, NULL),
+(2043, 1, 'admin.boqentry.create', NULL, NULL),
+(2044, 1, 'admin.boqentry.destroy', NULL, NULL),
+(2045, 1, 'admin.boqentry.edit', NULL, NULL),
+(2046, 1, 'admin.boqentry.index', NULL, NULL),
+(2047, 1, 'admin.boqentry.physical-progress', NULL, NULL),
+(2048, 1, 'admin.boqentry.save-physical-progress', NULL, NULL),
+(2049, 1, 'admin.boqentry.store', NULL, NULL),
+(2050, 1, 'admin.boqentry.update', NULL, NULL),
+(2051, 1, 'admin.boqentry.upload', NULL, NULL),
+(2052, 1, 'admin.contraction-phases.create', NULL, NULL),
+(2053, 1, 'admin.contraction-phases.destroy', NULL, NULL),
+(2054, 1, 'admin.contraction-phases.edit', NULL, NULL),
+(2055, 1, 'admin.contraction-phases.index', NULL, NULL),
+(2056, 1, 'admin.contraction-phases.show', NULL, NULL),
+(2057, 1, 'admin.contraction-phases.store', NULL, NULL),
+(2058, 1, 'admin.contraction-phases.update', NULL, NULL),
+(2059, 1, 'admin.contractors.create', NULL, NULL),
+(2060, 1, 'admin.contractors.destroy', NULL, NULL),
+(2061, 1, 'admin.contractors.edit', NULL, NULL),
+(2062, 1, 'admin.contractors.index', NULL, NULL),
+(2063, 1, 'admin.contractors.show', NULL, NULL),
+(2064, 1, 'admin.contractors.store', NULL, NULL),
+(2065, 1, 'admin.contractors.update', NULL, NULL),
+(2066, 1, 'admin.contracts.create', NULL, NULL),
+(2067, 1, 'admin.contracts.destroy', NULL, NULL),
+(2068, 1, 'admin.contracts.edit', NULL, NULL),
+(2069, 1, 'admin.contracts.index', NULL, NULL),
+(2070, 1, 'admin.contracts.show', NULL, NULL),
+(2071, 1, 'admin.contracts.store', NULL, NULL),
+(2072, 1, 'admin.contracts.update', NULL, NULL),
+(2073, 1, 'admin.dashboard', NULL, NULL),
+(2074, 1, 'admin.departments.create', NULL, NULL),
+(2075, 1, 'admin.departments.destroy', NULL, NULL),
+(2076, 1, 'admin.departments.edit', NULL, NULL),
+(2077, 1, 'admin.departments.index', NULL, NULL),
+(2078, 1, 'admin.departments.show', NULL, NULL),
+(2079, 1, 'admin.departments.store', NULL, NULL),
+(2080, 1, 'admin.departments.update', NULL, NULL),
+(2081, 1, 'admin.designations.create', NULL, NULL),
+(2082, 1, 'admin.designations.destroy', NULL, NULL),
+(2083, 1, 'admin.designations.edit', NULL, NULL),
+(2084, 1, 'admin.designations.index', NULL, NULL),
+(2085, 1, 'admin.designations.show', NULL, NULL),
+(2086, 1, 'admin.designations.store', NULL, NULL),
+(2087, 1, 'admin.designations.update', NULL, NULL),
+(2088, 1, 'admin.epcentry_data.bulkDestroy', NULL, NULL),
+(2089, 1, 'admin.epcentry_data.create', NULL, NULL),
+(2090, 1, 'admin.epcentry_data.destroy', NULL, NULL),
+(2091, 1, 'admin.epcentry_data.edit', NULL, NULL),
+(2092, 1, 'admin.epcentry_data.index', NULL, NULL),
+(2093, 1, 'admin.epcentry_data.store', NULL, NULL),
+(2094, 1, 'admin.epcentry_data.storeFromDefined', NULL, NULL),
+(2095, 1, 'admin.epcentry_data.update', NULL, NULL),
+(2096, 1, 'admin.financial-progress-updates.create', NULL, NULL),
+(2097, 1, 'admin.financial-progress-updates.destroy', NULL, NULL),
+(2098, 1, 'admin.financial-progress-updates.edit', NULL, NULL),
+(2099, 1, 'admin.financial-progress-updates.index', NULL, NULL),
+(2100, 1, 'admin.financial-progress-updates.show', NULL, NULL),
+(2101, 1, 'admin.financial-progress-updates.store', NULL, NULL),
+(2102, 1, 'admin.financial-progress-updates.update', NULL, NULL),
+(2103, 1, 'admin.financial-progress.upload', NULL, NULL),
+(2104, 1, 'admin.media.gallery', NULL, NULL),
+(2105, 1, 'admin.media.index', NULL, NULL),
+(2106, 1, 'admin.media_files.upload', NULL, NULL),
+(2107, 1, 'admin.navbar-items.create', NULL, NULL),
+(2108, 1, 'admin.navbar-items.destroy', NULL, NULL),
+(2109, 1, 'admin.navbar-items.edit', NULL, NULL),
+(2110, 1, 'admin.navbar-items.index', NULL, NULL),
+(2111, 1, 'admin.navbar-items.show', NULL, NULL),
+(2112, 1, 'admin.navbar-items.store', NULL, NULL),
+(2113, 1, 'admin.navbar-items.update', NULL, NULL),
+(2114, 1, 'admin.navbar-items.update-order', NULL, NULL),
+(2115, 1, 'admin.package-components.create', NULL, NULL),
+(2116, 1, 'admin.package-components.destroy', NULL, NULL),
+(2117, 1, 'admin.package-components.edit', NULL, NULL),
+(2118, 1, 'admin.package-components.index', NULL, NULL),
+(2119, 1, 'admin.package-components.show', NULL, NULL),
+(2120, 1, 'admin.package-components.store', NULL, NULL),
+(2121, 1, 'admin.package-components.update', NULL, NULL),
+(2122, 1, 'admin.package-project-assignments.create', NULL, NULL),
+(2123, 1, 'admin.package-project-assignments.destroy', NULL, NULL),
+(2124, 1, 'admin.package-project-assignments.edit', NULL, NULL),
+(2125, 1, 'admin.package-project-assignments.index', NULL, NULL),
+(2126, 1, 'admin.package-project-assignments.show', NULL, NULL),
+(2127, 1, 'admin.package-project-assignments.store', NULL, NULL),
+(2128, 1, 'admin.package-project-assignments.update', NULL, NULL),
+(2129, 1, 'admin.package-projects.create', NULL, NULL),
+(2130, 1, 'admin.package-projects.destroy', NULL, NULL),
+(2131, 1, 'admin.package-projects.edit', NULL, NULL),
+(2132, 1, 'admin.package-projects.index', NULL, NULL),
+(2133, 1, 'admin.package-projects.show', NULL, NULL),
+(2134, 1, 'admin.package-projects.store', NULL, NULL),
+(2135, 1, 'admin.package-projects.update', NULL, NULL),
+(2136, 1, 'admin.pages.create', NULL, NULL),
+(2137, 1, 'admin.pages.create.form', NULL, NULL),
+(2138, 1, 'admin.pages.delete', NULL, NULL),
+(2139, 1, 'admin.pages.edit.form', NULL, NULL),
+(2140, 1, 'admin.pages.list', NULL, NULL),
+(2141, 1, 'admin.pages.update', NULL, NULL),
+(2142, 1, 'admin.physical_boq_progress.bulk-delete', NULL, NULL),
+(2143, 1, 'admin.physical_boq_progress.create', NULL, NULL),
+(2144, 1, 'admin.physical_boq_progress.destroy', NULL, NULL),
+(2145, 1, 'admin.physical_boq_progress.edit', NULL, NULL),
+(2146, 1, 'admin.physical_boq_progress.index', NULL, NULL),
+(2147, 1, 'admin.physical_boq_progress.store', NULL, NULL),
+(2148, 1, 'admin.physical_boq_progress.update', NULL, NULL),
+(2149, 1, 'admin.physical_epc_progress.bulkDestroy', NULL, NULL),
+(2150, 1, 'admin.physical_epc_progress.create', NULL, NULL),
+(2151, 1, 'admin.physical_epc_progress.destroy', NULL, NULL),
+(2152, 1, 'admin.physical_epc_progress.edit', NULL, NULL),
+(2153, 1, 'admin.physical_epc_progress.index', NULL, NULL),
+(2154, 1, 'admin.physical_epc_progress.show', NULL, NULL),
+(2155, 1, 'admin.physical_epc_progress.store', NULL, NULL),
+(2156, 1, 'admin.physical_epc_progress.update', NULL, NULL),
+(2157, 1, 'admin.procurement-details.create', NULL, NULL),
+(2158, 1, 'admin.procurement-details.destroy', NULL, NULL),
+(2159, 1, 'admin.procurement-details.edit', NULL, NULL),
+(2160, 1, 'admin.procurement-details.index', NULL, NULL),
+(2161, 1, 'admin.procurement-details.show', NULL, NULL),
+(2162, 1, 'admin.procurement-details.store', NULL, NULL),
+(2163, 1, 'admin.procurement-details.update', NULL, NULL),
+(2164, 1, 'admin.procurement-work-programs.create', NULL, NULL),
+(2165, 1, 'admin.procurement-work-programs.destroy', NULL, NULL),
+(2166, 1, 'admin.procurement-work-programs.edit', NULL, NULL),
+(2167, 1, 'admin.procurement-work-programs.edit-by-package', NULL, NULL),
+(2168, 1, 'admin.procurement-work-programs.index', NULL, NULL),
+(2169, 1, 'admin.procurement-work-programs.show', NULL, NULL),
+(2170, 1, 'admin.procurement-work-programs.show.pack', NULL, NULL),
+(2171, 1, 'admin.procurement-work-programs.store', NULL, NULL),
+(2172, 1, 'admin.procurement-work-programs.store-single', NULL, NULL),
+(2173, 1, 'admin.procurement-work-programs.update', NULL, NULL),
+(2174, 1, 'admin.procurement-work-programs.update-single', NULL, NULL),
+(2175, 1, 'admin.procurement-work-programs.upload-documents', NULL, NULL),
+(2176, 1, 'admin.project.create', NULL, NULL),
+(2177, 1, 'admin.project.destroy', NULL, NULL),
+(2178, 1, 'admin.project.edit', NULL, NULL),
+(2179, 1, 'admin.project.index', NULL, NULL),
+(2180, 1, 'admin.project.show', NULL, NULL),
+(2181, 1, 'admin.project.store', NULL, NULL),
+(2182, 1, 'admin.project.update', NULL, NULL),
+(2183, 1, 'admin.projects-category.create', NULL, NULL),
+(2184, 1, 'admin.projects-category.destroy', NULL, NULL),
+(2185, 1, 'admin.projects-category.edit', NULL, NULL),
+(2186, 1, 'admin.projects-category.index', NULL, NULL),
+(2187, 1, 'admin.projects-category.show', NULL, NULL),
+(2188, 1, 'admin.projects-category.store', NULL, NULL),
+(2189, 1, 'admin.projects-category.update', NULL, NULL),
+(2190, 1, 'admin.role_routes.create', NULL, NULL),
+(2191, 1, 'admin.role_routes.destroy', NULL, NULL),
+(2192, 1, 'admin.role_routes.edit', NULL, NULL),
+(2193, 1, 'admin.role_routes.index', NULL, NULL),
+(2194, 1, 'admin.role_routes.show', NULL, NULL),
+(2195, 1, 'admin.role_routes.store', NULL, NULL),
+(2196, 1, 'admin.role_routes.update', NULL, NULL),
+(2197, 1, 'admin.roles.create', NULL, NULL),
+(2198, 1, 'admin.roles.destroy', NULL, NULL),
+(2199, 1, 'admin.roles.edit', NULL, NULL),
+(2200, 1, 'admin.roles.index', NULL, NULL),
+(2201, 1, 'admin.roles.show', NULL, NULL),
+(2202, 1, 'admin.roles.store', NULL, NULL),
+(2203, 1, 'admin.roles.update', NULL, NULL),
+(2204, 1, 'admin.safeguard-compliances.create', NULL, NULL),
+(2205, 1, 'admin.safeguard-compliances.destroy', NULL, NULL),
+(2206, 1, 'admin.safeguard-compliances.edit', NULL, NULL),
+(2207, 1, 'admin.safeguard-compliances.index', NULL, NULL),
+(2208, 1, 'admin.safeguard-compliances.show', NULL, NULL),
+(2209, 1, 'admin.safeguard-compliances.store', NULL, NULL),
+(2210, 1, 'admin.safeguard-compliances.update', NULL, NULL),
+(2211, 1, 'admin.safeguard_entries.bulk-delete', NULL, NULL),
+(2212, 1, 'admin.safeguard_entries.create', NULL, NULL),
+(2213, 1, 'admin.safeguard_entries.destroy', NULL, NULL),
+(2214, 1, 'admin.safeguard_entries.edit', NULL, NULL),
+(2215, 1, 'admin.safeguard_entries.import', NULL, NULL),
+(2216, 1, 'admin.safeguard_entries.index', NULL, NULL),
+(2217, 1, 'admin.safeguard_entries.show', NULL, NULL),
+(2218, 1, 'admin.safeguard_entries.store', NULL, NULL),
+(2219, 1, 'admin.safeguard_entries.update', NULL, NULL),
+(2220, 1, 'admin.social_safeguard_entries.index', NULL, NULL),
+(2221, 1, 'admin.social_safeguard_entries.storeOrUpdateFromIndex', NULL, NULL),
+(2222, 1, 'admin.sub-departments.create', NULL, NULL),
+(2223, 1, 'admin.sub-departments.destroy', NULL, NULL),
+(2224, 1, 'admin.sub-departments.edit', NULL, NULL),
+(2225, 1, 'admin.sub-departments.index', NULL, NULL),
+(2226, 1, 'admin.sub-departments.show', NULL, NULL),
+(2227, 1, 'admin.sub-departments.store', NULL, NULL),
+(2228, 1, 'admin.sub-departments.update', NULL, NULL),
+(2229, 1, 'admin.type-of-procurements.create', NULL, NULL),
+(2230, 1, 'admin.type-of-procurements.destroy', NULL, NULL),
+(2231, 1, 'admin.type-of-procurements.edit', NULL, NULL),
+(2232, 1, 'admin.type-of-procurements.index', NULL, NULL),
+(2233, 1, 'admin.type-of-procurements.restore', NULL, NULL),
+(2234, 1, 'admin.type-of-procurements.show', NULL, NULL),
+(2235, 1, 'admin.type-of-procurements.store', NULL, NULL),
+(2236, 1, 'admin.type-of-procurements.update', NULL, NULL),
+(2237, 1, 'admin.users.create', NULL, NULL),
+(2238, 1, 'admin.users.destroy', NULL, NULL),
+(2239, 1, 'admin.users.edit', NULL, NULL),
+(2240, 1, 'admin.users.index', NULL, NULL),
+(2241, 1, 'admin.users.show', NULL, NULL),
+(2242, 1, 'admin.users.store', NULL, NULL),
+(2243, 1, 'admin.users.update', NULL, NULL),
+(2244, 1, 'admin.work_services.create', NULL, NULL),
+(2245, 1, 'admin.work_services.destroy', NULL, NULL),
+(2246, 1, 'admin.work_services.edit', NULL, NULL),
+(2247, 1, 'admin.work_services.index', NULL, NULL),
+(2248, 1, 'admin.work_services.show', NULL, NULL),
+(2249, 1, 'admin.work_services.store', NULL, NULL),
+(2250, 1, 'admin.work_services.update', NULL, NULL),
+(2251, 1, 'dashboard', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1723,7 +1731,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('wf47VWK7nSBmqYIClHprSK870UHTXUAGlmkK9SOT', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiVHlZSnpsUHJRb1NyeUVxSnFNZjZlVThKS2g5RGE2MmRualJPOEhGSCI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQwOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWRtaW4vZGVzaWduYXRpb25zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MztzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMiRIYWc5b1MwYjIyNml3OUxibzJIdkFlZXBVOUFOTXhOTHBSMmpyY1htbjV0cUhHL2g4bkZ0aSI7fQ==', 1755692349);
+('piDjmSEk35BzQZTtZBZFu8K7NtjaHHCRPnENgTvM', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiMnRNVDhaNGR2WHhqZW5hREoyQXdST1NXQjFhaDdGQjNFU014MXBBVCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9zYWZlZ3VhcmQtY29tcGxpYW5jZXMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEyJEhhZzlvUzBiMjI2aXc5TGJvMkh2QWVlcFU5QU5NeE5McFIyanJjWG1uNXRxSEcvaDhuRnRpIjt9', 1755755568);
 
 -- --------------------------------------------------------
 
@@ -1781,6 +1789,28 @@ INSERT INTO `sub_category` (`id`, `category_id`, `name`, `status`, `created_at`,
 (11, 2, 'Supervision Design', 1, '2024-03-30 07:08:48', '2024-07-05 03:22:00', NULL),
 (12, 2, 'Supervision', 1, '2024-03-30 07:08:58', '2024-07-05 03:22:14', NULL),
 (13, 2, 'Design', 1, '2024-07-05 03:20:51', '2024-07-05 03:22:22', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sub_departments`
+--
+
+CREATE TABLE `sub_departments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `department_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sub_departments`
+--
+
+INSERT INTO `sub_departments` (`id`, `department_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'FPIU-Purola', 1, '2025-08-20 23:05:00', '2025-08-20 23:05:00');
 
 -- --------------------------------------------------------
 
@@ -1854,6 +1884,7 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `department_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `sub_department_id` bigint(20) UNSIGNED DEFAULT NULL,
   `designation_id` bigint(20) UNSIGNED DEFAULT NULL,
   `gender` enum('male','female','other') DEFAULT NULL,
   `phone_no` varchar(255) DEFAULT NULL,
@@ -1866,40 +1897,40 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `username`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`, `department_id`, `designation_id`, `gender`, `phone_no`, `status`, `district`, `deleted_at`) VALUES
-(1, 1, 'admin', 'admin@gmail.com', 'admin', NULL, '$2y$12$VzxX3jmvEG/0dKL4w5jbWe3PLWtM8cIz7eU3YUh0MV4k1uTP8uAlu', NULL, NULL, NULL, NULL, NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 06:58:54', '2025-08-04 06:58:54', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(2, 1, 'Test User 1', 'testuser1@example.com', 'test_user_1', '2025-08-04 11:12:57', '$2y$12$VzxX3jmvEG/0dKL4w5jbWe3PLWtM8cIz7eU3YUh0MV4k1uTP8uAlu', NULL, NULL, NULL, 'OjPV8Rf3S1', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-04 12:31:58', NULL, NULL, NULL, NULL, 'active', NULL, '2025-08-04 12:31:58'),
-(3, 1, 'Test User ', 'testuser2@example.com', 'test_user_', '2025-08-04 11:12:58', '$2y$12$Hag9oS0b226iw9Lbo2HvAeepU9ANMxNLpR2jrcXmn5tqHG/h8nFti', NULL, NULL, NULL, 'SCTDuAjAPehsyxz5wuQRHaZ3aINJQAR94f1Acz6shWGu63vcSYzazHMlqhro', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-11 05:56:59', 1, 10, 'male', '9090909090', 'active', 'Dehradun', NULL),
-(4, 1, 'Test User 3', 'testuser3@example.com', 'test_user_3', '2025-08-04 11:12:58', '$2y$12$.WEudQx6rlE8IvXmtz3she.zKNd2NOA3FpF6.WGHv8QoqKV2yajUq', NULL, NULL, NULL, 'P7Kjy9dmBp', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-04 11:12:58', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(5, 1, 'Test User 4', 'testuser4@example.com', 'test_user_4', '2025-08-04 11:12:58', '$2y$12$OiQc5Mamqa0WO4SsmHzovOm520kqdi6hszqA6gXQYdycPHwsRJqYS', NULL, NULL, NULL, 'aI1TSgyKKG', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(6, 1, 'Test User 5', 'testuser5@example.com', 'test_user_5', '2025-08-04 11:12:59', '$2y$12$ArGPNhRO/EFR48OFxTVLPOpJgMl226X.RWfsAp.G6id8.JpKk8ege', NULL, NULL, NULL, 'XuV6KCkwjv', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(7, 1, 'Test User 6', 'testuser6@example.com', 'test_user_6', '2025-08-04 11:12:59', '$2y$12$YZ45SKbyL10z5A5XyZFTPe60mmOTibR4HId3pymwaVMClWYg88A5G', NULL, NULL, NULL, '8ngp7rVu02', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(8, 1, 'Test User 7', 'testuser7@example.com', 'test_user_7', '2025-08-04 11:12:59', '$2y$12$i6bgzn2YqV.7OS2t8BRXjOOPnOFpHLYDsvEFMriFw1zX.leIEX6MO', NULL, NULL, NULL, 'xWiPiMStdJ', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:00', '2025-08-04 11:13:00', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(9, 1, 'Test User 8', 'testuser8@example.com', 'test_user_8', '2025-08-04 11:13:00', '$2y$12$c/1QCkJxDRlvVUooKOxyweHPkqUKEfiakuD0IWppXOB6n6JImSFw2', NULL, NULL, NULL, 'otK0zoH0Vu', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:00', '2025-08-04 11:13:00', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(10, 1, 'Test User 9', 'testuser9@example.com', 'test_user_9', '2025-08-04 11:13:00', '$2y$12$xdV4G9bXXF6mMTEtMverAOCQ9s4Al9Ea9/6i8xXG8aB9yJaNimexy', NULL, NULL, NULL, 'x7TGbcrScH', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:00', '2025-08-04 11:13:00', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(11, 1, 'Test User 10', 'testuser10@example.com', 'test_user_10', '2025-08-04 11:13:00', '$2y$12$qeK4sCfVXGn5coHg89ugC.3ce6bJ1LtUamJCh6xpYW0flixugOnXK', NULL, NULL, NULL, 'w9pJVhbFHm', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:01', '2025-08-04 11:13:01', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(12, 1, 'Test User 11', 'testuser11@example.com', 'test_user_11', '2025-08-04 11:13:01', '$2y$12$/NK1WIc.AKqvBR9vo3.vSOa5apAKGLNNuwtnocj8btk59/xWQrF5C', NULL, NULL, NULL, 'RLsh78jbMz', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:01', '2025-08-04 11:13:01', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(13, 1, 'Test User 12', 'testuser12@example.com', 'test_user_12', '2025-08-04 11:13:01', '$2y$12$73TgswNaGJ9tBu/e8bwUN.rFHYExRL8pDZ0BpWYOA3dv0KzEZ8Zla', NULL, NULL, NULL, 'Tr9kUsqTzH', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:01', '2025-08-04 11:13:01', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(14, 1, 'Test User 13', 'testuser13@example.com', 'test_user_13', '2025-08-04 11:13:01', '$2y$12$hu6KuOHt.c6L/CDBc.1IN.YfwkXrn11AAocWIrRVvivtgNsXWwJwq', NULL, NULL, NULL, 'yzjgtmKSRD', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:02', '2025-08-04 11:13:02', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(15, 1, 'Test User 14', 'testuser14@example.com', 'test_user_14', '2025-08-04 11:13:02', '$2y$12$kih.JQHDJReUYfnjeyK1BuVeo7Y22QSigKgn/VVQMek/9W46j/mya', NULL, NULL, NULL, 'nfHFORKiB5', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:02', '2025-08-04 11:13:02', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(16, 1, 'Test User 15', 'testuser15@example.com', 'test_user_15', '2025-08-04 11:13:02', '$2y$12$6rPybpQhqCdYK5llA3OwFeAtd97zVnD7.WiOYfTsBht4.LgllsZFy', NULL, NULL, NULL, 'vFs9N8Yyy2', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:03', '2025-08-04 11:13:03', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(17, 1, 'Test User 16', 'testuser16@example.com', 'test_user_16', '2025-08-04 11:13:03', '$2y$12$XAEOAgA0cxFe/NHKPCQqOOvyPQRJBrfeMSEaXerjuYXAs3.zzwd/6', NULL, NULL, NULL, 'eolVR6m8WL', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:03', '2025-08-04 11:13:03', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(18, 1, 'Test User 17', 'testuser17@example.com', 'test_user_17', '2025-08-04 11:13:03', '$2y$12$8Q13ltV3i2bnzMFcDscO6e/NePTdNoB9iG3nZoQTfTWoMxoeibm7e', NULL, NULL, NULL, 'UdoGQTBXOX', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:03', '2025-08-04 11:13:03', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(19, 1, 'Test User 18', 'testuser18@example.com', 'test_user_18', '2025-08-04 11:13:03', '$2y$12$.eKZ5nXZa0AgKFoZUQcGz.1ty0UdtFMzIpagEHqktb97wzH4T1GXa', NULL, NULL, NULL, 'Y6UJup7WCQ', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:04', '2025-08-04 11:13:04', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(20, 1, 'Test User 19', 'testuser19@example.com', 'test_user_19', '2025-08-04 11:13:04', '$2y$12$h6SIIBevrKXQJYNhfY66kOfjTdSeMJsoAPcuKcQXHj3XdlCxJQZ6m', NULL, NULL, NULL, '5IpsstbcUO', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:04', '2025-08-04 11:13:04', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(21, 1, 'Test User 20', 'testuser20@example.com', 'test_user_20', '2025-08-04 11:13:04', '$2y$12$HWRaIBLDiIIpfh9QvRJkSOeRTXM0QwxZnPHO6dplb5IpbQKAybJyS', NULL, NULL, NULL, 'VJ7rV7iPwc', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:05', '2025-08-04 11:13:05', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(22, 1, 'Test User 21', 'testuser21@example.com', 'test_user_21', '2025-08-04 11:13:05', '$2y$12$VRbEn7gESRE4kd8YFT8wxO.UlRiuY/waljAQx7cXxssYeWnB2Uleq', NULL, NULL, NULL, 'wIIK1l5H5Z', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:05', '2025-08-04 11:13:05', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(23, 1, 'Test User 22', 'testuser22@example.com', 'test_user_22', '2025-08-04 11:13:05', '$2y$12$pucmDxQM2N1ci.w.tI86OOip9.F0D8PlIIiqIqlSEQtFfCxQzmOAS', NULL, NULL, NULL, 'YnKYhATwwO', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:05', '2025-08-04 11:13:05', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(24, 1, 'Test User 23', 'testuser23@example.com', 'test_user_23', '2025-08-04 11:13:05', '$2y$12$Orck/Rn2FWrpJyD/tfQgeuuxtj11R3jRwXjXi4PZqVpWeSXNhjiq.', NULL, NULL, NULL, 'KTYF2ZOoY1', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:06', '2025-08-04 11:13:06', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(25, 1, 'Test User 24', 'testuser24@example.com', 'test_user_24', '2025-08-04 11:13:06', '$2y$12$8UoekrmxzpROdM659cwU4eIORANM.h6YPuETOrIVM3ABUSILqVg2O', NULL, NULL, NULL, 'JDOhsK1q7f', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:06', '2025-08-04 11:13:06', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(26, 1, 'Test User 25', 'testuser25@example.com', 'test_user_25', '2025-08-04 11:13:06', '$2y$12$QunanTnLEZFSD9Xis/NYyeZP.U63nC0PjUlwQOehvqpRv584kOBMm', NULL, NULL, NULL, '7jt9nC3vIh', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:07', '2025-08-04 11:13:07', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(27, 1, 'Test User 26', 'testuser26@example.com', 'test_user_26', '2025-08-04 11:13:07', '$2y$12$fevbBEtcyc31fGOVeimHsupFxEx/zzUPJl/twenuuzfczOFTBi3qS', NULL, NULL, NULL, 'YKQczUSKYT', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:07', '2025-08-04 11:13:07', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(28, 1, 'Test User 27', 'testuser27@example.com', 'test_user_27', '2025-08-04 11:13:07', '$2y$12$.fDluNd8s2tA8pfdozh6vupvj18zyUlJuZTDJrVF98KJZpuNGOBpu', NULL, NULL, NULL, 'aKfaIR2b9Z', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:07', '2025-08-04 11:13:07', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(29, 1, 'Test User 28', 'testuser28@example.com', 'test_user_28', '2025-08-04 11:13:07', '$2y$12$fGkVjaT62x77WKFRB/9.HelSkLA08yX8OHtJ7QVO0Mh/V9iBTB.dK', NULL, NULL, NULL, 'xPilcRiC1D', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:08', '2025-08-04 11:13:08', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(30, 1, 'Test User 29', 'testuser29@example.com', 'test_user_29', '2025-08-04 11:13:08', '$2y$12$xFZCbuYY4AcayMYYIyutqew6MGDr1hZvcJ7gsX8Fe7bfpnHy3ER9K', NULL, NULL, NULL, 'oXRMO2xbZy', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:08', '2025-08-04 11:13:08', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(31, 1, 'Test User 30', 'testuser30@example.com', 'test_user_30', '2025-08-04 11:13:08', '$2y$12$Y37eb8s.TfJ77jRRAOeaROBNLI6wX9jDDFzdY5hUe6yy4ES1KS6ry', NULL, NULL, NULL, '4kU4YQZwfR', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:08', '2025-08-04 11:13:08', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(32, 2, 'Yuvraj Kohli', 'Yuvrajkohli8090ylt@gmail.com', 'yuvraj_kohli', NULL, '$2y$12$Cw97ve07IYTo3nIjcmR8TeeQNN85kAOFb8.qYZRhDlGT9F1eBoOGy', NULL, NULL, NULL, NULL, NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:55:58', '2025-08-04 11:55:58', NULL, NULL, NULL, NULL, 'active', NULL, NULL),
-(33, 2, 'Dr Anju Panwar', 'anju.panwar@gmail.com', 'env-pmu', NULL, '$2y$12$N6ItL5DqK9Zb85YnIEVyHetXPMwwkzUGc2EgXb83ehWVmyi13f6VK', NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-20 02:46:07', '2025-08-20 02:46:07', 1, 1, 'female', '6397157703', 'active', 'test_user_', NULL);
+INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `username`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`, `department_id`, `sub_department_id`, `designation_id`, `gender`, `phone_no`, `status`, `district`, `deleted_at`) VALUES
+(1, 1, 'admin', 'admin@gmail.com', 'admin', NULL, '$2y$12$VzxX3jmvEG/0dKL4w5jbWe3PLWtM8cIz7eU3YUh0MV4k1uTP8uAlu', NULL, NULL, NULL, NULL, NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 06:58:54', '2025-08-20 23:15:41', 1, 1, NULL, NULL, NULL, 'active', NULL, NULL),
+(2, 1, 'Test User 1', 'testuser1@example.com', 'test_user_1', '2025-08-04 11:12:57', '$2y$12$VzxX3jmvEG/0dKL4w5jbWe3PLWtM8cIz7eU3YUh0MV4k1uTP8uAlu', NULL, NULL, NULL, 'OjPV8Rf3S1', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-04 12:31:58', NULL, NULL, NULL, NULL, NULL, 'active', NULL, '2025-08-04 12:31:58'),
+(3, 1, 'Test User', 'testuser2@example.com', 'test_user_', '2025-08-04 11:12:58', '$2y$12$Hag9oS0b226iw9Lbo2HvAeepU9ANMxNLpR2jrcXmn5tqHG/h8nFti', NULL, NULL, NULL, 'SCTDuAjAPehsyxz5wuQRHaZ3aINJQAR94f1Acz6shWGu63vcSYzazHMlqhro', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-20 23:27:00', 1, 1, 10, 'male', '9090909090', 'active', 'Dehradun', NULL),
+(4, 1, 'Test User 3', 'testuser3@example.com', 'test_user_3', '2025-08-04 11:12:58', '$2y$12$.WEudQx6rlE8IvXmtz3she.zKNd2NOA3FpF6.WGHv8QoqKV2yajUq', NULL, NULL, NULL, 'P7Kjy9dmBp', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-04 11:12:58', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(5, 1, 'Test User 4', 'testuser4@example.com', 'test_user_4', '2025-08-04 11:12:58', '$2y$12$OiQc5Mamqa0WO4SsmHzovOm520kqdi6hszqA6gXQYdycPHwsRJqYS', NULL, NULL, NULL, 'aI1TSgyKKG', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(6, 1, 'Test User 5', 'testuser5@example.com', 'test_user_5', '2025-08-04 11:12:59', '$2y$12$ArGPNhRO/EFR48OFxTVLPOpJgMl226X.RWfsAp.G6id8.JpKk8ege', NULL, NULL, NULL, 'XuV6KCkwjv', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(7, 1, 'Test User 6', 'testuser6@example.com', 'test_user_6', '2025-08-04 11:12:59', '$2y$12$YZ45SKbyL10z5A5XyZFTPe60mmOTibR4HId3pymwaVMClWYg88A5G', NULL, NULL, NULL, '8ngp7rVu02', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(8, 1, 'Test User 7', 'testuser7@example.com', 'test_user_7', '2025-08-04 11:12:59', '$2y$12$i6bgzn2YqV.7OS2t8BRXjOOPnOFpHLYDsvEFMriFw1zX.leIEX6MO', NULL, NULL, NULL, 'xWiPiMStdJ', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:00', '2025-08-04 11:13:00', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(9, 1, 'Test User 8', 'testuser8@example.com', 'test_user_8', '2025-08-04 11:13:00', '$2y$12$c/1QCkJxDRlvVUooKOxyweHPkqUKEfiakuD0IWppXOB6n6JImSFw2', NULL, NULL, NULL, 'otK0zoH0Vu', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:00', '2025-08-04 11:13:00', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(10, 1, 'Test User 9', 'testuser9@example.com', 'test_user_9', '2025-08-04 11:13:00', '$2y$12$xdV4G9bXXF6mMTEtMverAOCQ9s4Al9Ea9/6i8xXG8aB9yJaNimexy', NULL, NULL, NULL, 'x7TGbcrScH', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:00', '2025-08-04 11:13:00', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(11, 1, 'Test User 10', 'testuser10@example.com', 'test_user_10', '2025-08-04 11:13:00', '$2y$12$qeK4sCfVXGn5coHg89ugC.3ce6bJ1LtUamJCh6xpYW0flixugOnXK', NULL, NULL, NULL, 'w9pJVhbFHm', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:01', '2025-08-04 11:13:01', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(12, 1, 'Test User 11', 'testuser11@example.com', 'test_user_11', '2025-08-04 11:13:01', '$2y$12$/NK1WIc.AKqvBR9vo3.vSOa5apAKGLNNuwtnocj8btk59/xWQrF5C', NULL, NULL, NULL, 'RLsh78jbMz', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:01', '2025-08-04 11:13:01', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(13, 1, 'Test User 12', 'testuser12@example.com', 'test_user_12', '2025-08-04 11:13:01', '$2y$12$73TgswNaGJ9tBu/e8bwUN.rFHYExRL8pDZ0BpWYOA3dv0KzEZ8Zla', NULL, NULL, NULL, 'Tr9kUsqTzH', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:01', '2025-08-04 11:13:01', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(14, 1, 'Test User 13', 'testuser13@example.com', 'test_user_13', '2025-08-04 11:13:01', '$2y$12$hu6KuOHt.c6L/CDBc.1IN.YfwkXrn11AAocWIrRVvivtgNsXWwJwq', NULL, NULL, NULL, 'yzjgtmKSRD', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:02', '2025-08-04 11:13:02', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(15, 1, 'Test User 14', 'testuser14@example.com', 'test_user_14', '2025-08-04 11:13:02', '$2y$12$kih.JQHDJReUYfnjeyK1BuVeo7Y22QSigKgn/VVQMek/9W46j/mya', NULL, NULL, NULL, 'nfHFORKiB5', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:02', '2025-08-04 11:13:02', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(16, 1, 'Test User 15', 'testuser15@example.com', 'test_user_15', '2025-08-04 11:13:02', '$2y$12$6rPybpQhqCdYK5llA3OwFeAtd97zVnD7.WiOYfTsBht4.LgllsZFy', NULL, NULL, NULL, 'vFs9N8Yyy2', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:03', '2025-08-04 11:13:03', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(17, 1, 'Test User 16', 'testuser16@example.com', 'test_user_16', '2025-08-04 11:13:03', '$2y$12$XAEOAgA0cxFe/NHKPCQqOOvyPQRJBrfeMSEaXerjuYXAs3.zzwd/6', NULL, NULL, NULL, 'eolVR6m8WL', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:03', '2025-08-04 11:13:03', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(18, 1, 'Test User 17', 'testuser17@example.com', 'test_user_17', '2025-08-04 11:13:03', '$2y$12$8Q13ltV3i2bnzMFcDscO6e/NePTdNoB9iG3nZoQTfTWoMxoeibm7e', NULL, NULL, NULL, 'UdoGQTBXOX', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:03', '2025-08-04 11:13:03', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(19, 1, 'Test User 18', 'testuser18@example.com', 'test_user_18', '2025-08-04 11:13:03', '$2y$12$.eKZ5nXZa0AgKFoZUQcGz.1ty0UdtFMzIpagEHqktb97wzH4T1GXa', NULL, NULL, NULL, 'Y6UJup7WCQ', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:04', '2025-08-04 11:13:04', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(20, 1, 'Test User 19', 'testuser19@example.com', 'test_user_19', '2025-08-04 11:13:04', '$2y$12$h6SIIBevrKXQJYNhfY66kOfjTdSeMJsoAPcuKcQXHj3XdlCxJQZ6m', NULL, NULL, NULL, '5IpsstbcUO', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:04', '2025-08-04 11:13:04', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(21, 1, 'Test User 20', 'testuser20@example.com', 'test_user_20', '2025-08-04 11:13:04', '$2y$12$HWRaIBLDiIIpfh9QvRJkSOeRTXM0QwxZnPHO6dplb5IpbQKAybJyS', NULL, NULL, NULL, 'VJ7rV7iPwc', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:05', '2025-08-04 11:13:05', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(22, 1, 'Test User 21', 'testuser21@example.com', 'test_user_21', '2025-08-04 11:13:05', '$2y$12$VRbEn7gESRE4kd8YFT8wxO.UlRiuY/waljAQx7cXxssYeWnB2Uleq', NULL, NULL, NULL, 'wIIK1l5H5Z', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:05', '2025-08-04 11:13:05', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(23, 1, 'Test User 22', 'testuser22@example.com', 'test_user_22', '2025-08-04 11:13:05', '$2y$12$pucmDxQM2N1ci.w.tI86OOip9.F0D8PlIIiqIqlSEQtFfCxQzmOAS', NULL, NULL, NULL, 'YnKYhATwwO', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:05', '2025-08-04 11:13:05', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(24, 1, 'Test User 23', 'testuser23@example.com', 'test_user_23', '2025-08-04 11:13:05', '$2y$12$Orck/Rn2FWrpJyD/tfQgeuuxtj11R3jRwXjXi4PZqVpWeSXNhjiq.', NULL, NULL, NULL, 'KTYF2ZOoY1', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:06', '2025-08-04 11:13:06', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(25, 1, 'Test User 24', 'testuser24@example.com', 'test_user_24', '2025-08-04 11:13:06', '$2y$12$8UoekrmxzpROdM659cwU4eIORANM.h6YPuETOrIVM3ABUSILqVg2O', NULL, NULL, NULL, 'JDOhsK1q7f', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:06', '2025-08-04 11:13:06', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(26, 1, 'Test User 25', 'testuser25@example.com', 'test_user_25', '2025-08-04 11:13:06', '$2y$12$QunanTnLEZFSD9Xis/NYyeZP.U63nC0PjUlwQOehvqpRv584kOBMm', NULL, NULL, NULL, '7jt9nC3vIh', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:07', '2025-08-04 11:13:07', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(27, 1, 'Test User 26', 'testuser26@example.com', 'test_user_26', '2025-08-04 11:13:07', '$2y$12$fevbBEtcyc31fGOVeimHsupFxEx/zzUPJl/twenuuzfczOFTBi3qS', NULL, NULL, NULL, 'YKQczUSKYT', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:07', '2025-08-04 11:13:07', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(28, 1, 'Test User 27', 'testuser27@example.com', 'test_user_27', '2025-08-04 11:13:07', '$2y$12$.fDluNd8s2tA8pfdozh6vupvj18zyUlJuZTDJrVF98KJZpuNGOBpu', NULL, NULL, NULL, 'aKfaIR2b9Z', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:07', '2025-08-04 11:13:07', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(29, 1, 'Test User 28', 'testuser28@example.com', 'test_user_28', '2025-08-04 11:13:07', '$2y$12$fGkVjaT62x77WKFRB/9.HelSkLA08yX8OHtJ7QVO0Mh/V9iBTB.dK', NULL, NULL, NULL, 'xPilcRiC1D', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:08', '2025-08-04 11:13:08', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(30, 1, 'Test User 29', 'testuser29@example.com', 'test_user_29', '2025-08-04 11:13:08', '$2y$12$xFZCbuYY4AcayMYYIyutqew6MGDr1hZvcJ7gsX8Fe7bfpnHy3ER9K', NULL, NULL, NULL, 'oXRMO2xbZy', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:08', '2025-08-04 11:13:08', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(31, 1, 'Test User 30', 'testuser30@example.com', 'test_user_30', '2025-08-04 11:13:08', '$2y$12$Y37eb8s.TfJ77jRRAOeaROBNLI6wX9jDDFzdY5hUe6yy4ES1KS6ry', NULL, NULL, NULL, '4kU4YQZwfR', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:13:08', '2025-08-04 11:13:08', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(32, 2, 'Yuvraj Kohli', 'Yuvrajkohli8090ylt@gmail.com', 'yuvraj_kohli', NULL, '$2y$12$Cw97ve07IYTo3nIjcmR8TeeQNN85kAOFb8.qYZRhDlGT9F1eBoOGy', NULL, NULL, NULL, NULL, NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:55:58', '2025-08-04 11:55:58', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
+(33, 2, 'Dr Anju Panwar', 'anju.panwar@gmail.com', 'env-pmu', NULL, '$2y$12$N6ItL5DqK9Zb85YnIEVyHetXPMwwkzUGc2EgXb83ehWVmyi13f6VK', NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-20 02:46:07', '2025-08-20 02:46:07', 1, NULL, 1, 'female', '6397157703', 'active', 'test_user_', NULL);
 
 -- --------------------------------------------------------
 
@@ -2251,6 +2282,13 @@ ALTER TABLE `sub_category`
   ADD KEY `sub_category_category_id_index` (`category_id`);
 
 --
+-- Indexes for table `sub_departments`
+--
+ALTER TABLE `sub_departments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sub_departments_department_id_foreign` (`department_id`);
+
+--
 -- Indexes for table `sub_package_projects`
 --
 ALTER TABLE `sub_package_projects`
@@ -2275,7 +2313,8 @@ ALTER TABLE `users`
   ADD KEY `users_department_id_foreign` (`department_id`),
   ADD KEY `users_designation_id_foreign` (`designation_id`),
   ADD KEY `users_phone_no_index` (`phone_no`),
-  ADD KEY `users_district_index` (`district`);
+  ADD KEY `users_district_index` (`district`),
+  ADD KEY `users_sub_department_id_foreign` (`sub_department_id`);
 
 --
 -- Indexes for table `work_service`
@@ -2406,7 +2445,7 @@ ALTER TABLE `media_files`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `navbar_items`
@@ -2430,7 +2469,7 @@ ALTER TABLE `package_projects`
 -- AUTO_INCREMENT for table `package_project_assignments`
 --
 ALTER TABLE `package_project_assignments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `pages`
@@ -2490,7 +2529,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `role_routes`
 --
 ALTER TABLE `role_routes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2035;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2252;
 
 --
 -- AUTO_INCREMENT for table `safeguard_compliances`
@@ -2515,6 +2554,12 @@ ALTER TABLE `social_safeguard_entries`
 --
 ALTER TABLE `sub_category`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `sub_departments`
+--
+ALTER TABLE `sub_departments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `sub_package_projects`
@@ -2681,6 +2726,12 @@ ALTER TABLE `sub_category`
   ADD CONSTRAINT `sub_category_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `projects_category` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `sub_departments`
+--
+ALTER TABLE `sub_departments`
+  ADD CONSTRAINT `sub_departments_department_id_foreign` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `sub_package_projects`
 --
 ALTER TABLE `sub_package_projects`
@@ -2692,7 +2743,8 @@ ALTER TABLE `sub_package_projects`
 ALTER TABLE `users`
   ADD CONSTRAINT `users_department_id_foreign` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `users_designation_id_foreign` FOREIGN KEY (`designation_id`) REFERENCES `designations` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+  ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
+  ADD CONSTRAINT `users_sub_department_id_foreign` FOREIGN KEY (`sub_department_id`) REFERENCES `sub_departments` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `work_service`
