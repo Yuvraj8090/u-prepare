@@ -35,6 +35,22 @@ class PhysicalEpcProgressController extends Controller
 
         $progressEntries = $query->latest()->paginate(15);
 
+        // Attach images from MediaFile model
+        $progressEntries->getCollection()->transform(function ($entry) {
+            $imageIds = is_array($entry->images) ? $entry->images : json_decode($entry->images, true);
+
+            if (empty($imageIds)) {
+                $entry->image_urls = [];
+                return $entry;
+            }
+
+            $entry->image_urls = MediaFile::whereIn('id', $imageIds)
+                ->pluck('path') // assuming you have `url` column or an accessor
+                ->toArray();
+
+            return $entry;
+        });
+
         return view('admin.physical_epc_progress.index', [
             'progressEntries' => $progressEntries,
             'subPackageProjectName' => $subPackageProject->name,
@@ -149,24 +165,20 @@ class PhysicalEpcProgressController extends Controller
             ])
             ->with('success', 'Physical EPC Progress record updated successfully.');
     }
-public function destroy(Request $request, PhysicalEpcProgress $physicalEpcProgress)
-{
-    $this->deleteImages($physicalEpcProgress->images);
+    public function destroy(Request $request, PhysicalEpcProgress $physicalEpcProgress)
+    {
+        $this->deleteImages($physicalEpcProgress->images);
 
-    $subProjectId = $request->input('sub_package_project_id') 
-        ?? $physicalEpcProgress->epcentryData->sub_package_project_id ?? null;
+        $subProjectId = $request->input('sub_package_project_id') ?? ($physicalEpcProgress->epcentryData->sub_package_project_id ?? null);
 
-    $physicalEpcProgress->delete();
+        $physicalEpcProgress->delete();
 
-    return redirect()
-        ->route('dashboard', [
-            'sub_package_project_id' => $subProjectId,
-        ])
-        ->with('success', 'Physical EPC Progress record deleted successfully.');
-}
-
-
-
+        return redirect()
+            ->route('dashboard', [
+                'sub_package_project_id' => $subProjectId,
+            ])
+            ->with('success', 'Physical EPC Progress record deleted successfully.');
+    }
 
     public function bulkDestroy(Request $request)
     {

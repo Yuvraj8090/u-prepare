@@ -57,6 +57,10 @@ class PackageProject extends Model
     {
         return $query->select('id', 'package_name');
     }
+ public function scopeWithWorkProgramData($query)
+    {
+        return $query->with(['procurementDetail', 'workPrograms']);
+    }
 
     /*
     |--------------------------------------------------------------------------

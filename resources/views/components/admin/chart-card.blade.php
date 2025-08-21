@@ -19,7 +19,7 @@
     <div class="col-12">
         <div class="card shadow mb-4">
             <div class="card-header d-flex justify-content-between align-items-center bg-success text-white">
-                <h5 class="mb-0">{{ $title }}</h5>
+                <h5 class="mb-0 h1">{{ $title }}</h5>
                 <select class="form-select form-select-sm w-auto bg-light text-dark"
                     onchange="drawChart_{{ $id }}(this.value)">
                     @foreach ($chartTypes as $type)

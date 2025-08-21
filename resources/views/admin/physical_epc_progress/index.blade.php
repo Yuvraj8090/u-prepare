@@ -82,9 +82,10 @@
                             <td>{{ $entry->items ?? '-' }}</td>
                             <td>{{ $entry->progress_submitted_date?->format('d-m-Y') ?? '-' }}</td>
                             <td>
-                                @if (!empty($entry->images) && count($entry->images) > 0)
+                                
+                                @if (!empty($entry->image_urls) && count($entry->image_urls) > 0)
                                     <a href="#" class="btn btn-sm btn-info view-images-btn"
-                                        data-images='@json($entry->images)'>
+                                        data-images='@json($entry->image_urls)'>
                                         <i class="fas fa-image me-1"></i> View Images
                                     </a>
                                 @else

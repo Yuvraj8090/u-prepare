@@ -6192,6 +6192,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject basicInfo()
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject withWorkProgramData()
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject query()
