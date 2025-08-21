@@ -1,15 +1,12 @@
 <x-app-layout>
     <div class="container-fluid">
         <!-- Breadcrumb -->
-        <x-admin.breadcrumb-header
-    icon="fas fa-layer-group text-primary"
-    title="Procurement Work Programs"
-    :breadcrumbs="[
-        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
-        ['label' => 'Admin'],
-        ['label' => 'Work Programs']
-    ]"
-/>
+        <x-admin.breadcrumb-header icon="fas fa-layer-group text-primary" title="Procurement Work Programs"
+            :breadcrumbs="[
+                ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+                ['label' => 'Admin'],
+                ['label' => 'Work Programs'],
+            ]" />
 
 
         <!-- Flash Messages -->
@@ -71,21 +68,20 @@
                             <td>
                                 <div class="d-flex justify-content-end gap-2">
                                     @if ($project->has_work_program)
-    <a href="{{ route('admin.procurement-work-programs.edit-by-package', [
-        'package_project_id' => $project->id,
-        'procurement_details_id' => optional($project->procurementDetail)->id,
-    ]) }}" 
-        class="btn btn-sm btn-outline-primary">
-        <i class="fas fa-edit me-1"></i> Edit
-    </a> <a href="{{ route('admin.procurement-work-programs.show.pack', [
-                     'package_project_id' => $project->id,
-        'procurement_details_id' => optional($project->procurementDetail)->id,
-                ]) }}"
-                class="btn btn-sm btn-outline-secondary">
-                <i class="fas fa-eye me-1"></i> View
-            </a>
-
-
+                                        <a href="{{ route('admin.procurement-work-programs.edit-by-package', [
+                                            'package_project_id' => $project->id,
+                                            'procurement_details_id' => optional($project->procurementDetail)->id,
+                                        ]) }}"
+                                            class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-edit me-1"></i> Edit
+                                        </a> <a
+                                            href="{{ route('admin.procurement-work-programs.show.pack', [
+                                                'package_project_id' => $project->id,
+                                                'procurement_details_id' => optional($project->procurementDetail)->id,
+                                            ]) }}"
+                                            class="btn btn-sm btn-outline-secondary">
+                                            <i class="fas fa-eye me-1"></i> View
+                                        </a>
                                     @else
                                         <a href="{{ route('admin.procurement-work-programs.create', [
                                             'package_project_id' => $project->id,

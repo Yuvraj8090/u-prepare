@@ -22,22 +22,36 @@ class ContractController extends Controller
         $contracts = Contract::with(['project:id,package_name', 'contractor:id,company_name'])
             ->select('id', 'contract_number', 'project_id', 'contractor_id', 'contract_value', 'count_sub_project', 'signing_date')
             ->latest()
-            ->paginate(15);
+            ->get();
+        $packageProjects = PackageProject::withWorkProgramData()->latest()->get();
 
-        return view('admin.contracts.index', compact('contracts'));
+        return view('admin.contracts.index', compact('contracts', 'packageProjects'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $projects = PackageProject::select('id', 'package_name', 'package_number')->orderBy('package_name')->get();
 
         $contractors = Contractor::select('id', 'company_name', 'gst_no')->orderBy('company_name')->get();
 
-        // Always pass an empty Contract model so the form can use $contract safely
+        $packageProjects = PackageProject::basicInfo()->get();
+
         $contract = new Contract();
         $contract->contractor = new Contractor();
+        $selectedPackageProjectId = null;
 
-        return view('admin.contracts.create', compact('projects', 'contractors', 'contract'));
+        if ($request->package_project_id) {
+            // ✅ Check if a contract already exists
+            $exists = Contract::where('project_id', $request->package_project_id)->exists();
+            if ($exists) {
+                return redirect()->back()->withInput()->with('error', 'A contract has already been created for the selected project.');
+            }
+
+            // Only fetch if not already used
+            $selectedPackageProjectId = PackageProject::withWorkProgramData()->find($request->package_project_id);
+        }
+
+        return view('admin.contracts.create', compact('projects', 'contractors', 'contract', 'selectedPackageProjectId', 'packageProjects'));
     }
 
     public function store(Request $request)
@@ -216,25 +230,6 @@ class ContractController extends Controller
                 'physicalPercent' => $physicalPercent,
                 'actions' => $actions,
             ];
-
-            $actions[] = [
-                'label' => 'Create Social Details',
-                'icon' => 'fas fa-shield-alt',
-                'class' => 'btn-warning',
-                'route' => route('admin.safeguard_entries.index', ['sub_package_project_id' => $sp->id]),
-            ];
-
-            return [
-                'id' => $sp->id,
-                'name' => $sp->name,
-                'contractValue' => number_format($sp->contract_value, 2),
-                'financeTotal' => number_format($financeTotal, 2),
-                'financePercent' => $financePercent,
-                'physicalValue' => number_format($physicalValue, 2),
-                'physicalPercent' => $physicalPercent,
-                'actions' => $actions,
-            ];
-
         });
 
         return view('admin.contracts.show', [

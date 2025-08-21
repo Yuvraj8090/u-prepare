@@ -59,7 +59,7 @@ class PackageProject extends Model
     }
  public function scopeWithWorkProgramData($query)
     {
-        return $query->with(['procurementDetail', 'workPrograms']);
+        return $query->with(['procurementDetail', 'workPrograms','contracts']);
     }
 
     /*
