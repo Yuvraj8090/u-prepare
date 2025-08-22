@@ -44,14 +44,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
-<<<<<<< Updated upstream
             Route::get('financial-progress-updates-all', [FinancialProgressUpdateController::class, 'index2'])->name('financial-progress-updates.index2');
-=======
             Route::get('/grievances/{grievance_no}', [GrievanceController::class, 'show'])->name('grievances.show');
 
             Route::resource('grievances', GrievanceController::class);
 
->>>>>>> Stashed changes
             Route::resource('sub-departments', SubDepartmentController::class);
 
             Route::resource('package-project-assignments', PackageProjectAssignmentController::class);
