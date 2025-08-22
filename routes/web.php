@@ -32,6 +32,7 @@ use App\Http\Controllers\Admin\SubDepartmentController;
 use App\Http\Controllers\Admin\ProcurementWorkProgramController;
 use App\Http\Controllers\Admin\TypeOfProcurementController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\GrievanceController;
 
 Route::get('/en/{slug}', [PageController::class, 'showPage'])->name('page.show');
 Route::get('/hi/{slug}', [PageController::class, 'showPageHi'])->name('page.show.hi');
@@ -43,7 +44,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+<<<<<<< Updated upstream
             Route::get('financial-progress-updates-all', [FinancialProgressUpdateController::class, 'index2'])->name('financial-progress-updates.index2');
+=======
+            Route::get('/grievances/{grievance_no}', [GrievanceController::class, 'show'])->name('grievances.show');
+
+            Route::resource('grievances', GrievanceController::class);
+
+>>>>>>> Stashed changes
             Route::resource('sub-departments', SubDepartmentController::class);
 
             Route::resource('package-project-assignments', PackageProjectAssignmentController::class);
