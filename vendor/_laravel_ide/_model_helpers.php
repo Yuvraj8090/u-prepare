@@ -11020,9 +11020,21 @@ namespace App\Models {
     /**
      * App\Models\SubDepartment
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property bool $status
+     * @property string $name
+     * @property mixed $department_id
+     * @property int $id
      * @property-read \App\Models\Department $department
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
      * @property-read int|null $users_count
+     * @method static \Illuminate\Database\Eloquent\Builder<SubDepartment>|SubDepartment whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SubDepartment>|SubDepartment whereDepartmentId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SubDepartment>|SubDepartment whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SubDepartment>|SubDepartment whereStatus($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SubDepartment>|SubDepartment whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SubDepartment>|SubDepartment whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SubDepartment>|SubDepartment newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SubDepartment>|SubDepartment newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SubDepartment>|SubDepartment query()
@@ -11978,6 +11990,7 @@ namespace App\Models {
      * @property string|null $phone_no
      * @property mixed $gender
      * @property mixed $designation_id
+     * @property mixed $sub_department_id
      * @property mixed $department_id
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
@@ -12019,6 +12032,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereDepartmentId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereSubDepartmentId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereDesignationId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereGender($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User wherePhoneNo($value)
