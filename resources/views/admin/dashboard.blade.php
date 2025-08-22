@@ -67,11 +67,11 @@
                 <div class="card-body">
                     <x-admin.data-table :headers="[
                         'ID',
-                        'Name',
-                        'LOA Issued',
+                        'No. Package',
+                        'Type of contracts  ',
                         'Contract Signed',
-                        'Start Date Given',
-                        'LOA to be issued',
+                        'Bid Process Ongoing',
+                        'In Pocess(LOA/Contracts)',
                         'Contract Signing Pending',
                         'To be Re-bidded',
                     ]" id="type-of-procurement-table" :excel="true"
@@ -79,13 +79,14 @@
                         @foreach ($typeOfprocurement as $type)
                             <tr>
                                 <td>{{ $type->id }}</td>
+                                <td>{{ $type->id }}</td>
                                 <td>{{ $type->name }}</td>
                                 <td>{{ $type->description }}</td>
                                 <td>{{ $type->description }}</td>
                                 <td>{{ $type->description }}</td>
                                 <td>{{ $type->description }}</td>
                                 <td>{{ $type->description }}</td>
-                                <td>{{ $type->description }}</td>
+                                
 
                             </tr>
                         @endforeach
