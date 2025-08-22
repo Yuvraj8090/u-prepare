@@ -94,12 +94,12 @@
                                     Create Packages </a>
                             </li>
 
-                            <li >
+                            <li>
 
                                 <a href="{{ route('admin.procurement-details.index') }}"><i class="fa fa-list"></i>
                                     Procurement Details</a>
                             </li>
- <li><a href="{{ route('admin.contracts.index') }}"><i class="fa fa-list"></i> Manage
+                            <li><a href="{{ route('admin.contracts.index') }}"><i class="fa fa-list"></i> Manage
                                     Contracts</a></li>
                         </ul>
                     </li>
@@ -107,7 +107,7 @@
                     <!-- Contracts -->
                     <li
                         class="{{ request()->routeIs('admin.contracts.*') || request()->routeIs('admin.contractors.*') ? 'active' : '' }}">
-                        
+
                     </li>
 
                     <!-- Progress Updates -->
@@ -116,7 +116,7 @@
                         <a><i class="fa fa-chart-line"></i> Progress Updates <span
                                 class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ route('admin.financial-progress-updates.index') }}"><i
+                            <li><a href="{{ route('admin.financial-progress-updates.index2') }}"><i
                                         class="fa fa-coins"></i> Financial Progress</a></li>
                             <li><a href="{{ route('admin.physical_boq_progress.index') }}"><i class="fa fa-cubes"></i>
                                     Physical BOQ Progress</a></li>
@@ -183,8 +183,7 @@
                         request()->routeIs('admin.departments.*') ||
                         request()->routeIs('admin.package-components.*') ||
                         request()->routeIs('admin.designations.*') ||
-                        request()->routeIs('admin.projects-category.*')
-                        ||
+                        request()->routeIs('admin.projects-category.*') ||
                         request()->routeIs('admin.contractors.*')
                             ? 'active'
                             : '' }}">
@@ -207,11 +206,11 @@
                                 <a href="{{ route('admin.package-components.index') }}"><i class="fa fa-cubes"></i>
                                     Components</a>
                             </li>
-<li>
+                            <li>
 
-    <a href="{{ route('admin.contractors.index') }}"><i class="fa fa-user-tie"></i>
+                                <a href="{{ route('admin.contractors.index') }}"><i class="fa fa-user-tie"></i>
                                     Contractors</a>
-</li>
+                            </li>
                         </ul>
                     </li>
 
@@ -239,8 +238,7 @@
 
 
                     <!-- Super Admin -->
-                    <li
-                        class="{{ request()->routeIs('admin.project.*') || request()->routeIs('') ? 'active' : '' }}">
+                    <li class="{{ request()->routeIs('admin.project.*') || request()->routeIs('') ? 'active' : '' }}">
                         <a><i class="fa fa-industry"></i> Super Admin <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
 

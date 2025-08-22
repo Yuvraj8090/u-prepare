@@ -43,6 +43,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+            Route::get('financial-progress-updates-all', [FinancialProgressUpdateController::class, 'index2'])->name('financial-progress-updates.index2');
             Route::resource('sub-departments', SubDepartmentController::class);
 
             Route::resource('package-project-assignments', PackageProjectAssignmentController::class);

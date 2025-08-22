@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class FinancialProgressUpdateController extends Controller
 {
+    public function index2()
+    {
+        $subProjects = SubPackageProject::all();
+
+        return view('admin.financial_progress_update.index-2', compact('subProjects'));
+    }
     public function index(Request $request)
     {
         $subProjects = SubPackageProject::select('id', 'name')->get();
