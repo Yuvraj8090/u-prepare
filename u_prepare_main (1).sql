@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2025 at 07:55 AM
+-- Generation Time: Aug 22, 2025 at 09:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -183,7 +183,9 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('role_routes_1', 'a:217:{i:0;s:31:\"admin.already_define_epc.create\";i:1;s:32:\"admin.already_define_epc.destroy\";i:2;s:29:\"admin.already_define_epc.edit\";i:3;s:30:\"admin.already_define_epc.index\";i:4;s:29:\"admin.already_define_epc.show\";i:5;s:30:\"admin.already_define_epc.store\";i:6;s:31:\"admin.already_define_epc.update\";i:7;s:26:\"admin.boqentry.bulk-delete\";i:8;s:21:\"admin.boqentry.create\";i:9;s:22:\"admin.boqentry.destroy\";i:10;s:19:\"admin.boqentry.edit\";i:11;s:20:\"admin.boqentry.index\";i:12;s:32:\"admin.boqentry.physical-progress\";i:13;s:37:\"admin.boqentry.save-physical-progress\";i:14;s:20:\"admin.boqentry.store\";i:15;s:21:\"admin.boqentry.update\";i:16;s:21:\"admin.boqentry.upload\";i:17;s:31:\"admin.contraction-phases.create\";i:18;s:32:\"admin.contraction-phases.destroy\";i:19;s:29:\"admin.contraction-phases.edit\";i:20;s:30:\"admin.contraction-phases.index\";i:21;s:29:\"admin.contraction-phases.show\";i:22;s:30:\"admin.contraction-phases.store\";i:23;s:31:\"admin.contraction-phases.update\";i:24;s:24:\"admin.contractors.create\";i:25;s:25:\"admin.contractors.destroy\";i:26;s:22:\"admin.contractors.edit\";i:27;s:23:\"admin.contractors.index\";i:28;s:22:\"admin.contractors.show\";i:29;s:23:\"admin.contractors.store\";i:30;s:24:\"admin.contractors.update\";i:31;s:22:\"admin.contracts.create\";i:32;s:23:\"admin.contracts.destroy\";i:33;s:20:\"admin.contracts.edit\";i:34;s:21:\"admin.contracts.index\";i:35;s:20:\"admin.contracts.show\";i:36;s:21:\"admin.contracts.store\";i:37;s:22:\"admin.contracts.update\";i:38;s:15:\"admin.dashboard\";i:39;s:24:\"admin.departments.create\";i:40;s:25:\"admin.departments.destroy\";i:41;s:22:\"admin.departments.edit\";i:42;s:23:\"admin.departments.index\";i:43;s:22:\"admin.departments.show\";i:44;s:23:\"admin.departments.store\";i:45;s:24:\"admin.departments.update\";i:46;s:25:\"admin.designations.create\";i:47;s:26:\"admin.designations.destroy\";i:48;s:23:\"admin.designations.edit\";i:49;s:24:\"admin.designations.index\";i:50;s:23:\"admin.designations.show\";i:51;s:24:\"admin.designations.store\";i:52;s:25:\"admin.designations.update\";i:53;s:31:\"admin.epcentry_data.bulkDestroy\";i:54;s:26:\"admin.epcentry_data.create\";i:55;s:27:\"admin.epcentry_data.destroy\";i:56;s:24:\"admin.epcentry_data.edit\";i:57;s:25:\"admin.epcentry_data.index\";i:58;s:25:\"admin.epcentry_data.store\";i:59;s:36:\"admin.epcentry_data.storeFromDefined\";i:60;s:26:\"admin.epcentry_data.update\";i:61;s:39:\"admin.financial-progress-updates.create\";i:62;s:40:\"admin.financial-progress-updates.destroy\";i:63;s:37:\"admin.financial-progress-updates.edit\";i:64;s:38:\"admin.financial-progress-updates.index\";i:65;s:37:\"admin.financial-progress-updates.show\";i:66;s:38:\"admin.financial-progress-updates.store\";i:67;s:39:\"admin.financial-progress-updates.update\";i:68;s:31:\"admin.financial-progress.upload\";i:69;s:19:\"admin.media.gallery\";i:70;s:17:\"admin.media.index\";i:71;s:24:\"admin.media_files.upload\";i:72;s:25:\"admin.navbar-items.create\";i:73;s:26:\"admin.navbar-items.destroy\";i:74;s:23:\"admin.navbar-items.edit\";i:75;s:24:\"admin.navbar-items.index\";i:76;s:23:\"admin.navbar-items.show\";i:77;s:24:\"admin.navbar-items.store\";i:78;s:25:\"admin.navbar-items.update\";i:79;s:31:\"admin.navbar-items.update-order\";i:80;s:31:\"admin.package-components.create\";i:81;s:32:\"admin.package-components.destroy\";i:82;s:29:\"admin.package-components.edit\";i:83;s:30:\"admin.package-components.index\";i:84;s:29:\"admin.package-components.show\";i:85;s:30:\"admin.package-components.store\";i:86;s:31:\"admin.package-components.update\";i:87;s:40:\"admin.package-project-assignments.create\";i:88;s:41:\"admin.package-project-assignments.destroy\";i:89;s:38:\"admin.package-project-assignments.edit\";i:90;s:39:\"admin.package-project-assignments.index\";i:91;s:38:\"admin.package-project-assignments.show\";i:92;s:39:\"admin.package-project-assignments.store\";i:93;s:40:\"admin.package-project-assignments.update\";i:94;s:29:\"admin.package-projects.create\";i:95;s:30:\"admin.package-projects.destroy\";i:96;s:27:\"admin.package-projects.edit\";i:97;s:28:\"admin.package-projects.index\";i:98;s:27:\"admin.package-projects.show\";i:99;s:28:\"admin.package-projects.store\";i:100;s:29:\"admin.package-projects.update\";i:101;s:18:\"admin.pages.create\";i:102;s:23:\"admin.pages.create.form\";i:103;s:18:\"admin.pages.delete\";i:104;s:21:\"admin.pages.edit.form\";i:105;s:16:\"admin.pages.list\";i:106;s:18:\"admin.pages.update\";i:107;s:39:\"admin.physical_boq_progress.bulk-delete\";i:108;s:34:\"admin.physical_boq_progress.create\";i:109;s:35:\"admin.physical_boq_progress.destroy\";i:110;s:32:\"admin.physical_boq_progress.edit\";i:111;s:33:\"admin.physical_boq_progress.index\";i:112;s:33:\"admin.physical_boq_progress.store\";i:113;s:34:\"admin.physical_boq_progress.update\";i:114;s:39:\"admin.physical_epc_progress.bulkDestroy\";i:115;s:34:\"admin.physical_epc_progress.create\";i:116;s:35:\"admin.physical_epc_progress.destroy\";i:117;s:32:\"admin.physical_epc_progress.edit\";i:118;s:33:\"admin.physical_epc_progress.index\";i:119;s:32:\"admin.physical_epc_progress.show\";i:120;s:33:\"admin.physical_epc_progress.store\";i:121;s:34:\"admin.physical_epc_progress.update\";i:122;s:32:\"admin.procurement-details.create\";i:123;s:33:\"admin.procurement-details.destroy\";i:124;s:30:\"admin.procurement-details.edit\";i:125;s:31:\"admin.procurement-details.index\";i:126;s:30:\"admin.procurement-details.show\";i:127;s:31:\"admin.procurement-details.store\";i:128;s:32:\"admin.procurement-details.update\";i:129;s:38:\"admin.procurement-work-programs.create\";i:130;s:39:\"admin.procurement-work-programs.destroy\";i:131;s:36:\"admin.procurement-work-programs.edit\";i:132;s:47:\"admin.procurement-work-programs.edit-by-package\";i:133;s:37:\"admin.procurement-work-programs.index\";i:134;s:36:\"admin.procurement-work-programs.show\";i:135;s:41:\"admin.procurement-work-programs.show.pack\";i:136;s:37:\"admin.procurement-work-programs.store\";i:137;s:44:\"admin.procurement-work-programs.store-single\";i:138;s:38:\"admin.procurement-work-programs.update\";i:139;s:45:\"admin.procurement-work-programs.update-single\";i:140;s:48:\"admin.procurement-work-programs.upload-documents\";i:141;s:20:\"admin.project.create\";i:142;s:21:\"admin.project.destroy\";i:143;s:18:\"admin.project.edit\";i:144;s:19:\"admin.project.index\";i:145;s:18:\"admin.project.show\";i:146;s:19:\"admin.project.store\";i:147;s:20:\"admin.project.update\";i:148;s:30:\"admin.projects-category.create\";i:149;s:31:\"admin.projects-category.destroy\";i:150;s:28:\"admin.projects-category.edit\";i:151;s:29:\"admin.projects-category.index\";i:152;s:28:\"admin.projects-category.show\";i:153;s:29:\"admin.projects-category.store\";i:154;s:30:\"admin.projects-category.update\";i:155;s:24:\"admin.role_routes.create\";i:156;s:25:\"admin.role_routes.destroy\";i:157;s:22:\"admin.role_routes.edit\";i:158;s:23:\"admin.role_routes.index\";i:159;s:22:\"admin.role_routes.show\";i:160;s:23:\"admin.role_routes.store\";i:161;s:24:\"admin.role_routes.update\";i:162;s:18:\"admin.roles.create\";i:163;s:19:\"admin.roles.destroy\";i:164;s:16:\"admin.roles.edit\";i:165;s:17:\"admin.roles.index\";i:166;s:16:\"admin.roles.show\";i:167;s:17:\"admin.roles.store\";i:168;s:18:\"admin.roles.update\";i:169;s:34:\"admin.safeguard-compliances.create\";i:170;s:35:\"admin.safeguard-compliances.destroy\";i:171;s:32:\"admin.safeguard-compliances.edit\";i:172;s:33:\"admin.safeguard-compliances.index\";i:173;s:32:\"admin.safeguard-compliances.show\";i:174;s:33:\"admin.safeguard-compliances.store\";i:175;s:34:\"admin.safeguard-compliances.update\";i:176;s:35:\"admin.safeguard_entries.bulk-delete\";i:177;s:30:\"admin.safeguard_entries.create\";i:178;s:31:\"admin.safeguard_entries.destroy\";i:179;s:28:\"admin.safeguard_entries.edit\";i:180;s:30:\"admin.safeguard_entries.import\";i:181;s:29:\"admin.safeguard_entries.index\";i:182;s:28:\"admin.safeguard_entries.show\";i:183;s:29:\"admin.safeguard_entries.store\";i:184;s:30:\"admin.safeguard_entries.update\";i:185;s:36:\"admin.social_safeguard_entries.index\";i:186;s:53:\"admin.social_safeguard_entries.storeOrUpdateFromIndex\";i:187;s:28:\"admin.sub-departments.create\";i:188;s:29:\"admin.sub-departments.destroy\";i:189;s:26:\"admin.sub-departments.edit\";i:190;s:27:\"admin.sub-departments.index\";i:191;s:26:\"admin.sub-departments.show\";i:192;s:27:\"admin.sub-departments.store\";i:193;s:28:\"admin.sub-departments.update\";i:194;s:33:\"admin.type-of-procurements.create\";i:195;s:34:\"admin.type-of-procurements.destroy\";i:196;s:31:\"admin.type-of-procurements.edit\";i:197;s:32:\"admin.type-of-procurements.index\";i:198;s:34:\"admin.type-of-procurements.restore\";i:199;s:31:\"admin.type-of-procurements.show\";i:200;s:32:\"admin.type-of-procurements.store\";i:201;s:33:\"admin.type-of-procurements.update\";i:202;s:18:\"admin.users.create\";i:203;s:19:\"admin.users.destroy\";i:204;s:16:\"admin.users.edit\";i:205;s:17:\"admin.users.index\";i:206;s:16:\"admin.users.show\";i:207;s:17:\"admin.users.store\";i:208;s:18:\"admin.users.update\";i:209;s:26:\"admin.work_services.create\";i:210;s:27:\"admin.work_services.destroy\";i:211;s:24:\"admin.work_services.edit\";i:212;s:25:\"admin.work_services.index\";i:213;s:24:\"admin.work_services.show\";i:214;s:25:\"admin.work_services.store\";i:215;s:26:\"admin.work_services.update\";i:216;s:9:\"dashboard\";}', 1755756140);
+('navbar_items_en', 'O:39:\"Illuminate\\Database\\Eloquent\\Collection\":2:{s:8:\"\0*\0items\";a:7:{i:0;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:1;s:5:\"title\";s:8:\"About us\";s:4:\"slug\";s:8:\"about-us\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:1;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:33:59\";s:10:\"updated_at\";s:19:\"2025-08-18 04:33:59\";s:4:\"page\";N;s:16:\"translated_title\";s:8:\"About us\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:1;s:5:\"title\";s:8:\"About us\";s:4:\"slug\";s:8:\"about-us\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:1;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:33:59\";s:10:\"updated_at\";s:19:\"2025-08-18 04:33:59\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:1:{s:8:\"children\";O:39:\"Illuminate\\Database\\Eloquent\\Collection\":2:{s:8:\"\0*\0items\";a:5:{i:0;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:2;s:5:\"title\";s:15:\"About U-PREPARE\";s:4:\"slug\";s:15:\"about-u-prepare\";s:9:\"parent_id\";i:1;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:34:38\";s:10:\"updated_at\";s:19:\"2025-08-18 04:34:38\";s:4:\"page\";N;s:16:\"translated_title\";s:15:\"About U-PREPARE\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:2;s:5:\"title\";s:15:\"About U-PREPARE\";s:4:\"slug\";s:15:\"about-u-prepare\";s:9:\"parent_id\";i:1;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:34:38\";s:10:\"updated_at\";s:19:\"2025-08-18 04:34:38\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:1;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:3;s:5:\"title\";s:18:\"Mission and Vision\";s:4:\"slug\";s:18:\"mission-and-vision\";s:9:\"parent_id\";i:1;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:34:52\";s:10:\"updated_at\";s:19:\"2025-08-18 04:34:52\";s:4:\"page\";N;s:16:\"translated_title\";s:18:\"Mission and Vision\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:3;s:5:\"title\";s:18:\"Mission and Vision\";s:4:\"slug\";s:18:\"mission-and-vision\";s:9:\"parent_id\";i:1;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:34:52\";s:10:\"updated_at\";s:19:\"2025-08-18 04:34:52\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:2;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:4;s:5:\"title\";s:7:\"History\";s:4:\"slug\";s:7:\"history\";s:9:\"parent_id\";i:1;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:35:05\";s:10:\"updated_at\";s:19:\"2025-08-18 04:35:05\";s:4:\"page\";N;s:16:\"translated_title\";s:7:\"History\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:4;s:5:\"title\";s:7:\"History\";s:4:\"slug\";s:7:\"history\";s:9:\"parent_id\";i:1;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:35:05\";s:10:\"updated_at\";s:19:\"2025-08-18 04:35:05\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:3;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:5;s:5:\"title\";s:10:\"Objectives\";s:4:\"slug\";s:10:\"objectives\";s:9:\"parent_id\";i:1;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:35:17\";s:10:\"updated_at\";s:19:\"2025-08-18 04:35:17\";s:4:\"page\";N;s:16:\"translated_title\";s:10:\"Objectives\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:5;s:5:\"title\";s:10:\"Objectives\";s:4:\"slug\";s:10:\"objectives\";s:9:\"parent_id\";i:1;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:35:17\";s:10:\"updated_at\";s:19:\"2025-08-18 04:35:17\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:4;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:6;s:5:\"title\";s:17:\"Project Structure\";s:4:\"slug\";s:17:\"project-structure\";s:9:\"parent_id\";i:1;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:35:31\";s:10:\"updated_at\";s:19:\"2025-08-18 04:35:31\";s:4:\"page\";N;s:16:\"translated_title\";s:17:\"Project Structure\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:6;s:5:\"title\";s:17:\"Project Structure\";s:4:\"slug\";s:17:\"project-structure\";s:9:\"parent_id\";i:1;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:35:31\";s:10:\"updated_at\";s:19:\"2025-08-18 04:35:31\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:1;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:7;s:5:\"title\";s:10:\"COMPONENTS\";s:4:\"slug\";s:10:\"components\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:1;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:35:46\";s:10:\"updated_at\";s:19:\"2025-08-18 04:35:46\";s:4:\"page\";N;s:16:\"translated_title\";s:10:\"COMPONENTS\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:7;s:5:\"title\";s:10:\"COMPONENTS\";s:4:\"slug\";s:10:\"components\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:1;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:35:46\";s:10:\"updated_at\";s:19:\"2025-08-18 04:35:46\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:1:{s:8:\"children\";O:39:\"Illuminate\\Database\\Eloquent\\Collection\":2:{s:8:\"\0*\0items\";a:4:{i:0;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:8;s:5:\"title\";s:35:\"Enhancing Infrastructure Resilience\";s:4:\"slug\";s:35:\"enhancing-infrastructure-resilience\";s:9:\"parent_id\";i:7;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:36:01\";s:10:\"updated_at\";s:19:\"2025-08-18 04:36:01\";s:4:\"page\";N;s:16:\"translated_title\";s:35:\"Enhancing Infrastructure Resilience\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:8;s:5:\"title\";s:35:\"Enhancing Infrastructure Resilience\";s:4:\"slug\";s:35:\"enhancing-infrastructure-resilience\";s:9:\"parent_id\";i:7;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:36:01\";s:10:\"updated_at\";s:19:\"2025-08-18 04:36:01\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:1;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:9;s:5:\"title\";s:45:\"Improving Emergency Preparedness and Response\";s:4:\"slug\";s:45:\"improving-emergency-preparedness-and-response\";s:9:\"parent_id\";i:7;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:36:14\";s:10:\"updated_at\";s:19:\"2025-08-18 04:36:14\";s:4:\"page\";N;s:16:\"translated_title\";s:45:\"Improving Emergency Preparedness and Response\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:9;s:5:\"title\";s:45:\"Improving Emergency Preparedness and Response\";s:4:\"slug\";s:45:\"improving-emergency-preparedness-and-response\";s:9:\"parent_id\";i:7;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:36:14\";s:10:\"updated_at\";s:19:\"2025-08-18 04:36:14\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:2;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:10;s:5:\"title\";s:48:\"Preventing and Managing Forest and General Fires\";s:4:\"slug\";s:48:\"preventing-and-managing-forest-and-general-fires\";s:9:\"parent_id\";i:7;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:37:03\";s:10:\"updated_at\";s:19:\"2025-08-18 04:37:03\";s:4:\"page\";N;s:16:\"translated_title\";s:48:\"Preventing and Managing Forest and General Fires\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:10;s:5:\"title\";s:48:\"Preventing and Managing Forest and General Fires\";s:4:\"slug\";s:48:\"preventing-and-managing-forest-and-general-fires\";s:9:\"parent_id\";i:7;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:37:03\";s:10:\"updated_at\";s:19:\"2025-08-18 04:37:03\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:3;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:11;s:5:\"title\";s:18:\"Project Management\";s:4:\"slug\";s:18:\"project-management\";s:9:\"parent_id\";i:7;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:37:27\";s:10:\"updated_at\";s:19:\"2025-08-18 04:37:27\";s:4:\"page\";N;s:16:\"translated_title\";s:18:\"Project Management\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:11;s:5:\"title\";s:18:\"Project Management\";s:4:\"slug\";s:18:\"project-management\";s:9:\"parent_id\";i:7;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:37:27\";s:10:\"updated_at\";s:19:\"2025-08-18 04:37:27\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:2;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:12;s:5:\"title\";s:9:\"RESOURCES\";s:4:\"slug\";s:9:\"resources\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:1;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:37:44\";s:10:\"updated_at\";s:19:\"2025-08-18 04:37:44\";s:4:\"page\";N;s:16:\"translated_title\";s:9:\"RESOURCES\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:12;s:5:\"title\";s:9:\"RESOURCES\";s:4:\"slug\";s:9:\"resources\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:1;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:37:44\";s:10:\"updated_at\";s:19:\"2025-08-18 04:37:44\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:1:{s:8:\"children\";O:39:\"Illuminate\\Database\\Eloquent\\Collection\":2:{s:8:\"\0*\0items\";a:4:{i:0;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:13;s:5:\"title\";s:5:\"Blogs\";s:4:\"slug\";s:5:\"blogs\";s:9:\"parent_id\";i:12;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:37:55\";s:10:\"updated_at\";s:19:\"2025-08-18 04:37:55\";s:4:\"page\";N;s:16:\"translated_title\";s:5:\"Blogs\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:13;s:5:\"title\";s:5:\"Blogs\";s:4:\"slug\";s:5:\"blogs\";s:9:\"parent_id\";i:12;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:37:55\";s:10:\"updated_at\";s:19:\"2025-08-18 04:37:55\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:1;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:14;s:5:\"title\";s:14:\"Press releases\";s:4:\"slug\";s:14:\"press-releases\";s:9:\"parent_id\";i:12;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:38:09\";s:10:\"updated_at\";s:19:\"2025-08-18 04:38:09\";s:4:\"page\";N;s:16:\"translated_title\";s:14:\"Press releases\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:14;s:5:\"title\";s:14:\"Press releases\";s:4:\"slug\";s:14:\"press-releases\";s:9:\"parent_id\";i:12;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:38:09\";s:10:\"updated_at\";s:19:\"2025-08-18 04:38:09\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:2;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:15;s:5:\"title\";s:4:\"News\";s:4:\"slug\";s:4:\"news\";s:9:\"parent_id\";i:12;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:38:20\";s:10:\"updated_at\";s:19:\"2025-08-18 04:38:20\";s:4:\"page\";N;s:16:\"translated_title\";s:4:\"News\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:15;s:5:\"title\";s:4:\"News\";s:4:\"slug\";s:4:\"news\";s:9:\"parent_id\";i:12;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:38:20\";s:10:\"updated_at\";s:19:\"2025-08-18 04:38:20\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:3;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:16;s:5:\"title\";s:7:\"Gallery\";s:4:\"slug\";s:7:\"gallery\";s:9:\"parent_id\";i:12;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:38:30\";s:10:\"updated_at\";s:19:\"2025-08-18 04:38:30\";s:4:\"page\";N;s:16:\"translated_title\";s:7:\"Gallery\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:16;s:5:\"title\";s:7:\"Gallery\";s:4:\"slug\";s:7:\"gallery\";s:9:\"parent_id\";i:12;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:38:30\";s:10:\"updated_at\";s:19:\"2025-08-18 04:38:30\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:3;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:17;s:5:\"title\";s:14:\"PROJECT STATUS\";s:4:\"slug\";s:14:\"project-status\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:38:46\";s:10:\"updated_at\";s:19:\"2025-08-18 04:38:46\";s:4:\"page\";N;s:16:\"translated_title\";s:14:\"PROJECT STATUS\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:17;s:5:\"title\";s:14:\"PROJECT STATUS\";s:4:\"slug\";s:14:\"project-status\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:38:46\";s:10:\"updated_at\";s:19:\"2025-08-18 04:38:46\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:1:{s:8:\"children\";O:39:\"Illuminate\\Database\\Eloquent\\Collection\":2:{s:8:\"\0*\0items\";a:0:{}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:4;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:18;s:5:\"title\";s:10:\"GRIEVANCES\";s:4:\"slug\";s:10:\"grievances\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:1;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:39:15\";s:10:\"updated_at\";s:19:\"2025-08-18 04:39:15\";s:4:\"page\";N;s:16:\"translated_title\";s:10:\"GRIEVANCES\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:18;s:5:\"title\";s:10:\"GRIEVANCES\";s:4:\"slug\";s:10:\"grievances\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:1;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:39:15\";s:10:\"updated_at\";s:19:\"2025-08-18 04:39:15\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:1:{s:8:\"children\";O:39:\"Illuminate\\Database\\Eloquent\\Collection\":2:{s:8:\"\0*\0items\";a:2:{i:0;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:19;s:5:\"title\";s:8:\"Register\";s:4:\"slug\";s:8:\"register\";s:9:\"parent_id\";i:18;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:39:28\";s:10:\"updated_at\";s:19:\"2025-08-18 04:39:28\";s:4:\"page\";N;s:16:\"translated_title\";s:8:\"Register\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:19;s:5:\"title\";s:8:\"Register\";s:4:\"slug\";s:8:\"register\";s:9:\"parent_id\";i:18;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:39:28\";s:10:\"updated_at\";s:19:\"2025-08-18 04:39:28\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:1;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:20;s:5:\"title\";s:6:\"Status\";s:4:\"slug\";s:6:\"status\";s:9:\"parent_id\";i:18;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:39:38\";s:10:\"updated_at\";s:19:\"2025-08-18 04:39:38\";s:4:\"page\";N;s:16:\"translated_title\";s:6:\"Status\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:20;s:5:\"title\";s:6:\"Status\";s:4:\"slug\";s:6:\"status\";s:9:\"parent_id\";i:18;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:39:38\";s:10:\"updated_at\";s:19:\"2025-08-18 04:39:38\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:0:{}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:5;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:21;s:5:\"title\";s:9:\"MIS LOGIN\";s:4:\"slug\";s:9:\"mis-login\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:40:00\";s:10:\"updated_at\";s:19:\"2025-08-18 04:40:00\";s:4:\"page\";N;s:16:\"translated_title\";s:9:\"MIS LOGIN\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:21;s:5:\"title\";s:9:\"MIS LOGIN\";s:4:\"slug\";s:9:\"mis-login\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:40:00\";s:10:\"updated_at\";s:19:\"2025-08-18 04:40:00\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:1:{s:8:\"children\";O:39:\"Illuminate\\Database\\Eloquent\\Collection\":2:{s:8:\"\0*\0items\";a:0:{}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}i:6;O:21:\"App\\Models\\NavbarItem\":33:{s:13:\"\0*\0connection\";s:5:\"mysql\";s:8:\"\0*\0table\";s:12:\"navbar_items\";s:13:\"\0*\0primaryKey\";s:2:\"id\";s:10:\"\0*\0keyType\";s:3:\"int\";s:12:\"incrementing\";b:1;s:7:\"\0*\0with\";a:0:{}s:12:\"\0*\0withCount\";a:0:{}s:19:\"preventsLazyLoading\";b:0;s:10:\"\0*\0perPage\";i:15;s:6:\"exists\";b:1;s:18:\"wasRecentlyCreated\";b:0;s:28:\"\0*\0escapeWhenCastingToString\";b:0;s:13:\"\0*\0attributes\";a:14:{s:2:\"id\";i:22;s:5:\"title\";s:10:\"CONTACT US\";s:4:\"slug\";s:10:\"contact-us\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:40:17\";s:10:\"updated_at\";s:19:\"2025-08-18 04:40:17\";s:4:\"page\";N;s:16:\"translated_title\";s:10:\"CONTACT US\";}s:11:\"\0*\0original\";a:12:{s:2:\"id\";i:22;s:5:\"title\";s:10:\"CONTACT US\";s:4:\"slug\";s:10:\"contact-us\";s:9:\"parent_id\";N;s:11:\"is_dropdown\";i:0;s:5:\"order\";i:0;s:9:\"is_active\";i:1;s:5:\"route\";N;s:3:\"url\";s:1:\"#\";s:4:\"icon\";N;s:10:\"created_at\";s:19:\"2025-08-18 04:40:17\";s:10:\"updated_at\";s:19:\"2025-08-18 04:40:17\";}s:10:\"\0*\0changes\";a:0:{}s:11:\"\0*\0previous\";a:0:{}s:8:\"\0*\0casts\";a:0:{}s:17:\"\0*\0classCastCache\";a:0:{}s:21:\"\0*\0attributeCastCache\";a:0:{}s:13:\"\0*\0dateFormat\";N;s:10:\"\0*\0appends\";a:0:{}s:19:\"\0*\0dispatchesEvents\";a:0:{}s:14:\"\0*\0observables\";a:0:{}s:12:\"\0*\0relations\";a:1:{s:8:\"children\";O:39:\"Illuminate\\Database\\Eloquent\\Collection\":2:{s:8:\"\0*\0items\";a:0:{}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}}s:10:\"\0*\0touches\";a:0:{}s:27:\"\0*\0relationAutoloadCallback\";N;s:26:\"\0*\0relationAutoloadContext\";N;s:10:\"timestamps\";b:1;s:13:\"usesUniqueIds\";b:0;s:9:\"\0*\0hidden\";a:0:{}s:10:\"\0*\0visible\";a:0:{}s:11:\"\0*\0fillable\";a:10:{i:0;s:5:\"title\";i:1;s:8:\"title_hi\";i:2;s:4:\"slug\";i:3;s:9:\"parent_id\";i:4;s:11:\"is_dropdown\";i:5;s:5:\"order\";i:6;s:9:\"is_active\";i:7;s:5:\"route\";i:8;s:3:\"url\";i:9;s:4:\"icon\";}s:10:\"\0*\0guarded\";a:1:{i:0;s:1:\"*\";}}}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}', 1755844988);
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('role_routes_1', 'a:224:{i:0;s:31:\"admin.already_define_epc.create\";i:1;s:32:\"admin.already_define_epc.destroy\";i:2;s:29:\"admin.already_define_epc.edit\";i:3;s:30:\"admin.already_define_epc.index\";i:4;s:29:\"admin.already_define_epc.show\";i:5;s:30:\"admin.already_define_epc.store\";i:6;s:31:\"admin.already_define_epc.update\";i:7;s:26:\"admin.boqentry.bulk-delete\";i:8;s:21:\"admin.boqentry.create\";i:9;s:22:\"admin.boqentry.destroy\";i:10;s:19:\"admin.boqentry.edit\";i:11;s:20:\"admin.boqentry.index\";i:12;s:32:\"admin.boqentry.physical-progress\";i:13;s:37:\"admin.boqentry.save-physical-progress\";i:14;s:20:\"admin.boqentry.store\";i:15;s:21:\"admin.boqentry.update\";i:16;s:21:\"admin.boqentry.upload\";i:17;s:31:\"admin.contraction-phases.create\";i:18;s:32:\"admin.contraction-phases.destroy\";i:19;s:29:\"admin.contraction-phases.edit\";i:20;s:30:\"admin.contraction-phases.index\";i:21;s:29:\"admin.contraction-phases.show\";i:22;s:30:\"admin.contraction-phases.store\";i:23;s:31:\"admin.contraction-phases.update\";i:24;s:24:\"admin.contractors.create\";i:25;s:25:\"admin.contractors.destroy\";i:26;s:22:\"admin.contractors.edit\";i:27;s:23:\"admin.contractors.index\";i:28;s:22:\"admin.contractors.show\";i:29;s:23:\"admin.contractors.store\";i:30;s:24:\"admin.contractors.update\";i:31;s:22:\"admin.contracts.create\";i:32;s:23:\"admin.contracts.destroy\";i:33;s:20:\"admin.contracts.edit\";i:34;s:21:\"admin.contracts.index\";i:35;s:20:\"admin.contracts.show\";i:36;s:21:\"admin.contracts.store\";i:37;s:22:\"admin.contracts.update\";i:38;s:15:\"admin.dashboard\";i:39;s:24:\"admin.departments.create\";i:40;s:25:\"admin.departments.destroy\";i:41;s:22:\"admin.departments.edit\";i:42;s:23:\"admin.departments.index\";i:43;s:22:\"admin.departments.show\";i:44;s:23:\"admin.departments.store\";i:45;s:24:\"admin.departments.update\";i:46;s:25:\"admin.designations.create\";i:47;s:26:\"admin.designations.destroy\";i:48;s:23:\"admin.designations.edit\";i:49;s:24:\"admin.designations.index\";i:50;s:23:\"admin.designations.show\";i:51;s:24:\"admin.designations.store\";i:52;s:25:\"admin.designations.update\";i:53;s:31:\"admin.epcentry_data.bulkDestroy\";i:54;s:26:\"admin.epcentry_data.create\";i:55;s:27:\"admin.epcentry_data.destroy\";i:56;s:24:\"admin.epcentry_data.edit\";i:57;s:25:\"admin.epcentry_data.index\";i:58;s:25:\"admin.epcentry_data.store\";i:59;s:36:\"admin.epcentry_data.storeFromDefined\";i:60;s:26:\"admin.epcentry_data.update\";i:61;s:39:\"admin.financial-progress-updates.create\";i:62;s:40:\"admin.financial-progress-updates.destroy\";i:63;s:37:\"admin.financial-progress-updates.edit\";i:64;s:38:\"admin.financial-progress-updates.index\";i:65;s:37:\"admin.financial-progress-updates.show\";i:66;s:38:\"admin.financial-progress-updates.store\";i:67;s:39:\"admin.financial-progress-updates.update\";i:68;s:31:\"admin.financial-progress.upload\";i:69;s:23:\"admin.grievances.create\";i:70;s:24:\"admin.grievances.destroy\";i:71;s:21:\"admin.grievances.edit\";i:72;s:22:\"admin.grievances.index\";i:73;s:21:\"admin.grievances.show\";i:74;s:22:\"admin.grievances.store\";i:75;s:23:\"admin.grievances.update\";i:76;s:19:\"admin.media.gallery\";i:77;s:17:\"admin.media.index\";i:78;s:24:\"admin.media_files.upload\";i:79;s:25:\"admin.navbar-items.create\";i:80;s:26:\"admin.navbar-items.destroy\";i:81;s:23:\"admin.navbar-items.edit\";i:82;s:24:\"admin.navbar-items.index\";i:83;s:23:\"admin.navbar-items.show\";i:84;s:24:\"admin.navbar-items.store\";i:85;s:25:\"admin.navbar-items.update\";i:86;s:31:\"admin.navbar-items.update-order\";i:87;s:31:\"admin.package-components.create\";i:88;s:32:\"admin.package-components.destroy\";i:89;s:29:\"admin.package-components.edit\";i:90;s:30:\"admin.package-components.index\";i:91;s:29:\"admin.package-components.show\";i:92;s:30:\"admin.package-components.store\";i:93;s:31:\"admin.package-components.update\";i:94;s:40:\"admin.package-project-assignments.create\";i:95;s:41:\"admin.package-project-assignments.destroy\";i:96;s:38:\"admin.package-project-assignments.edit\";i:97;s:39:\"admin.package-project-assignments.index\";i:98;s:38:\"admin.package-project-assignments.show\";i:99;s:39:\"admin.package-project-assignments.store\";i:100;s:40:\"admin.package-project-assignments.update\";i:101;s:29:\"admin.package-projects.create\";i:102;s:30:\"admin.package-projects.destroy\";i:103;s:27:\"admin.package-projects.edit\";i:104;s:28:\"admin.package-projects.index\";i:105;s:27:\"admin.package-projects.show\";i:106;s:28:\"admin.package-projects.store\";i:107;s:29:\"admin.package-projects.update\";i:108;s:18:\"admin.pages.create\";i:109;s:23:\"admin.pages.create.form\";i:110;s:18:\"admin.pages.delete\";i:111;s:21:\"admin.pages.edit.form\";i:112;s:16:\"admin.pages.list\";i:113;s:18:\"admin.pages.update\";i:114;s:39:\"admin.physical_boq_progress.bulk-delete\";i:115;s:34:\"admin.physical_boq_progress.create\";i:116;s:35:\"admin.physical_boq_progress.destroy\";i:117;s:32:\"admin.physical_boq_progress.edit\";i:118;s:33:\"admin.physical_boq_progress.index\";i:119;s:33:\"admin.physical_boq_progress.store\";i:120;s:34:\"admin.physical_boq_progress.update\";i:121;s:39:\"admin.physical_epc_progress.bulkDestroy\";i:122;s:34:\"admin.physical_epc_progress.create\";i:123;s:35:\"admin.physical_epc_progress.destroy\";i:124;s:32:\"admin.physical_epc_progress.edit\";i:125;s:33:\"admin.physical_epc_progress.index\";i:126;s:32:\"admin.physical_epc_progress.show\";i:127;s:33:\"admin.physical_epc_progress.store\";i:128;s:34:\"admin.physical_epc_progress.update\";i:129;s:32:\"admin.procurement-details.create\";i:130;s:33:\"admin.procurement-details.destroy\";i:131;s:30:\"admin.procurement-details.edit\";i:132;s:31:\"admin.procurement-details.index\";i:133;s:30:\"admin.procurement-details.show\";i:134;s:31:\"admin.procurement-details.store\";i:135;s:32:\"admin.procurement-details.update\";i:136;s:38:\"admin.procurement-work-programs.create\";i:137;s:39:\"admin.procurement-work-programs.destroy\";i:138;s:36:\"admin.procurement-work-programs.edit\";i:139;s:47:\"admin.procurement-work-programs.edit-by-package\";i:140;s:37:\"admin.procurement-work-programs.index\";i:141;s:36:\"admin.procurement-work-programs.show\";i:142;s:41:\"admin.procurement-work-programs.show.pack\";i:143;s:37:\"admin.procurement-work-programs.store\";i:144;s:44:\"admin.procurement-work-programs.store-single\";i:145;s:38:\"admin.procurement-work-programs.update\";i:146;s:45:\"admin.procurement-work-programs.update-single\";i:147;s:48:\"admin.procurement-work-programs.upload-documents\";i:148;s:20:\"admin.project.create\";i:149;s:21:\"admin.project.destroy\";i:150;s:18:\"admin.project.edit\";i:151;s:19:\"admin.project.index\";i:152;s:18:\"admin.project.show\";i:153;s:19:\"admin.project.store\";i:154;s:20:\"admin.project.update\";i:155;s:30:\"admin.projects-category.create\";i:156;s:31:\"admin.projects-category.destroy\";i:157;s:28:\"admin.projects-category.edit\";i:158;s:29:\"admin.projects-category.index\";i:159;s:28:\"admin.projects-category.show\";i:160;s:29:\"admin.projects-category.store\";i:161;s:30:\"admin.projects-category.update\";i:162;s:24:\"admin.role_routes.create\";i:163;s:25:\"admin.role_routes.destroy\";i:164;s:22:\"admin.role_routes.edit\";i:165;s:23:\"admin.role_routes.index\";i:166;s:22:\"admin.role_routes.show\";i:167;s:23:\"admin.role_routes.store\";i:168;s:24:\"admin.role_routes.update\";i:169;s:18:\"admin.roles.create\";i:170;s:19:\"admin.roles.destroy\";i:171;s:16:\"admin.roles.edit\";i:172;s:17:\"admin.roles.index\";i:173;s:16:\"admin.roles.show\";i:174;s:17:\"admin.roles.store\";i:175;s:18:\"admin.roles.update\";i:176;s:34:\"admin.safeguard-compliances.create\";i:177;s:35:\"admin.safeguard-compliances.destroy\";i:178;s:32:\"admin.safeguard-compliances.edit\";i:179;s:33:\"admin.safeguard-compliances.index\";i:180;s:32:\"admin.safeguard-compliances.show\";i:181;s:33:\"admin.safeguard-compliances.store\";i:182;s:34:\"admin.safeguard-compliances.update\";i:183;s:35:\"admin.safeguard_entries.bulk-delete\";i:184;s:30:\"admin.safeguard_entries.create\";i:185;s:31:\"admin.safeguard_entries.destroy\";i:186;s:28:\"admin.safeguard_entries.edit\";i:187;s:30:\"admin.safeguard_entries.import\";i:188;s:29:\"admin.safeguard_entries.index\";i:189;s:28:\"admin.safeguard_entries.show\";i:190;s:29:\"admin.safeguard_entries.store\";i:191;s:30:\"admin.safeguard_entries.update\";i:192;s:36:\"admin.social_safeguard_entries.index\";i:193;s:53:\"admin.social_safeguard_entries.storeOrUpdateFromIndex\";i:194;s:28:\"admin.sub-departments.create\";i:195;s:29:\"admin.sub-departments.destroy\";i:196;s:26:\"admin.sub-departments.edit\";i:197;s:27:\"admin.sub-departments.index\";i:198;s:26:\"admin.sub-departments.show\";i:199;s:27:\"admin.sub-departments.store\";i:200;s:28:\"admin.sub-departments.update\";i:201;s:33:\"admin.type-of-procurements.create\";i:202;s:34:\"admin.type-of-procurements.destroy\";i:203;s:31:\"admin.type-of-procurements.edit\";i:204;s:32:\"admin.type-of-procurements.index\";i:205;s:34:\"admin.type-of-procurements.restore\";i:206;s:31:\"admin.type-of-procurements.show\";i:207;s:32:\"admin.type-of-procurements.store\";i:208;s:33:\"admin.type-of-procurements.update\";i:209;s:18:\"admin.users.create\";i:210;s:19:\"admin.users.destroy\";i:211;s:16:\"admin.users.edit\";i:212;s:17:\"admin.users.index\";i:213;s:16:\"admin.users.show\";i:214;s:17:\"admin.users.store\";i:215;s:18:\"admin.users.update\";i:216;s:26:\"admin.work_services.create\";i:217;s:27:\"admin.work_services.destroy\";i:218;s:24:\"admin.work_services.edit\";i:219;s:25:\"admin.work_services.index\";i:220;s:24:\"admin.work_services.show\";i:221;s:25:\"admin.work_services.store\";i:222;s:26:\"admin.work_services.update\";i:223;s:9:\"dashboard\";}', 1755844988);
 
 -- --------------------------------------------------------
 
@@ -488,15 +490,6 @@ CREATE TABLE `financial_progress_updates` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `financial_progress_updates`
---
-
-INSERT INTO `financial_progress_updates` (`id`, `project_id`, `finance_amount`, `no_of_bills`, `bill_serial_no`, `submit_date`, `media`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 10, 13011787.00, 1, '\"Mobilization Advance\"', '2025-01-29', '[]', '2025-08-17 03:23:26', '2025-08-17 03:23:26', NULL),
-(2, 10, 21729683.00, 1, '\"RA Bill - 01\"', '2025-05-01', '[]', '2025-08-17 03:26:13', '2025-08-17 03:26:13', NULL),
-(3, 10, 21079094.00, 1, '\"RA Bill - 02\"', '2025-06-20', '[]', '2025-08-17 03:26:49', '2025-08-17 03:26:49', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -585,6 +578,80 @@ INSERT INTO `geography_divisions` (`id`, `name`, `slug`, `created_at`, `updated_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `grievances`
+--
+
+CREATE TABLE `grievances` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `grievance_no` varchar(255) NOT NULL,
+  `full_name` varchar(255) NOT NULL,
+  `address` text DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `mobile` varchar(15) DEFAULT NULL,
+  `grievance_related_to` varchar(255) NOT NULL,
+  `nature_of_complaint` varchar(255) NOT NULL,
+  `detail_of_complaint` text DEFAULT NULL,
+  `district` varchar(255) DEFAULT NULL,
+  `block` varchar(255) DEFAULT NULL,
+  `village` varchar(255) DEFAULT NULL,
+  `project` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `document` varchar(255) DEFAULT NULL,
+  `filing_on_behalf` tinyint(1) NOT NULL DEFAULT 0,
+  `consent_from_survivor` tinyint(1) NOT NULL DEFAULT 0,
+  `status` varchar(255) NOT NULL DEFAULT 'pending',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `grievances`
+--
+
+INSERT INTO `grievances` (`id`, `grievance_no`, `full_name`, `address`, `email`, `mobile`, `grievance_related_to`, `nature_of_complaint`, `detail_of_complaint`, `district`, `block`, `village`, `project`, `description`, `document`, `filing_on_behalf`, `consent_from_survivor`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'GR00001', 'Ramesh Kumar', '123 MG Road, Bhopal', 'ramesh@example.com', '9876543210', 'Road Construction', 'Delay in work', 'The road project has been delayed by 6 months', 'Bhopal', 'Block A', 'Village Alpha', 'Road Project 101', 'Road still incomplete', NULL, 0, 0, 'Pending', '2025-08-22 06:26:32', '2025-08-22 06:26:32'),
+(2, 'GR00002', 'Sita Devi', '45 Gandhi Nagar, Indore', 'sita@example.com', '9123456780', 'Water Supply', 'Poor Quality', 'Water supply is muddy and not drinkable', 'Indore', 'Block B', 'Village Beta', 'Water Project 202', 'Water unfit for drinking', NULL, 0, 0, 'Pending', '2025-08-22 06:26:32', '2025-08-22 06:26:32'),
+(3, 'GR00003', 'Arjun Singh', '78 Civil Lines, Jabalpur', 'arjun@example.com', '9988776655', 'Electricity', 'Frequent Power Cuts', 'There are daily power cuts lasting 5–6 hours', 'Jabalpur', 'Block C', 'Village Gamma', 'Electricity Project 303', 'Frequent interruptions in power supply', NULL, 0, 0, 'Pending', '2025-08-22 06:26:32', '2025-08-22 06:26:32'),
+(4, 'GR00004', 'Meena Sharma', '12 Patel Colony, Gwalior', 'meena@example.com', '9876501234', 'Healthcare', 'Lack of Staff', 'Primary health center has no doctors available', 'Gwalior', 'Block D', 'Village Delta', 'Health Project 404', 'Urgent need for medical staff', NULL, 0, 0, 'Pending', '2025-08-22 06:26:32', '2025-08-22 06:26:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `grievance_assignments`
+--
+
+CREATE TABLE `grievance_assignments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `grievance_id` bigint(20) UNSIGNED NOT NULL,
+  `assigned_to` bigint(20) UNSIGNED DEFAULT NULL,
+  `assigned_by` bigint(20) UNSIGNED DEFAULT NULL,
+  `department` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `grievance_logs`
+--
+
+CREATE TABLE `grievance_logs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `grievance_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `remark` text DEFAULT NULL,
+  `preliminary_action_taken` text DEFAULT NULL,
+  `final_action_taken` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jobs`
 --
 
@@ -648,7 +715,9 @@ INSERT INTO `media_files` (`id`, `path`, `type`, `meta_data`, `lat`, `long`, `cr
 (6, 'financial_progress/fQrTmeCmol6nMP4dB5Se4ENmjcNu74Hhzi8SXdde.png', 'image/png', '{\"name\":\"background.png\",\"size\":385403,\"mime\":\"image\\/png\",\"uploaded_at\":\"2025-08-15 10:26:01\",\"uploaded_by\":3}', NULL, NULL, '2025-08-15 04:56:01', '2025-08-15 04:56:01', NULL),
 (7, 'financial_progress/QrS4zc9rMPM1b9DsmHwc5gSQDwFeBEL0MwBInjXO.png', 'image/png', '{\"name\":\"captured_image.png\",\"size\":345493,\"mime\":\"image\\/png\",\"uploaded_at\":\"2025-08-15 10:26:01\",\"uploaded_by\":3}', NULL, NULL, '2025-08-15 04:56:01', '2025-08-15 04:56:01', NULL),
 (8, 'financial_progress/7ZTTpNTxikGeFYE9dldcCikGMcpgmHj91H2CfN09.png', 'image/png', '{\"name\":\"sunglasses.png\",\"size\":11716,\"mime\":\"image\\/png\",\"uploaded_at\":\"2025-08-15 11:17:37\",\"uploaded_by\":3}', NULL, NULL, '2025-08-15 05:47:37', '2025-08-15 05:47:37', NULL),
-(9, 'financial_progress/gLCBvKrWE4eIxxyeOIagAgr9Ck3E5pUjRK6fKJ94.pdf', 'application/pdf', '{\"name\":\"sample-local-pdf.pdf\",\"size\":49672,\"mime\":\"application\\/pdf\",\"uploaded_at\":\"2025-08-15 11:18:11\",\"uploaded_by\":3}', NULL, NULL, '2025-08-15 05:48:11', '2025-08-15 05:48:11', NULL);
+(9, 'financial_progress/gLCBvKrWE4eIxxyeOIagAgr9Ck3E5pUjRK6fKJ94.pdf', 'application/pdf', '{\"name\":\"sample-local-pdf.pdf\",\"size\":49672,\"mime\":\"application\\/pdf\",\"uploaded_at\":\"2025-08-15 11:18:11\",\"uploaded_by\":3}', NULL, NULL, '2025-08-15 05:48:11', '2025-08-15 05:48:11', NULL),
+(10, 'progress_images/4BhqfGq3kocY5QOxsmlwSAzViKhew1SETtewPoVi.png', 'image/png', '{\"subject\":\"Physical EPC Progress\",\"sub_package_project_id\":10,\"name\":null,\"original_name\":\"background.png\",\"latitude\":null,\"longitude\":null}', NULL, NULL, '2025-08-21 00:35:31', '2025-08-21 00:35:31', NULL),
+(11, 'financial_progress/fP600OC4nAagP7g45ZSAMq4J990HM9AYBlIS8lQ7.png', 'image/png', '{\"name\":\"background.png\",\"size\":385403,\"mime\":\"image\\/png\",\"uploaded_at\":\"2025-08-21 09:49:12\",\"uploaded_by\":3}', NULL, NULL, '2025-08-21 04:19:12', '2025-08-21 04:19:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -715,7 +784,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (53, '2025_08_13_115329_create_safeguard_custom_entries_table', 36),
 (54, '2025_08_13_124535_add_safeguard_entry_id_to_social_safeguard_entries_table', 37),
 (55, '2025_08_13_175135_add_is_one_time_to_contraction_phases_table', 38),
-(56, '2025_08_14_095816_create_financial_progress_updates_table', 39),
 (57, '2025_04_03_165953_create_navbar_items_table', 40),
 (58, '2025_04_06_075536_create_pages_table', 41),
 (59, '2025_08_18_045723_update_pages_table_add_softdeletes_and_title_hi', 42),
@@ -728,7 +796,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (66, '2025_08_19_121007_change_lok_sabha_fk_to_assembly', 49),
 (67, '2025_08_20_054540_create_role_routes_table', 50),
 (68, '2025_08_20_104756_create_package_project_assignments_table', 51),
-(69, '2025_08_21_041813_create_sub_departments_table', 52);
+(70, '2025_08_21_041813_create_sub_departments_table', 52),
+(72, '2025_08_14_095816_create_financial_progress_updates_table', 53),
+(73, '2025_08_22_044118_create_grievances_table', 54),
+(74, '2025_08_22_044437_add_status_to_grievances_table', 55),
+(75, '2025_08_22_045459_add_grievance_no_to_grievances_table', 56),
+(76, '2025_08_22_050955_create_grievance_assignments_table', 57),
+(77, '2025_08_22_062419_create_grievance_logs_table', 58),
+(78, '2025_08_22_070828_add_actions_to_grievance_logs_table', 59);
 
 -- --------------------------------------------------------
 
@@ -1054,7 +1129,7 @@ CREATE TABLE `physical_epc_progress` (
 INSERT INTO `physical_epc_progress` (`id`, `epcentry_data_id`, `percent`, `amount`, `items`, `progress_submitted_date`, `images`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (4, 48, 15.00, 23030862.00, 'all doen', '2025-04-28', '[]', '2025-08-17 03:20:34', '2025-08-17 03:20:34', NULL),
 (5, 49, 15.00, 23030862.00, 'ed', '2025-06-08', '[]', '2025-08-17 03:21:08', '2025-08-17 03:21:08', NULL),
-(6, 50, 15.00, 23030862.00, 'done', '2025-06-30', '[]', '2025-08-17 03:21:39', '2025-08-17 03:21:39', NULL);
+(6, 50, 15.00, 23030862.00, 'done', '2025-06-30', '[10]', '2025-08-17 03:21:39', '2025-08-21 00:35:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -1428,223 +1503,230 @@ INSERT INTO `role_routes` (`id`, `role_id`, `route_name`, `created_at`, `updated
 (2032, 2, 'admin.work_services.store', NULL, NULL),
 (2033, 2, 'admin.work_services.update', NULL, NULL),
 (2034, 2, 'dashboard', NULL, NULL),
-(2035, 1, 'admin.already_define_epc.create', NULL, NULL),
-(2036, 1, 'admin.already_define_epc.destroy', NULL, NULL),
-(2037, 1, 'admin.already_define_epc.edit', NULL, NULL),
-(2038, 1, 'admin.already_define_epc.index', NULL, NULL),
-(2039, 1, 'admin.already_define_epc.show', NULL, NULL),
-(2040, 1, 'admin.already_define_epc.store', NULL, NULL),
-(2041, 1, 'admin.already_define_epc.update', NULL, NULL),
-(2042, 1, 'admin.boqentry.bulk-delete', NULL, NULL),
-(2043, 1, 'admin.boqentry.create', NULL, NULL),
-(2044, 1, 'admin.boqentry.destroy', NULL, NULL),
-(2045, 1, 'admin.boqentry.edit', NULL, NULL),
-(2046, 1, 'admin.boqentry.index', NULL, NULL),
-(2047, 1, 'admin.boqentry.physical-progress', NULL, NULL),
-(2048, 1, 'admin.boqentry.save-physical-progress', NULL, NULL),
-(2049, 1, 'admin.boqentry.store', NULL, NULL),
-(2050, 1, 'admin.boqentry.update', NULL, NULL),
-(2051, 1, 'admin.boqentry.upload', NULL, NULL),
-(2052, 1, 'admin.contraction-phases.create', NULL, NULL),
-(2053, 1, 'admin.contraction-phases.destroy', NULL, NULL),
-(2054, 1, 'admin.contraction-phases.edit', NULL, NULL),
-(2055, 1, 'admin.contraction-phases.index', NULL, NULL),
-(2056, 1, 'admin.contraction-phases.show', NULL, NULL),
-(2057, 1, 'admin.contraction-phases.store', NULL, NULL),
-(2058, 1, 'admin.contraction-phases.update', NULL, NULL),
-(2059, 1, 'admin.contractors.create', NULL, NULL),
-(2060, 1, 'admin.contractors.destroy', NULL, NULL),
-(2061, 1, 'admin.contractors.edit', NULL, NULL),
-(2062, 1, 'admin.contractors.index', NULL, NULL),
-(2063, 1, 'admin.contractors.show', NULL, NULL),
-(2064, 1, 'admin.contractors.store', NULL, NULL),
-(2065, 1, 'admin.contractors.update', NULL, NULL),
-(2066, 1, 'admin.contracts.create', NULL, NULL),
-(2067, 1, 'admin.contracts.destroy', NULL, NULL),
-(2068, 1, 'admin.contracts.edit', NULL, NULL),
-(2069, 1, 'admin.contracts.index', NULL, NULL),
-(2070, 1, 'admin.contracts.show', NULL, NULL),
-(2071, 1, 'admin.contracts.store', NULL, NULL),
-(2072, 1, 'admin.contracts.update', NULL, NULL),
-(2073, 1, 'admin.dashboard', NULL, NULL),
-(2074, 1, 'admin.departments.create', NULL, NULL),
-(2075, 1, 'admin.departments.destroy', NULL, NULL),
-(2076, 1, 'admin.departments.edit', NULL, NULL),
-(2077, 1, 'admin.departments.index', NULL, NULL),
-(2078, 1, 'admin.departments.show', NULL, NULL),
-(2079, 1, 'admin.departments.store', NULL, NULL),
-(2080, 1, 'admin.departments.update', NULL, NULL),
-(2081, 1, 'admin.designations.create', NULL, NULL),
-(2082, 1, 'admin.designations.destroy', NULL, NULL),
-(2083, 1, 'admin.designations.edit', NULL, NULL),
-(2084, 1, 'admin.designations.index', NULL, NULL),
-(2085, 1, 'admin.designations.show', NULL, NULL),
-(2086, 1, 'admin.designations.store', NULL, NULL),
-(2087, 1, 'admin.designations.update', NULL, NULL),
-(2088, 1, 'admin.epcentry_data.bulkDestroy', NULL, NULL),
-(2089, 1, 'admin.epcentry_data.create', NULL, NULL),
-(2090, 1, 'admin.epcentry_data.destroy', NULL, NULL),
-(2091, 1, 'admin.epcentry_data.edit', NULL, NULL),
-(2092, 1, 'admin.epcentry_data.index', NULL, NULL),
-(2093, 1, 'admin.epcentry_data.store', NULL, NULL),
-(2094, 1, 'admin.epcentry_data.storeFromDefined', NULL, NULL),
-(2095, 1, 'admin.epcentry_data.update', NULL, NULL),
-(2096, 1, 'admin.financial-progress-updates.create', NULL, NULL),
-(2097, 1, 'admin.financial-progress-updates.destroy', NULL, NULL),
-(2098, 1, 'admin.financial-progress-updates.edit', NULL, NULL),
-(2099, 1, 'admin.financial-progress-updates.index', NULL, NULL),
-(2100, 1, 'admin.financial-progress-updates.show', NULL, NULL),
-(2101, 1, 'admin.financial-progress-updates.store', NULL, NULL),
-(2102, 1, 'admin.financial-progress-updates.update', NULL, NULL),
-(2103, 1, 'admin.financial-progress.upload', NULL, NULL),
-(2104, 1, 'admin.media.gallery', NULL, NULL),
-(2105, 1, 'admin.media.index', NULL, NULL),
-(2106, 1, 'admin.media_files.upload', NULL, NULL),
-(2107, 1, 'admin.navbar-items.create', NULL, NULL),
-(2108, 1, 'admin.navbar-items.destroy', NULL, NULL),
-(2109, 1, 'admin.navbar-items.edit', NULL, NULL),
-(2110, 1, 'admin.navbar-items.index', NULL, NULL),
-(2111, 1, 'admin.navbar-items.show', NULL, NULL),
-(2112, 1, 'admin.navbar-items.store', NULL, NULL),
-(2113, 1, 'admin.navbar-items.update', NULL, NULL),
-(2114, 1, 'admin.navbar-items.update-order', NULL, NULL),
-(2115, 1, 'admin.package-components.create', NULL, NULL),
-(2116, 1, 'admin.package-components.destroy', NULL, NULL),
-(2117, 1, 'admin.package-components.edit', NULL, NULL),
-(2118, 1, 'admin.package-components.index', NULL, NULL),
-(2119, 1, 'admin.package-components.show', NULL, NULL),
-(2120, 1, 'admin.package-components.store', NULL, NULL),
-(2121, 1, 'admin.package-components.update', NULL, NULL),
-(2122, 1, 'admin.package-project-assignments.create', NULL, NULL),
-(2123, 1, 'admin.package-project-assignments.destroy', NULL, NULL),
-(2124, 1, 'admin.package-project-assignments.edit', NULL, NULL),
-(2125, 1, 'admin.package-project-assignments.index', NULL, NULL),
-(2126, 1, 'admin.package-project-assignments.show', NULL, NULL),
-(2127, 1, 'admin.package-project-assignments.store', NULL, NULL),
-(2128, 1, 'admin.package-project-assignments.update', NULL, NULL),
-(2129, 1, 'admin.package-projects.create', NULL, NULL),
-(2130, 1, 'admin.package-projects.destroy', NULL, NULL),
-(2131, 1, 'admin.package-projects.edit', NULL, NULL),
-(2132, 1, 'admin.package-projects.index', NULL, NULL),
-(2133, 1, 'admin.package-projects.show', NULL, NULL),
-(2134, 1, 'admin.package-projects.store', NULL, NULL),
-(2135, 1, 'admin.package-projects.update', NULL, NULL),
-(2136, 1, 'admin.pages.create', NULL, NULL),
-(2137, 1, 'admin.pages.create.form', NULL, NULL),
-(2138, 1, 'admin.pages.delete', NULL, NULL),
-(2139, 1, 'admin.pages.edit.form', NULL, NULL),
-(2140, 1, 'admin.pages.list', NULL, NULL),
-(2141, 1, 'admin.pages.update', NULL, NULL),
-(2142, 1, 'admin.physical_boq_progress.bulk-delete', NULL, NULL),
-(2143, 1, 'admin.physical_boq_progress.create', NULL, NULL),
-(2144, 1, 'admin.physical_boq_progress.destroy', NULL, NULL),
-(2145, 1, 'admin.physical_boq_progress.edit', NULL, NULL),
-(2146, 1, 'admin.physical_boq_progress.index', NULL, NULL),
-(2147, 1, 'admin.physical_boq_progress.store', NULL, NULL),
-(2148, 1, 'admin.physical_boq_progress.update', NULL, NULL),
-(2149, 1, 'admin.physical_epc_progress.bulkDestroy', NULL, NULL),
-(2150, 1, 'admin.physical_epc_progress.create', NULL, NULL),
-(2151, 1, 'admin.physical_epc_progress.destroy', NULL, NULL),
-(2152, 1, 'admin.physical_epc_progress.edit', NULL, NULL),
-(2153, 1, 'admin.physical_epc_progress.index', NULL, NULL),
-(2154, 1, 'admin.physical_epc_progress.show', NULL, NULL),
-(2155, 1, 'admin.physical_epc_progress.store', NULL, NULL),
-(2156, 1, 'admin.physical_epc_progress.update', NULL, NULL),
-(2157, 1, 'admin.procurement-details.create', NULL, NULL),
-(2158, 1, 'admin.procurement-details.destroy', NULL, NULL),
-(2159, 1, 'admin.procurement-details.edit', NULL, NULL),
-(2160, 1, 'admin.procurement-details.index', NULL, NULL),
-(2161, 1, 'admin.procurement-details.show', NULL, NULL),
-(2162, 1, 'admin.procurement-details.store', NULL, NULL),
-(2163, 1, 'admin.procurement-details.update', NULL, NULL),
-(2164, 1, 'admin.procurement-work-programs.create', NULL, NULL),
-(2165, 1, 'admin.procurement-work-programs.destroy', NULL, NULL),
-(2166, 1, 'admin.procurement-work-programs.edit', NULL, NULL),
-(2167, 1, 'admin.procurement-work-programs.edit-by-package', NULL, NULL),
-(2168, 1, 'admin.procurement-work-programs.index', NULL, NULL),
-(2169, 1, 'admin.procurement-work-programs.show', NULL, NULL),
-(2170, 1, 'admin.procurement-work-programs.show.pack', NULL, NULL),
-(2171, 1, 'admin.procurement-work-programs.store', NULL, NULL),
-(2172, 1, 'admin.procurement-work-programs.store-single', NULL, NULL),
-(2173, 1, 'admin.procurement-work-programs.update', NULL, NULL),
-(2174, 1, 'admin.procurement-work-programs.update-single', NULL, NULL),
-(2175, 1, 'admin.procurement-work-programs.upload-documents', NULL, NULL),
-(2176, 1, 'admin.project.create', NULL, NULL),
-(2177, 1, 'admin.project.destroy', NULL, NULL),
-(2178, 1, 'admin.project.edit', NULL, NULL),
-(2179, 1, 'admin.project.index', NULL, NULL),
-(2180, 1, 'admin.project.show', NULL, NULL),
-(2181, 1, 'admin.project.store', NULL, NULL),
-(2182, 1, 'admin.project.update', NULL, NULL),
-(2183, 1, 'admin.projects-category.create', NULL, NULL),
-(2184, 1, 'admin.projects-category.destroy', NULL, NULL),
-(2185, 1, 'admin.projects-category.edit', NULL, NULL),
-(2186, 1, 'admin.projects-category.index', NULL, NULL),
-(2187, 1, 'admin.projects-category.show', NULL, NULL),
-(2188, 1, 'admin.projects-category.store', NULL, NULL),
-(2189, 1, 'admin.projects-category.update', NULL, NULL),
-(2190, 1, 'admin.role_routes.create', NULL, NULL),
-(2191, 1, 'admin.role_routes.destroy', NULL, NULL),
-(2192, 1, 'admin.role_routes.edit', NULL, NULL),
-(2193, 1, 'admin.role_routes.index', NULL, NULL),
-(2194, 1, 'admin.role_routes.show', NULL, NULL),
-(2195, 1, 'admin.role_routes.store', NULL, NULL),
-(2196, 1, 'admin.role_routes.update', NULL, NULL),
-(2197, 1, 'admin.roles.create', NULL, NULL),
-(2198, 1, 'admin.roles.destroy', NULL, NULL),
-(2199, 1, 'admin.roles.edit', NULL, NULL),
-(2200, 1, 'admin.roles.index', NULL, NULL),
-(2201, 1, 'admin.roles.show', NULL, NULL),
-(2202, 1, 'admin.roles.store', NULL, NULL),
-(2203, 1, 'admin.roles.update', NULL, NULL),
-(2204, 1, 'admin.safeguard-compliances.create', NULL, NULL),
-(2205, 1, 'admin.safeguard-compliances.destroy', NULL, NULL),
-(2206, 1, 'admin.safeguard-compliances.edit', NULL, NULL),
-(2207, 1, 'admin.safeguard-compliances.index', NULL, NULL),
-(2208, 1, 'admin.safeguard-compliances.show', NULL, NULL),
-(2209, 1, 'admin.safeguard-compliances.store', NULL, NULL),
-(2210, 1, 'admin.safeguard-compliances.update', NULL, NULL),
-(2211, 1, 'admin.safeguard_entries.bulk-delete', NULL, NULL),
-(2212, 1, 'admin.safeguard_entries.create', NULL, NULL),
-(2213, 1, 'admin.safeguard_entries.destroy', NULL, NULL),
-(2214, 1, 'admin.safeguard_entries.edit', NULL, NULL),
-(2215, 1, 'admin.safeguard_entries.import', NULL, NULL),
-(2216, 1, 'admin.safeguard_entries.index', NULL, NULL),
-(2217, 1, 'admin.safeguard_entries.show', NULL, NULL),
-(2218, 1, 'admin.safeguard_entries.store', NULL, NULL),
-(2219, 1, 'admin.safeguard_entries.update', NULL, NULL),
-(2220, 1, 'admin.social_safeguard_entries.index', NULL, NULL),
-(2221, 1, 'admin.social_safeguard_entries.storeOrUpdateFromIndex', NULL, NULL),
-(2222, 1, 'admin.sub-departments.create', NULL, NULL),
-(2223, 1, 'admin.sub-departments.destroy', NULL, NULL),
-(2224, 1, 'admin.sub-departments.edit', NULL, NULL),
-(2225, 1, 'admin.sub-departments.index', NULL, NULL),
-(2226, 1, 'admin.sub-departments.show', NULL, NULL),
-(2227, 1, 'admin.sub-departments.store', NULL, NULL),
-(2228, 1, 'admin.sub-departments.update', NULL, NULL),
-(2229, 1, 'admin.type-of-procurements.create', NULL, NULL),
-(2230, 1, 'admin.type-of-procurements.destroy', NULL, NULL),
-(2231, 1, 'admin.type-of-procurements.edit', NULL, NULL),
-(2232, 1, 'admin.type-of-procurements.index', NULL, NULL),
-(2233, 1, 'admin.type-of-procurements.restore', NULL, NULL),
-(2234, 1, 'admin.type-of-procurements.show', NULL, NULL),
-(2235, 1, 'admin.type-of-procurements.store', NULL, NULL),
-(2236, 1, 'admin.type-of-procurements.update', NULL, NULL),
-(2237, 1, 'admin.users.create', NULL, NULL),
-(2238, 1, 'admin.users.destroy', NULL, NULL),
-(2239, 1, 'admin.users.edit', NULL, NULL),
-(2240, 1, 'admin.users.index', NULL, NULL),
-(2241, 1, 'admin.users.show', NULL, NULL),
-(2242, 1, 'admin.users.store', NULL, NULL),
-(2243, 1, 'admin.users.update', NULL, NULL),
-(2244, 1, 'admin.work_services.create', NULL, NULL),
-(2245, 1, 'admin.work_services.destroy', NULL, NULL),
-(2246, 1, 'admin.work_services.edit', NULL, NULL),
-(2247, 1, 'admin.work_services.index', NULL, NULL),
-(2248, 1, 'admin.work_services.show', NULL, NULL),
-(2249, 1, 'admin.work_services.store', NULL, NULL),
-(2250, 1, 'admin.work_services.update', NULL, NULL),
-(2251, 1, 'dashboard', NULL, NULL);
+(2252, 1, 'admin.already_define_epc.create', NULL, NULL),
+(2253, 1, 'admin.already_define_epc.destroy', NULL, NULL),
+(2254, 1, 'admin.already_define_epc.edit', NULL, NULL),
+(2255, 1, 'admin.already_define_epc.index', NULL, NULL),
+(2256, 1, 'admin.already_define_epc.show', NULL, NULL),
+(2257, 1, 'admin.already_define_epc.store', NULL, NULL),
+(2258, 1, 'admin.already_define_epc.update', NULL, NULL),
+(2259, 1, 'admin.boqentry.bulk-delete', NULL, NULL),
+(2260, 1, 'admin.boqentry.create', NULL, NULL),
+(2261, 1, 'admin.boqentry.destroy', NULL, NULL),
+(2262, 1, 'admin.boqentry.edit', NULL, NULL),
+(2263, 1, 'admin.boqentry.index', NULL, NULL),
+(2264, 1, 'admin.boqentry.physical-progress', NULL, NULL),
+(2265, 1, 'admin.boqentry.save-physical-progress', NULL, NULL),
+(2266, 1, 'admin.boqentry.store', NULL, NULL),
+(2267, 1, 'admin.boqentry.update', NULL, NULL),
+(2268, 1, 'admin.boqentry.upload', NULL, NULL),
+(2269, 1, 'admin.contraction-phases.create', NULL, NULL),
+(2270, 1, 'admin.contraction-phases.destroy', NULL, NULL),
+(2271, 1, 'admin.contraction-phases.edit', NULL, NULL),
+(2272, 1, 'admin.contraction-phases.index', NULL, NULL),
+(2273, 1, 'admin.contraction-phases.show', NULL, NULL),
+(2274, 1, 'admin.contraction-phases.store', NULL, NULL),
+(2275, 1, 'admin.contraction-phases.update', NULL, NULL),
+(2276, 1, 'admin.contractors.create', NULL, NULL),
+(2277, 1, 'admin.contractors.destroy', NULL, NULL),
+(2278, 1, 'admin.contractors.edit', NULL, NULL),
+(2279, 1, 'admin.contractors.index', NULL, NULL),
+(2280, 1, 'admin.contractors.show', NULL, NULL),
+(2281, 1, 'admin.contractors.store', NULL, NULL),
+(2282, 1, 'admin.contractors.update', NULL, NULL),
+(2283, 1, 'admin.contracts.create', NULL, NULL),
+(2284, 1, 'admin.contracts.destroy', NULL, NULL),
+(2285, 1, 'admin.contracts.edit', NULL, NULL),
+(2286, 1, 'admin.contracts.index', NULL, NULL),
+(2287, 1, 'admin.contracts.show', NULL, NULL),
+(2288, 1, 'admin.contracts.store', NULL, NULL),
+(2289, 1, 'admin.contracts.update', NULL, NULL),
+(2290, 1, 'admin.dashboard', NULL, NULL),
+(2291, 1, 'admin.departments.create', NULL, NULL),
+(2292, 1, 'admin.departments.destroy', NULL, NULL),
+(2293, 1, 'admin.departments.edit', NULL, NULL),
+(2294, 1, 'admin.departments.index', NULL, NULL),
+(2295, 1, 'admin.departments.show', NULL, NULL),
+(2296, 1, 'admin.departments.store', NULL, NULL),
+(2297, 1, 'admin.departments.update', NULL, NULL),
+(2298, 1, 'admin.designations.create', NULL, NULL),
+(2299, 1, 'admin.designations.destroy', NULL, NULL),
+(2300, 1, 'admin.designations.edit', NULL, NULL),
+(2301, 1, 'admin.designations.index', NULL, NULL),
+(2302, 1, 'admin.designations.show', NULL, NULL),
+(2303, 1, 'admin.designations.store', NULL, NULL),
+(2304, 1, 'admin.designations.update', NULL, NULL),
+(2305, 1, 'admin.epcentry_data.bulkDestroy', NULL, NULL),
+(2306, 1, 'admin.epcentry_data.create', NULL, NULL),
+(2307, 1, 'admin.epcentry_data.destroy', NULL, NULL),
+(2308, 1, 'admin.epcentry_data.edit', NULL, NULL),
+(2309, 1, 'admin.epcentry_data.index', NULL, NULL),
+(2310, 1, 'admin.epcentry_data.store', NULL, NULL),
+(2311, 1, 'admin.epcentry_data.storeFromDefined', NULL, NULL),
+(2312, 1, 'admin.epcentry_data.update', NULL, NULL),
+(2313, 1, 'admin.financial-progress-updates.create', NULL, NULL),
+(2314, 1, 'admin.financial-progress-updates.destroy', NULL, NULL),
+(2315, 1, 'admin.financial-progress-updates.edit', NULL, NULL),
+(2316, 1, 'admin.financial-progress-updates.index', NULL, NULL),
+(2317, 1, 'admin.financial-progress-updates.show', NULL, NULL),
+(2318, 1, 'admin.financial-progress-updates.store', NULL, NULL),
+(2319, 1, 'admin.financial-progress-updates.update', NULL, NULL),
+(2320, 1, 'admin.financial-progress.upload', NULL, NULL),
+(2321, 1, 'admin.grievances.create', NULL, NULL),
+(2322, 1, 'admin.grievances.destroy', NULL, NULL),
+(2323, 1, 'admin.grievances.edit', NULL, NULL),
+(2324, 1, 'admin.grievances.index', NULL, NULL),
+(2325, 1, 'admin.grievances.show', NULL, NULL),
+(2326, 1, 'admin.grievances.store', NULL, NULL),
+(2327, 1, 'admin.grievances.update', NULL, NULL),
+(2328, 1, 'admin.media.gallery', NULL, NULL),
+(2329, 1, 'admin.media.index', NULL, NULL),
+(2330, 1, 'admin.media_files.upload', NULL, NULL),
+(2331, 1, 'admin.navbar-items.create', NULL, NULL),
+(2332, 1, 'admin.navbar-items.destroy', NULL, NULL),
+(2333, 1, 'admin.navbar-items.edit', NULL, NULL),
+(2334, 1, 'admin.navbar-items.index', NULL, NULL),
+(2335, 1, 'admin.navbar-items.show', NULL, NULL),
+(2336, 1, 'admin.navbar-items.store', NULL, NULL),
+(2337, 1, 'admin.navbar-items.update', NULL, NULL),
+(2338, 1, 'admin.navbar-items.update-order', NULL, NULL),
+(2339, 1, 'admin.package-components.create', NULL, NULL),
+(2340, 1, 'admin.package-components.destroy', NULL, NULL),
+(2341, 1, 'admin.package-components.edit', NULL, NULL),
+(2342, 1, 'admin.package-components.index', NULL, NULL),
+(2343, 1, 'admin.package-components.show', NULL, NULL),
+(2344, 1, 'admin.package-components.store', NULL, NULL),
+(2345, 1, 'admin.package-components.update', NULL, NULL),
+(2346, 1, 'admin.package-project-assignments.create', NULL, NULL),
+(2347, 1, 'admin.package-project-assignments.destroy', NULL, NULL),
+(2348, 1, 'admin.package-project-assignments.edit', NULL, NULL),
+(2349, 1, 'admin.package-project-assignments.index', NULL, NULL),
+(2350, 1, 'admin.package-project-assignments.show', NULL, NULL),
+(2351, 1, 'admin.package-project-assignments.store', NULL, NULL),
+(2352, 1, 'admin.package-project-assignments.update', NULL, NULL),
+(2353, 1, 'admin.package-projects.create', NULL, NULL),
+(2354, 1, 'admin.package-projects.destroy', NULL, NULL),
+(2355, 1, 'admin.package-projects.edit', NULL, NULL),
+(2356, 1, 'admin.package-projects.index', NULL, NULL),
+(2357, 1, 'admin.package-projects.show', NULL, NULL),
+(2358, 1, 'admin.package-projects.store', NULL, NULL),
+(2359, 1, 'admin.package-projects.update', NULL, NULL),
+(2360, 1, 'admin.pages.create', NULL, NULL),
+(2361, 1, 'admin.pages.create.form', NULL, NULL),
+(2362, 1, 'admin.pages.delete', NULL, NULL),
+(2363, 1, 'admin.pages.edit.form', NULL, NULL),
+(2364, 1, 'admin.pages.list', NULL, NULL),
+(2365, 1, 'admin.pages.update', NULL, NULL),
+(2366, 1, 'admin.physical_boq_progress.bulk-delete', NULL, NULL),
+(2367, 1, 'admin.physical_boq_progress.create', NULL, NULL),
+(2368, 1, 'admin.physical_boq_progress.destroy', NULL, NULL),
+(2369, 1, 'admin.physical_boq_progress.edit', NULL, NULL),
+(2370, 1, 'admin.physical_boq_progress.index', NULL, NULL),
+(2371, 1, 'admin.physical_boq_progress.store', NULL, NULL),
+(2372, 1, 'admin.physical_boq_progress.update', NULL, NULL),
+(2373, 1, 'admin.physical_epc_progress.bulkDestroy', NULL, NULL),
+(2374, 1, 'admin.physical_epc_progress.create', NULL, NULL),
+(2375, 1, 'admin.physical_epc_progress.destroy', NULL, NULL),
+(2376, 1, 'admin.physical_epc_progress.edit', NULL, NULL),
+(2377, 1, 'admin.physical_epc_progress.index', NULL, NULL),
+(2378, 1, 'admin.physical_epc_progress.show', NULL, NULL),
+(2379, 1, 'admin.physical_epc_progress.store', NULL, NULL),
+(2380, 1, 'admin.physical_epc_progress.update', NULL, NULL),
+(2381, 1, 'admin.procurement-details.create', NULL, NULL),
+(2382, 1, 'admin.procurement-details.destroy', NULL, NULL),
+(2383, 1, 'admin.procurement-details.edit', NULL, NULL),
+(2384, 1, 'admin.procurement-details.index', NULL, NULL),
+(2385, 1, 'admin.procurement-details.show', NULL, NULL),
+(2386, 1, 'admin.procurement-details.store', NULL, NULL),
+(2387, 1, 'admin.procurement-details.update', NULL, NULL),
+(2388, 1, 'admin.procurement-work-programs.create', NULL, NULL),
+(2389, 1, 'admin.procurement-work-programs.destroy', NULL, NULL),
+(2390, 1, 'admin.procurement-work-programs.edit', NULL, NULL),
+(2391, 1, 'admin.procurement-work-programs.edit-by-package', NULL, NULL),
+(2392, 1, 'admin.procurement-work-programs.index', NULL, NULL),
+(2393, 1, 'admin.procurement-work-programs.show', NULL, NULL),
+(2394, 1, 'admin.procurement-work-programs.show.pack', NULL, NULL),
+(2395, 1, 'admin.procurement-work-programs.store', NULL, NULL),
+(2396, 1, 'admin.procurement-work-programs.store-single', NULL, NULL),
+(2397, 1, 'admin.procurement-work-programs.update', NULL, NULL),
+(2398, 1, 'admin.procurement-work-programs.update-single', NULL, NULL),
+(2399, 1, 'admin.procurement-work-programs.upload-documents', NULL, NULL),
+(2400, 1, 'admin.project.create', NULL, NULL),
+(2401, 1, 'admin.project.destroy', NULL, NULL),
+(2402, 1, 'admin.project.edit', NULL, NULL),
+(2403, 1, 'admin.project.index', NULL, NULL),
+(2404, 1, 'admin.project.show', NULL, NULL),
+(2405, 1, 'admin.project.store', NULL, NULL),
+(2406, 1, 'admin.project.update', NULL, NULL),
+(2407, 1, 'admin.projects-category.create', NULL, NULL),
+(2408, 1, 'admin.projects-category.destroy', NULL, NULL),
+(2409, 1, 'admin.projects-category.edit', NULL, NULL),
+(2410, 1, 'admin.projects-category.index', NULL, NULL),
+(2411, 1, 'admin.projects-category.show', NULL, NULL),
+(2412, 1, 'admin.projects-category.store', NULL, NULL),
+(2413, 1, 'admin.projects-category.update', NULL, NULL),
+(2414, 1, 'admin.role_routes.create', NULL, NULL),
+(2415, 1, 'admin.role_routes.destroy', NULL, NULL),
+(2416, 1, 'admin.role_routes.edit', NULL, NULL),
+(2417, 1, 'admin.role_routes.index', NULL, NULL),
+(2418, 1, 'admin.role_routes.show', NULL, NULL),
+(2419, 1, 'admin.role_routes.store', NULL, NULL),
+(2420, 1, 'admin.role_routes.update', NULL, NULL),
+(2421, 1, 'admin.roles.create', NULL, NULL),
+(2422, 1, 'admin.roles.destroy', NULL, NULL),
+(2423, 1, 'admin.roles.edit', NULL, NULL),
+(2424, 1, 'admin.roles.index', NULL, NULL),
+(2425, 1, 'admin.roles.show', NULL, NULL),
+(2426, 1, 'admin.roles.store', NULL, NULL),
+(2427, 1, 'admin.roles.update', NULL, NULL),
+(2428, 1, 'admin.safeguard-compliances.create', NULL, NULL),
+(2429, 1, 'admin.safeguard-compliances.destroy', NULL, NULL),
+(2430, 1, 'admin.safeguard-compliances.edit', NULL, NULL),
+(2431, 1, 'admin.safeguard-compliances.index', NULL, NULL),
+(2432, 1, 'admin.safeguard-compliances.show', NULL, NULL),
+(2433, 1, 'admin.safeguard-compliances.store', NULL, NULL),
+(2434, 1, 'admin.safeguard-compliances.update', NULL, NULL),
+(2435, 1, 'admin.safeguard_entries.bulk-delete', NULL, NULL),
+(2436, 1, 'admin.safeguard_entries.create', NULL, NULL),
+(2437, 1, 'admin.safeguard_entries.destroy', NULL, NULL),
+(2438, 1, 'admin.safeguard_entries.edit', NULL, NULL),
+(2439, 1, 'admin.safeguard_entries.import', NULL, NULL),
+(2440, 1, 'admin.safeguard_entries.index', NULL, NULL),
+(2441, 1, 'admin.safeguard_entries.show', NULL, NULL),
+(2442, 1, 'admin.safeguard_entries.store', NULL, NULL),
+(2443, 1, 'admin.safeguard_entries.update', NULL, NULL),
+(2444, 1, 'admin.social_safeguard_entries.index', NULL, NULL),
+(2445, 1, 'admin.social_safeguard_entries.storeOrUpdateFromIndex', NULL, NULL),
+(2446, 1, 'admin.sub-departments.create', NULL, NULL),
+(2447, 1, 'admin.sub-departments.destroy', NULL, NULL),
+(2448, 1, 'admin.sub-departments.edit', NULL, NULL),
+(2449, 1, 'admin.sub-departments.index', NULL, NULL),
+(2450, 1, 'admin.sub-departments.show', NULL, NULL),
+(2451, 1, 'admin.sub-departments.store', NULL, NULL),
+(2452, 1, 'admin.sub-departments.update', NULL, NULL),
+(2453, 1, 'admin.type-of-procurements.create', NULL, NULL),
+(2454, 1, 'admin.type-of-procurements.destroy', NULL, NULL),
+(2455, 1, 'admin.type-of-procurements.edit', NULL, NULL),
+(2456, 1, 'admin.type-of-procurements.index', NULL, NULL),
+(2457, 1, 'admin.type-of-procurements.restore', NULL, NULL),
+(2458, 1, 'admin.type-of-procurements.show', NULL, NULL),
+(2459, 1, 'admin.type-of-procurements.store', NULL, NULL),
+(2460, 1, 'admin.type-of-procurements.update', NULL, NULL),
+(2461, 1, 'admin.users.create', NULL, NULL),
+(2462, 1, 'admin.users.destroy', NULL, NULL),
+(2463, 1, 'admin.users.edit', NULL, NULL),
+(2464, 1, 'admin.users.index', NULL, NULL),
+(2465, 1, 'admin.users.show', NULL, NULL),
+(2466, 1, 'admin.users.store', NULL, NULL),
+(2467, 1, 'admin.users.update', NULL, NULL),
+(2468, 1, 'admin.work_services.create', NULL, NULL),
+(2469, 1, 'admin.work_services.destroy', NULL, NULL),
+(2470, 1, 'admin.work_services.edit', NULL, NULL),
+(2471, 1, 'admin.work_services.index', NULL, NULL),
+(2472, 1, 'admin.work_services.show', NULL, NULL),
+(2473, 1, 'admin.work_services.store', NULL, NULL),
+(2474, 1, 'admin.work_services.update', NULL, NULL),
+(2475, 1, 'dashboard', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1731,7 +1813,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('piDjmSEk35BzQZTtZBZFu8K7NtjaHHCRPnENgTvM', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiMnRNVDhaNGR2WHhqZW5hREoyQXdST1NXQjFhaDdGQjNFU014MXBBVCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9zYWZlZ3VhcmQtY29tcGxpYW5jZXMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEyJEhhZzlvUzBiMjI2aXc5TGJvMkh2QWVlcFU5QU5NeE5McFIyanJjWG1uNXRxSEcvaDhuRnRpIjt9', 1755755568);
+('Jb37teXgMmagkUf4RyGwHest56DOZJkAK5DJNaRN', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiY0tEaEVlSGxhSlZycWJKSEF2ekFGdmo5SGJKVFNzTnF1RkZ5M0c4biI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9ncmlldmFuY2VzL0dSMDAwMDEiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEyJEhhZzlvUzBiMjI2aXc5TGJvMkh2QWVlcFU5QU5NeE5McFIyanJjWG1uNXRxSEcvaDhuRnRpIjt9', 1755844744);
 
 -- --------------------------------------------------------
 
@@ -1805,13 +1887,6 @@ CREATE TABLE `sub_departments` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `sub_departments`
---
-
-INSERT INTO `sub_departments` (`id`, `department_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'FPIU-Purola', 1, '2025-08-20 23:05:00', '2025-08-20 23:05:00');
-
 -- --------------------------------------------------------
 
 --
@@ -1858,7 +1933,7 @@ CREATE TABLE `type_of_procurements` (
 
 INSERT INTO `type_of_procurements` (`id`, `name`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'EPC', 'In which We can define', '2025-08-19 01:43:35', '2025-08-19 01:43:35', NULL),
-(2, 'Item-Wise', 'in Which BOQ sheet need to upload', '2025-08-19 01:44:05', '2025-08-19 01:44:05', NULL),
+(2, 'Item-Rate', 'in Which BOQ sheet need to upload', '2025-08-19 01:44:05', '2025-08-21 01:07:27', NULL),
 (3, 'Others', 'also same', '2025-08-19 01:44:21', '2025-08-19 01:44:21', NULL);
 
 -- --------------------------------------------------------
@@ -1898,9 +1973,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `username`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`, `department_id`, `sub_department_id`, `designation_id`, `gender`, `phone_no`, `status`, `district`, `deleted_at`) VALUES
-(1, 1, 'admin', 'admin@gmail.com', 'admin', NULL, '$2y$12$VzxX3jmvEG/0dKL4w5jbWe3PLWtM8cIz7eU3YUh0MV4k1uTP8uAlu', NULL, NULL, NULL, NULL, NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 06:58:54', '2025-08-20 23:15:41', 1, 1, NULL, NULL, NULL, 'active', NULL, NULL),
+(1, 1, 'admin', 'admin@gmail.com', 'admin', NULL, '$2y$12$VzxX3jmvEG/0dKL4w5jbWe3PLWtM8cIz7eU3YUh0MV4k1uTP8uAlu', NULL, NULL, NULL, NULL, NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 06:58:54', '2025-08-20 23:15:41', 1, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (2, 1, 'Test User 1', 'testuser1@example.com', 'test_user_1', '2025-08-04 11:12:57', '$2y$12$VzxX3jmvEG/0dKL4w5jbWe3PLWtM8cIz7eU3YUh0MV4k1uTP8uAlu', NULL, NULL, NULL, 'OjPV8Rf3S1', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-04 12:31:58', NULL, NULL, NULL, NULL, NULL, 'active', NULL, '2025-08-04 12:31:58'),
-(3, 1, 'Test User', 'testuser2@example.com', 'test_user_', '2025-08-04 11:12:58', '$2y$12$Hag9oS0b226iw9Lbo2HvAeepU9ANMxNLpR2jrcXmn5tqHG/h8nFti', NULL, NULL, NULL, 'SCTDuAjAPehsyxz5wuQRHaZ3aINJQAR94f1Acz6shWGu63vcSYzazHMlqhro', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-20 23:27:00', 1, 1, 10, 'male', '9090909090', 'active', 'Dehradun', NULL),
+(3, 1, 'Test User', 'testuser2@example.com', 'test_user_', '2025-08-04 11:12:58', '$2y$12$Hag9oS0b226iw9Lbo2HvAeepU9ANMxNLpR2jrcXmn5tqHG/h8nFti', NULL, NULL, NULL, 'SCTDuAjAPehsyxz5wuQRHaZ3aINJQAR94f1Acz6shWGu63vcSYzazHMlqhro', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-20 23:27:00', 1, NULL, 10, 'male', '9090909090', 'active', 'Dehradun', NULL),
 (4, 1, 'Test User 3', 'testuser3@example.com', 'test_user_3', '2025-08-04 11:12:58', '$2y$12$.WEudQx6rlE8IvXmtz3she.zKNd2NOA3FpF6.WGHv8QoqKV2yajUq', NULL, NULL, NULL, 'P7Kjy9dmBp', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:58', '2025-08-04 11:12:58', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (5, 1, 'Test User 4', 'testuser4@example.com', 'test_user_4', '2025-08-04 11:12:58', '$2y$12$OiQc5Mamqa0WO4SsmHzovOm520kqdi6hszqA6gXQYdycPHwsRJqYS', NULL, NULL, NULL, 'aI1TSgyKKG', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
 (6, 1, 'Test User 5', 'testuser5@example.com', 'test_user_5', '2025-08-04 11:12:59', '$2y$12$ArGPNhRO/EFR48OFxTVLPOpJgMl226X.RWfsAp.G6id8.JpKk8ege', NULL, NULL, NULL, 'XuV6KCkwjv', NULL, 'profile-photos/ecfCBGtLogkZ4bqlPAJwgbgPxsmSvtdOG2AHxDXp.png', '2025-08-04 11:12:59', '2025-08-04 11:12:59', NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL),
@@ -2096,6 +2171,30 @@ ALTER TABLE `geography_districts`
 ALTER TABLE `geography_divisions`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `geography_divisions_slug_unique` (`slug`);
+
+--
+-- Indexes for table `grievances`
+--
+ALTER TABLE `grievances`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `grievances_grievance_no_unique` (`grievance_no`);
+
+--
+-- Indexes for table `grievance_assignments`
+--
+ALTER TABLE `grievance_assignments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `grievance_assignments_grievance_id_foreign` (`grievance_id`),
+  ADD KEY `grievance_assignments_assigned_to_foreign` (`assigned_to`),
+  ADD KEY `grievance_assignments_assigned_by_foreign` (`assigned_by`);
+
+--
+-- Indexes for table `grievance_logs`
+--
+ALTER TABLE `grievance_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `grievance_logs_grievance_id_foreign` (`grievance_id`),
+  ADD KEY `grievance_logs_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `jobs`
@@ -2409,7 +2508,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `financial_progress_updates`
 --
 ALTER TABLE `financial_progress_updates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `geography_blocks`
@@ -2430,6 +2529,24 @@ ALTER TABLE `geography_divisions`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `grievances`
+--
+ALTER TABLE `grievances`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `grievance_assignments`
+--
+ALTER TABLE `grievance_assignments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `grievance_logs`
+--
+ALTER TABLE `grievance_logs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -2439,13 +2556,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `media_files`
 --
 ALTER TABLE `media_files`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `navbar_items`
@@ -2529,7 +2646,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `role_routes`
 --
 ALTER TABLE `role_routes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2252;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2476;
 
 --
 -- AUTO_INCREMENT for table `safeguard_compliances`
@@ -2559,7 +2676,7 @@ ALTER TABLE `sub_category`
 -- AUTO_INCREMENT for table `sub_departments`
 --
 ALTER TABLE `sub_departments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `sub_package_projects`
@@ -2640,6 +2757,21 @@ ALTER TABLE `geography_blocks`
 --
 ALTER TABLE `geography_districts`
   ADD CONSTRAINT `geography_districts_division_id_foreign` FOREIGN KEY (`division_id`) REFERENCES `geography_divisions` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `grievance_assignments`
+--
+ALTER TABLE `grievance_assignments`
+  ADD CONSTRAINT `grievance_assignments_assigned_by_foreign` FOREIGN KEY (`assigned_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `grievance_assignments_assigned_to_foreign` FOREIGN KEY (`assigned_to`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `grievance_assignments_grievance_id_foreign` FOREIGN KEY (`grievance_id`) REFERENCES `grievances` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `grievance_logs`
+--
+ALTER TABLE `grievance_logs`
+  ADD CONSTRAINT `grievance_logs_grievance_id_foreign` FOREIGN KEY (`grievance_id`) REFERENCES `grievances` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `grievance_logs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `navbar_items`

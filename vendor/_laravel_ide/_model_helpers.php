@@ -5172,10 +5172,11 @@ namespace App\Models {
      * @property string $full_name
      * @property string $grievance_no
      * @property int $id
-     * @property-read mixed $is_assigned
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GrievanceLog> $logs
+     * @property-read int|null $logs_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GrievanceAssignment> $assignments
      * @property-read int|null $assignments_count
-     * @property-read \App\Models\GrievanceAssignment $latestAssignment
+     * @property-read \App\Models\User $user
      * @method static \Illuminate\Database\Eloquent\Builder<Grievance>|Grievance whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Grievance>|Grievance whereGrievanceNo($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Grievance>|Grievance whereFullName($value)
@@ -5196,8 +5197,6 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Grievance>|Grievance whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Grievance>|Grievance whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Grievance>|Grievance whereUpdatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Grievance>|Grievance basicInfo()
-     * @method static \Illuminate\Database\Eloquent\Builder<Grievance>|Grievance withLatestAssignment()
      * @method static \Illuminate\Database\Eloquent\Builder<Grievance>|Grievance newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Grievance>|Grievance newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Grievance>|Grievance query()

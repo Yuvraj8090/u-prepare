@@ -4,9 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Grievance extends Model
 {
@@ -15,6 +12,7 @@ class Grievance extends Model
     protected $table = 'grievances';
 
     protected $fillable = [
+        'grievance_no',
         'full_name',
         'address',
         'email',
@@ -33,74 +31,27 @@ class Grievance extends Model
         'status',
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | Booted: Global Scope → Restrict grievances based on assignments
-    |--------------------------------------------------------------------------
-    */
-    protected static function booted()
+    /**
+     * Relationship: Logs related to grievance
+     */
+    public function logs()
     {
-        // Auto-generate grievance number
-        static::creating(function ($grievance) {
-            $lastId = Grievance::max('id') ?? 0;
-            $grievance->grievance_no = 'GR' . str_pad($lastId + 1, 5, '0', STR_PAD_LEFT);
-        });
-
-        // Restrict grievances visibility
-        static::addGlobalScope('userAssignments', function (Builder $builder) {
-            if (auth()->check()) {
-                // Only admins (role_id = 1) see everything
-                if (auth()->user()->role_id !== 1) {
-                    $builder->whereHas('assignments', function ($q) {
-                        $q->where('assigned_to', auth()->id());
-                    });
-                }
-            }
-        });
+        return $this->hasMany(GrievanceLog::class);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Scopes
-    |--------------------------------------------------------------------------
-    */
-    public function scopeBasicInfo($query)
+    /**
+     * Relationship: Assignments related to grievance
+     */
+    public function assignments()
     {
-        return $query->select('id', 'grievance_no', 'full_name', 'status');
+        return $this->hasMany(GrievanceAssignment::class);
     }
 
-    public function scopeWithLatestAssignment($query)
+    /**
+     * Relationship: User who created the grievance
+     */
+    public function user()
     {
-        return $query->with(['latestAssignment.assignedToUser', 'latestAssignment.assignedByUser']);
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Relationships
-    |--------------------------------------------------------------------------
-    */
-    public function assignments(): HasMany
-    {
-        return $this->hasMany(GrievanceAssignment::class, 'grievance_id');
-    }
-
-    public function latestAssignment(): HasOne
-    {
-        return $this->hasOne(GrievanceAssignment::class, 'grievance_id')->latestOfMany();
-    }
-    public function getRouteKeyName()
-{
-    return 'grievance_no';
-}
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Accessors
-    |--------------------------------------------------------------------------
-    */
-    public function getIsAssignedAttribute(): bool
-    {
-        return $this->assignments->isNotEmpty();
+        return $this->belongsTo(User::class);
     }
 }

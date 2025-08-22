@@ -3,137 +3,189 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Grievance;
+use App\Models\{Grievance, GrievanceLog, GrievanceAssignment, User};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class GrievanceController extends Controller
 {
     /**
-     * Display a listing of grievances with filters & pagination.
+     * Display grievances with filters & pagination.
      */
     public function index(Request $request)
     {
         $query = Grievance::query();
 
-        // ✅ Apply filters
+        // Filters
         if ($request->filled('search')) {
             $query->where('full_name', 'like', '%' . $request->search . '%');
         }
-
         if ($request->filled('district')) {
             $query->where('district', $request->district);
         }
-
         if ($request->filled('related_to')) {
             $query->where('grievance_related_to', $request->related_to);
         }
-
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
-
         if ($request->filled('year')) {
             $query->whereYear('created_at', $request->year);
         }
-
         if ($request->filled('month')) {
             $query->whereMonth('created_at', $request->month);
         }
 
-        // ✅ Paginate
-        $grievances = $query->latest()->get();
+        $grievances = $query->latest()->paginate(20);
 
-        // ✅ Summary counts
+        // Stats
         $total    = Grievance::count();
         $pending  = Grievance::where('status', 'pending')->count();
         $resolved = Grievance::where('status', 'resolved')->count();
         $rejected = Grievance::where('status', 'rejected')->count();
 
-        // ✅ Distinct filter options
+        // Filters data
         $districts = Grievance::distinct()->pluck('district')->filter()->toArray();
         $relatedToOptions = Grievance::distinct()->pluck('grievance_related_to')->filter()->toArray();
 
         return view('admin.grievances.index', compact(
-            'grievances',
-            'total',
-            'pending',
-            'resolved',
-            'rejected',
-            'districts',
-            'relatedToOptions'
+            'grievances', 'total', 'pending', 'resolved', 'rejected', 'districts', 'relatedToOptions'
         ));
     }
 
     /**
-     * Show the form for creating a new grievance.
+     * Show grievance details with logs & assignments.
      */
-    public function create()
+    public function show($grievance_no)
     {
-        return view('admin.grievances.create');
+        $users = User::all();
+        $grievance = Grievance::with([
+            'logs.user',
+            'assignments.assignedUser',
+            'assignments.assignedByUser'
+        ])->where('grievance_no', $grievance_no)->firstOrFail();
+
+        return view('admin.grievances.show', compact('grievance', 'users'));
     }
 
     /**
-     * Store a newly created grievance.
+     * Store Log.
      */
-    public function store(Request $request)
+    public function storeLog(Request $request, $grievance_id)
     {
-        $request->validate([
-            'full_name' => 'required|string|max:255',
-            'grievance_related_to' => 'required|string|max:255',
-            'nature_of_complaint' => 'required|string|max:500',
-            'status' => 'nullable|string|in:pending,in-progress,resolved,rejected',
-        ]);
+        try {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'remark' => 'nullable|string',
+                'preliminary_action_taken' => 'nullable|string|max:500',
+                'final_action_taken' => 'nullable|string|max:500',
+            ]);
 
-        Grievance::create($request->all());
+            $log = GrievanceLog::create([
+                'grievance_id' => $grievance_id,
+                'user_id' => auth()->id(),
+                'title' => $request->title,
+                'remark' => $request->remark,
+                'preliminary_action_taken' => $request->preliminary_action_taken,
+                'final_action_taken' => $request->final_action_taken,
+            ]);
 
-        return redirect()->route('admin.grievances.index')
-            ->with('success', 'Grievance created successfully.');
+            return response()->json(['success' => true, 'message' => 'Log added successfully.', 'log' => $log]);
+        } catch (\Exception $e) {
+            Log::error("Error storing grievance log: " . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Failed to add log.'], 500);
+        }
+    }
+
+    public function updateLog(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'remark' => 'nullable|string',
+                'preliminary_action_taken' => 'nullable|string|max:500',
+                'final_action_taken' => 'nullable|string|max:500',
+            ]);
+
+            $log = GrievanceLog::findOrFail($id);
+            $log->update($request->all());
+
+            return response()->json(['success' => true, 'message' => 'Log updated successfully.', 'log' => $log]);
+        } catch (\Exception $e) {
+            Log::error("Error updating grievance log: " . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Failed to update log.'], 500);
+        }
+    }
+
+    public function destroyLog($id)
+    {
+        try {
+            $log = GrievanceLog::findOrFail($id);
+            $log->delete();
+
+            return response()->json(['success' => true, 'message' => 'Log deleted successfully.']);
+        } catch (\Exception $e) {
+            Log::error("Error deleting grievance log: " . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Failed to delete log.'], 500);
+        }
     }
 
     /**
-     * Show a grievance.
+     * Store Assignment.
      */
-   public function show($grievance_no)
-{
-    $grievance = Grievance::where('grievance_no', $grievance_no)->firstOrFail();
-    return view('admin.grievances.show', compact('grievance'));
-}
-
-
-    /**
-     * Show the form for editing a grievance.
-     */
-    public function edit(Grievance $grievance)
+    public function storeAssignment(Request $request, $grievance_id)
     {
-        return view('admin.grievances.edit', compact('grievance'));
+        try {
+            $request->validate([
+                'assigned_to' => 'required|integer|exists:users,id',
+                'department'  => 'required|string|max:255',
+            ]);
+
+            $assignment = GrievanceAssignment::create([
+                'grievance_id' => $grievance_id,
+                'assigned_to'  => $request->assigned_to,
+                'assigned_by'  => auth()->id(),
+                'department'   => $request->department,
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'Assignment added successfully.', 'assignment' => $assignment]);
+        } catch (\Exception $e) {
+            Log::error("Error storing grievance assignment: " . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Failed to add assignment.'], 500);
+        }
     }
 
-    /**
-     * Update a grievance.
-     */
-    public function update(Request $request, Grievance $grievance)
+    public function updateAssignment(Request $request, $id)
     {
-        $request->validate([
-            'full_name' => 'required|string|max:255',
-            'grievance_related_to' => 'required|string|max:255',
-            'nature_of_complaint' => 'required|string|max:500',
-            'status' => 'nullable|string|in:pending,in-progress,resolved,rejected',
-        ]);
+        try {
+            $request->validate([
+                'assigned_to' => 'required|integer|exists:users,id',
+                'department'  => 'required|string|max:255',
+            ]);
 
-        $grievance->update($request->all());
+            $assignment = GrievanceAssignment::findOrFail($id);
+            $assignment->update([
+                'assigned_to' => $request->assigned_to,
+                'department'  => $request->department,
+            ]);
 
-        return redirect()->route('admin.grievances.index')
-            ->with('success', 'Grievance updated successfully.');
+            return response()->json(['success' => true, 'message' => 'Assignment updated successfully.', 'assignment' => $assignment]);
+        } catch (\Exception $e) {
+            Log::error("Error updating grievance assignment: " . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Failed to update assignment.'], 500);
+        }
     }
 
-    /**
-     * Delete a grievance.
-     */
-    public function destroy(Grievance $grievance)
+    public function destroyAssignment($id)
     {
-        $grievance->delete();
+        try {
+            $assignment = GrievanceAssignment::findOrFail($id);
+            $assignment->delete();
 
-        return redirect()->route('admin.grievances.index')
-            ->with('success', 'Grievance deleted successfully.');
+            return response()->json(['success' => true, 'message' => 'Assignment deleted successfully.']);
+        } catch (\Exception $e) {
+            Log::error("Error deleting grievance assignment: " . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Failed to delete assignment.'], 500);
+        }
     }
 }

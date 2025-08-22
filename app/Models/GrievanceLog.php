@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class GrievanceLog extends Model
 {
@@ -18,19 +17,22 @@ class GrievanceLog extends Model
         'user_id',
         'title',
         'remark',
+        'preliminary_action_taken',
+        'final_action_taken',
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | Relationships
-    |--------------------------------------------------------------------------
-    */
-    public function grievance(): BelongsTo
+    /**
+     * Relationship: Belongs to a grievance
+     */
+    public function grievance()
     {
         return $this->belongsTo(Grievance::class);
     }
 
-    public function user(): BelongsTo
+    /**
+     * Relationship: Belongs to a user (who added the log)
+     */
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

@@ -45,10 +45,20 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         ->name('admin.')
         ->group(function () {
             Route::get('financial-progress-updates-all', [FinancialProgressUpdateController::class, 'index2'])->name('financial-progress-updates.index2');
-            Route::get('/grievances/{grievance_no}', [GrievanceController::class, 'show'])->name('grievances.show');
-
             Route::resource('grievances', GrievanceController::class);
 
+            // Show by grievance_no instead of ID
+            Route::get('/grievances/{grievance_no}', [GrievanceController::class, 'show'])->name('grievances.show');
+
+            // Logs
+            Route::post('/grievances/{grievance_id}/logs', [GrievanceController::class, 'storeLog'])->name('grievances.logs.store');
+            Route::put('/grievance-logs/{id}', [GrievanceController::class, 'updateLog'])->name('grievances.logs.update');
+            Route::delete('/grievance-logs/{id}', [GrievanceController::class, 'destroyLog'])->name('grievances.logs.destroy');
+
+            // Assignments
+            Route::post('/grievances/{grievance_id}/assignments', [GrievanceController::class, 'storeAssignment'])->name('grievances.assignments.store');
+            Route::put('/grievance-assignments/{id}', [GrievanceController::class, 'updateAssignment'])->name('grievances.assignments.update');
+            Route::delete('/grievance-assignments/{id}', [GrievanceController::class, 'destroyAssignment'])->name('grievances.assignments.destroy');
             Route::resource('sub-departments', SubDepartmentController::class);
 
             Route::resource('package-project-assignments', PackageProjectAssignmentController::class);
