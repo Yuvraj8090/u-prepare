@@ -31,11 +31,12 @@ class PackageComponentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'   => 'required|string|max:255',
-            'budget' => 'nullable|numeric|min:0',
+            'name'        => 'required|string|max:255',
+            'budget'      => 'nullable|numeric|min:0',
+            'description' => 'nullable|string',
         ]);
 
-        PackageComponent::create($request->only(['name', 'budget']));
+        PackageComponent::create($request->only(['name', 'budget', 'description']));
 
         return redirect()->route('admin.package-components.index')
                          ->with('success', 'Package Component created successfully.');
@@ -63,11 +64,12 @@ class PackageComponentController extends Controller
     public function update(Request $request, PackageComponent $packageComponent)
     {
         $request->validate([
-            'name'   => 'required|string|max:255',
-            'budget' => 'nullable|numeric|min:0',
+            'name'        => 'required|string|max:255',
+            'budget'      => 'nullable|numeric|min:0',
+            'description' => 'nullable|string',
         ]);
 
-        $packageComponent->update($request->only(['name', 'budget']));
+        $packageComponent->update($request->only(['name', 'budget', 'description']));
 
         return redirect()->route('admin.package-components.index')
                          ->with('success', 'Package Component updated successfully.');

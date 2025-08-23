@@ -37,25 +37,26 @@
 
                     <!-- Data Table Component -->
                     <div class="col-md-12">
-                        <x-admin.data-table 
-                            :id="$id.'_table'"
-                            :headers="$headers"
-                            :excel="$excel"
-                            :print="$print"
-                            :pageLength="$pageLength"
-                            :lengthMenu="$lengthMenu"
-                            :lengthMenuLabels="$lengthMenuLabels"
-                            :title="$title"
-                            :searchPlaceholder="$searchPlaceholder"
-                            :resourceName="$resourceName"
-                        >
+                        <x-admin.data-table :id="$id . '_table'" :headers="$headers" :excel="$excel" :print="$print"
+                            :pageLength="$pageLength" :lengthMenu="$lengthMenu" :lengthMenuLabels="$lengthMenuLabels" :title="$title" :searchPlaceholder="$searchPlaceholder"
+                            :resourceName="$resourceName">
                             @foreach ($rows as $row)
                                 <tr>
                                     @foreach ($row as $col)
-                                        <td>{{ $col }}</td>
+                                        <td>
+                                            @if (is_array($col) && isset($col['url']))
+                                                <a href="{{ $col['url'] }}" class="text-primary fw-bold">
+                                                    {{ $col['text'] }}
+                                                </a>
+                                            @else
+                                                {{ $col }}
+                                            @endif
+                                        </td>
                                     @endforeach
                                 </tr>
                             @endforeach
+
+
                         </x-admin.data-table>
                     </div>
                 </div>
@@ -66,7 +67,9 @@
 
 <!-- Google Charts -->
 <script type="text/javascript">
-    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.load('current', {
+        packages: ['corechart']
+    });
     google.charts.setOnLoadCallback(init_{{ $id }});
 
     let data_{{ $id }};
@@ -78,7 +81,9 @@
         let rows = [
             @foreach ($labels as $i => $label)
                 ['{{ $label }}', {{ $data[$i] ?? 0 }}]
-                @if (!$loop->last),@endif
+                @if (!$loop->last)
+                    ,
+                @endif
             @endforeach
         ];
 

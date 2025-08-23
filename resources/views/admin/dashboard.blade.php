@@ -9,7 +9,17 @@
                 @endphp
 
                 <x-admin.chart-card id="departments_budget" title="Departments Budget" :headers="['Department', 'Budget']" :rows="array_merge(
-                    $departments->map(fn($d) => [$d->name, formatPriceToCR($d->budget ?? 0)])->toArray(),
+                    $departments
+                        ->map(
+                            fn($d) => [
+                                [
+                                    'text' => $d->name,
+                                    'url' => route('admin.package-projects.index', ['department_id' => $d->id]),
+                                ], // clickable
+                                formatPriceToCR($d->budget ?? 0), // plain text
+                            ],
+                        )
+                        ->toArray(),
                     [['Total', formatPriceToCR($total_budget)]],
                 )"
                     :labels="$departments->pluck('name')->push('Total')->toArray()" :data="$departments->pluck('budget')->map(fn($v) => $v ?? 0)->toArray()" type="pie" />
@@ -24,12 +34,21 @@
 
                 <x-admin.chart-card id="components_budget" title="Package Components Budget" :headers="['Component', 'Budget']"
                     :rows="array_merge(
-                        $components->map(fn($c) => [$c->name, formatPriceToCR($c->budget ?? 0)])->toArray(),
+                        $components
+                            ->map(
+                                fn($c) => [
+                                    [
+                                        'text' => $c->name,
+                                        'url' => route('admin.package-projects.index', [
+                                            'package_component_id' => $c->id,
+                                        ]),
+                                    ],
+                                    formatPriceToCR($c->budget ?? 0),
+                                ],
+                            )
+                            ->toArray(),
                         [['Total', formatPriceToCR($total_component_budget)]],
-                    )" :labels="$components->pluck('name')->push('Total')->toArray()" :data="$components
-                        ->pluck('budget')
-                        ->map(fn($v) => $v ?? 0)
-                        ->toArray()" type="pie" />
+                    )" :labels="$components->pluck('name')->push('Total')->toArray()" :data="$components->pluck('budget')->map(fn($v) => $v ?? 0)->toArray()" type="pie" />
 
             </div>
 
@@ -39,7 +58,14 @@
                     :rows="$departments
                         ->map(
                             fn($d) => [
-                                $d->name,
+                                [
+                                    'text' => $d->name,
+                                    'url' => route('admin.package-projects.index', [
+                                        'department_id' => $d->id,
+                                        'has_contract' => 1,
+                                    ]),
+                                ],
+                    
                                 $d->projects_count ?? 0,
                                 $d->signed_contracts_count ?? 0,
                                 formatPriceToCR($d->total_contract_value),
@@ -62,37 +88,43 @@
 
 
             </div>
-            <div class="card shadow-sm mt-4">
+  <div class="card shadow-sm mt-4">
+    <div class="card-body">
+        <x-admin.data-table 
+            :headers="[
+                'ID',
+                'No. Package',
+                'Type of contracts',
+                'LOA to be Issued',
+                'LOA Issued',
+                'Contract Signing Pending',
+                'Contract Signed',
+                'Start Date Given',
+                'To be Rebid',
+            ]" 
+            id="type-of-procurement-table" 
+            :excel="true"
+            :print="true" 
+            :pageLength="10"
+        >
+            @foreach ($typeOfProcurement as $type)
+                <tr>
+                    <td>{{ $type->id }}</td>
+                    <td>{{ $type->procurement_details_count ?? 0 }}</td> {{-- Number of packages per type --}}
+                    <td>{{ $type->name }}</td>
+                    <td>{{ $type->loa_to_be_issued_count }}</td> {{-- LOA to be Issued --}}
+                    <td>{{ $type->loa_issued_count }}</td> {{-- LOA Issued --}}
+                    <td>{{ $type->contract_pending_count }}</td> {{-- Contract Signing Pending --}}
+                    <td>{{ $type->signed_contracts_count }}</td> {{-- Contract Signed --}}
+                    <td>{{ $type->description }}</td> {{-- Start Date or remarks --}}
+                    <td>{{ $type->description ?? 0 }}</td> {{-- Total Contract Value or To be Rebid --}}
+                </tr>
+            @endforeach
+        </x-admin.data-table>
+    </div>
+</div>
 
-                <div class="card-body">
-                    <x-admin.data-table :headers="[
-                        'ID',
-                        'No. Package',
-                        'Type of contracts  ',
-                        'Contract Signed',
-                        'Bid Process Ongoing',
-                        'In Pocess(LOA/Contracts)',
-                        'Contract Signing Pending',
-                        'To be Re-bidded',
-                    ]" id="type-of-procurement-table" :excel="true"
-                        :print="true" :pageLength="10">
-                        @foreach ($typeOfprocurement as $type)
-                            <tr>
-                                <td>{{ $type->id }}</td>
-                                <td>{{ $type->id }}</td>
-                                <td>{{ $type->name }}</td>
-                                <td>{{ $type->description }}</td>
-                                <td>{{ $type->description }}</td>
-                                <td>{{ $type->description }}</td>
-                                <td>{{ $type->description }}</td>
-                                <td>{{ $type->description }}</td>
-                                
 
-                            </tr>
-                        @endforeach
-                    </x-admin.data-table>
-                </div>
-            </div>
 
         </div>
     </div>

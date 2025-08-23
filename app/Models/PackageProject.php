@@ -30,112 +30,82 @@ class PackageProject extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | Global Scope: Restrict data based on role
+    | Global Scope: Role Based Restriction
     |--------------------------------------------------------------------------
     */
     protected static function booted()
     {
         static::addGlobalScope('userAssignments', function (Builder $builder) {
-            if (auth()->check()) {
-                // If user is NOT admin (role_id != 1), restrict to their assignments
-                if (auth()->user()->role_id !== 1) {
-                    $builder->whereHas('assignments', function ($q) {
-                        $q->where('assigned_to', auth()->id());
-                    });
-                }
-                // else role_id == 1 → show all projects (no restriction)
+            if (auth()->check() && auth()->user()->role_id !== 1) {
+                $builder->whereHas('assignments', function ($q) {
+                    $q->where('assigned_to', auth()->id());
+                });
             }
         });
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Scopes
+    | Query Scopes
     |--------------------------------------------------------------------------
     */
     public function scopeBasicInfo($query)
     {
         return $query->select('id', 'package_name');
     }
- public function scopeWithWorkProgramData($query)
+
+    public function scopeWithWorkProgramData($query)
     {
-        return $query->with(['procurementDetail', 'workPrograms','contracts']);
+        return $query->with(['procurementDetail', 'workPrograms', 'contracts']);
     }
+
+    public function scopeApplyFilters($query, array $filters)
+{
+    return $query
+        ->when($filters['department_id'] ?? null, fn($q, $v) => $q->where('department_id', $v))
+        ->when($filters['package_component_id'] ?? null, fn($q, $v) => $q->where('package_component_id', $v))
+        ->when($filters['district_id'] ?? null, fn($q, $v) => $q->where('district_id', $v))
+        ->when($filters['category_id'] ?? null, fn($q, $v) => $q->where('package_category_id', $v))
+        ->when($filters['sub_category_id'] ?? null, fn($q, $v) => $q->where('package_sub_category_id', $v))
+        ->when($filters['vidhan_sabha_id'] ?? null, fn($q, $v) => $q->where('vidhan_sabha_id', $v))
+        ->when($filters['lok_sabha_id'] ?? null, fn($q, $v) => $q->where('lok_sabha_id', $v))
+        ->when($filters['block_id'] ?? null, fn($q, $v) => $q->where('block_id', $v))
+        ->when($filters['search'] ?? null, function ($q, $search) {
+            $q->where(fn($sub) =>
+                $sub->where('package_name', 'like', "%{$search}%")
+                    ->orWhere('package_number', 'like', "%{$search}%")
+            );
+        })
+        // ✅ New: filter by contract existence
+        ->when($filters['has_contract'] ?? null, function ($q, $value) {
+            if ($value == 1) {
+                $q->whereHas('contracts');
+            } elseif ($value == 0) {
+                $q->whereDoesntHave('contracts');
+            }
+        });
+}
+
 
     /*
     |--------------------------------------------------------------------------
     | Relationships
     |--------------------------------------------------------------------------
     */
-    public function project(): BelongsTo
-    {
-        return $this->belongsTo(Project::class);
-    }
-
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(ProjectsCategory::class, 'package_category_id');
-    }
-
-    public function assignments(): HasMany
-    {
-        return $this->hasMany(PackageProjectAssignment::class, 'package_project_id');
-    }
-
-    public function subCategory(): BelongsTo
-    {
-        return $this->belongsTo(SubCategory::class, 'package_sub_category_id');
-    }
-
-    public function department(): BelongsTo
-    {
-        return $this->belongsTo(Department::class);
-    }
-
-    public function packageComponent(): BelongsTo
-    {
-        return $this->belongsTo(PackageComponent::class, 'package_component_id');
-    }
-
-    public function vidhanSabha(): BelongsTo
-    {
-        return $this->belongsTo(Constituency::class, 'vidhan_sabha_id');
-    }
-
-    public function lokSabha(): BelongsTo
-    {
-        return $this->belongsTo(Constituency::class, 'lok_sabha_id');
-    }
-
-    public function district(): BelongsTo
-    {
-        return $this->belongsTo(GeographyDistrict::class);
-    }
-
-    public function block(): BelongsTo
-    {
-        return $this->belongsTo(GeographyBlock::class);
-    }
-
-    public function procurementDetail(): HasOne
-    {
-        return $this->hasOne(ProcurementDetail::class);
-    }
-
-    public function workPrograms(): HasMany
-    {
-        return $this->hasMany(ProcurementWorkProgram::class);
-    }
-
-    public function subProjects(): HasMany
-    {
-        return $this->hasMany(SubPackageProject::class, 'project_id', 'id');
-    }
-
-    public function contracts(): HasMany
-    {
-        return $this->hasMany(Contract::class, 'project_id');
-    }
+    public function project(): BelongsTo { return $this->belongsTo(Project::class); }
+    public function category(): BelongsTo { return $this->belongsTo(ProjectsCategory::class, 'package_category_id'); }
+    public function subCategory(): BelongsTo { return $this->belongsTo(SubCategory::class, 'package_sub_category_id'); }
+    public function department(): BelongsTo { return $this->belongsTo(Department::class); }
+    public function packageComponent(): BelongsTo { return $this->belongsTo(PackageComponent::class, 'package_component_id'); }
+    public function vidhanSabha(): BelongsTo { return $this->belongsTo(Constituency::class, 'vidhan_sabha_id'); }
+    public function lokSabha(): BelongsTo { return $this->belongsTo(Constituency::class, 'lok_sabha_id'); }
+    public function district(): BelongsTo { return $this->belongsTo(GeographyDistrict::class); }
+    public function block(): BelongsTo { return $this->belongsTo(GeographyBlock::class); }
+    public function procurementDetail(): HasOne { return $this->hasOne(ProcurementDetail::class); }
+    public function workPrograms(): HasMany { return $this->hasMany(ProcurementWorkProgram::class); }
+    public function subProjects(): HasMany { return $this->hasMany(SubPackageProject::class, 'project_id', 'id'); }
+    public function contracts(): HasMany { return $this->hasMany(Contract::class, 'project_id'); }
+    public function assignments(): HasMany { return $this->hasMany(PackageProjectAssignment::class, 'package_project_id'); }
 
     /*
     |--------------------------------------------------------------------------

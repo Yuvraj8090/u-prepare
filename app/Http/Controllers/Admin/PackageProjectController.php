@@ -5,45 +5,48 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePackageProjectRequest;
 use App\Http\Requests\Admin\UpdatePackageProjectRequest;
-use App\Models\{
-    PackageProject,
-    Project,
-    ProjectsCategory,
-    SubCategory,
-    Department,
-    Assembly,
-    Constituency,
-    GeographyDistrict,
-    GeographyBlock,
-    PackageComponent,
-    Contract
-};
+use App\Models\{PackageProject, Project, ProjectsCategory, SubCategory, District, Department, Assembly, Constituency, SubPackageProject, GeographyDistrict, GeographyBlock, PackageComponent, Contract};
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class PackageProjectController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $packageProjects = PackageProject::with([
-                'project:id,name,budget',
-                'category:id,name',
-                'subCategory:id,name',
-                'department:id,name',
-                'vidhanSabha:id,name',
-                'lokSabha:id,name',
-                'district:id,name',
-                'block:id,name',
-                'procurementDetail:id,package_project_id,method_of_procurement,type_of_procurement_id,publication_date',
-                'workPrograms:id,package_project_id,procurement_details_id,name_work_program,weightage,days,start_date,planned_date',
-                'subProjects:id,project_id,name',
-            ])
-            ->withCount('workPrograms')
-            ->latest()
-            ->get();
+    'project:id,name,budget',
+    'category:id,name',
+    'subCategory:id,name',
+    'department:id,name',
+    'vidhanSabha:id,name',
+    'lokSabha:id,name',
+    'district:id,name',
+    'block:id,name',
+    'procurementDetail:id,package_project_id,method_of_procurement,type_of_procurement_id,publication_date',
+    'workPrograms:id,package_project_id,procurement_details_id,name_work_program,weightage,days,start_date,planned_date',
+    'subProjects:id,project_id,name',
+    // ✅ also load contracts
+    'contracts:id,project_id,contract_number,contract_value'
+])
+->withCount('workPrograms')
+->applyFilters($request->all())
+->latest()
+->get();
 
-        return view('admin.package-projects.index', compact('packageProjects'));
+
+        // dropdowns for filters
+        $departments = Department::select('id', 'name')->get();
+        $districts = District::select('id', 'name')->get();
+        $components = PackageComponent::select('id', 'name')->get();
+        $categories = ProjectsCategory::select('id', 'name')->get();
+        $subCategories = SubCategory::select('id', 'name')->get();
+        $blocks = GeographyBlock::select('id', 'name')->get();
+        $vidhanSabhas = Constituency::select('id', 'name')->get();
+        $lokSabhas = Constituency::select('id', 'name')->get();
+
+        return view('admin.package-projects.index', compact('packageProjects', 'departments', 'districts', 'categories', 'subCategories', 'blocks', 'vidhanSabhas', 'lokSabhas', 'components'));
     }
 
     public function create(): View
@@ -65,49 +68,32 @@ class PackageProjectController extends Controller
 
         PackageProject::create($data);
 
-        return redirect()
-            ->route('admin.package-projects.index')
-            ->with('success', 'Package project created successfully.');
+        return redirect()->route('admin.package-projects.index')->with('success', 'Package project created successfully.');
     }
 
     public function show(PackageProject $packageProject): View
     {
-        $packageProject->load([
-            'project:id,name,budget',
-            'category:id,name',
-            'subCategory:id,name',
-            'department:id,name',
-            'vidhanSabha:id,name',
-            'lokSabha:id,name',
-            'district:id,name',
-            'block:id,name',
-            'procurementDetail',
-            'workPrograms',
-            'subProjects:id,project_id,name',
-        ]);
+        $packageProject->load(['project:id,name,budget', 'category:id,name', 'subCategory:id,name', 'department:id,name', 'vidhanSabha:id,name', 'lokSabha:id,name', 'district:id,name', 'block:id,name', 'procurementDetail', 'workPrograms', 'subProjects:id,project_id,name']);
 
-        $contract = Contract::withBasicRelations()
-            ->where('project_id', $packageProject->id)
-            ->first();
+        $contract = Contract::withBasicRelations()->where('project_id', $packageProject->id)->first();
 
         return view('admin.package-projects.show', compact('packageProject', 'contract'));
     }
 
-  public function edit(PackageProject $packageProject): View
-{
-  // <-- this will show all fields, including DEC/HPC dates
-  $projects       = Project::select('id', 'name', 'budget')->get();
-            $categories    = ProjectsCategory::all();
-            $subCategories  = SubCategory::all();
-            $departments   = Department::all();
-            $constituencies = Constituency::all();
-            $districts    = GeographyDistrict::all();
-            $blocks      = GeographyBlock::all();
-            $components     = PackageComponent::all();
-            $assembly = Assembly::all();
-    return view('admin.package-projects.edit',compact('assembly','packageProject','projects','categories','subCategories','departments','constituencies','districts','blocks','components'));
-}
-
+    public function edit(PackageProject $packageProject): View
+    {
+        // <-- this will show all fields, including DEC/HPC dates
+        $projects = Project::select('id', 'name', 'budget')->get();
+        $categories = ProjectsCategory::all();
+        $subCategories = SubCategory::all();
+        $departments = Department::all();
+        $constituencies = Constituency::all();
+        $districts = GeographyDistrict::all();
+        $blocks = GeographyBlock::all();
+        $components = PackageComponent::all();
+        $assembly = Assembly::all();
+        return view('admin.package-projects.edit', compact('assembly', 'packageProject', 'projects', 'categories', 'subCategories', 'departments', 'constituencies', 'districts', 'blocks', 'components'));
+    }
 
     public function update(UpdatePackageProjectRequest $request, PackageProject $packageProject): RedirectResponse
     {
@@ -125,23 +111,16 @@ class PackageProjectController extends Controller
 
         $packageProject->update($data);
 
-        return redirect()
-            ->route('admin.package-projects.index')
-            ->with('success', 'Package project updated successfully.');
+        return redirect()->route('admin.package-projects.index')->with('success', 'Package project updated successfully.');
     }
 
     public function destroy(PackageProject $packageProject): RedirectResponse
     {
-        Storage::disk('public')->delete([
-            $packageProject->dec_document_path,
-            $packageProject->hpc_document_path,
-        ]);
+        Storage::disk('public')->delete([$packageProject->dec_document_path, $packageProject->hpc_document_path]);
 
         $packageProject->delete();
 
-        return redirect()
-            ->route('admin.package-projects.index')
-            ->with('success', 'Package project deleted successfully.');
+        return redirect()->route('admin.package-projects.index')->with('success', 'Package project deleted successfully.');
     }
 
     /**
@@ -150,14 +129,14 @@ class PackageProjectController extends Controller
     private function formData(): array
     {
         return [
-            'projects'       => Project::select('id', 'name', 'budget')->get(),
-            'categories'     => ProjectsCategory::all(),
-            'subCategories'  => SubCategory::all(),
-            'departments'    => Department::all(),
+            'projects' => Project::select('id', 'name', 'budget')->get(),
+            'categories' => ProjectsCategory::all(),
+            'subCategories' => SubCategory::all(),
+            'departments' => Department::all(),
             'constituencies' => Constituency::all(),
-            'districts'      => GeographyDistrict::all(),
-            'blocks'         => GeographyBlock::all(),
-            'components'     => PackageComponent::all(),
+            'districts' => GeographyDistrict::all(),
+            'blocks' => GeographyBlock::all(),
+            'components' => PackageComponent::all(),
         ];
     }
 }

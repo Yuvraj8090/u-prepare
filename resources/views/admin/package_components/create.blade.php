@@ -12,27 +12,64 @@
             ]"  
         /> 
 
-        <div class="card shadow-sm">
+        <div class="card shadow-sm border-0">
             <div class="card-body">
                 <form action="{{ route('admin.package-components.store') }}" method="POST">
                     @csrf
 
+                    {{-- Name --}}
                     <div class="mb-3">
-                        <label class="form-label">Name <span class="text-danger">*</span></label>
-                        <input type="text" name="name" class="form-control" required value="{{ old('name') }}">
-                        @error('name') <small class="text-danger">{{ $message }}</small> @enderror
+                        <label class="form-label fw-semibold">Name <span class="text-danger">*</span></label>
+                        <input 
+                            type="text" 
+                            name="name" 
+                            class="form-control @error('name') is-invalid @enderror" 
+                            value="{{ old('name') }}" 
+                            required
+                        >
+                        @error('name') 
+                            <div class="invalid-feedback">{{ $message }}</div> 
+                        @enderror
                     </div>
 
+                    {{-- Budget --}}
                     <div class="mb-3">
-                        <label class="form-label">Budget (₹)</label>
-                        <input type="number" step="0.01" name="budget" class="form-control" value="{{ old('budget') }}">
-                        @error('budget') <small class="text-danger">{{ $message }}</small> @enderror
+                        <label class="form-label fw-semibold">Budget (₹)</label>
+                        <input 
+                            type="number" 
+                            step="0.01" 
+                            name="budget" 
+                            class="form-control @error('budget') is-invalid @enderror" 
+                            value="{{ old('budget') }}"
+                        >
+                        @error('budget') 
+                            <div class="invalid-feedback">{{ $message }}</div> 
+                        @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Save
-                    </button>
-                    <a href="{{ route('admin.package-components.index') }}" class="btn btn-secondary">Cancel</a>
+                    {{-- Description --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Description</label>
+                        <textarea 
+                            name="description" 
+                            id="description" 
+                            rows="4" 
+                            class="form-control @error('description') is-invalid @enderror"
+                        >{{ old('description') }}</textarea>
+                        @error('description') 
+                            <div class="invalid-feedback">{{ $message }}</div> 
+                        @enderror
+                    </div>
+
+                    {{-- Actions --}}
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                        <a href="{{ route('admin.package-components.index') }}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>

@@ -250,15 +250,26 @@
                     </li>
 
                     <li
-                        class="{{ request()->routeIs('admin.pages.*') || request()->routeIs('admin.navbar-items.*') ? 'active' : '' }}">
-                        <a><i class="fa fa-industry"></i> Website Management <span
-                                class="fa fa-chevron-down"></span></a>
+                        class="{{ request()->routeIs('admin.pages.*') || request()->routeIs('admin.navbar-items.*') || request()->routeIs('admin.slides.*') || request()->routeIs('admin.leaders.*') ? 'active' : '' }}">
+                        <a>
+                            <i class="fa fa-industry"></i> Website Management
+                            <span class="fa fa-chevron-down"></span>
+                        </a>
+
+
                         <ul class="nav child_menu">
                             <!-- Pages -->
                             <li>
                                 <a href="{{ route('admin.pages.list') }}"><i class="fa fa-file-alt"></i> Pages</a>
                             </li>
-
+                            <li>
+                                <a href="{{ route('admin.slides.index') }}"><i class="fa fa-file-alt"></i> Slides Management
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.leaders.index') }}"><i class="fas fa-user-tie"></i> Leaders Management
+                                </a>
+                            </li>
                             <!-- Navbar Items -->
                             <li>
                                 <a href="{{ route('admin.navbar-items.index') }}"><i class="fa fa-bars"></i> Navbar

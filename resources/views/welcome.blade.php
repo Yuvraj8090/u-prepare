@@ -1,86 +1,315 @@
 <x-guest-layout>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="demo" class="carousel slide" data-bs-ride="carousel">
-
-                    <!-- Indicators/dots -->
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
-                        <button type="button" data-bs-target="#demo" data-bs-slide-to="4"></button>
+    <section class="container-fluid slider p-0">
+        <div class="hero-slider">
+            @foreach ($allslides as $slide)
+                <div>
+                    <div class="slider-item" style="background-image: url({{ asset('storage/' . $slide->img) }})">
+                        <div class="overlay"></div>
+                        <div class="caption">
+                            @if ($slide->head)
+                                <h2>{{ $slide->head }}</h2>
+                            @endif
+                            @if ($slide->subh)
+                                <p class="mb-3">{{ $slide->subh }}</p>
+                            @endif
+                            @if ($slide->link)
+                                <a href="{{ $slide->link }}" class="btn">
+                                    {{ $slide->btn_text }}
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            @endif
+                        </div>
                     </div>
+                </div>
+            @endforeach
+        </div>
+    </section><!-- End Hero -->
 
-                    <!-- The slideshow/carousel -->
-                    <div class="carousel-inner">
+    <!-- ======= Section ======= -->
+    <section class="about-sec pt-4">
+        <div class="container-fluid p-0">
+            <div class="bg-bar">
+                <div class="overlay"></div>
+                <img src="{{ asset('assets/img/honper-bgi.webp') }}" />
+            </div>
 
-                        <div class="carousel-item active">
-                            <img src="{{ asset('asset/web/IMG20240426151005.jpg') }}" loading="lazy"
-                                class="d-block w-100" height="600px">
+            <div class="container-fluid honpers">
+                <div class="row">
+                    @foreach ($persons as $person)
+                        <div class="col-md-3 d-flex flex-column center honper">
+                            <figure class="d-flex center">
+                                <img src="{{ asset('storage/' . $person->img) }}" class="rounded shadow-sm"
+                                    alt="{{ $person->name }}">
+                            </figure>
+                            <div class="caption text-center m-0">
+                                <h4>{{ $person->name }}</h4>
+                                <h5>({{ $person->title }})</h5>
+                            </div>
                         </div>
-                        <div class="carousel-item">
-                            <img src="{{ asset('asset/web/IMG20240426151005.jpg') }}" loading="lazy"
-                                class="d-block w-100" height="600px">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{{ asset('asset/web/IMG20240426150955.jpg') }}" loading="lazy"
-                                class="d-block w-100" height="600px">
-                        </div>
-
-                        <div class="carousel-item">
-                            <img src="{{ asset('asset/web/one.jpeg') }}" class="d-block w-100" loading="lazy"
-                                height="600px">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{{ asset('asset/web/two.jpeg') }}" class="d-block w-100" loading="lazy"
-                                height="600px">
-                        </div>
-
-                        <!-- Left and right controls/icons -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#demo"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#demo"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </button>
-                    </div>
-
+                    @endforeach
 
                 </div>
             </div>
-            <div class="col-md-8 col-xs-12">
-                <p class='p'>
-                    The U-PREPARE project aims to enhance the climate and disaster resilience of critical public
-                    infrastructure and strengthen disaster risk management capacity in Uttarakhand. Its Project
-                    Development Objective (PDO) encompasses improving infrastructure access, early warning systems, and
-                    fire stations to benefit communities. The project's components include infrastructure resilience
-                    enhancement, emergency preparedness and response improvement, forest and general fire prevention and
-                    management, project management, and a contingent emergency response component. With an expected
-                    reach of approximately 10 million people, including a focus on women, the project targets various
-                    beneficiaries, such as those reliant on resilient infrastructure and enhanced emergency services.
-                    The World Bank's involvement reflects its expertise in disaster risk management (DRM) and climate
-                    adaptation, aiming to build upon past successes while emphasizing capacity building and community
-                    engagement. Key lessons incorporated into the project design include the importance of complementing
-                    physical investments with capacity building, engaging communities for effective DRM, and leveraging
-                    private capital for sustainability.
-                </p>
-            </div>
-            <div class="col-md-4 col-xs-12">
-                <div style="background-color:rgb(209 200 193);margin:10px;padding:5px 10px;">
 
-                    <h5 style="padding-top:30px;">NOTICE BOARD</h5>
-                    <br>
-                    <marquee style="height:200px;" direction="up" behavior="scroll" scrollamount="2">
-                        <p>This is a paragraph that scrolls from top to bottom. You can adjust the speed and direction
-                            of the scrolling text using the attributes of the marquee tag.</p>
-                    </marquee>
+            <div class="container-fluid pt-5">
+                <div class="row">
+                    <h2 class="fw-bold">
+                        <span class="colthemb">U</span><span>-PREPARE</span>
+                    </h2>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 col-xl-8">
+                        <p class="text-justify">
+                            The Uttarakhand Disaster Resilience and Preparedness Project, funded by the World Bank with
+                            an
+                            investment of US$200 million, is dedicated to safeguarding the lives and livelihoods of 10
+                            million
+                            people across the state by enhancing the climate and disaster resilience of critical public
+                            infrastructure
+                            in Uttarakhand and encompasses a range of transformative initiatives. These include
+                            enhancing infrastructure
+                            access, creating sophisticated early warning systems, and establishing strategically located
+                            fire stations to
+                            protect communities. The project prioritizes fortifying infrastructure resilience, elevating
+                            emergency
+                            preparedness, and implementing proactive measures for forest fire prevention and management.
+                            It emphasizes
+                            efficient project management and places a strong focus on capacity building and training for
+                            local authorities
+                            and communities, fostering a culture of disaster risk awareness and reduction. The use of
+                            innovative technologies
+                            for advanced risk assessment is integral to the initiative. By collaborating closely with
+                            governmental,
+                            non-governmental, and international partners, the project adopts a holistic approach to
+                            resilience. Integrating
+                            these measures into development planning seeks to craft a safer and more resilient
+                            Uttarakhand, paving the way
+                            for a secure and sustainable future for all.
+                        </p>
+                    </div>
+
+                    <div class="col-lg-5 col-xl-4">
+                        <div class="announcement-board h-100">
+                            <div class="head text-center">
+                                <h3 class="m-0 d-flex center text-white">
+                                    <img src="{{ asset('assets/img/icons/megaphone-white.png') }}">
+                                    {!! request()->cookie('lang') === 'hi' ? 'घोषणा' : 'ANNOUNCEMENTS' !!}
+                                </h3>
+                            </div>
+                            <div class="body p-3">
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <img class="me-2" src="{{ asset('assets/img/icons/bullet.png') }}">
+                                        <a href="{{ url('tenders-and-notices') }}">Tenders & Notices</a>
+                                    </li>
+                                    {{--
+                                    @if (isset($announcements))
+                                        @forelse($announcements as $announcement)
+                                            <li>
+                                                <img class="me-2" src="{{ asset('assets/img/icons/bullet.png') }}">
+                                                <a href="{{ route('announcement', $announcement->slug) }}"> {!! request()->cookie('lang') === 'hi' ? $announcement->hin_title : $announcement->eng_title !!}</a>
+                                            </li>
+                                        @empty
+                                            <li>
+                                                <img class="me-2" src="{{ asset('assets/img/icons/bullet.png')}}" >
+                                                No Announcements Found
+                                            </li>
+                                        @endforelse
+                                    @endif
+				    --}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section class="citizen-corner py-5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="text-center mb-4">
+                        <span class="d-block">CITIZEN CORNER</span>
+                        <span class="hr"></span>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="row">
+              
+            </div>
+        </div>
+    </section>
+
+    <section class="past-projects">
+        <div class="container-fluid p-0">
+            <div class="pps-slider">
+               
+            </div>
+        </div>
+    </section>
+
+    <section class="components">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="comp-head d-flex align-items-end justify-content-between mb-3">
+                        <div class="left mb-1">
+                            <h3 class="mb-0">
+                                <i class="bi bi-newspaper"></i>
+                                COMPONENTS
+                            </h3>
+                        </div>
+                        <div class="right">
+                            &nbsp;
+                            {{-- <a class="text-dark" href="#">
+                                <i class="bi bi-chevron-double-right"></i>
+                                Read more
+                            </a> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="components-slider">
+                @if (isset($components))
+                    @forelse($components as $comp)
+                        <div>
+                            <div class="comps-item">
+                                <div class="ci-img">
+                                    <img src="{{ $comp->image }}" />
+                                </div>
+                                <div class="ci-content p-2">
+                                    <h4>{!! request()->cookie('lang') === 'hi'
+                                        ? substr($comp->page_hin_title, 0, 50)
+                                        : substr($comp->page_eng_title, 0, 50) !!}</h4>
+                                    <p class="mb-0">{!! request()->cookie('lang') === 'hi'
+                                        ? mb_substr($comp->hin_content, 0, 500)
+                                        : mb_substr($comp->eng_content, 0, 600) !!}
+                                    </p>
+                                </div>
+                                <div class="ci-rms text-center pb-3">
+                                    <a href="{{ $comp->link }}" class="rmore">
+                                        <span>READ MORE</span>
+                                        <i class="bi bi-caret-right-fill"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                    @endforelse
+                @endif
+            </div>
+        </div>
+    </section>
+
+    <section class="videos">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="vid-head d-flex align-items-end justify-content-between mb-3">
+                        <div class="left mb-1">
+                            <h3 class="mb-0">
+                                <i class="bi bi-camera-reels"></i>
+                                VIDEOS
+                            </h3>
+                        </div>
+                        <div class="right">
+                            <a class="text-white" href="#">
+                                <i class="bi bi-chevron-double-right"></i>
+                                Click to U-PREPARE-YouTube-channel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="videos-slider">
+                @for ($v = 0; $v < 3; $v++)
+                    @foreach ($videos as $vid)
+                        <div>
+                            <div class="vid-item">
+                                <div class="vid-img">
+                                    <img src="{{ asset($vid->img) }}" />
+                                    <a class="d-flex center" href="#">
+                                        <i class="bi bi-play-circle"></i>
+                                    </a>
+                                </div>
+                                <div class="vid-content">
+                                    <p class="mb-0">{{ $vid->text }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endfor
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="contact-head text-center">
+            <h3>REACH US</h3>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-xl-5">
+                    <a class="text-decoration-underline text-dark" href="#">Find us here</a>
+                    <div class="map mb-2">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3442.544367980115!2d78.08280947495017!3d30.36389647476432!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3908d70048644c07%3A0xa0a0da3e097c93a4!2sUSDMA%20New%20Building%20IT%20park!5e0!3m2!1sen!2sin!4v1721896382781!5m2!1sen!2sin"
+                            class="w-100 h-100 border-0" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <address>
+                        <h5>5<sup>th</sup> FLOOR, USDMA NEW BUILDING</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <i class="bi bi-geo-alt-fill"></i>
+                                36, IT Park, Dehradun, Uttarakhand, 248013
+                            </li>
+                            <li>
+                                <i class="bi bi-telephone-fill"></i>
+                                <a href="tel:18001804276">1800-180-4276</a>,
+                                <a href="tel:01352971663">0135-2971663</a>
+                            </li>
+                            <li>
+                                <i class="bi bi-envelope-fill"></i>
+                                <a href="mailto:upreparegrievance@gmail.com">upreparegrievance@gmail.com</a>
+                            </li>
+                        </ul>
+                    </address>
+                </div>
+                <div class="col-xl-2 col-lg-1 d-lg-block d-none"></div>
+                <div class="col-md-6 col-xl-4 mt-4 mt-md-0">
+                    <h4 class="text-center">
+                        <i class="bi bi-chat-left-dots"></i>
+                        Feedback
+                    </h4>
+                    <form id="ajax-form" data-action="{{ route('feedback') }}" data-method="POST">
+                        @csrf
+                        <input type="text" class="form-control mb-3" placeholder="NAME*" name="name">
+                        <input type="email" class="form-control mb-3" placeholder="E-MAIL*" name="email">
+                        <select name="type" id="" class="form-select mb-3">
+                            <option value="">Kindly Select Query Type</option>
+                            <option value="inquiry">INQUIRY</option>
+                            <option value="feedback">FEEDBACK</option>
+                            <option value="others">OTHERS</option>
+                        </select>
+                        <input type="text" class="form-control mb-3" placeholder="SUBJECT" name="subject">
+                        <textarea name="message" rows="4" class="form-control mb-3" placeholder="MESSAGE"></textarea>
+
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-theme">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="d-xl-block d-none col-xl-1"></div>
+            </div>
+        </div>
+    </section>
 </x-guest-layout>

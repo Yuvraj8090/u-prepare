@@ -31,6 +31,7 @@ use App\Http\Controllers\Admin\PackageComponentController;
 use App\Http\Controllers\Admin\SubDepartmentController;
 use App\Http\Controllers\Admin\ProcurementWorkProgramController;
 use App\Http\Controllers\Admin\TypeOfProcurementController;
+use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\GrievanceController;
 
@@ -44,6 +45,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+
+    Route::resource('slides', SlideController::class);
+
+    Route::resource('leaders', \App\Http\Controllers\Admin\LeaderController::class);
+
+
             Route::get('financial-progress-updates-all', [FinancialProgressUpdateController::class, 'index2'])->name('financial-progress-updates.index2');
             Route::resource('grievances', GrievanceController::class);
 
