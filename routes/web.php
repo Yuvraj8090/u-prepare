@@ -33,8 +33,24 @@ use App\Http\Controllers\Admin\ProcurementWorkProgramController;
 use App\Http\Controllers\Admin\TypeOfProcurementController;
 use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Admin\GrievanceController;
+use App\Http\Controllers\AdminNewsController;
+use App\Http\Controllers\AdminTenderController;
 
+use App\Http\Controllers\Admin\GrievanceController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\Admin\FeedbackController as AdminFeedback;
+// English news listing
+Route::get('/news', [AdminNewsController::class, 'publicIndex'])->name('news.index');
+// Hindi news listing
+Route::get('/hi/news', [AdminNewsController::class, 'publicIndex'])->name('news.index.hi');
+
+// Show single news item
+Route::get('/news/{news}', [AdminNewsController::class, 'show'])->name('news.show');
+Route::get('/hi/news/{news}', [AdminNewsController::class, 'show'])->name('news.show.hi');
+Route::get('/en/tenders', [AdminTenderController::class, 'publicIndex'])->name('tender.index.public');
+
+// Public form submission
+Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 Route::get('/en/{slug}', [PageController::class, 'showPage'])->name('page.show');
 Route::get('/hi/{slug}', [PageController::class, 'showPageHi'])->name('page.show.hi');
 Route::get('/', [PageController::class, 'showWelcomePage'])->name('welcome.default');
@@ -46,9 +62,20 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         ->name('admin.')
         ->group(function () {
 
+
+
+    Route::resource('news', AdminNewsController::class);
+    Route::resource('tenders', AdminTenderController::class);
+
+
+// Admin routes (with middleware protection)
+    Route::resource('feedback', AdminFeedback::class)->only(['index', 'show', 'destroy']);
+
+
     Route::resource('slides', SlideController::class);
 
     Route::resource('leaders', \App\Http\Controllers\Admin\LeaderController::class);
+  Route::resource('videos', \App\Http\Controllers\Admin\VideoController::class);
 
 
             Route::get('financial-progress-updates-all', [FinancialProgressUpdateController::class, 'index2'])->name('financial-progress-updates.index2');

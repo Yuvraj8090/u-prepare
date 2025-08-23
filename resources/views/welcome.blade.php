@@ -39,8 +39,7 @@
                     @foreach ($persons as $person)
                         <div class="col-md-3 d-flex flex-column center honper">
                             <figure class="d-flex center">
-                                <img src="{{ asset('storage/' . $person->img) }}" class="rounded shadow-sm"
-                                    alt="{{ $person->name }}">
+                                <img src="{{ asset('storage/' . $person->img) }}" />
                             </figure>
                             <div class="caption text-center m-0">
                                 <h4>{{ $person->name }}</h4>
@@ -48,7 +47,6 @@
                             </div>
                         </div>
                     @endforeach
-
                 </div>
             </div>
 
@@ -93,32 +91,24 @@
                     <div class="col-lg-5 col-xl-4">
                         <div class="announcement-board h-100">
                             <div class="head text-center">
-                                <h3 class="m-0 d-flex center text-white">
-                                    <img src="{{ asset('assets/img/icons/megaphone-white.png') }}">
+                                <h3 class="m-0 d-flex align-items-center text-white mb-2">
+                                    <img src="{{ asset('assets/img/icons/megaphone-white.png') }}" class="me-2"
+                                        alt="Announcements">
                                     {!! request()->cookie('lang') === 'hi' ? 'घोषणा' : 'ANNOUNCEMENTS' !!}
                                 </h3>
                             </div>
                             <div class="body p-3">
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <img class="me-2" src="{{ asset('assets/img/icons/bullet.png') }}">
-                                        <a href="{{ url('tenders-and-notices') }}">Tenders & Notices</a>
-                                    </li>
-                                    {{--
-                                    @if (isset($announcements))
-                                        @forelse($announcements as $announcement)
-                                            <li>
-                                                <img class="me-2" src="{{ asset('assets/img/icons/bullet.png') }}">
-                                                <a href="{{ route('announcement', $announcement->slug) }}"> {!! request()->cookie('lang') === 'hi' ? $announcement->hin_title : $announcement->eng_title !!}</a>
-                                            </li>
-                                        @empty
-                                            <li>
-                                                <img class="me-2" src="{{ asset('assets/img/icons/bullet.png')}}" >
-                                                No Announcements Found
-                                            </li>
-                                        @endforelse
-                                    @endif
-				    --}}
+                                <ul class="list-unstyled m-0">
+                                    @foreach ($news as $item)
+                                        <li class="d-flex align-items-start mb-1 text-black">
+                                            <img class="me-2 mt-1" src="{{ asset('assets/img/icons/bullet.png') }}"
+                                                alt="•">
+                                            <a href="{{ route('news.show', $item->id) }}"
+                                                class="text-black  text-decoration-none">
+                                                {!! request()->cookie('lang') === 'hi' ? $item->title_hi : $item->title_en !!}
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -140,7 +130,14 @@
             </div>
 
             <div class="row">
-              
+                @foreach ($cc_items as $item)
+                    <div class="col-md-4 d-flex justify-content-center mb-4">
+                        <a href="{{ $item->link }}" class="cc-item p-4 d-flex align-items-center">
+                            <img class="me-2" src="{{ asset('assets/img/icons/' . $item->img) }}">
+                            <h6 class="mb-0">{{ $item->name }}</h6>
+                        </a>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -148,7 +145,22 @@
     <section class="past-projects">
         <div class="container-fluid p-0">
             <div class="pps-slider">
-               
+                @foreach ($pps_items as $key => $item)
+                    <div>
+                        <div class="pps-item prel">
+                            <div class="bg w-100 h-100">
+                                <div class="overlay w-100 h-100 {{ $item->bgc }}"></div>
+                                <img class="w-100 h-100" src="{{ asset($item->img) }}">
+                            </div>
+                            <div
+                                class="content d-flex flex-column align-items-center justify-content-between h-100 prel">
+                                <h6 class="fw-bold text-white">{{ $item->name }}</h6>
+                                <h2 class="fw-bold text-white">{{ $item->title }}</h2>
+                                <a href="{{ $item->link }}" @class(['btn', 'btn-pp', 'btn-af' => $key])>{{ $item->link_txt }}</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -234,7 +246,7 @@
                         <div>
                             <div class="vid-item">
                                 <div class="vid-img">
-                                    <img src="{{ asset($vid->img) }}" />
+                                    <img src="{{ asset('storage/' . $vid->img) }}" />
                                     <a class="d-flex center" href="#">
                                         <i class="bi bi-play-circle"></i>
                                     </a>
@@ -290,23 +302,70 @@
                         <i class="bi bi-chat-left-dots"></i>
                         Feedback
                     </h4>
-                    <form id="ajax-form" data-action="{{ route('feedback') }}" data-method="POST">
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('feedback.store') }}" method="POST">
                         @csrf
-                        <input type="text" class="form-control mb-3" placeholder="NAME*" name="name">
-                        <input type="email" class="form-control mb-3" placeholder="E-MAIL*" name="email">
-                        <select name="type" id="" class="form-select mb-3">
+
+                        <input type="text" class="form-control mb-3 @error('name') is-invalid @enderror"
+                            placeholder="NAME*" name="name" value="{{ old('name') }}">
+                        @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
+                        <input type="email" class="form-control mb-3 @error('email') is-invalid @enderror"
+                            placeholder="E-MAIL*" name="email" value="{{ old('email') }}">
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
+                        <select name="type" class="form-select mb-3 @error('type') is-invalid @enderror">
                             <option value="">Kindly Select Query Type</option>
-                            <option value="inquiry">INQUIRY</option>
-                            <option value="feedback">FEEDBACK</option>
-                            <option value="others">OTHERS</option>
+                            <option value="inquiry" {{ old('type') == 'inquiry' ? 'selected' : '' }}>INQUIRY</option>
+                            <option value="feedback" {{ old('type') == 'feedback' ? 'selected' : '' }}>FEEDBACK
+                            </option>
+                            <option value="others" {{ old('type') == 'others' ? 'selected' : '' }}>OTHERS</option>
                         </select>
-                        <input type="text" class="form-control mb-3" placeholder="SUBJECT" name="subject">
-                        <textarea name="message" rows="4" class="form-control mb-3" placeholder="MESSAGE"></textarea>
+                        @error('type')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
+                        <input type="text" class="form-control mb-3 @error('subject') is-invalid @enderror"
+                            placeholder="SUBJECT" name="subject" value="{{ old('subject') }}">
+                        @error('subject')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
+                        <textarea name="message" rows="4" class="form-control mb-3 @error('message') is-invalid @enderror"
+                            placeholder="MESSAGE">{{ old('message') }}</textarea>
+                        @error('message')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
 
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-theme">Submit</button>
+                            <button type="submit" class="btn btn-theme">Submit</button>
                         </div>
                     </form>
+
+
                 </div>
                 <div class="d-xl-block d-none col-xl-1"></div>
             </div>

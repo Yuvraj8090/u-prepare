@@ -348,6 +348,29 @@
             }
         }
     </style>
+    <style>
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #28A745; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #28A745; 
+}
+</style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     <!-- Font Awesome 6 Free CDN -->

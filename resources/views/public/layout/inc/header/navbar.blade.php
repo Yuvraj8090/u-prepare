@@ -102,7 +102,7 @@
                 @if(auth()->guest())
                     <a href="{{ route('login') }}" @class(['active' => Route::currentRouteName() == 'mis.login'])>MIS LOGIN</a>
                 @else
-                    <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+                    <a href="{{ route('dashboard') }}">Dashboard</a>
                 @endif
             </li>
 

@@ -270,6 +270,10 @@
                                 <a href="{{ route('admin.leaders.index') }}"><i class="fas fa-user-tie"></i> Leaders Management
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('admin.videos.index') }}"><i class="fas fa-video"></i> Videos Management
+                                </a>
+                            </li>
                             <!-- Navbar Items -->
                             <li>
                                 <a href="{{ route('admin.navbar-items.index') }}"><i class="fa fa-bars"></i> Navbar

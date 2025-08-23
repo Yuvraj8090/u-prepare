@@ -16,6 +16,54 @@ class PageController extends Controller
     /**
      * Clear all Laravel caches.
      */
+    public function showPageHi($slug)
+{
+    // Set the application locale to Hindi
+    App::setLocale('hi');
+
+    // Translator instance for Hindi
+    $translator = new GoogleTranslate('hi');
+
+    // Fetch the active page by slug
+    $page = Page::where('slug', $slug)
+                ->where('status', 1)
+                ->firstOrFail();
+
+    // Translate or use existing Hindi content
+    $body = $page->body_hindi ?: $translator->translate($page->body);
+$pageTitleHI =$page->title_hi;
+    // Fetch the matching navbar item
+    $navbarItem = NavbarItem::where('slug', $slug)->first();
+
+    // Initialize sidebar items
+    $sidebarItems = collect();
+
+    if ($navbarItem) {
+        $parentId = $navbarItem->parent_id ?? $navbarItem->id;
+
+        $sidebarItems = NavbarItem::where('parent_id', $parentId)
+            ->where('is_active', 1)
+            ->orderBy('order')
+            ->get()
+            ->map(function ($item) use ($translator) {
+                $item->translated_title = $item->title_hi ?: $translator->translate($item->title);
+                return $item;
+            });
+    }
+
+    // Breadcrumb translation
+    $breadcrumbs = $navbarItem ? $this->getTranslatedBreadcrumbs($navbarItem, $translator) : [];
+
+    // Return the page view
+    return view('pages.show', [
+        'page'         => $page,
+        'pageTitleHI'=> $pageTitleHI,
+        'body'         => $body,
+        'sidebarItems' => $sidebarItems,
+        'breadcrumbs'  => $breadcrumbs,
+        'lang'         => 'hi',
+    ]);
+}
     public function clearCache(Request $request)
     {
         try {
