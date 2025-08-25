@@ -61,22 +61,18 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+            Route::post('/social-safeguard-entries/save', [SocialSafeguardEntryController::class, 'save'])->name('social_safeguard_entries.save');
 
+            Route::resource('news', AdminNewsController::class);
+            Route::resource('tenders', AdminTenderController::class);
 
+            // Admin routes (with middleware protection)
+            Route::resource('feedback', AdminFeedback::class)->only(['index', 'show', 'destroy']);
 
-    Route::resource('news', AdminNewsController::class);
-    Route::resource('tenders', AdminTenderController::class);
+            Route::resource('slides', SlideController::class);
 
-
-// Admin routes (with middleware protection)
-    Route::resource('feedback', AdminFeedback::class)->only(['index', 'show', 'destroy']);
-
-
-    Route::resource('slides', SlideController::class);
-
-    Route::resource('leaders', \App\Http\Controllers\Admin\LeaderController::class);
-  Route::resource('videos', \App\Http\Controllers\Admin\VideoController::class);
-
+            Route::resource('leaders', \App\Http\Controllers\Admin\LeaderController::class);
+            Route::resource('videos', \App\Http\Controllers\Admin\VideoController::class);
 
             Route::get('financial-progress-updates-all', [FinancialProgressUpdateController::class, 'index2'])->name('financial-progress-updates.index2');
             Route::resource('grievances', GrievanceController::class);
@@ -123,7 +119,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
             Route::resource('financial-progress-updates', FinancialProgressUpdateController::class);
 
             Route::get('/social-safeguard-entries', [SocialSafeguardEntryController::class, 'index'])->name('social_safeguard_entries.index');
+
+            Route::get('/social-safeguard-entries-all', [SocialSafeguardEntryController::class, 'subPackageProjectOverview'])->name('social_safeguard_entries.overview');
+
             Route::post('/social-safeguard-entries/store-or-update', [SocialSafeguardEntryController::class, 'storeOrUpdateFromIndex'])->name('social_safeguard_entries.storeOrUpdateFromIndex');
+Route::get('/package-projects/by-department/{department}', [\App\Http\Controllers\Admin\PackageProjectAssignmentController::class, 'getProjectsByDepartment'])->name('package-projects.by-department');
+
+            // alias for save()
+            Route::post('/social-safeguard-entries/save', [SocialSafeguardEntryController::class, 'save'])->name('social_safeguard_entries.save');
             Route::get('physical_boq_progress', [PhysicalBoqProgressController::class, 'index'])->name('physical_boq_progress.index');
             Route::get('physical_boq_progress_get', [PhysicalBoqProgressController::class, 'physicalProgress'])->name('boqentry.physical-progress');
             Route::post('physical_boq_update', [PhysicalBoqProgressController::class, 'saveProgress'])->name('boqentry.save-physical-progress');
@@ -163,7 +166,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
             Route::get('media-gallery', [MediaFileController::class, 'gallery'])->name('media.gallery');
             Route::get('media-files', [MediaFileController::class, 'index'])->name('media.index');
-
+            Route::get('/safeguard-entries-all', [SafeguardEntryController::class, 'index2'])->name('safeguard_entries.index2');
             Route::resource('procurement-details', ProcurementDetailController::class)->except(['create', 'store']);
             Route::post('safeguard_entries/import', [SafeguardEntryController::class, 'import'])->name('safeguard_entries.import');
             Route::delete('safeguard_entries/bulk-delete', [SafeguardEntryController::class, 'bulkDelete'])->name('safeguard_entries.bulk-delete');

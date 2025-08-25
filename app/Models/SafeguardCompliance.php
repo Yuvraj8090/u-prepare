@@ -15,4 +15,8 @@ class SafeguardCompliance extends Model
     {
         return $this->hasMany(SafeguardEntry::class);
     }
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_safeguard_compliance');
+    }
 }

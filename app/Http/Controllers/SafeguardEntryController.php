@@ -15,6 +15,48 @@ class SafeguardEntryController extends Controller
     /**
      * Display a listing of safeguard entries.
      */
+public function index2(Request $request)
+{
+    // Fetch all sub-projects
+    $subProjects = SubPackageProject::select('id', 'name')->get();
+
+    // Selected project ID
+    $selectedProjectId = $request->input('sub_package_project_id');
+
+    $subProject = null;
+    $entries = collect();
+
+    // Load related data
+    $safeguardCompliances = SafeguardCompliance::all();
+    $contractionPhases = ContractionPhase::all();
+
+    if ($selectedProjectId) {
+        $subProject = SubPackageProject::findOrFail($selectedProjectId);
+
+        // Load only entries for selected project
+        $entries = SafeguardEntry::with(['safeguardCompliance', 'contractionPhase'])
+            ->where('sub_package_project_id', $selectedProjectId)
+            ->get();
+    }
+
+    // Determine which sub-projects have entries
+    $projectsStatus = $subProjects->mapWithKeys(function ($project) {
+        $done = SafeguardEntry::where('sub_package_project_id', $project->id)->exists();
+        return [$project->id => $done];
+    });
+
+    return view('admin.safeguard_entries.index-1', compact(
+        'subProjects',
+        'entries',
+        'subProject',
+        'selectedProjectId',
+        'projectsStatus',
+        'safeguardCompliances',
+        'contractionPhases'
+    ));
+}
+
+
     public function index(Request $request)
     {
         $subProjects = SubPackageProject::select('id', 'name')->get();

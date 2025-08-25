@@ -11062,6 +11062,8 @@ namespace App\Models {
      * @property-read int|null $users_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RoleRoute> $routes
      * @property-read int|null $routes_count
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SafeguardCompliance> $safeguardCompliances
+     * @property-read int|null $safeguardCompliances_count
      * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role whereCreatedAt($value)
@@ -11683,6 +11685,7 @@ namespace App\Models {
     /**
      * App\Models\SafeguardCompliance
      *
+     * @property mixed $role_id
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
@@ -11690,11 +11693,14 @@ namespace App\Models {
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SafeguardEntry> $safeguardEntries
      * @property-read int|null $safeguardEntries_count
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles
+     * @property-read int|null $roles_count
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereRoleId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance query()

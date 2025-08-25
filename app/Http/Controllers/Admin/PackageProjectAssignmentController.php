@@ -16,9 +16,16 @@ class PackageProjectAssignmentController extends Controller
      */
     public function index()
     {
-        $assignments = PackageProjectAssignment::with(['project', 'assignee', 'assigner'])
-            ->latest()
-            ->get();
+        $query = PackageProjectAssignment::with(['project', 'assignee', 'assigner'])
+            ->whereNotNull('assigned_to') // only assigned ones
+            ->latest();
+
+        if (auth()->user()->role_id != 1) {
+            // only show records for the logged-in user
+            $query->where('assigned_to', auth()->id());
+        }
+
+        $assignments = $query->get();
 
         return view('admin.package_project_assignments.index', compact('assignments'));
     }
@@ -27,48 +34,72 @@ class PackageProjectAssignmentController extends Controller
      * Show form to assign a project
      */
     public function create()
-    {
-        $projects = PackageProject::basicInfo()->get();
-        $users = User::select('id', 'name')->get();
-        $subDepartments = \App\Models\SubDepartment::select('id', 'name')->get();
+{
+    $departments = \App\Models\Department::select('id', 'name')->get();
+    $users = User::select('id', 'name')->get();
+    $subDepartments = SubDepartment::select('id', 'name', 'department_id')->get();
 
-        return view('admin.package_project_assignments.create', compact('projects', 'users', 'subDepartments'));
-    }
+    // Projects will be loaded via AJAX based on department selection
+    $projects = collect();
+
+    return view('admin.package_project_assignments.create', compact('departments', 'users', 'subDepartments', 'projects'));
+}
+public function getProjectsByDepartment($departmentId)
+{
+    $projects = PackageProject::basicInfo()
+        ->where('department_id', $departmentId)
+        ->get();
+
+    return response()->json($projects);
+}
+
 
     /**
      * Store a new assignment
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'package_project_id' => 'required|exists:package_projects,id',
-            'assigned_to' => 'nullable|exists:users,id',
-            'sub_department_id' => 'nullable|exists:sub_departments,id',
-        ]);
+{
+    $request->validate([
+        'package_project_ids' => 'required|array|min:1', // bulk project support
+        'package_project_ids.*' => 'exists:package_projects,id',
+        'assigned_to' => 'nullable|exists:users,id',
+        'sub_department_id' => 'nullable|exists:sub_departments,id',
+    ]);
 
-        // ✅ Case 1: assign to specific user
-        if ($request->filled('assigned_to')) {
-            PackageProjectAssignment::create([
-                'package_project_id' => $request->package_project_id,
-                'assigned_to' => $request->assigned_to,
-                'assigned_by' => auth()->id(),
-            ]);
+    $projectIds = $request->package_project_ids;
 
-            return redirect()->route('admin.package-project-assignments.index')->with('success', 'Project assigned to user successfully.');
+    // ✅ Case 1: assign to specific user
+    if ($request->filled('assigned_to')) {
+        foreach ($projectIds as $projectId) {
+            PackageProjectAssignment::firstOrCreate(
+                [
+                    'package_project_id' => $projectId,
+                    'assigned_to' => $request->assigned_to,
+                ],
+                [
+                    'assigned_by' => auth()->id(),
+                ],
+            );
         }
 
-        // ✅ Case 2: assign to all users in a sub-department
-        if ($request->filled('sub_department_id')) {
-            $subDept = SubDepartment::with('users')->find($request->sub_department_id);
+        return redirect()
+            ->route('admin.package-project-assignments.index')
+            ->with('success', 'Project(s) assigned to user successfully.');
+    }
 
-            if (!$subDept || $subDept->users->isEmpty()) {
-                return back()->with('error', 'No users found in this sub-department.');
-            }
+    // ✅ Case 2: assign to all users in a sub-department
+    if ($request->filled('sub_department_id')) {
+        $subDept = SubDepartment::with('users')->find($request->sub_department_id);
 
+        if (!$subDept || $subDept->users->isEmpty()) {
+            return back()->with('error', 'No users found in this sub-department.');
+        }
+
+        foreach ($projectIds as $projectId) {
             foreach ($subDept->users as $user) {
                 PackageProjectAssignment::firstOrCreate(
                     [
-                        'package_project_id' => $request->package_project_id,
+                        'package_project_id' => $projectId,
                         'assigned_to' => $user->id,
                     ],
                     [
@@ -76,12 +107,16 @@ class PackageProjectAssignmentController extends Controller
                     ],
                 );
             }
-
-            return redirect()->route('admin.package-project-assignments.index')->with('success', 'Project assigned to all users in sub-department successfully.');
         }
 
-        return back()->with('error', 'Please select either a user or a sub-department.');
+        return redirect()
+            ->route('admin.package-project-assignments.index')
+            ->with('success', 'Project(s) assigned to all users in sub-department successfully.');
     }
+
+    return back()->with('error', 'Please select either a user or a sub-department.');
+}
+
 
     /**
      * Delete an assignment

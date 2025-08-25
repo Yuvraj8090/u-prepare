@@ -35,17 +35,17 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('asset/build/css/custom.min.css') }}?ver=1.5.1">
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-<!-- ApexCharts -->
-<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.41.0/dist/apexcharts.min.js"></script>
+    <!-- ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.41.0/dist/apexcharts.min.js"></script>
 
-<!-- Optional Export Libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Optional Export Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-<!-- jQuery (needed for some export plugins or future use) -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- jQuery (needed for some export plugins or future use) -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
     <!-- jQuery UI JS -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
@@ -56,11 +56,11 @@
 
     <!-- TinyMCE -->
 
-    
+
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
-<script src="{{ asset('asset/build/js/custom.js') }}?ver=1.5.1"></script>
+    <script src="{{ asset('asset/build/js/custom.js') }}?ver=1.5.1"></script>
     <style>
         .form-group {
             position: relative;
@@ -262,7 +262,7 @@
             font-size: 16px;
         }
 
-       
+
 
         .menu_section h3 {
             font-size: 14px !important;
@@ -349,33 +349,31 @@
         }
     </style>
     <style>
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
-}
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
 
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
-  border-radius: 10px;
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #28A745; 
-  border-radius: 10px;
-}
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            border-radius: 10px;
+        }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #28A745; 
-}
-</style>
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #28A745;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #28A745;
+        }
+    </style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    <!-- Font Awesome 6 Free CDN -->
-  
-    @yield('header_styles')
+
 </head>
 
 <body class="nav-md">
@@ -388,16 +386,14 @@
             <x-admin.sidebar></x-admin.sidebar>
             <x-admin.header></x-admin.header>
 
-           <div class="right_col" role="main" style="min-height: 100vh;">
-    {{ $slot }}
-</div>
+            <div class="right_col" role="main" style="min-height: 100vh;">
+                {{ $slot }}
+            </div>
 
 
 
-@yield('modal')
-
-<!-- loader -->
-<x-admin.footer></x-admin.footer>
+    
+            <x-admin.footer></x-admin.footer>
             <x-admin.loader></x-admin.loader>
         </div>
     </div>
@@ -425,10 +421,10 @@
 
     <script src="{{ asset('asset/custom.js') }}?ver=1.1.0"></script>
 
-       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.css">
     <script src="{{ asset('assets/js/mis/scripts.js') }}?ver=1.6.2"></script>
     @stack('modals')
     @livewireScripts
@@ -436,4 +432,3 @@
 </body>
 
 </html>
-

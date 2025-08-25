@@ -9,38 +9,29 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class NavbarItem extends Model
 {
     protected $fillable = [
-        'title',
-        'title_hi',
-        'slug',
-        'parent_id',
-        'is_dropdown',
-        'order',
-        'is_active',
-        'route',
-        'url',
-        'icon'
+        'title', 'title_hi', 'slug', 'parent_id', 'is_dropdown',
+        'order', 'is_active', 'route', 'url', 'icon'
     ];
 
     public function parent(): BelongsTo
     {
         return $this->belongsTo(NavbarItem::class, 'parent_id');
     }
-    // app/Models/NavbarItem.php
 
-
-
-    public function children()
+    public function children(): HasMany
     {
-        return $this->hasMany(NavbarItem::class, 'parent_id')->where('is_active', true)->orderBy('order');
+        return $this->hasMany(NavbarItem::class, 'parent_id')
+            ->where('is_active', true)
+            ->orderBy('order');
     }
 
     public function getLinkAttribute(): string
     {
         return $this->route ? route($this->route) : ($this->url ?? '#');
     }
-    public function roles()
-{
-    return $this->belongsToMany(Role::class);
-}
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }

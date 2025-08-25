@@ -20,4 +20,10 @@ class Role extends Model
     {
         return $this->hasMany(RoleRoute::class, 'role_id');
     }
+    // Role.php
+public function safeguardCompliances()
+{
+    return $this->belongsToMany(SafeguardCompliance::class, 'role_safeguard_compliance');
+}
+
 }

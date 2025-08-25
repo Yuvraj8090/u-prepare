@@ -13,13 +13,10 @@
         {{-- Filter Form --}}
         <form id="filter-form" method="GET" class="row mb-4">
             <div class="col-md-12 ">
-               @foreach ($projects as $project)
-               
-                <input type="text"  value="{{ $project->name }}" class="form-control" disabled style="border:none !important;"/>
-                        
-                            
-                       
-                    @endforeach 
+                @foreach ($projects as $project)
+                    <input type="text" value="{{ $project->name }}" class="form-control" disabled
+                        style="border:none !important;" />
+                @endforeach
                 <input type="hidden" name="sub_package_project_id" value="{{ request('sub_package_project_id') }}">
             </div>
 
@@ -155,9 +152,11 @@
                                             <span class="text-muted">N/A</span>
                                         @endif
                                     </td>
-                                    <td><input type="date" name="date_of_entry" class="form-control"
-                                            value="{{ $social?->date_of_entry?->format('Y-m-d') ?? now()->format('Y-m-d') }}"
-                                            {{ $locked ? 'readonly' : '' }}></td>
+                                    <td>
+                                        <input type="date" name="date_of_entry" class="form-control"
+                                            value="{{ $social?->date_of_entry?->format('Y-m-d') ?? request('date_of_entry', now()->format('Y-m-d')) }}"
+                                            max="{{ now()->format('Y-m-d') }}" {{ $locked ? 'readonly' : '' }}>
+                                    </td>
                                     <td>
                                         @if (!$locked)
                                             <button type="button" class="btn btn-success btn-sm save-row">
@@ -245,8 +244,47 @@
                 </div>
             </div>
         </div>
-<!-- jQuery CDN -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <!-- jQuery CDN -->
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+       
+        <script>
+$(document).on('click', '.save-row', function () {
+    const btn = $(this);
+    const row = btn.closest('tr');
+    const entryId = row.data('entry-id');
+
+    // Build payload to match controller
+    const payload = {
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        entry_id: entryId,
+        yes_no: row.find('select[name="yes_no"]').val(),
+        remarks: row.find('input[name="remarks"]').val(),
+        validity_date: row.find('input[name="validity_date"]').val(),
+        date_of_entry: row.find('input[name="date_of_entry"]').val(),
+        project_id: "{{ request('sub_package_project_id') }}",
+        social_compliance_id: "{{ request('safeguard_compliance_id') }}", // ✅ FIXED
+        contraction_phase_id: "{{ request('contraction_phase_id') }}",
+    };
+
+    $.ajax({
+        url: "{{ route('admin.social_safeguard_entries.save') }}",
+        method: "POST",
+        data: payload,
+        success: function (res) {
+            if (res.status === 'success') {
+                alert(res.message);
+                location.reload();
+            } else {
+                alert(res.message || 'Something went wrong.');
+            }
+        },
+        error: function (xhr) {
+            alert(xhr.responseJSON?.message || 'Server error.');
+        }
+    });
+});
+</script>
+
 
         {{-- JS --}}
         <script>
@@ -374,7 +412,7 @@
                             const icon = getIcon(file.name);
                             rowUl.insertAdjacentHTML('beforeend',
                                 `<li><i class="${icon}"></i> <a href="${file.url}" target="_blank">${file.name}</a></li>`
-                                );
+                            );
                             viewTableBody.innerHTML += `<tr>
                                 <td>${file.name}</td>
                                 <td>-</td>
