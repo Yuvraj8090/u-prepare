@@ -75,97 +75,105 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($entries as $entry)
-                                @php
-                                    $social = $entry->social;
-                                    $locked = $entry->is_locked;
-                                @endphp
-                                <tr data-entry-id="{{ $entry->id }}" data-social-id="{{ $social?->id }}">
-                                    <td>{{ $entry->sl_no }}</td>
-                                    <td class="text-start">{{ $entry->item_description }}</td>
-                                    <td>
-                                        <select name="yes_no" class="form-select" {{ $locked ? 'disabled' : '' }}>
-                                            <option value="">Select</option>
-                                            <option value="1"
-                                                {{ $social && $social->yes_no == 1 ? 'selected' : '' }}>Yes</option>
-                                            <option value="0"
-                                                {{ $social && $social->yes_no == 0 ? 'selected' : '' }}>No</option>
-                                            <option value="3"
-                                                {{ $social && $social->yes_no == 3 ? 'selected' : '' }}>N/A</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-secondary btn-sm open-upload-modal"
-                                            data-bs-toggle="modal" data-bs-target="#uploadModal"
-                                            data-entry-id="{{ $entry->id }}" data-social-id="{{ $social?->id }}">
-                                            <i class="fas fa-upload"></i> Upload/View
-                                        </button>
-                                        <div class="uploaded-files mt-1 d-none">
-                                            @if ($social?->photos_documents_case_studies)
-                                                <ul class="list-unstyled mb-0">
-                                                    @foreach ($social->photos_documents_case_studies as $mediaId)
-                                                        @php
-                                                            $media = \App\Models\MediaFile::find($mediaId);
-                                                            $icon = 'far fa-file';
-                                                            if ($media) {
-                                                                $ext = pathinfo($media->url, PATHINFO_EXTENSION);
-                                                                switch (strtolower($ext)) {
-                                                                    case 'pdf':
-                                                                        $icon = 'far fa-file-pdf text-danger';
-                                                                        break;
-                                                                    case 'doc':
-                                                                    case 'docx':
-                                                                        $icon = 'far fa-file-word text-primary';
-                                                                        break;
-                                                                    case 'xls':
-                                                                    case 'xlsx':
-                                                                        $icon = 'far fa-file-excel text-success';
-                                                                        break;
-                                                                    case 'jpg':
-                                                                    case 'jpeg':
-                                                                    case 'png':
-                                                                        $icon = 'far fa-file-image text-warning';
-                                                                        break;
-                                                                }
-                                                            }
-                                                        @endphp
-                                                        @if ($media)
-                                                            <li>
-                                                                <i class="{{ $icon }}"></i>
-                                                                <a href="{{ $media->url }}"
-                                                                    target="_blank">{{ $media->meta_data['name'] ?? 'File' }}</a>
-                                                            </li>
-                                                        @endif
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        </div>
-                                    </td>
-                                    <td><input type="text" name="remarks" class="form-control"
-                                            value="{{ $social->remarks ?? '' }}" {{ $locked ? 'readonly' : '' }}></td>
-                                    <td>
-                                        @if ($entry->is_validity)
-                                            <input type="date" name="validity_date" class="form-control"
-                                                value="{{ $social?->validity_date?->format('Y-m-d') ?? '' }}"
-                                                {{ $locked ? 'readonly' : '' }}>
-                                        @else
-                                            <span class="text-muted">N/A</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <input type="date" name="date_of_entry" class="form-control"
-                                            value="{{ $social?->date_of_entry?->format('Y-m-d') ?? request('date_of_entry', now()->format('Y-m-d')) }}"
-                                            max="{{ now()->format('Y-m-d') }}" {{ $locked ? 'readonly' : '' }}>
-                                    </td>
-                                    <td>
-                                        @if (!$locked)
-                                            <button type="button" class="btn btn-success btn-sm save-row">
-                                                <i class="fas fa-save"></i> Save
-                                            </button>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                           @foreach ($entries as $entry)
+    @php
+        $allSlNos = collect($entries)->pluck('sl_no')->toArray();
+
+        // A row is parent if at least one other row starts with "sl_no."
+        $isParent = collect($allSlNos)->contains(function ($sl) use ($entry) {
+            return Str::startsWith($sl, $entry->sl_no . '.');
+        });
+
+        // count dots to know level (A=0, A.1=1, A.1.1=2 ...)
+        $level = substr_count($entry->sl_no, '.');
+
+        $social = $entry->social;
+        $locked = $entry->is_locked;
+    @endphp
+
+    <tr class="{{ $isParent ? 'table-secondary fw-bold' : '' }}"
+        data-entry-id="{{ $entry->id }}" data-social-id="{{ $social?->id }}">
+        
+        {{-- SL No --}}
+        <td>{{ $entry->sl_no }}</td>
+
+        {{-- Item (with indentation) --}}
+        <td class="text-start" style="padding-left: {{ $level * 20 }}px;">
+            {{ $entry->item_description }}
+        </td>
+
+        {{-- Yes/No --}}
+        <td>
+            @if ($isParent)
+                <span class="text-muted">—</span>
+            @else
+                <select name="yes_no" class="form-select" {{ $locked ? 'disabled' : '' }}>
+                    <option value="">Select</option>
+                    <option value="1" {{ $social && $social->yes_no == 1 ? 'selected' : '' }}>Yes</option>
+                    <option value="0" {{ $social && $social->yes_no == 0 ? 'selected' : '' }}>No</option>
+                    <option value="3" {{ $social && $social->yes_no == 3 ? 'selected' : '' }}>N/A</option>
+                </select>
+            @endif
+        </td>
+
+        {{-- Files --}}
+        <td>
+            @if ($isParent)
+                <span class="text-muted">—</span>
+            @else
+                <button type="button" class="btn btn-secondary btn-sm open-upload-modal"
+                    data-bs-toggle="modal" data-bs-target="#uploadModal"
+                    data-entry-id="{{ $entry->id }}" data-social-id="{{ $social?->id }}">
+                    <i class="fas fa-upload"></i> Upload/View
+                </button>
+            @endif
+        </td>
+
+        {{-- Remarks --}}
+        <td>
+            @if ($isParent)
+                <span class="text-muted">—</span>
+            @else
+                <input type="text" name="remarks" class="form-control"
+                    value="{{ $social->remarks ?? '' }}" {{ $locked ? 'readonly' : '' }}>
+            @endif
+        </td>
+
+        {{-- Validity --}}
+        <td>
+            @if ($isParent)
+                <span class="text-muted">—</span>
+            @elseif ($entry->is_validity)
+                <input type="date" name="validity_date" class="form-control"
+                    value="{{ $social?->validity_date?->format('Y-m-d') ?? '' }}"
+                    {{ $locked ? 'readonly' : '' }}>
+            @else
+                <span class="text-muted">N/A</span>
+            @endif
+        </td>
+
+        {{-- Date of Entry --}}
+        <td>
+            @if ($isParent)
+                <span class="text-muted">—</span>
+            @else
+                <input type="date" name="date_of_entry" class="form-control"
+                    value="{{ $social?->date_of_entry?->format('Y-m-d') ?? request('date_of_entry', now()->format('Y-m-d')) }}"
+                    max="{{ now()->format('Y-m-d') }}" {{ $locked ? 'readonly' : '' }}>
+            @endif
+        </td>
+
+        {{-- Action --}}
+        <td>
+            @if (!$isParent && !$locked)
+                <button type="button" class="btn btn-success btn-sm save-row">
+                    <i class="fas fa-save"></i> Save
+                </button>
+            @endif
+        </td>
+    </tr>
+@endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -246,44 +254,44 @@
         </div>
         <!-- jQuery CDN -->
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-       
+
         <script>
-$(document).on('click', '.save-row', function () {
-    const btn = $(this);
-    const row = btn.closest('tr');
-    const entryId = row.data('entry-id');
+            $(document).on('click', '.save-row', function() {
+                const btn = $(this);
+                const row = btn.closest('tr');
+                const entryId = row.data('entry-id');
 
-    // Build payload to match controller
-    const payload = {
-        _token: $('meta[name="csrf-token"]').attr('content'),
-        entry_id: entryId,
-        yes_no: row.find('select[name="yes_no"]').val(),
-        remarks: row.find('input[name="remarks"]').val(),
-        validity_date: row.find('input[name="validity_date"]').val(),
-        date_of_entry: row.find('input[name="date_of_entry"]').val(),
-        project_id: "{{ request('sub_package_project_id') }}",
-        social_compliance_id: "{{ request('safeguard_compliance_id') }}", // ✅ FIXED
-        contraction_phase_id: "{{ request('contraction_phase_id') }}",
-    };
+                // Build payload to match controller
+                const payload = {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    entry_id: entryId,
+                    yes_no: row.find('select[name="yes_no"]').val(),
+                    remarks: row.find('input[name="remarks"]').val(),
+                    validity_date: row.find('input[name="validity_date"]').val(),
+                    date_of_entry: row.find('input[name="date_of_entry"]').val(),
+                    project_id: "{{ request('sub_package_project_id') }}",
+                    social_compliance_id: "{{ request('safeguard_compliance_id') }}", // ✅ FIXED
+                    contraction_phase_id: "{{ request('contraction_phase_id') }}",
+                };
 
-    $.ajax({
-        url: "{{ route('admin.social_safeguard_entries.save') }}",
-        method: "POST",
-        data: payload,
-        success: function (res) {
-            if (res.status === 'success') {
-                alert(res.message);
-                location.reload();
-            } else {
-                alert(res.message || 'Something went wrong.');
-            }
-        },
-        error: function (xhr) {
-            alert(xhr.responseJSON?.message || 'Server error.');
-        }
-    });
-});
-</script>
+                $.ajax({
+                    url: "{{ route('admin.social_safeguard_entries.save') }}",
+                    method: "POST",
+                    data: payload,
+                    success: function(res) {
+                        if (res.status === 'success') {
+                            alert(res.message);
+                            location.reload();
+                        } else {
+                            alert(res.message || 'Something went wrong.');
+                        }
+                    },
+                    error: function(xhr) {
+                        alert(xhr.responseJSON?.message || 'Server error.');
+                    }
+                });
+            });
+        </script>
 
 
         {{-- JS --}}

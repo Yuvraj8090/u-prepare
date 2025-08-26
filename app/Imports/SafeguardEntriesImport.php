@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Models\SafeguardEntry;
-use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -22,12 +21,19 @@ class SafeguardEntriesImport implements ToModel, WithHeadingRow
 
     public function model(array $row)
     {
+        $slNo = trim($row['sl_no'] ?? '');
+
+        // ✅ Skip if sl_no is missing/empty
+        if ($slNo === '') {
+            return null;
+        }
+
         return new SafeguardEntry([
-            'sub_package_project_id' => $this->projectId,
+            'sub_package_project_id'  => $this->projectId,
             'safeguard_compliance_id' => $this->complianceId,
-            'contraction_phase_id' => $this->phaseId,
-            'sl_no' => $row['sl_no'] ?? null,
-            'item_description' => $row['item_description'] ?? null,
+            'contraction_phase_id'    => $this->phaseId,
+            'sl_no'                   => $slNo,
+            'item_description'        => $row['item_description'] ?? null,
         ]);
     }
 }

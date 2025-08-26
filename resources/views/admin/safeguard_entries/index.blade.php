@@ -2,15 +2,12 @@
     <div class="container-fluid">
 
         <!-- Header & Breadcrumb -->
-        <x-admin.breadcrumb-header
-    icon="fas fa-shield-alt text-primary"
-    title="Safeguard Entries Management"
-    :breadcrumbs="[
-        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
-        ['label' => 'Admin'],
-        ['label' => 'Safeguard Entries']
-    ]"
-/>
+        <x-admin.breadcrumb-header icon="fas fa-shield-alt text-primary" title="Safeguard Entries Management"
+            :breadcrumbs="[
+                ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+                ['label' => 'Admin'],
+                ['label' => 'Safeguard Entries'],
+            ]" />
 
 
         <!-- Alerts -->
@@ -33,9 +30,15 @@
             </div>
 
             <!-- Import Form -->
+            <a href="/safeguard_entries_demo.xlsx" class="btn btn-success " download>
+                <i class="fas fa-file-excel me-1"></i> Demo Format
+            </a>
+
             <div class="card shadow-sm mb-5">
-                <div class="card-header bg-success text-white">
+                <div class="card-header bg-success text-white d-flex justify-content-between">
                     <h5 class="mb-0"><i class="fas fa-file-import me-2"></i> Import Safeguard Entries</h5>
+
+
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.safeguard_entries.import') }}"
@@ -76,6 +79,7 @@
                             <button type="submit" class="btn btn-success"><i class="fas fa-upload me-1"></i>
                                 Import</button>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -91,7 +95,7 @@
                     </a>
                 </div>
                 <div class="card-body">
-                    @if ($entries->isNotEmpty())
+                    @if (!empty($entries) && count($entries))
                         <form id="bulkDeleteForm" method="POST" action="">
                             @csrf
                             @method('DELETE')
@@ -106,88 +110,99 @@
                                 </div>
                             </div>
 
-                            <x-admin.data-table 
-    :headers="['Select', 'Sl. No.', 'Description', 'Compliance & Phase', 'Validity', 'Actions']" 
-    id="entries-table" 
-    :excel="true" 
-    :print="true" 
-    :pageLength="10">
+                            <x-admin.data-table :headers="[
+                                'Select',
+                                'Sl. No.',
+                                'Description',
+                                'Compliance & Phase',
+                                'Validity',
+                                'Actions',
+                            ]" id="entries-table" :excel="true" :print="true"
+                                :pageLength="10">
+                                @foreach ($entries as $slNo => $group)
+                                    @foreach ($group as $entry)
+                                        @php
+                                            // Detect parent (no dot, only single section like "A", "B", "C")
+                                            $isParent = !Str::contains($entry->sl_no, '.');
+                                        @endphp
 
-    @foreach ($entries as $parentSlNo => $group)
-        @php $parent = $group->first(); @endphp
-        <tr class="table-primary fw-bold">
-            <td><input type="checkbox" class="entryCheckbox" name="ids[]" value="{{ $parent->id }}"></td>
-            <td>{{ $parentSlNo }}</td>
-            <td>{{ $parent->item_description }}</td>
-            <td>
-                {{ optional($parent->safeguardCompliance)->name }}
-                @if($parent->contractionPhase)
-                    ({{ $parent->contractionPhase->name }})
-                @endif
-            </td>
-            <td>
-                @if($parent->is_validity)
-                    <span class="badge bg-success">Required</span>
-                @else
-                    <span class="badge bg-danger">Not Required</span>
-                @endif
-            </td>
-            <td>
-                <div class="d-flex">
-                    <a href="{{ route('admin.safeguard_entries.edit', $parent->id) }}" 
-                       class="btn btn-sm btn-outline-warning me-2">
-                       <i class="fas fa-edit me-1"></i> Edit
-                    </a>
-                    <form method="POST" action="{{ route('admin.safeguard_entries.destroy', $parent->id) }}">
-                        @csrf @method('DELETE')
-                        <button class="btn btn-sm btn-outline-danger" 
-                                onclick="return confirm('Delete this entry?')">
-                            <i class="fas fa-trash-alt me-1"></i> Delete
-                        </button>
-                    </form>
-                </div>
-            </td>
-        </tr>
+                                        @if ($isParent)
+                                            <tr class="table-primary fw-bold">
+                                                <td><input type="checkbox" class="entryCheckbox" name="ids[]"
+                                                        value="{{ $entry->id }}"></td>
+                                                <td>{{ $entry->sl_no }}</td>
+                                                <td>{{ $entry->item_description }}</td>
+                                                <td>
+                                                    {{ optional($entry->safeguardCompliance)->name }}
+                                                    @if ($entry->contractionPhase)
+                                                        ({{ $entry->contractionPhase->name }})
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($entry->is_validity)
+                                                        <span class="badge bg-success">Required</span>
+                                                    @else
+                                                        <span class="badge bg-danger">Not Required</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a href="{{ route('admin.safeguard_entries.edit', $entry->id) }}"
+                                                            class="btn btn-sm btn-outline-warning me-2">
+                                                            <i class="fas fa-edit me-1"></i> Edit
+                                                        </a>
+                                                        <form method="POST"
+                                                            action="{{ route('admin.safeguard_entries.destroy', $entry->id) }}">
+                                                            @csrf @method('DELETE')
+                                                            <button class="btn btn-sm btn-outline-danger"
+                                                                onclick="return confirm('Delete this entry?')">
+                                                                <i class="fas fa-trash-alt me-1"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td><input type="checkbox" class="entryCheckbox" name="ids[]"
+                                                        value="{{ $entry->id }}"></td>
+                                                <td class="ps-4">{{ $entry->sl_no }}</td>
+                                                <td>{{ $entry->item_description }}</td>
+                                                <td>
+                                                    {{ optional($entry->safeguardCompliance)->name }}
+                                                    @if ($entry->contractionPhase)
+                                                        ({{ $entry->contractionPhase->name }})
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($entry->is_validity)
+                                                        <span class="badge bg-success">Required</span>
+                                                    @else
+                                                        <span class="badge bg-danger">Not Required</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a href="{{ route('admin.safeguard_entries.edit', $entry->id) }}"
+                                                            class="btn btn-sm btn-outline-warning me-2">
+                                                            <i class="fas fa-edit me-1"></i> Edit
+                                                        </a>
+                                                        <form method="POST"
+                                                            action="{{ route('admin.safeguard_entries.destroy', $entry->id) }}">
+                                                            @csrf @method('DELETE')
+                                                            <button class="btn btn-sm btn-outline-danger"
+                                                                onclick="return confirm('Delete this entry?')">
+                                                                <i class="fas fa-trash-alt me-1"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                @endforeach
 
-        @foreach ($group as $entry)
-            @if (!($entry->id === $parent->id))
-                <tr>
-                    <td><input type="checkbox" class="entryCheckbox" name="ids[]" value="{{ $entry->id }}"></td>
-                    <td class="ps-4">{{ $entry->sl_no }}</td>
-                    <td>{{ $entry->item_description }}</td>
-                    <td>
-                        {{ optional($entry->safeguardCompliance)->name }}
-                        @if($entry->contractionPhase)
-                            ({{ $entry->contractionPhase->name }})
-                        @endif
-                    </td>
-                    <td>
-                        @if($entry->is_validity)
-                            <span class="badge bg-success">Required</span>
-                        @else
-                            <span class="badge bg-danger">Not Required</span>
-                        @endif
-                    </td>
-                    <td>
-                        <div class="d-flex">
-                            <a href="{{ route('admin.safeguard_entries.edit', $entry->id) }}" 
-                               class="btn btn-sm btn-outline-warning me-2">
-                               <i class="fas fa-edit me-1"></i> Edit
-                            </a>
-                            <form method="POST" action="{{ route('admin.safeguard_entries.destroy', $entry->id) }}">
-                                @csrf @method('DELETE')
-                                <button class="btn btn-sm btn-outline-danger" 
-                                        onclick="return confirm('Delete this entry?')">
-                                    <i class="fas fa-trash-alt me-1"></i> Delete
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            @endif
-        @endforeach
-    @endforeach
-</x-admin.data-table>
+                            </x-admin.data-table>
 
                         </form>
                     @else

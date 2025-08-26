@@ -47,8 +47,8 @@
                 onerror="this.style.display='none'; document.getElementById('initialsDiv').style.display='flex';">
 
             <div id="initialsDiv"
-                style="height:150px; width:150px; background-color: #ADD8E6; color: white; border-radius: 50%; 
-                font-size: 72px; font-weight: bold; display: none; align-items: center; justify-content: center; 
+                style="height:50px; width:50px; background-color: #ADD8E6; color: white; border-radius: 50%; 
+                font-size: 25px; font-weight: bold; display: none; align-items: center; justify-content: center; 
                 margin: 0 auto; user-select:none;">
                 {{ $initials }}
             </div>
@@ -57,7 +57,45 @@
         </div>
 
         <br />
+        <div class="mx-2">
+            <button id="clearCacheBtn" class="btn btn-primary w-100 mt-3">
+                🔄 Clear Cache
+            </button>
 
+            <div id="cacheResult" class="mt-2 text-sm "></div>
+        </div>
+        <script>
+            document.getElementById('clearCacheBtn').addEventListener('click', function() {
+                if (!confirm('Are you sure you want to clear the website cache?')) return;
+
+                fetch('{{ route('admin.clear.cache') }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const resultDiv = document.getElementById('cacheResult');
+                        resultDiv.style.color = data.status === 'success' ? 'white' : 'white';
+
+                        if (data.status === 'success') {
+                            resultDiv.textContent = (data.message || 'Cache cleared successfully.') +
+                                ' Page will reload in 2 seconds...';
+                            setTimeout(() => location.reload(), 2000);
+                        } else {
+                            resultDiv.textContent = data.message || 'Something went wrong.';
+                        }
+                    })
+                    .catch(() => {
+                        const resultDiv = document.getElementById('cacheResult');
+                        resultDiv.textContent = 'Request failed.';
+                        resultDiv.style.color = 'red';
+                    });
+            });
+        </script>
         <!-- Sidebar Menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
@@ -132,9 +170,9 @@
                         <ul class="nav child_menu">
                             <li><a href="{{ route('admin.safeguard-compliances.index') }}"><i
                                         class="fa fa-check-circle"></i> Compliance</a></li>
-                            <li><a href="{{ route('admin.safeguard_entries.index2') }}"><i class="fa fa-shield"></i>
+                            <li><a href="{{ route('admin.safeguard_entries.index') }}"><i class="fa fa-shield"></i>
                                     Safeguard Entries</a></li>
-                            <li><a href="{{ route('admin.social_safeguard_entries.overview') }}"><i
+                            <li><a href="{{ route('admin.social_safeguard_entries.index') }}"><i
                                         class="fa fa-users"></i> Social Safeguards</a></li>
                         </ul>
                     </li>
@@ -248,26 +286,6 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="{{ request()->routeIs('admin.grievances.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.grievances.index') }}">
-                            <i class="fa fa-comments"></i> Grievances
-                        </a>
-                    </li>
-                    <li class="{{ request()->routeIs('admin.package-project-assignments.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.package-project-assignments.index') }}">
-                            <i class="fa fa-tasks"></i> Project Assignments
-                        </a>
-                    </li>
-                    <li class="{{ request()->routeIs('admin.feedback.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.feedback.index') }}">
-                            <i class="fa fa-comment-dots"></i> Feedback
-                        </a>
-                    </li>
-                    <li><a href="{{ route('admin.news.index') }}"><i class="fa fa-newspaper"></i> News</a></li>
-                    <li><a href="{{ route('admin.tenders.index') }}"><i class="fa fa-file-contract"></i> Tenders</a>
-                    </li>
-                    <li><a href="{{ route('admin.sub-departments.index') }}"><i class="fa fa-sitemap"></i> Sub
-                            Departments</a></li>
 
                     <li
                         class="{{ request()->routeIs('admin.pages.*') || request()->routeIs('admin.navbar-items.*') || request()->routeIs('admin.slides.*') || request()->routeIs('admin.leaders.*') ? 'active' : '' }}">

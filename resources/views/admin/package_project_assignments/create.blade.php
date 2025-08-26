@@ -1,14 +1,10 @@
 <x-app-layout>
     <div class="container-fluid">
-        <x-admin.breadcrumb-header 
-            icon="fas fa-plus-circle text-primary" 
-            title="Assign Project" 
-            :breadcrumbs="[
-                ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i> Dashboard'],
-                ['route' => 'admin.package-project-assignments.index', 'label' => 'Assignments'],
-                ['label' => 'Assign Project'],
-            ]" 
-        />
+        <x-admin.breadcrumb-header icon="fas fa-plus-circle text-primary" title="Assign Project" :breadcrumbs="[
+            ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i> Dashboard'],
+            ['route' => 'admin.package-project-assignments.index', 'label' => 'Assignments'],
+            ['label' => 'Assign Project'],
+        ]" />
 
         <div class="card shadow-sm">
             <div class="card-header">
@@ -28,24 +24,25 @@
                             @endforeach
                         </select>
                     </div>
-{{-- Projects --}}
-<div class="mb-3">
-    <label class="form-label fw-bold">Select Projects</label>
-    
-    {{-- Select All Button --}}
-    <div id="select_all_wrapper" class="mb-2 d-none">
-        <button type="button" id="toggle_select_all" class="btn btn-sm btn-outline-primary">
-            Select All
-        </button>
-    </div>
+                    {{-- Projects --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Select Projects</label>
 
-    <div id="project_checkboxes" class="border rounded p-3" style="max-height: 250px; overflow-y: auto;">
-        <p class="text-muted mb-0">-- Select Department First --</p>
-    </div>
-    @error('package_project_ids')
-        <small class="text-danger">{{ $message }}</small>
-    @enderror
-</div>
+                        {{-- Select All Button --}}
+                        <div id="select_all_wrapper" class="mb-2 d-none">
+                            <button type="button" id="toggle_select_all" class="btn btn-sm btn-outline-primary">
+                                Select All
+                            </button>
+                        </div>
+
+                        <div id="project_checkboxes" class="border rounded p-3"
+                            style="max-height: 250px; overflow-y: auto;">
+                            <p class="text-muted mb-0">-- Select Department First --</p>
+                        </div>
+                        @error('package_project_ids')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
 
 
                     {{-- Sub-Department --}}
@@ -57,7 +54,8 @@
                                 <option value="{{ $subDept->id }}">{{ $subDept->name }}</option>
                             @endforeach
                         </select>
-                        <small class="text-muted">If selected, project will be assigned to all users in this sub-department.</small>
+                        <small class="text-muted">If selected, project will be assigned to all users in this
+                            sub-department.</small>
                     </div>
 
                     <div class="text-center my-3">
@@ -88,64 +86,70 @@
 
 {{-- Ajax Script for Projects --}}
 <script>
-document.getElementById('department_id').addEventListener('change', function() {
-    let deptId = this.value;
-    let projectBox = document.getElementById('project_checkboxes');
-    let selectAllWrapper = document.getElementById('select_all_wrapper');
-    let toggleBtn = document.getElementById('toggle_select_all');
+    document.getElementById('department_id').addEventListener('change', function() {
+        let deptId = this.value;
+        let projectBox = document.getElementById('project_checkboxes');
+        let selectAllWrapper = document.getElementById('select_all_wrapper');
+        let toggleBtn = document.getElementById('toggle_select_all');
 
-    projectBox.innerHTML = '<p class="text-muted">Loading projects...</p>';
-    selectAllWrapper.classList.add('d-none'); // hide button until projects load
+        projectBox.innerHTML = '<p class="text-muted">Loading projects...</p>';
+        selectAllWrapper.classList.add('d-none'); // hide button until projects load
 
-    if (deptId) {
-        fetch(`/admin/package-projects/by-department/${deptId}`)
-            .then(res => res.json())
-            .then(data => {
-                projectBox.innerHTML = '';
-                if (data.length) {
-                    // show Select All button
-                    selectAllWrapper.classList.remove('d-none');
+        if (deptId) {
+            // Use Laravel route() helper
+            let url = "{{ route('admin.package-projects.by-department', ':id') }}".replace(':id', deptId);
 
-                    data.forEach(p => {
-                        let wrapper = document.createElement('div');
-                        wrapper.className = "form-check mb-2";
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    projectBox.innerHTML = '';
+                    if (data.length) {
+                        // show Select All button
+                        selectAllWrapper.classList.remove('d-none');
 
-                        let checkbox = document.createElement('input');
-                        checkbox.type = "checkbox";
-                        checkbox.name = "package_project_ids[]";
-                        checkbox.value = p.id;
-                        checkbox.id = "project_" + p.id;
-                        checkbox.className = "form-check-input project-checkbox";
+                        data.forEach(p => {
+                            let wrapper = document.createElement('div');
+                            wrapper.className = "form-check mb-2";
 
-                        let label = document.createElement('label');
-                        label.htmlFor = "project_" + p.id;
-                        label.className = "form-check-label";
-                        label.textContent = p.package_name;
+                            let checkbox = document.createElement('input');
+                            checkbox.type = "checkbox";
+                            checkbox.name = "package_project_ids[]";
+                            checkbox.value = p.id;
+                            checkbox.id = "project_" + p.id;
+                            checkbox.className = "form-check-input project-checkbox";
 
-                        wrapper.appendChild(checkbox);
-                        wrapper.appendChild(label);
-                        projectBox.appendChild(wrapper);
-                    });
+                            let label = document.createElement('label');
+                            label.htmlFor = "project_" + p.id;
+                            label.className = "form-check-label";
+                            label.textContent = p.package_name;
 
-                    // reset button text
-                    toggleBtn.textContent = "Select All";
+                            wrapper.appendChild(checkbox);
+                            wrapper.appendChild(label);
+                            projectBox.appendChild(wrapper);
+                        });
 
-                    // attach event listener for toggle
-                    toggleBtn.onclick = function() {
-                        let checkboxes = document.querySelectorAll('.project-checkbox');
-                        let allChecked = Array.from(checkboxes).every(cb => cb.checked);
+                        // reset button text
+                        toggleBtn.textContent = "Select All";
 
-                        checkboxes.forEach(cb => cb.checked = !allChecked);
+                        // attach event listener for toggle
+                        toggleBtn.onclick = function() {
+                            let checkboxes = document.querySelectorAll('.project-checkbox');
+                            let allChecked = Array.from(checkboxes).every(cb => cb.checked);
 
-                        toggleBtn.textContent = allChecked ? "Select All" : "Deselect All";
-                    };
-                } else {
-                    projectBox.innerHTML = '<p class="text-danger">No projects found for this department.</p>';
-                }
-            });
-    } else {
-        projectBox.innerHTML = '<p class="text-muted">-- Select Department First --</p>';
-    }
-});
+                            checkboxes.forEach(cb => cb.checked = !allChecked);
+
+                            toggleBtn.textContent = allChecked ? "Select All" : "Deselect All";
+                        };
+                    } else {
+                        projectBox.innerHTML =
+                            '<p class="text-danger">No projects found for this department.</p>';
+                    }
+                })
+                .catch(() => {
+                    projectBox.innerHTML = '<p class="text-danger">Error loading projects.</p>';
+                });
+        } else {
+            projectBox.innerHTML = '<p class="text-muted">-- Select Department First --</p>';
+        }
+    });
 </script>
-

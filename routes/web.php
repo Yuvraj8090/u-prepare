@@ -43,7 +43,8 @@ use App\Http\Controllers\Admin\FeedbackController as AdminFeedback;
 Route::get('/en/news', [AdminNewsController::class, 'publicIndex'])->name('news.index');
 // Hindi news listing
 Route::get('/hi/news', [AdminNewsController::class, 'publicIndex'])->name('news.index.hi');
-
+Route::post('/admin/clear-cache', [PageController::class, 'clearCache'])
+->name('admin.clear.cache');
 // Show single news item
 Route::get('/news/{news}', [AdminNewsController::class, 'show'])->name('news.show');
 Route::get('/hi/news/{news}', [AdminNewsController::class, 'show'])->name('news.show.hi');
@@ -123,7 +124,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
             Route::get('/social-safeguard-entries-all', [SocialSafeguardEntryController::class, 'subPackageProjectOverview'])->name('social_safeguard_entries.overview');
 
             Route::post('/social-safeguard-entries/store-or-update', [SocialSafeguardEntryController::class, 'storeOrUpdateFromIndex'])->name('social_safeguard_entries.storeOrUpdateFromIndex');
-Route::get('/package-projects/by-department/{department}', [\App\Http\Controllers\Admin\PackageProjectAssignmentController::class, 'getProjectsByDepartment'])->name('package-projects.by-department');
+            Route::get('/package-projects/by-department/{department}', [\App\Http\Controllers\Admin\PackageProjectAssignmentController::class, 'getProjectsByDepartment'])->name('package-projects.by-department');
 
             // alias for save()
             Route::post('/social-safeguard-entries/save', [SocialSafeguardEntryController::class, 'save'])->name('social_safeguard_entries.save');
@@ -205,6 +206,7 @@ Route::get('/package-projects/by-department/{department}', [\App\Http\Controller
             Route::resource('package-projects', PackageProjectController::class);
         });
     Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/dashboard', [DashboardController::class, 'index2'])->name('admin.dashboard');
 
     // Dashboard main page
