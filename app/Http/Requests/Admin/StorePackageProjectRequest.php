@@ -35,6 +35,7 @@ class StorePackageProjectRequest extends FormRequest
         'hpc_approval_date' => ['nullable', 'date'],
         'hpc_letter_number' => ['nullable', 'string', 'max:100'],
         'hpc_document_path' => ['nullable', 'file', 'mimes:pdf', 'max:20480'],
+        'status' => ['nullable', 'string', 'max:100'],
     ];
 }
 

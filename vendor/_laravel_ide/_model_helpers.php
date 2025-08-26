@@ -8080,6 +8080,7 @@ namespace App\Models {
     /**
      * App\Models\PackageProject
      *
+     * @property string|null $status
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
@@ -8147,6 +8148,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject basicInfo()
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject withWorkProgramData()
      * @method static \Illuminate\Database\Eloquent\Builder<PackageProject>|PackageProject applyFilters()

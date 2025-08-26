@@ -18,27 +18,26 @@ class ProcurementWorkProgramController extends Controller
         return view('admin.procurement_work_programs.index', compact('packageProjects'));
     }
 
- public function create(Request $request)
-{
-    // Get all projects for dropdown (basic info)
-    $packageProjects = PackageProject::basicInfo()->get();
+    public function create(Request $request)
+    {
+        // Get all projects for dropdown (basic info)
+        $packageProjects = PackageProject::basicInfo()->get();
 
-    // Selected project (with procurementDetail + workPrograms)
-    $selectedPackageProject = null;
+        // Selected project (with procurementDetail + workPrograms)
+        $selectedPackageProject = null;
 
-    if ($request->package_project_id) {
-        $selectedPackageProject = PackageProject::withWorkProgramData()
-            ->find($request->package_project_id);
+        if ($request->package_project_id) {
+            $selectedPackageProject = PackageProject::withWorkProgramData()->find($request->package_project_id);
+        }
+
+        return view('admin.procurement_work_programs.create', [
+            'packageProjects' => $packageProjects, // All projects for dropdown
+            'selectedPackageProject' => $selectedPackageProject, // Full details of selected project
+            'procurementDetails' => $selectedPackageProject?->procurementDetail, // Single related detail
+            'procurementDetailsForm' => $selectedPackageProject?->procurementDetail, // Single related detail
+            'selectedPackageProjectId' => $request->package_project_id,
+        ]);
     }
-
-    return view('admin.procurement_work_programs.create', [
-        'packageProjects' => $packageProjects,                 // All projects for dropdown
-        'selectedPackageProject' => $selectedPackageProject,   // Full details of selected project
-        'procurementDetails' => $selectedPackageProject?->procurementDetail, // Single related detail
-        'procurementDetailsForm' => $selectedPackageProject?->procurementDetail, // Single related detail
-        'selectedPackageProjectId' => $request->package_project_id,
-    ]);
-}
 
     public function store(Request $request)
     {
@@ -229,7 +228,6 @@ class ProcurementWorkProgramController extends Controller
         ]);
     }
 
-    
     public function editByPackage($package_project_id, $procurement_details_id)
     {
         $workPrograms = ProcurementWorkProgram::where('package_project_id', $package_project_id)->where('procurement_details_id', $procurement_details_id)->get();
@@ -275,7 +273,6 @@ class ProcurementWorkProgramController extends Controller
             'pre_bid_minutes_document' => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
         ]);
 
-      
         $existingWeightages = ProcurementWorkProgram::where('package_project_id', $validated['package_project_id'])->where('procurement_details_id', $validated['procurement_details_id'])->pluck('weightage', 'id')->toArray();
 
         $existingWeightages[$procurementWorkProgram->id] = $validated['weightage'];
@@ -315,22 +312,21 @@ class ProcurementWorkProgramController extends Controller
     }
 
     public function show($package_project_id, $procurement_details_id)
-{
-    $workPrograms = ProcurementWorkProgram::with(['packageProject', 'procurementDetail'])
-        ->where('package_project_id', $package_project_id)
-        ->where('procurement_details_id', $procurement_details_id)
-        ->get();
+    {
+        $workPrograms = ProcurementWorkProgram::with(['packageProject', 'procurementDetail'])
+            ->where('package_project_id', $package_project_id)
+            ->where('procurement_details_id', $procurement_details_id)
+            ->get();
 
-    $workProgram = $workPrograms->first(); // may be null if none exist
+        $workProgram = $workPrograms->first(); // may be null if none exist
 
-    return view('admin.procurement_work_programs.show', [
-        'workProgram' => $workProgram,
-        'workPrograms' => $workPrograms,
-        'packageProjects' => PackageProject::all(['id', 'package_name']),
-        'procurementDetails' => ProcurementDetail::all(['id', 'method_of_procurement']),
-        'packageProjectId' => $package_project_id,
-        'procurementDetailsId' => $procurement_details_id,
-    ]);
-}
-
+        return view('admin.procurement_work_programs.show', [
+            'workProgram' => $workProgram,
+            'workPrograms' => $workPrograms,
+            'packageProjects' => PackageProject::all(['id', 'package_name']),
+            'procurementDetails' => ProcurementDetail::all(['id', 'method_of_procurement']),
+            'packageProjectId' => $package_project_id,
+            'procurementDetailsId' => $procurement_details_id,
+        ]);
+    }
 }

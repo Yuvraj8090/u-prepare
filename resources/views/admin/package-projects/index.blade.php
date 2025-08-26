@@ -2,15 +2,12 @@
     <div class="container-fluid">
 
         <!-- Breadcrumb -->
-        <x-admin.breadcrumb-header 
-            icon="fas fa-boxes text-primary" 
-            title="Package Projects Management"
+        <x-admin.breadcrumb-header icon="fas fa-boxes text-primary" title="Package Projects Management"
             :breadcrumbs="[
                 ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
                 ['label' => 'Admin'],
                 ['label' => 'Package Projects'],
-            ]" 
-        />
+            ]" />
 
         <!-- Success/Error Alerts -->
         @if (session('success'))
@@ -32,110 +29,101 @@
             </div>
 
             <!-- Filters -->
-           <div class="card-body border-bottom">
-    <form method="GET" action="{{ route('admin.package-projects.index') }}">
-        <div class="row g-3 align-items-end">
-            
-            <!-- Department -->
-            <div class="col-md-3 col-lg-2">
-                <label class="form-label fw-semibold">Department</label>
-                <select name="department_id" class="form-select">
-                    <option value="">All Departments</option>
-                    @foreach($departments as $dept)
-                        <option value="{{ $dept->id }}" 
-                            {{ request('department_id') == $dept->id ? 'selected' : '' }}>
-                            {{ $dept->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+            <div class="card-body border-bottom">
+                <form method="GET" action="{{ route('admin.package-projects.index') }}">
+                    <div class="row g-3 align-items-end">
 
-            <!-- District -->
-            <div class="col-md-3 col-lg-2">
-                <label class="form-label fw-semibold">District</label>
-                <select name="district_id" class="form-select">
-                    <option value="">All Districts</option>
-                    @foreach($districts as $district)
-                        <option value="{{ $district->id }}" 
-                            {{ request('district_id') == $district->id ? 'selected' : '' }}>
-                            {{ $district->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+                        <!-- Department -->
+                        <div class="col-md-3 col-lg-2">
+                            <label class="form-label fw-semibold">Department</label>
+                            <select name="department_id" class="form-select">
+                                <option value="">All Departments</option>
+                                @foreach ($departments as $dept)
+                                    <option value="{{ $dept->id }}"
+                                        {{ request('department_id') == $dept->id ? 'selected' : '' }}>
+                                        {{ $dept->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-            <!-- Category -->
-            <div class="col-md-3 col-lg-2">
-                <label class="form-label fw-semibold">Category</label>
-                <select name="category_id" class="form-select">
-                    <option value="">All Categories</option>
-                    @foreach($categories as $cat)
-                        <option value="{{ $cat->id }}" 
-                            {{ request('category_id') == $cat->id ? 'selected' : '' }}>
-                            {{ $cat->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+                        <!-- District -->
+                        <div class="col-md-3 col-lg-2">
+                            <label class="form-label fw-semibold">District</label>
+                            <select name="district_id" class="form-select">
+                                <option value="">All Districts</option>
+                                @foreach ($districts as $district)
+                                    <option value="{{ $district->id }}"
+                                        {{ request('district_id') == $district->id ? 'selected' : '' }}>
+                                        {{ $district->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-            <!-- Component -->
-            <div class="col-md-3 col-lg-2">
-                <label class="form-label fw-semibold">Component</label>
-                <select name="package_component_id" class="form-select">
-                    <option value="">All Components</option>
-                    @foreach($components as $comp)
-                        <option value="{{ $comp->id }}" 
-                            {{ request('package_component_id') == $comp->id ? 'selected' : '' }}>
-                            {{ $comp->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+                        <!-- Category -->
+                        <div class="col-md-3 col-lg-2">
+                            <label class="form-label fw-semibold">Category</label>
+                            <select name="category_id" class="form-select">
+                                <option value="">All Categories</option>
+                                @foreach ($categories as $cat)
+                                    <option value="{{ $cat->id }}"
+                                        {{ request('category_id') == $cat->id ? 'selected' : '' }}>
+                                        {{ $cat->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-            <!-- Search -->
-            <div class="col-md-4 col-lg-3">
-                <label class="form-label fw-semibold">Search</label>
-                <input type="text" 
-                       name="search" 
-                       class="form-control" 
-                       placeholder="Search by Name / Number"
-                       value="{{ request('search') }}">
-            </div>
+                        <!-- Component -->
+                        <div class="col-md-3 col-lg-2">
+                            <label class="form-label fw-semibold">Component</label>
+                            <select name="package_component_id" class="form-select">
+                                <option value="">All Components</option>
+                                @foreach ($components as $comp)
+                                    <option value="{{ $comp->id }}"
+                                        {{ request('package_component_id') == $comp->id ? 'selected' : '' }}>
+                                        {{ $comp->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-            <!-- Buttons -->
-            <div class="col-md-4 col-lg-3 d-flex gap-2 mt-3">
-                <button type="submit" class="btn btn-primary flex-fill">
-                    <i class="fas fa-filter me-1"></i> Filter
-                </button>
-                <a href="{{ route('admin.package-projects.index') }}" class="btn btn-secondary flex-fill">
-                    <i class="fas fa-undo me-1"></i> Reset
-                </a>
+                        <!-- Search -->
+                        <div class="col-md-4 col-lg-3">
+                            <label class="form-label fw-semibold">Search</label>
+                            <input type="text" name="search" class="form-control"
+                                placeholder="Search by Name / Number" value="{{ request('search') }}">
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="col-md-4 col-lg-3 d-flex gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary flex-fill">
+                                <i class="fas fa-filter me-1"></i> Filter
+                            </button>
+                            <a href="{{ route('admin.package-projects.index') }}" class="btn btn-secondary flex-fill">
+                                <i class="fas fa-undo me-1"></i> Reset
+                            </a>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
-    </form>
-</div>
 
 
             <!-- Table -->
             <div class="card-body">
-                <x-admin.data-table 
-                    id="package-projects-table" 
-                    :headers="[
-                        'Package',
-                        'Category', 
-                        'Sanction Budge (₹)',
-                        'District',
-                        'Procurement',
-                        'Contracts',
-                        'Status',
-                        'Actions',
-                    ]" 
-                    :excel="true" 
-                    :print="true"
-                    title="Package Projects Export" 
-                    searchPlaceholder="Search package projects..."
-                    resourceName="package-projects" 
-                    :pageLength="10">
+                <x-admin.data-table id="package-projects-table" :headers="[
+                    'Package',
+                    'Category',
+                    'Sanction Budge (₹)',
+                    'District',
+                    'Procurement',
+                    'Contracts',
+                    'Status',
+                    'Actions',
+                ]" :excel="true" :print="true"
+                    title="Package Projects Export" searchPlaceholder="Search package projects..."
+                    resourceName="package-projects" :pageLength="10">
 
                     @foreach ($packageProjects as $project)
                         <tr>
@@ -143,9 +131,8 @@
                             <td>
                                 <div class="d-flex flex-column">
                                     <!-- Name -->
-                                    <a href="{{ route('admin.package-projects.show', $project->id) }}" 
-                                        class="fw-bold text-primary mb-1 text-truncate" 
-                                        style="max-width: 450px;" 
+                                    <a href="{{ route('admin.package-projects.show', $project->id) }}"
+                                        class="fw-bold text-primary mb-1 text-truncate" style="max-width: 450px;"
                                         title="{{ $project->package_name }}">
                                         {{ $project->package_name }}
                                     </a>
@@ -156,11 +143,11 @@
                                     <!-- Badges -->
                                     <div class="d-flex flex-wrap gap-1 mb-1">
                                         <span class="badge bg-{{ $project->dec_approved ? 'warning' : 'secondary' }}">
-                                            <i class="fas fa-check-circle"></i> DEC: 
+                                            <i class="fas fa-check-circle"></i> DEC:
                                             {{ $project->dec_approved ? 'Approved' : 'Pending' }}
                                         </span>
                                         <span class="badge bg-{{ $project->hpc_approved ? 'info' : 'secondary' }}">
-                                            <i class="fas fa-check-circle"></i> HPC: 
+                                            <i class="fas fa-check-circle"></i> HPC:
                                             {{ $project->hpc_approved ? 'Approved' : 'Pending' }}
                                         </span>
                                         @if ($project->department?->name)
@@ -226,8 +213,8 @@
                             <td class="align-middle">
                                 @if ($project->contracts->isNotEmpty())
                                     <div class="dropdown">
-                                        <button class="btn btn-sm btn-outline-info dropdown-toggle" 
-                                            type="button" data-bs-toggle="dropdown">
+                                        <button class="btn btn-sm btn-outline-info dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown">
                                             {{ $project->contracts->count() }} Contract(s)
                                         </button>
                                         <ul class="dropdown-menu shadow-sm p-2" style="min-width: 300px;">
@@ -260,31 +247,27 @@
 
                             <!-- Status -->
                             <td>
-                                @if ($project->is_active)
-                                    <span class="badge bg-success">
-                                        <i class="fas fa-circle-check"></i> Active
-                                    </span>
-                                @else
-                                    <span class="badge bg-danger">
-                                        <i class="fas fa-circle-pause"></i> Inactive
-                                    </span>
-                                @endif
+
+                                <span class="badge bg-success">
+                                    <i class="fas fa-circle-check"></i> {{ $project->status }}
+                                </span>
+
                             </td>
 
                             <!-- Actions -->
                             <td class="align-middle">
                                 <div class="d-flex justify-content-end gap-1">
                                     <a href="{{ route('admin.package-projects.show', $project->id) }}"
-                                       class="btn btn-sm btn-info text-white" title="View Details">
+                                        class="btn btn-sm btn-info text-white" title="View Details">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <a href="{{ route('admin.package-projects.edit', $project->id) }}"
-                                       class="btn btn-sm btn-primary" title="Edit">
+                                        class="btn btn-sm btn-primary" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('admin.package-projects.destroy', $project->id) }}" 
-                                          method="POST" 
-                                          onsubmit="return confirm('Are you sure you want to delete this package project?')">
+                                    <form action="{{ route('admin.package-projects.destroy', $project->id) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Are you sure you want to delete this package project?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" title="Delete">

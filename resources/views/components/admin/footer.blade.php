@@ -1,4 +1,4 @@
-<div class="min-vh-100">
+<div >
     <footer class="mt-auto bg-white ">
     <div class="pull-right">
        copyright @ by {{ env('APP_NAME') }}

@@ -381,9 +381,9 @@
     <x-loader></x-loader>
 
     <div class="container body">
-        <div class="main_container">
+        <div class="main_container" style="min-height: 100vh;">
 
-            <x-admin.sidebar></x-admin.sidebar>
+            <x-admin.sidebar ></x-admin.sidebar>
             <x-admin.header></x-admin.header>
 
             <div class="right_col" role="main" style="min-height: 100vh;">
