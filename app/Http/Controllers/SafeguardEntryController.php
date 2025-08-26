@@ -13,73 +13,50 @@ use Maatwebsite\Excel\Facades\Excel;
 class SafeguardEntryController extends Controller
 {
     /**
-     * Display a listing of safeguard entries.
+     * Display a listing of safeguard entries (with filters for project, compliance, and phase).
      */
-public function index2(Request $request)
-{
-    // Fetch all sub-projects
-    $subProjects = SubPackageProject::select('id', 'name')->get();
-
-    // Selected project ID
-    $selectedProjectId = $request->input('sub_package_project_id');
-
-    $subProject = null;
-    $entries = collect();
-
-    // Load related data
-    $safeguardCompliances = SafeguardCompliance::all();
-    $contractionPhases = ContractionPhase::all();
-
-    if ($selectedProjectId) {
-        $subProject = SubPackageProject::findOrFail($selectedProjectId);
-
-        // Load only entries for selected project
-        $entries = SafeguardEntry::with(['safeguardCompliance', 'contractionPhase'])
-            ->where('sub_package_project_id', $selectedProjectId)
-            ->get();
-    }
-
-    // Determine which sub-projects have entries
-    $projectsStatus = $subProjects->mapWithKeys(function ($project) {
-        $done = SafeguardEntry::where('sub_package_project_id', $project->id)->exists();
-        return [$project->id => $done];
-    });
-
-    return view('admin.safeguard_entries.index-1', compact(
-        'subProjects',
-        'entries',
-        'subProject',
-        'selectedProjectId',
-        'projectsStatus',
-        'safeguardCompliances',
-        'contractionPhases'
-    ));
-}
-
-
     public function index(Request $request)
     {
+        // Load all sub-projects for dropdowns
         $subProjects = SubPackageProject::select('id', 'name')->get();
-        $selectedProjectId = $request->input('sub_package_project_id');
-        $entries = collect();
-        $subProject = null;
 
-        $safeguardCompliances = SafeguardCompliance::all();
-        $contractionPhases = ContractionPhase::all();
+        // Currently selected project
+        $selectedProjectId = $request->input('sub_package_project_id');
+        $subProject = null;
+        $entries = collect();
+        $safeguardCompliances = collect();
+        $contractionPhases = collect();
 
         if ($selectedProjectId) {
             $subProject = SubPackageProject::findOrFail($selectedProjectId);
-            $entries = $this->getGroupedEntries($selectedProjectId);
+
+            // Build base query for entries in this project
+            $query = SafeguardEntry::with(['safeguardCompliance', 'contractionPhase'])->where('sub_package_project_id', $selectedProjectId);
+
+            // Apply filters if selected
+            if ($request->filled('safeguard_compliance_id')) {
+                $query->where('safeguard_compliance_id', $request->safeguard_compliance_id);
+            }
+
+            if ($request->filled('contraction_phase_id')) {
+                $query->where('contraction_phase_id', $request->contraction_phase_id);
+            }
+
+            // Fetch and group entries
+            $entries = $this->groupEntries($query->get());
+
+            // Fetch only compliances relevant to this project
+            $safeguardCompliances = SafeguardCompliance::whereHas('safeguardEntries', function ($q) use ($selectedProjectId) {
+                $q->where('sub_package_project_id', $selectedProjectId);
+            })->get();
+
+            // Fetch only phases relevant to this project
+            $contractionPhases = ContractionPhase::whereHas('safeguardEntries', function ($q) use ($selectedProjectId) {
+                $q->where('sub_package_project_id', $selectedProjectId);
+            })->get();
         }
 
-        return view('admin.safeguard_entries.index', compact(
-            'subProjects',
-            'entries',
-            'subProject',
-            'selectedProjectId',
-            'safeguardCompliances',
-            'contractionPhases'
-        ));
+        return view('admin.safeguard_entries.index', compact('subProjects', 'entries', 'subProject', 'selectedProjectId', 'safeguardCompliances', 'contractionPhases'));
     }
 
     /**
@@ -89,14 +66,7 @@ public function index2(Request $request)
     {
         $this->validateImport($request);
 
-        Excel::import(
-            new SafeguardEntriesImport(
-                $request->sub_package_project_id,
-                $request->safeguard_compliance_id,
-                $request->contraction_phase_id
-            ),
-            $request->file('file')
-        );
+        Excel::import(new SafeguardEntriesImport($request->sub_package_project_id, $request->safeguard_compliance_id, $request->contraction_phase_id), $request->file('file'));
 
         return back()->with('success', 'Safeguard entries imported successfully.');
     }
@@ -129,10 +99,7 @@ public function index2(Request $request)
      */
     public function edit(SafeguardEntry $safeguardEntry)
     {
-        return view('admin.safeguard_entries.edit', array_merge(
-            ['safeguardEntry' => $safeguardEntry],
-            $this->formData()
-        ));
+        return view('admin.safeguard_entries.edit', array_merge(['safeguardEntry' => $safeguardEntry], $this->formData()));
     }
 
     /**
@@ -182,20 +149,14 @@ public function index2(Request $request)
     }
 
     /**
-     * Get grouped safeguard entries for a project.
-     * Groups by main sl_no but keeps different contraction_phase_id separate.
+     * Group safeguard entries by main sl_no (and keep different phases distinct).
      */
-    private function getGroupedEntries(int $projectId)
+    private function groupEntries($entries)
     {
-        return SafeguardEntry::with(['subPackageProject', 'safeguardCompliance', 'contractionPhase'])
-            ->where('sub_package_project_id', $projectId)
-            ->orderByRaw("CAST(SUBSTRING_INDEX(sl_no, '.', 1) AS UNSIGNED), sl_no")
-            ->get()
-            ->groupBy(function ($item) {
-                // Group by first part of sl_no + contraction_phase_id to keep them distinct
-                $mainNo = explode('.', $item->sl_no)[0] ?? $item->sl_no;
-                return $mainNo . '-' . $item->contraction_phase_id;
-            });
+        return $entries->groupBy(function ($item) {
+            $mainNo = explode('.', $item->sl_no)[0] ?? $item->sl_no;
+            return $mainNo . '-' . $item->contraction_phase_id;
+        });
     }
 
     /**
@@ -236,5 +197,37 @@ public function index2(Request $request)
             'contraction_phase_id' => 'required|exists:contraction_phases,id',
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);
+    }
+    public function index2(Request $request)
+    {
+        // Fetch all sub-projects
+        $subProjects = SubPackageProject::select('id', 'name')->get();
+
+        // Selected project ID
+        $selectedProjectId = $request->input('sub_package_project_id');
+
+        $subProject = null;
+        $entries = collect();
+
+        // Load related data
+        $safeguardCompliances = SafeguardCompliance::all();
+        $contractionPhases = ContractionPhase::all();
+
+        if ($selectedProjectId) {
+            $subProject = SubPackageProject::findOrFail($selectedProjectId);
+
+            // Load only entries for selected project
+            $entries = SafeguardEntry::with(['safeguardCompliance', 'contractionPhase'])
+                ->where('sub_package_project_id', $selectedProjectId)
+                ->get();
+        }
+
+        // Determine which sub-projects have entries
+        $projectsStatus = $subProjects->mapWithKeys(function ($project) {
+            $done = SafeguardEntry::where('sub_package_project_id', $project->id)->exists();
+            return [$project->id => $done];
+        });
+
+        return view('admin.safeguard_entries.index-1', compact('subProjects', 'entries', 'subProject', 'selectedProjectId', 'projectsStatus', 'safeguardCompliances', 'contractionPhases'));
     }
 }
