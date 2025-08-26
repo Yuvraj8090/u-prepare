@@ -132,9 +132,9 @@
                         <ul class="nav child_menu">
                             <li><a href="{{ route('admin.safeguard-compliances.index') }}"><i
                                         class="fa fa-check-circle"></i> Compliance</a></li>
-                            <li><a href="{{ route('admin.safeguard_entries.index') }}"><i class="fa fa-shield"></i>
+                            <li><a href="{{ route('admin.safeguard_entries.index2') }}"><i class="fa fa-shield"></i>
                                     Safeguard Entries</a></li>
-                            <li><a href="{{ route('admin.social_safeguard_entries.index') }}"><i
+                            <li><a href="{{ route('admin.social_safeguard_entries.overview') }}"><i
                                         class="fa fa-users"></i> Social Safeguards</a></li>
                         </ul>
                     </li>
@@ -248,6 +248,26 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="{{ request()->routeIs('admin.grievances.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.grievances.index') }}">
+                            <i class="fa fa-comments"></i> Grievances
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('admin.package-project-assignments.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.package-project-assignments.index') }}">
+                            <i class="fa fa-tasks"></i> Project Assignments
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('admin.feedback.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.feedback.index') }}">
+                            <i class="fa fa-comment-dots"></i> Feedback
+                        </a>
+                    </li>
+                    <li><a href="{{ route('admin.news.index') }}"><i class="fa fa-newspaper"></i> News</a></li>
+                    <li><a href="{{ route('admin.tenders.index') }}"><i class="fa fa-file-contract"></i> Tenders</a>
+                    </li>
+                    <li><a href="{{ route('admin.sub-departments.index') }}"><i class="fa fa-sitemap"></i> Sub
+                            Departments</a></li>
 
                     <li
                         class="{{ request()->routeIs('admin.pages.*') || request()->routeIs('admin.navbar-items.*') || request()->routeIs('admin.slides.*') || request()->routeIs('admin.leaders.*') ? 'active' : '' }}">
@@ -263,15 +283,18 @@
                                 <a href="{{ route('admin.pages.list') }}"><i class="fa fa-file-alt"></i> Pages</a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.slides.index') }}"><i class="fa fa-file-alt"></i> Slides Management
+                                <a href="{{ route('admin.slides.index') }}"><i class="fa fa-file-alt"></i> Slides
+                                    Management
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.leaders.index') }}"><i class="fas fa-user-tie"></i> Leaders Management
+                                <a href="{{ route('admin.leaders.index') }}"><i class="fas fa-user-tie"></i> Leaders
+                                    Management
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.videos.index') }}"><i class="fas fa-video"></i> Videos Management
+                                <a href="{{ route('admin.videos.index') }}"><i class="fas fa-video"></i> Videos
+                                    Management
                                 </a>
                             </li>
                             <!-- Navbar Items -->

@@ -78,16 +78,15 @@ class AppServiceProvider extends ServiceProvider
     }
 
     protected function processNavbarItem($item, string $locale): void
-    {
-        $item->page = Page::where('slug', $item->route)->first();
+{
+    $item->page = Page::where('slug', $item->route)->first();
+    $item->translated_title = $locale === 'hi' && !empty($item->title_hi)
+        ? $item->title_hi
+        : TranslationHelper::translate($item->title, $locale);
 
-        $item->translated_title = $locale === 'hi' && !empty($item->title_hi) ? $item->title_hi : TranslationHelper::translate($item->title, $locale);
+    $item->children->each(fn($child) => $this->processNavbarItem($child, $locale));
+}
 
-        $item->children->each(function ($child) use ($locale) {
-            $child->page = Page::where('slug', $child->route)->first();
-            $child->translated_title = $locale === 'hi' && !empty($child->title_hi) ? $child->title_hi : TranslationHelper::translate($child->title, $locale);
-        });
-    }
 
     /**
      * Share all slides globally

@@ -10,7 +10,7 @@ class NavbarItem extends Model
 {
     protected $fillable = [
         'title', 'title_hi', 'slug', 'parent_id', 'is_dropdown',
-        'order', 'is_active', 'route', 'url', 'icon'
+        'order', 'is_active', 'route', 'url', 'icon', 'target'
     ];
 
     public function parent(): BelongsTo
@@ -22,16 +22,20 @@ class NavbarItem extends Model
     {
         return $this->hasMany(NavbarItem::class, 'parent_id')
             ->where('is_active', true)
-            ->orderBy('order');
+            ->orderBy('order')
+            ->with('children'); // ✅ recursive load
     }
 
     public function getLinkAttribute(): string
     {
-        return $this->route ? route($this->route) : ($this->url ?? '#');
-    }
+        if ($this->route && \Route::has($this->route)) {
+            return route($this->route, ['locale' => app()->getLocale()]);
+        }
 
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
+        if ($this->slug) {
+            return url(app()->getLocale() . '/' . $this->slug);
+        }
+
+        return $this->url ?? '#';
     }
 }

@@ -7123,8 +7123,6 @@ namespace App\Models {
      * @property-read \App\Models\NavbarItem $parent
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\NavbarItem> $children
      * @property-read int|null $children_count
-     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles
-     * @property-read int|null $roles_count
      * @method static \Illuminate\Database\Eloquent\Builder<NavbarItem>|NavbarItem whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<NavbarItem>|NavbarItem whereTitle($value)
      * @method static \Illuminate\Database\Eloquent\Builder<NavbarItem>|NavbarItem whereSlug($value)

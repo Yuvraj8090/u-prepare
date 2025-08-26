@@ -1,126 +1,78 @@
+@php
+    $locale = app()->getLocale();
+    $localePrefix = $locale === 'hi' ? 'hi' : 'en';
+    $currentSlug = request()->segment(2) ?? request()->segment(1);
+    $pageTitle = $page->translated_title ?? $page->title ?? 'Home';
+@endphp
+
 <nav class="navbar">
     <div class="container-xxl">
         <ul>
+            {{-- Home --}}
             <li>
-                <a href="{{ route('welcome.default') }}" @class(['active' => Route::currentRouteName() == 'welcome.default'])>HOME</a>
-            </li>
-
-            @php
-                $routeName = Route::currentRouteName();
-                $pageName  = explode('public.page.', $routeName);
-                $pageName  = count($pageName) == 2 ? $pageName[1] : NULL;
-            @endphp
-
-            <li class="dropdown">
-                <a href="#" @class(['active'=> in_array($pageName, ['about', 'mission', 'history', 'objective', 'structure', 'team'])])>
-                    <span>ABOUT</span>
-                    <i class="bi bi-chevron-down"></i>
+                <a href="{{ route('welcome.default') }}" 
+                   @class(['active' => Route::currentRouteName() === 'welcome.default'])>
+                    {{ __('HOME') }}
                 </a>
-                <ul>
-                    <li>
-                        <a href="{{ route('welcome.default') }}" @class(['active' => $routeName == 'welcome.default'])>About U-PREPARE</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('welcome.default') }}" @class(['active' => $routeName == 'welcome.default'])>Mission and Vision</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('welcome.default') }}" @class(['active' => $routeName == 'welcome.default'])>History</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('welcome.default') }}" @class(['active' => $routeName == 'welcome.default'])>Objectives</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('welcome.default') }}" @class(['active' => $routeName == 'welcome.default'])>Project Structure</a>
-                    </li>
-                   
-                </ul>
             </li>
 
-            <li class="dropdown">
-                <a href="#" @class(['active'=> in_array($pageName, ['eninfrares', 'imempres', 'forestfire', 'projmanage', 'conemres'])])>
-                    <span>COMPONENTS</span>
-                    <i class="bi bi-chevron-down"></i>
-                </a>
-                <ul>
-                    <li>
-                        <a href="{{ route('welcome.default') }}" @class(['active' => $routeName == 'welcome.default'])>Enhancing Infrastructure Resilience</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('welcome.default') }}" @class(['active' => $routeName == 'welcome.default'])>Improving Emergency Preparedness and Response</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('welcome.default') }}" @class(['active' => $routeName == 'welcome.default'])>Preventing and Managing Forest and General Fires</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('welcome.default') }}" @class(['active' => $routeName == 'welcome.default'])>Project Management</a>
-                    </li>
-                    
-                </ul>
-            </li>
+            {{-- Navbar Items --}}
+            @foreach ($navbarItems as $item)
+                @php
+                    $itemTitle = $locale === 'hi' ? ($item['title_hi'] ?? $item['title']) : $item['title'];
+                    $itemUrl = !empty($item['slug']) ? url($localePrefix . '/' . $item['slug']) : '#';
+                    $hasChildren = !empty($item['children']);
+                @endphp
 
-            <li class="dropdown">
-                <a href="#" @class(['active' => Route::currentRouteName() == 'public.resources'])>
-                    <span>RESOURCES</span>
-                    <i class="bi bi-chevron-down"></i>
-                </a>
-                <ul>
+                @if (!$hasChildren)
                     <li>
-                        <a href="#">Blogs</a>
+                        <a href="{{ $itemUrl }}" target="{{ $item['target'] ?? '_self' }}">
+                            {{ $itemTitle }}
+                        </a>
                     </li>
-                    <li>
-                        <a href="#">Press releases</a>
-                    </li>
-                    <li>
-                        <a href="#">News</a>
-                    </li>
-                    <li>
-                        <a href="#">Gallery</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li>
-                <a href="#" @class(['active' => Route::currentRouteName() == 'public.project.status'])>PROJECT STATUS</a>
-            </li>
-
-            <li class="dropdown">
-                <a href="#" @class(['active'=> in_array(Route::currentRouteName(), ['welcome.default', 'welcome.default'])])>
-                    <span>GRIEVANCES </span>
-                    <i class="bi bi-chevron-down"></i>
-                </a>
-                <ul>
-                    <li>
-                        <a href="{{ route('welcome.default') }}" @class(['active' => Route::currentRouteName() == 'welcome.default'])>Register</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('welcome.default') }}"  @class(['active' => Route::currentRouteName() == 'welcome.default'])>Status</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li>
-                @if(auth()->guest())
-                    <a href="{{ route('login') }}" @class(['active' => Route::currentRouteName() == 'mis.login'])>MIS LOGIN</a>
                 @else
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                    <li class="dropdown">
+                        <a href="{{ $itemUrl }}" target="{{ $item['target'] ?? '_self' }}">
+                            {{ $itemTitle }} <i class="bi bi-chevron-down"></i>
+                        </a>
+                        <ul>
+                            @foreach ($item['children'] as $child)
+                                @php
+                                    $childTitle = $locale === 'hi' 
+                                        ? ($child['translated_title'] ?? $child['title']) 
+                                        : $child['title'];
+                                    $childUrl = !empty($child['slug']) ? url($localePrefix . '/' . $child['slug']) : '#';
+                                @endphp
+                                <li>
+                                    <a href="{{ $childUrl }}" target="{{ $child['target'] ?? '_self' }}">
+                                        {{ $childTitle }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
                 @endif
-            </li>
+            @endforeach
 
+            {{-- Login/Dashboard --}}
             <li>
-                <a href="{{ route('admin.dashboard') }}" @class(['active'=> Route::currentRouteName() == 'admin.dashboard'])>CONTACT US</a>
+                @guest
+                    <a href="{{ route('login') }}">{{ __('MIS LOGIN') }}</a>
+                @else
+                    <a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
+                @endguest
             </li>
 
-            <li class="prel">
-                <a href="#" class="search">
-                    <i class="bi bi-search m-0"></i>
-                </a>
-                <div class="pabs sinp-box d-none">
+            {{-- Search --}}
+            <li>
+                <a href="#" class="search"><i class="bi bi-search"></i></a>
+                <div class="search-box d-none">
                     <form>
-                        <input class="form-control" type="text" name="search" placeholder="Search here..." >
+                        <input type="text" name="search" placeholder="{{ __('Search here...') }}">
                     </form>
                 </div>
             </li>
         </ul>
     </div>
     <i class="bi bi-list mobile-nav-toggle"></i>
-</nav><!-- .navbar -->
+</nav>

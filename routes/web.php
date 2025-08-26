@@ -40,7 +40,7 @@ use App\Http\Controllers\Admin\GrievanceController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Admin\FeedbackController as AdminFeedback;
 // English news listing
-Route::get('/news', [AdminNewsController::class, 'publicIndex'])->name('news.index');
+Route::get('/en/news', [AdminNewsController::class, 'publicIndex'])->name('news.index');
 // Hindi news listing
 Route::get('/hi/news', [AdminNewsController::class, 'publicIndex'])->name('news.index.hi');
 
