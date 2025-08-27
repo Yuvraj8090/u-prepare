@@ -36,6 +36,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminNewsController;
 use App\Http\Controllers\AdminTenderController;
 
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\GrievanceController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Admin\FeedbackController as AdminFeedback;
@@ -43,8 +44,7 @@ use App\Http\Controllers\Admin\FeedbackController as AdminFeedback;
 Route::get('/en/news', [AdminNewsController::class, 'publicIndex'])->name('news.index');
 // Hindi news listing
 Route::get('/hi/news', [AdminNewsController::class, 'publicIndex'])->name('news.index.hi');
-Route::post('/admin/clear-cache', [PageController::class, 'clearCache'])
-->name('admin.clear.cache');
+Route::post('/admin/clear-cache', [PageController::class, 'clearCache'])->name('admin.clear.cache');
 // Show single news item
 Route::get('/news/{news}', [AdminNewsController::class, 'show'])->name('news.show');
 Route::get('/hi/news/{news}', [AdminNewsController::class, 'show'])->name('news.show.hi');
@@ -62,6 +62,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+            Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+
             Route::post('/social-safeguard-entries/save', [SocialSafeguardEntryController::class, 'save'])->name('social_safeguard_entries.save');
 
             Route::resource('news', AdminNewsController::class);
@@ -207,7 +209,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         });
     Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/dashboard', [DashboardController::class, 'index2'])->name('admin.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     // Dashboard main page
 });
