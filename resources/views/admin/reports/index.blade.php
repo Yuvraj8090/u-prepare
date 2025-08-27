@@ -200,7 +200,34 @@
                             </td>
 
                             <!-- Approvals & Status -->
-                            <td>
+                              <td class="align-middle">
+                                @if ($project->contracts->isNotEmpty())
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <a href="{{ route('admin.contracts.show', $contract) }}"
+                                            class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-eye me-1"></i> View
+                                        </a>
+                                        <a href="{{ route('admin.contracts.edit', $contract) }}"
+                                            class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-edit me-1"></i> Edit
+                                        </a>
+                                        <form action="{{ route('admin.contracts.destroy', $contract) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                onclick="return confirm('Are you sure you want to delete this contract?')">
+                                                <i class="fas fa-trash-alt me-1"></i> Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                @else
+                                    <a href="{{ route('admin.contracts.create', [
+                                        'package_project_id' => $project->id,
+                                    ]) }}"
+                                        class="btn btn-sm btn-outline-primary" title="Create">
+                                        <i class="fas fa-plus "></i> </a>
+                                @endif
                             </td>
 
                             <!-- Actions -->

@@ -33,12 +33,11 @@
 
                 @if ($contract->project && $contract->project->procurementDetail)
                     <x-admin.procurement-details :procurementDetail="$contract->project->procurementDetail" />
-                    
                 @endif
                 <x-admin.work-program :workPrograms="$contract->project->workPrograms" />
                 {{-- Yuvraj Add Procurement Work Program   --}}
 
-         
+
 
 
                 <div class="card shadow-sm mb-4">
@@ -54,13 +53,7 @@
                             @if ($contract->subProjects->isEmpty())
                                 <p class="text-muted fst-italic">No sub-projects found.</p>
                             @else
-                                <x-admin.data-table id="sub-projects-table" :headers="[
-                                    '#',
-                                    'Name',
-                                    'Contract Value (₹)',
-                                    
-                                    'Actions',
-                                ]" :excel="true"
+                                <x-admin.data-table id="sub-projects-table" :headers="['#', 'Name', 'Contract Value (₹)', 'Actions']" :excel="true"
                                     :print="true" :pageLength="10" :resourceName="'sub-projects'">
 
                                     @foreach ($subProjectsData as $i => $sp)
@@ -68,22 +61,20 @@
                                             <td>{{ $i + 1 }}</td>
                                             <td>{{ $sp['name'] }}</td>
                                             <td class="text-end">₹{{ $sp['contractValue'] }}</td>
-
-                                            <!-- Financial Progress -->
-                                           
-
-                                            <!-- Actions -->
                                             <td>
                                                 <div class="d-flex flex-wrap gap-2">
                                                     @foreach ($sp['actions'] as $action)
-                                                        <a href="{{ $action['route'] }}"
-                                                            class="btn btn-sm {{ $action['class'] }} d-flex align-items-center gap-1">
-                                                            <i class="{{ $action['icon'] }}"></i>
-                                                            <span>{{ $action['label'] }}</span>
-                                                        </a>
+                                                        @if (canRoute($action['route_name']))
+                                                            <a href="{{ route($action['route_name'], $action['params'] ?? []) }}"
+                                                                class="btn btn-sm {{ $action['class'] }} d-flex align-items-center gap-1">
+                                                                <i class="{{ $action['icon'] }}"></i>
+                                                                <span>{{ $action['label'] }}</span>
+                                                            </a>
+                                                        @endif
                                                     @endforeach
                                                 </div>
                                             </td>
+
                                         </tr>
                                     @endforeach
 
