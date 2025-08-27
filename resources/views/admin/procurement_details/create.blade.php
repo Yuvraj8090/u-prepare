@@ -22,6 +22,16 @@
                 <x-admin.approval-details :packageProject="$packageProject" />
             </div>
         </div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> Please fix the errors below:
+                <ul class="mb-0 mt-2">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <form action="{{ route('admin.procurement-details.store', $packageProject) }}" method="POST"
@@ -53,24 +63,22 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <p for="type_of_procurement" class="form-label h3">Type of Package *</p>
-                                    <select class="form-select @error('type_of_procurement') is-invalid @enderror"
-                                        id="type_of_procurement" name="type_of_procurement" required>
-                                        <option value="">Select Type</option>
-                                        <option value="Item Wise"
-                                            {{ old('type_of_procurement') == 'Item Wise' ? 'selected' : '' }}>Item Wise
-                                        </option>
-                                        <option value="EPC"
-                                            {{ old('type_of_procurement') == 'EPC' ? 'selected' : '' }}>EPC
-                                        </option>
-                                        <option value="Others"
-                                            {{ old('type_of_procurement') == 'Others' ? 'selected' : '' }}>
-                                            Others</option>
-                                    </select>
-                                    @error('type_of_procurement')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+    <p for="type_of_procurement_id" class="form-label h3">Type of Package *</p>
+    <select class="form-select @error('type_of_procurement_id') is-invalid @enderror"
+        id="type_of_procurement_id" name="type_of_procurement_id" required>
+        <option value="">Select Type</option>
+        @foreach($typesOfProcurement as $type)
+            <option value="{{ $type->id }}" 
+                {{ old('type_of_procurement_id') == $type->id ? 'selected' : '' }}>
+                {{ $type->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('type_of_procurement_id')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
 
                                 <div class="col-md-4">
                                     <p for="publication_date" class="form-label h3">Bid Publication Date</p>

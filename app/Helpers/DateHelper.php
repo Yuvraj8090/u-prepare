@@ -76,3 +76,19 @@ if (!function_exists('formatIndianCurrency')) {
         return strrev($formatted) . $decimal;
     }
 }
+if (!function_exists('canRoute')) {
+    function canRoute(string $routeName): bool {
+        $user = auth()->user();
+        if (!$user) return false;
+
+        $allowedRoutes = cache()->remember(
+            "role_routes_{$user->role_id}",
+            now()->addMinutes(10),
+            fn() => \App\Models\RoleRoute::where('role_id', $user->role_id)
+                    ->pluck('route_name')
+                    ->toArray()
+        );
+
+        return in_array($routeName, $allowedRoutes);
+    }
+}

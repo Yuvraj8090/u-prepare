@@ -55,32 +55,44 @@ class ProcurementDetailController extends Controller
     /**
      * Store new procurement details.
      */
-    public function store(Request $request, PackageProject $packageProject)
-    {
-        if ($packageProject->procurementDetail()->exists()) {
-            return redirect()
-                ->route('admin.procurement-details.show', $packageProject->procurementDetail)
-                ->with('warning', 'Procurement details already exist.');
-        }
-
-        $validated = $this->validateProcurementDetails($request);
-
-        try {
-            if ($request->hasFile('publication_document')) {
-                $validated['publication_document_path'] = $this->storePublicationDocument($request);
-            }
-
-            $procurementDetail = $packageProject->procurementDetail()->create($validated);
-
-            return redirect()
-                ->route('admin.procurement-details.show', $procurementDetail)
-                ->with('success', 'Procurement details created successfully.');
-
-        } catch (\Exception $e) {
-            Log::error('Failed to create procurement details: ' . $e->getMessage());
-            return back()->withInput()->with('error', 'Failed to create procurement details. Please try again.');
-        }
+  public function store(Request $request, PackageProject $packageProject)
+{
+    // Check if procurement details already exist
+    if ($packageProject->procurementDetail()->exists()) {
+        return redirect()
+            ->route('admin.procurement-details.show', $packageProject->procurementDetail)
+            ->with('warning', 'Procurement details already exist.');
     }
+
+    // Validate incoming request
+    $validated = $this->validateProcurementDetails($request);
+
+    try {
+        // Handle file upload if exists
+        if ($request->hasFile('publication_document')) {
+            $validated['publication_document_path'] = $this->storePublicationDocument($request);
+        }
+
+        // Create procurement detail
+        $procurementDetail = $packageProject->procurementDetail()->create($validated);
+
+        return redirect()
+            ->route('admin.procurement-details.show', $procurementDetail)
+            ->with('success', 'Procurement details created successfully.');
+
+    } catch (\Exception $e) {
+        // Log detailed error for debugging
+        Log::error('Failed to create procurement details', [
+            'package_project_id' => $packageProject->id,
+            'request_data' => $request->except(['publication_document']),
+            'exception_message' => $e->getMessage(),
+            'exception_trace' => $e->getTraceAsString(),
+        ]);
+
+        return back()->withInput()->with('error', 'Failed to create procurement details. Please try again.');
+    }
+}
+
 
     /**
      * Display a procurement detail.
