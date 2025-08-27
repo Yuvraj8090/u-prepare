@@ -109,7 +109,7 @@
 
                     {{-- Packages --}}
                     @if (canRoute('admin.procurement-details.index') || canRoute('admin.package-projects.index') || canRoute('admin.procurement-work-programs.index') || canRoute('admin.contracts.index'))
-                        <li class="{{ request()->routeIs('admin.procurement-details.*') || request()->routeIs('admin.package-projects.*') || request()->routeIs('admin.procurement-work-programs.*') ? 'active' : '' }}">
+                        <li class="{{ request()->routeIs('admin.procurement-details.*') || request()->routeIs('admin.package-projects.*') ||request()->routeIs('admin.package-project-assignments.*') || request()->routeIs('admin.procurement-work-programs.*') ? 'active' : '' }}">
                             <a><i class="fa fa-book"></i> Packages <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 @if (canRoute('admin.package-projects.index'))
@@ -120,6 +120,9 @@
                                 @endif
                                 @if (canRoute('admin.contracts.index'))
                                     <li><a href="{{ route('admin.contracts.index') }}"><i class="fa fa-list"></i> Manage Contracts</a></li>
+                                @endif
+                                @if (canRoute('admin.package-project-assignments.index'))
+                                    <li><a href="{{ route('admin.package-project-assignments.index') }}"><i class="fa fa-list"></i> Assignments</a></li>
                                 @endif
                             </ul>
                         </li>
