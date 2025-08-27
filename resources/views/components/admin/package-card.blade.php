@@ -1,4 +1,4 @@
-<div class="card h-100">
+<div class="card">
             <div class="card-header bg-white py-3">
                 <p class="mb-0 h2">
                     <i class="fas fa-info-circle me-2 "></i> Package Name : {{ $packageProject->package_name }}
