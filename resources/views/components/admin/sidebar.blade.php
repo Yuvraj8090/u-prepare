@@ -106,6 +106,16 @@
                             <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i> Dashboard</a>
                         </li>
                     @endif
+                    {{-- Sub Package Project Test Reports --}}
+
+
+                    @if (canRoute('admin.sub_package_project_test_types.index'))
+                        <li
+                            class="{{ request()->routeIs('admin.sub_package_project_test_types.index') ? 'active' : '' }}">
+                            <a href="{{ route('admin.sub_package_project_test_types.index') }}"><i
+                                    class="fa fa-home"></i> Test for Types </a>
+                        </li>
+                    @endif
                     @if (canRoute('admin.reports.index'))
                         <li class="{{ request()->routeIs('admin.reports.index') ? 'active' : '' }}">
                             <a href="{{ route('admin.reports.index') }}"><i class="fa fa-home"></i> Reports</a>
@@ -163,6 +173,57 @@
                             </ul>
                         </li>
                     @endif
+                    {{-- Contract Security --}}
+                    @if (canRoute('admin.contract-security-forms.index') || canRoute('admin.contract-security-types.index'))
+                        <li
+                            class="{{ request()->routeIs('admin.contract-security-forms.*') || request()->routeIs('admin.contract-security-types.*') ? 'active' : '' }}">
+                            <a><i class="fa fa-lock"></i> Contract Security <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                @if (canRoute('admin.contract-security-types.index'))
+                                    <li><a href="{{ route('admin.contract-security-types.index') }}"><i
+                                                class="fa fa-key"></i> Security Types</a></li>
+                                @endif
+                                @if (canRoute('admin.contract-security-forms.index'))
+                                    <li><a href="{{ route('admin.contract-security-forms.index') }}"><i
+                                                class="fa fa-file-contract"></i> Security Forms</a></li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
+
+                    {{-- Grievances --}}
+                    @if (canRoute('admin.grievances.index'))
+                        <li class="{{ request()->routeIs('admin.grievances.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.grievances.index') }}"><i class="fa fa-exclamation-triangle"></i>
+                                Grievances</a>
+                        </li>
+                    @endif
+
+                    {{-- Feedback --}}
+                    @if (canRoute('admin.feedback.index'))
+                        <li class="{{ request()->routeIs('admin.feedback.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.feedback.index') }}"><i class="fa fa-comments"></i> Feedback</a>
+                        </li>
+                    @endif
+
+                    {{-- News & Tenders --}}
+                    @if (canRoute('admin.news.index') || canRoute('admin.tenders.index'))
+                        <li
+                            class="{{ request()->routeIs('admin.news.*') || request()->routeIs('admin.tenders.*') ? 'active' : '' }}">
+                            <a><i class="fa fa-newspaper"></i> News & Tenders <span
+                                    class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                @if (canRoute('admin.news.index'))
+                                    <li><a href="{{ route('admin.news.index') }}"><i class="fa fa-bullhorn"></i>
+                                            News</a></li>
+                                @endif
+                                @if (canRoute('admin.tenders.index'))
+                                    <li><a href="{{ route('admin.tenders.index') }}"><i
+                                                class="fa fa-file-signature"></i> Tenders</a></li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
 
                     {{-- Progress Updates --}}
                     @if (canRoute('admin.financial-progress-updates.index2') ||
@@ -175,7 +236,7 @@
                             <ul class="nav child_menu">
                                 @if (canRoute('admin.financial-progress-updates.index2'))
                                     <li><a href="{{ route('admin.financial-progress-updates.index2') }}"><i
-                                                class="fa fa-coins"></i> Financial Progress</a></li>
+                                                class="fa fa-coins"></i> Update Progress</a></li>
                                 @endif
                                 @if (canRoute('admin.physical_boq_progress.index'))
                                     <li><a href="{{ route('admin.physical_boq_progress.index') }}"><i
@@ -261,7 +322,8 @@
                                     class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 @if (canRoute('admin.users.index'))
-                                    <li><a href="{{ route('admin.users.index') }}"><i class="fa fa-user"></i> Users</a>
+                                    <li><a href="{{ route('admin.users.index') }}"><i class="fa fa-user"></i>
+                                            Users</a>
                                     </li>
                                 @endif
                                 @if (canRoute('admin.roles.index'))
@@ -269,7 +331,8 @@
                                             Roles</a></li>
                                 @endif
                                 @if (canRoute('admin.role_routes.index'))
-                                    <li><a href="{{ route('admin.role_routes.index') }}"><i class="fa fa-id-badge"></i>
+                                    <li><a href="{{ route('admin.role_routes.index') }}"><i
+                                                class="fa fa-id-badge"></i>
                                             Permission Routes</a></li>
                                 @endif
                                 @if (canRoute('admin.designations.index'))

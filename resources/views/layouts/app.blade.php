@@ -347,6 +347,14 @@
                 margin-top: -10px !important;
             }
         }
+
+.container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
     </style>
     <style>
         /* width */
@@ -380,10 +388,10 @@
 
     <x-loader></x-loader>
 
-    <div class="container body">
+    <div class=" container body" >
         <div class="main_container" style="min-height: 100vh;">
 
-            <x-admin.sidebar ></x-admin.sidebar>
+            <x-admin.sidebar></x-admin.sidebar>
             <x-admin.header></x-admin.header>
 
             <div class="right_col" role="main" style="min-height: 100vh;">
@@ -392,7 +400,7 @@
 
 
 
-    
+
             <x-admin.footer></x-admin.footer>
             <x-admin.loader></x-admin.loader>
         </div>

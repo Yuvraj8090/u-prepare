@@ -10,20 +10,7 @@ class Contract extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'contract_number',
-        'project_id',
-        'contract_value',
-        'security',
-        'signing_date',
-        'commencement_date',
-        'initial_completion_date',
-        'revised_completion_date',
-        'actual_completion_date',
-        'contract_document',
-        'count_sub_project',
-        'contractor_id'
-    ];
+    protected $fillable = ['contract_number', 'project_id', 'contract_value', 'security', 'signing_date', 'commencement_date', 'initial_completion_date', 'revised_completion_date', 'actual_completion_date', 'contract_document', 'count_sub_project', 'contractor_id'];
 
     protected $casts = [
         'signing_date' => 'datetime',
@@ -59,13 +46,22 @@ class Contract extends Model
     | Scopes
     |--------------------------------------------------------------------------
     */
+    public function securities()
+    {
+        return $this->hasMany(ContractSecurity::class);
+    }
 
     public function scopeWithBasicRelations($query)
     {
-        return $query->with([
-            'project:id,package_name,department_id',
-            'project.department:id,name',
-            'contractor:id,company_name',
-        ]);
+        return $query->with(['project:id,package_name,department_id', 'project.department:id,name', 'contractor:id,company_name']);
+    }
+    public function active_securities()
+    {
+        return $this->hasMany(ContractSecurity::class)->where('issued_end_date', '>=', now());
+    }
+
+    public function expired_securities()
+    {
+        return $this->hasMany(ContractSecurity::class)->where('issued_end_date', '<', now());
     }
 }

@@ -19,11 +19,23 @@ class ContractController extends Controller
 {
     public function index()
     {
-        $contracts = Contract::with(['project:id,package_name', 'contractor:id,company_name'])
+        $contracts = Contract::with(['project:id,package_name', 'contractor:id,company_name', 'securities.type:id,name', 'securities.form:id,name'])
             ->select('id', 'contract_number', 'project_id', 'contractor_id', 'contract_value', 'count_sub_project', 'signing_date')
             ->latest()
             ->get();
+
         $packageProjects = PackageProject::withWorkProgramData()->latest()->get();
+
+        // Split securities into active & expired for each contract
+        $contracts->each(function ($contract) {
+            $now = now();
+            $contract->active_securities = $contract->securities->filter(function ($sec) use ($now) {
+                return !$sec->issued_end_date || $sec->issued_end_date >= $now;
+            });
+            $contract->expired_securities = $contract->securities->filter(function ($sec) use ($now) {
+                return $sec->issued_end_date && $sec->issued_end_date < $now;
+            });
+        });
 
         return view('admin.contracts.index', compact('contracts', 'packageProjects'));
     }
@@ -205,7 +217,6 @@ class ContractController extends Controller
             }
 
             // Always add Financial Progress Update
-            
 
             // Always add Safe Guard Entry
             $actions[] = [

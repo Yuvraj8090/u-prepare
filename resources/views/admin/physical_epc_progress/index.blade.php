@@ -57,9 +57,9 @@
                     'SL No.',
                     'Activity',
                     'Stage',
-                    'Item',
+                   
                     'Percent',
-                    'Amount',
+                    
                     'Items Done',
                     'Submitted Date',
                     'Images',
@@ -76,9 +76,9 @@
                             <td>{{ $entry->epcentryData->sl_no ?? '-' }}</td>
                             <td>{{ $entry->epcentryData->activity_name ?? '-' }}</td>
                             <td>{{ $entry->epcentryData->stage_name ?? '-' }}</td>
-                            <td>{{ $entry->epcentryData->item_description ?? '-' }}</td>
+                            
                             <td>{{ $entry->percent ? $entry->percent . '%' : '-' }}</td>
-                            <td>{{ $entry->amount }}</td>
+                            
                             <td>{{ $entry->items ?? '-' }}</td>
                             <td>{{ $entry->progress_submitted_date?->format('d-m-Y') ?? '-' }}</td>
                             <td>

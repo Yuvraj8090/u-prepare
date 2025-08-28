@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="container-fluid">
+
         <!-- Breadcrumb -->
         <x-admin.breadcrumb-header icon="fas fa-file-contract text-primary" title="Reports" :breadcrumbs="[
             ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
@@ -7,233 +8,124 @@
             ['label' => 'Reports'],
         ]" />
 
-
-        <!-- Flash Messages -->
-        @if (session('success'))
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <x-alert type="success" :message="session('success')" dismissible />
-                </div>
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <x-alert type="danger" :message="session('error')" dismissible />
-                </div>
-            </div>
-        @endif
-
         <!-- Data Table -->
         <div class="card shadow-sm">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <div class="card-header bg-white">
                 <h5 class="mb-0 text-primary">
                     <i class="fas fa-list me-2"></i> Report Overview
                 </h5>
-
             </div>
 
             <div class="card-body">
                 <x-admin.data-table id="package-projects-table" :headers="[
                     'Package',
-                    'Category',
-                    'Sanction Budge (₹)',
-                    'District',
+                    'Package No.',
+                    'Category / Sub Category',
+                    'Estimated Budget (₹ incl. GST)',
+                    'Sanction Budget (₹)',
+                    'District / Block',
                     'Procurement',
                     'Contracts',
-                    'action',
+                    'Sub Projects',
                 ]" :excel="true" :print="true"
-                    title="Reports Export" searchPlaceholder="Search package projects..." resourceName="Reports"
-                    :pageLength="10">
+                    resourceName="Reports" :pageLength="10">
 
                     @foreach ($packageProjects as $project)
                         <tr>
-                            <!-- Package Name & Number -->
+                            <!-- Package -->
                             <td>
-
-                                <div class="d-flex flex-column">
-                                    <!-- Main Title -->
-                                    <a href="{{ route('admin.package-projects.show', $project->id) }}"
-                                        title="{{ $project->package_name }}"
-                                        class="fw-bold text-primary mb-1 text-truncate" style="max-width: 450px;">
-                                        {{ $project->package_name }}
-                                    </a>
-
-                                    <!-- Package Number -->
-                                    <span class="text-muted small mb-1">
-                                        <i class="fas fa-hashtag"></i> {{ $project->package_number }}
-                                    </span>
-
-                                    <div class="d-flex flex-wrap gap-1 mb-1">
-
-                                        <span class="badge bg-{{ $project->dec_approved ? 'warning' : 'secondary' }}">
-                                            <i class="fas fa-check-circle"></i> DEC:
-                                            {{ $project->dec_approved ? 'Approved' : 'Pending' }}
-                                        </span>
-
-
-                                        <span class="badge bg-{{ $project->hpc_approved ? 'info' : 'secondary' }}">
-                                            <i class="fas fa-check-circle"></i> HPC:
-                                            {{ $project->hpc_approved ? 'Approved' : 'Pending' }}
-                                        </span>
-
-
-                                        <!-- Implementation Agency -->
-                                        @if ($project->department?->name)
-                                            <span class="badge bg-success text-white">
-                                                <i class="fas fa-building"></i> {{ $project->department->name }}
-                                            </span>
-                                        @endif
-                                    </div>
-
+                                <div class="fw-bold text-primary">{{ $project->package_name }}</div>
+                                <small class="text-muted">Status: {{ $project->status }}</small>
                             </td>
 
-                            <!-- Category / Department -->
+                            <!-- Package No. -->
+                            <td>#{{ $project->package_number }}</td>
+
+                            <!-- Category -->
                             <td>
-                                @if ($project->category?->name)
-                                    <span class="font-weight-bold"> <i class="fas fa-tags"></i>
-                                        {{ $project->category->name }} </span>
+                                {{ $project->category->name ?? 'N/A' }}
+                                @if ($project->subCategory)
+                                    <br><small class="text-muted">({{ $project->subCategory->name }})</small>
                                 @endif
+                            </td>
 
-                                @if ($project->subCategory?->name)
-                                    ( {{ $project->subCategory->name }} )
-                                @endif
-
+                            <!-- Estimated Budget -->
+                            <td class="fw-bold text-success">
+                                {{ formatPriceToCR($project->estimated_budget_incl_gst) }}
                             </td>
 
                             <!-- Sanction Budget -->
-                            <td class="align-middle">
-                                <div class="fw-bold text-success">
-                                    {{ formatPriceToCR($project->estimated_budget_incl_gst) }}
-                                </div>
+                            <td>
+                                {{ formatPriceToCR($project->dec_approved ? $project->estimated_budget_incl_gst : 0) }}
+                                <br>
+                                @if ($project->dec_approved)
+                                    <span class="badge bg-success">Approved</span>
+                                @else
+                                    <span class="badge bg-warning">Pending</span>
+                                @endif
                             </td>
 
-                            <!-- Location -->
+                            <!-- District / Block -->
                             <td>
-                                <div class="fw-semibold">
-                                    {{ $project->district?->name ?? 'N/A' }}
-                                </div>
-
-                                @if ($project->block?->name)
-                                    <div class="small text-muted">
-                                        BLock : <i class="fas fa-map-marker-alt"></i> {{ $project->block->name }}
-                                    </div>
+                                {{ $project->district->name ?? 'N/A' }}
+                                @if ($project->block)
+                                    <div class="small text-muted">Block: {{ $project->block->name }}</div>
                                 @endif
                             </td>
 
                             <!-- Procurement -->
-                            <td class="align-middle">
+                            <td>
                                 @if ($project->procurementDetail)
-                                    <span class="badge bg-success text-dark">
-                                        <i class="fas fa-exclamation-circle"></i> Completed
-                                    </span>
-
-                                    <div class="fw-semibold">
-                                        Method : {{ $project->procurementDetail->method_of_procurement }}
-                                    </div>
-
-                                    <div class="fw-semibold">
-                                        Type : {{ $project->procurementDetail->typeOfProcurement?->name }}
+                                    <span class="badge bg-success">Completed</span>
+                                    <div class="small">Method: {{ $project->procurementDetail->method_of_procurement }}
                                     </div>
                                 @else
-                                    <span class="badge bg-warning text-dark">
-                                        <i class="fas fa-exclamation-circle"></i> Pending
-                                    </span>
+                                    <span class="badge bg-secondary">Pending</span>
                                 @endif
                             </td>
 
                             <!-- Contracts -->
-                            <td class="align-middle">
-                                @if ($project->contracts->isNotEmpty())
-                                    <div class="dropdown">
-                                       
-                                        <ul class="shadow-sm p-2" style="min-width: 300px;">
-                                            @foreach ($project->contracts as $contract)
-                                                <li class="list-group-item d-flex justify-content-between align-items-center"
-                                                    title="Contract No: {{ $contract->contract_number }}">
-                                                    <p class="mb-0 d-flex align-items-cente h5">
-                                                        <i class="fas fa-hashtag text-primary me-2"></i> Contract No
-                                                    </p>
-                                                    <span class="fw-bold h6 d-inline-block text-truncate"
-                                                        style="max-width: 110px;">
-                                                        {{ $contract->contract_number }}
-                                                    </span>
-
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <p class="mb-0 d-flex align-items-cente h5">
-                                                        <i class="fas text-primary me-2"> ₹ </i> Contract Value
-                                                    </p>
-                                                    <span class="fw-bold h6"> ₹
-                                                        {{ number_format($contract->contract_value, 2) }} </span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <p class="mb-0 d-flex align-items-cente h5">
-                                                        <i class="fas fa-industry text-primary me-2"></i> Firm Name
-                                                    </p>
-                                                    @if ($contract->contractor)
-                                                        <span class="fw-bold h6">
-                                                            {{ $contract->contractor->company_name }} </span>
-                                                    @endif
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <p class="mb-0 d-flex align-items-cente h5">
-                                                        <i class="fas fa-boxes  text-primary me-2"></i> Sub - Projects
-                                                    </p>
-                                                    @if ($contract->subProjects->isNotEmpty())
-                                                        <span class="fw-bold h6">
-                                                            {{ $contract->subProjects->count() }} </span>
-                                                    @endif
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
+                            <td>
+                                @if ($project->contracts->count() > 0)
+                                    <ul class="list-group list-group-flush">
+                                        @foreach ($project->contracts as $contract)
+                                            <li class="list-group-item px-2 py-1">
+                                                <div class="fw-bold text-primary">
+                                                    #{{ $contract->contract_number }}
+                                                </div>
+                                                <small>Value:
+                                                    ₹{{ number_format($contract->contract_value, 2) }}</small><br>
+                                                <small>Financial: {{ $contract->financial_progress ?? 0 }}%</small><br>
+                                                <small>Physical: {{ $contract->physical_progress ?? 0 }}%</small>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 @else
-                                    <span class="badge bg-secondary">
-                                        <i class="fas fa-times-circle"></i> No Contracts
-                                    </span>
+                                    <span class="badge bg-secondary">No Contracts</span>
                                 @endif
                             </td>
 
-                            <!-- Approvals & Status -->
-                              <td class="align-middle">
-                                @if ($project->contracts->isNotEmpty())
-                                    <div class="d-flex justify-content-end gap-2">
-                                        <a href="{{ route('admin.contracts.show', $contract) }}"
-                                            class="btn btn-sm btn-outline-info">
-                                            <i class="fas fa-eye me-1"></i> View
-                                        </a>
-                                        <a href="{{ route('admin.contracts.edit', $contract) }}"
-                                            class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-edit me-1"></i> Edit
-                                        </a>
-                                        <form action="{{ route('admin.contracts.destroy', $contract) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                onclick="return confirm('Are you sure you want to delete this contract?')">
-                                                <i class="fas fa-trash-alt me-1"></i> Delete
-                                            </button>
-                                        </form>
-                                    </div>
+                            <!-- Sub Projects -->
+                            <td>
+                                @if ($project->subProjects->count() > 0)
+                                    <ul class="list-group list-group-flush">
+                                        @foreach ($project->subProjects as $sub)
+                                            <li class="small px-2 py-1">
+                                                {{ $sub->name ?? 'Unnamed' }} —
+                                                <span class="text-muted">Fin:
+                                                    {{ $sub->financial_progress ?? 0 }}%,</span>
+                                                <span class="text-muted">Phy:
+                                                    {{ $sub->physical_progress ?? 0 }}%</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 @else
-                                    <a href="{{ route('admin.contracts.create', [
-                                        'package_project_id' => $project->id,
-                                    ]) }}"
-                                        class="btn btn-sm btn-outline-primary" title="Create">
-                                        <i class="fas fa-plus "></i> </a>
+                                    <span class="badge bg-secondary">No Sub Projects</span>
                                 @endif
                             </td>
-
-                            <!-- Actions -->
-
                         </tr>
                     @endforeach
+
                 </x-admin.data-table>
             </div>
         </div>

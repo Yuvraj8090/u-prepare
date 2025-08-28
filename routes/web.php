@@ -26,17 +26,22 @@ use App\Http\Controllers\Admin\PhysicalEpcProgressController;
 use App\Http\Controllers\Admin\WorkServiceController;
 use App\Http\Controllers\MediaFileController;
 use App\Http\Controllers\Admin\RoleRouteController;
+use App\Http\Controllers\Admin\SubPackageProjectTestController;
 use App\Http\Controllers\Admin\ProcurementDetailController;
 use App\Http\Controllers\Admin\PackageComponentController;
 use App\Http\Controllers\Admin\SubDepartmentController;
 use App\Http\Controllers\Admin\ProcurementWorkProgramController;
 use App\Http\Controllers\Admin\TypeOfProcurementController;
 use App\Http\Controllers\Admin\SlideController;
+use App\Http\Controllers\Admin\ContractSecurityTypeController;
+use App\Http\Controllers\Admin\ContractSecurityFormController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminNewsController;
 use App\Http\Controllers\AdminTenderController;
 
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\SubPackageProjectTestReportController;
+use App\Http\Controllers\Admin\ContractSecurityController;
 use App\Http\Controllers\Admin\GrievanceController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Admin\FeedbackController as AdminFeedback;
@@ -62,6 +67,44 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+
+    // Test Reports
+    Route::get('sub_package_project_test_reports/{testId}', [SubPackageProjectTestReportController::class, 'index'])
+        ->name('sub_package_project_test_reports.index');
+
+    Route::post('sub_package_project_test_reports', [SubPackageProjectTestReportController::class, 'store'])
+        ->name('sub_package_project_test_reports.store');
+
+    Route::get('sub_package_project_test_reports/{report}/edit', [SubPackageProjectTestReportController::class, 'edit'])
+        ->name('sub_package_project_test_reports.edit');
+
+    Route::post('sub_package_project_test_reports/{report}', [SubPackageProjectTestReportController::class, 'update'])
+        ->name('sub_package_project_test_reports.update');
+
+    Route::delete('sub_package_project_test_reports/{report}', [SubPackageProjectTestReportController::class, 'destroy'])
+        ->name('sub_package_project_test_reports.destroy');
+
+    Route::get('sub_package_project_test_reports/restore/{id}', [SubPackageProjectTestReportController::class, 'restore'])
+        ->name('sub_package_project_test_reports.restore');
+
+
+            Route::resource('sub_package_project_test_types', SubPackageProjectTestTypeController::class)->except(['create', 'edit', 'show']);
+            Route::get('sub_package_project_tests/{subPackageProject}', [SubPackageProjectTestController::class, 'index'])->name('sub_package_project_tests.index');
+            Route::post('sub_package_project_tests', [SubPackageProjectTestController::class, 'store'])->name('sub_package_project_tests.store');
+            Route::get('sub_package_project_tests/{subPackageProjectTest}/edit', [SubPackageProjectTestController::class, 'edit'])->name('sub_package_project_tests.edit');
+            Route::put('sub_package_project_tests/{subPackageProjectTest}', [SubPackageProjectTestController::class, 'update'])->name('sub_package_project_tests.update');
+            Route::delete('sub_package_project_tests/{subPackageProjectTest}', [SubPackageProjectTestController::class, 'destroy'])->name('sub_package_project_tests.destroy');
+            Route::post('sub_package_project_tests/{id}/restore', [SubPackageProjectTestController::class, 'restore'])->name('sub_package_project_tests.restore');
+
+            Route::prefix('contracts/{contract}')
+                ->name('contracts.')
+                ->group(function () {
+                    Route::resource('securities', ContractSecurityController::class);
+                });
+
+            Route::resource('contract-security-types', ContractSecurityTypeController::class);
+            Route::resource('contract-security-forms', ContractSecurityFormController::class);
+
             Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
 
             Route::post('/social-safeguard-entries/save', [SocialSafeguardEntryController::class, 'save'])->name('social_safeguard_entries.save');
@@ -77,7 +120,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
             Route::resource('leaders', \App\Http\Controllers\Admin\LeaderController::class);
             Route::resource('videos', \App\Http\Controllers\Admin\VideoController::class);
 
-            Route::get('financial-progress-updates-all', [FinancialProgressUpdateController::class, 'index2'])->name('financial-progress-updates.index2');
+            Route::get('update-progress', [FinancialProgressUpdateController::class, 'index2'])->name('financial-progress-updates.index2');
             Route::resource('grievances', GrievanceController::class);
 
             // Show by grievance_no instead of ID
