@@ -12989,6 +12989,8 @@ namespace App\Models {
      * @property int $id
      * @property-read mixed $contraction_phases
      * @property-read \App\Models\Role $role
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ContractionPhase> $contractionPhases
+     * @property-read int|null $contractionPhases_count
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereCreatedAt($value)

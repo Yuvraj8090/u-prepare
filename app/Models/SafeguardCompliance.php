@@ -40,8 +40,15 @@ class SafeguardCompliance extends Model
             ->orderBy('name') // optional ordering
             ->get();
     }
-     public function contractionPhases()
-    {
-        return ContractionPhase::whereIn('id', $this->contraction_phase_ids ?? [])->get();
-    }
+    public function contractionPhases()
+{
+    return $this->belongsToMany(
+        ContractionPhase::class,
+        'safeguard_compliance_contraction_phase', // pivot table name
+        'safeguard_compliance_id', // foreign key on pivot
+        'contraction_phase_id'     // related key on pivot
+    );
+}
+
+  
 }

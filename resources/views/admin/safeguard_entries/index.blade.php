@@ -48,7 +48,7 @@
                                 <select name="safeguard_compliance_id" id="safeguard_compliance_id" class="form-select" required>
                                     <option value="">-- Select Compliance --</option>
                                     @foreach ($safeguardCompliances as $compliance)
-                                        <option value="{{ $compliance->id }}" data-phases='@json($compliance->contractionPhases())'>
+                                        <option value="{{ $compliance->id }}" data-phases='@json($compliance->contractionPhases)'>
                                             {{ $compliance->name }}
                                         </option>
                                     @endforeach
@@ -96,7 +96,7 @@
                         <option value="">-- All Compliances --</option>
                         @foreach ($safeguardCompliances as $compliance)
                             <option value="{{ $compliance->id }}" 
-                                data-phases='@json($compliance->contractionPhases())'
+                                data-phases='@json($compliance->contractionPhases)'
                                 {{ request('safeguard_compliance_id') == $compliance->id ? 'selected' : '' }}>
                                 {{ $compliance->name }}
                             </option>
