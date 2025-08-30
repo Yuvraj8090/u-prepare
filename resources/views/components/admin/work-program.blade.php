@@ -11,31 +11,37 @@
                 <div class="d-flex">
                     @php $docCount = 0; @endphp
 
-                @foreach ($workPrograms as $program)
-                    @if ($program->procurement_bid_document)
-                        @php $docCount++; @endphp
-                        <li class="mb-2">
-                            <a href="{{ asset('storage/' . $program->procurement_bid_document) }}" target="_blank"
-                                class="btn btn-outline-primary btn-sm">
-                                <i class="fas fa-file-pdf me-2"></i> Bid Document
-                            </a>
-                        </li>
+                    @php
+                        $found = false;
+                    @endphp
+
+                    @foreach ($workPrograms as $program)
+                        @if (!$found && $program->procurement_bid_document)
+                            <li class="mb-2">
+                                <a href="{{ asset('storage/' . $program->procurement_bid_document) }}" target="_blank"
+                                    class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-file-pdf me-2"></i> Bid Document
+                                </a>
+                            </li>
+                            @php $found = true; @endphp
+                        @elseif (!$found && $program->pre_bid_minutes_document)
+                            <li class="mb-2">
+                                <a href="{{ asset('storage/' . $program->pre_bid_minutes_document) }}" target="_blank"
+                                    class="btn btn-outline-success btn-sm">
+                                    <i class="fas fa-file-alt me-2"></i> Pre-Bid Minutes
+                                </a>
+                            </li>
+                            @php $found = true; @endphp
+                        @endif
+                    @endforeach
+
+                    @if (!$found)
+                        <li class="text-muted">Not available</li>
                     @endif
 
-                    @if ($program->pre_bid_minutes_document)
-                        @php $docCount++; @endphp
-                        <li class="mb-2">
-                            <a href="{{ asset('storage/' . $program->pre_bid_minutes_document) }}" target="_blank"
-                                class="btn btn-outline-success btn-sm">
-                                <i class="fas fa-file-alt me-2"></i> Pre-Bid Minutes
-                            </a>
-                        </li>
+                    @if ($docCount === 0)
+                        <p class="text-muted fst-italic">No documents uploaded.</p>
                     @endif
-                @endforeach
-
-                @if ($docCount === 0)
-                    <p class="text-muted fst-italic">No documents uploaded.</p>
-                @endif
                 </div>
 
             </div>
