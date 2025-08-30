@@ -40,13 +40,8 @@ class SafeguardCompliance extends Model
             ->orderBy('name') // optional ordering
             ->get();
     }
-     public function contractionPhases(): HasMany
+     public function contractionPhases()
     {
-        // Return a "query builder" instead of collection
-        return ContractionPhase::whereIn('id', $this->contraction_phase_ids ?? [])
-            ->orderBy('name') // optional ordering
-            ->getQuery()      // returns query builder instead of collection
-            ->getModel()      // trick to satisfy type hint? Actually, see below
-            ;
+        return ContractionPhase::whereIn('id', $this->contraction_phase_ids ?? [])->get();
     }
 }
