@@ -191,9 +191,7 @@
                                                 ({{ $firstContract->update_count }})
                                             </span>
                                         @else
-                                            <span class="badge bg-success px-3 py-2 rounded-pill">
-                                                <i class="fas fa-check-circle me-1"></i> Original
-                                            </span>
+                                            
                                         @endif
 
                                         <button class="btn btn-sm btn-outline-info dropdown-toggle w-100 mt-2"
