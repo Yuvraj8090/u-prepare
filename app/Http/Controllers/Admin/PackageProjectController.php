@@ -118,27 +118,39 @@ class PackageProjectController extends Controller
     }
 
     public function update(UpdatePackageProjectRequest $request, PackageProject $packageProject): RedirectResponse
-    {
-        $data = $request->validated();
+{
+    $data = $request->validated();
 
-        if ($request->hasFile('dec_document_path')) {
+    // Handle DEC Document
+    if ($request->hasFile('dec_document_path')) {
+        // Delete only if old file exists
+        if (!empty($packageProject->dec_document_path) && Storage::disk('public')->exists($packageProject->dec_document_path)) {
             Storage::disk('public')->delete($packageProject->dec_document_path);
-            $data['dec_document_path'] = $request->file('dec_document_path')->store('package-projects/dec-documents', 'public');
         }
 
-        if ($request->hasFile('hpc_document_path')) {
-            Storage::disk('public')->delete($packageProject->hpc_document_path);
-            $data['hpc_document_path'] = $request->file('hpc_document_path')->store('package-projects/hpc-documents', 'public');
-        }
-
-        // ✅ Keep existing status if not sent
-        $data['status'] = $data['status'] ?? $packageProject->status;
-
-        $packageProject->update($data);
-
-        return redirect()->route('admin.package-projects.index')
-            ->with('success', 'Package project updated successfully.');
+        $data['dec_document_path'] = $request->file('dec_document_path')
+            ->store('package-projects/dec-documents', 'public');
     }
+
+    // Handle HPC Document
+    if ($request->hasFile('hpc_document_path')) {
+        if (!empty($packageProject->hpc_document_path) && Storage::disk('public')->exists($packageProject->hpc_document_path)) {
+            Storage::disk('public')->delete($packageProject->hpc_document_path);
+        }
+
+        $data['hpc_document_path'] = $request->file('hpc_document_path')
+            ->store('package-projects/hpc-documents', 'public');
+    }
+
+    // ✅ Keep existing status if not sent
+    $data['status'] = $data['status'] ?? $packageProject->status;
+
+    $packageProject->update($data);
+
+    return redirect()->route('admin.package-projects.index')
+        ->with('success', 'Package project updated successfully.');
+}
+
 
     public function destroy(PackageProject $packageProject): RedirectResponse
     {
