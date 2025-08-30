@@ -48,9 +48,11 @@
                                 <select name="safeguard_compliance_id" id="safeguard_compliance_id" class="form-select" required>
                                     <option value="">-- Select Compliance --</option>
                                     @foreach ($safeguardCompliances as $compliance)
-                                        <option value="{{ $compliance->id }}" data-phases='@json($compliance->contractionPhases)'>
-                                            {{ $compliance->name }}
-                                        </option>
+                                       <option value="{{ $compliance->id }}" 
+    data-phases='@json($compliance->contraction_phases)'>
+    {{ $compliance->name }}
+</option>
+
                                     @endforeach
                                 </select>
                             </div>
@@ -95,11 +97,12 @@
                     <select name="safeguard_compliance_id" id="filter_safeguard_compliance_id" class="form-select">
                         <option value="">-- All Compliances --</option>
                         @foreach ($safeguardCompliances as $compliance)
-                            <option value="{{ $compliance->id }}" 
-                                data-phases='@json($compliance->contractionPhases)'
-                                {{ request('safeguard_compliance_id') == $compliance->id ? 'selected' : '' }}>
-                                {{ $compliance->name }}
-                            </option>
+                           <option value="{{ $compliance->id }}" 
+    data-phases='@json($compliance->contraction_phases)'
+    {{ request('safeguard_compliance_id') == $compliance->id ? 'selected' : '' }}>
+    {{ $compliance->name }}
+</option>
+
                         @endforeach
                     </select>
                 </div>
@@ -126,38 +129,51 @@
 <!-- Scripts -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const complianceSelect = document.getElementById('filter_safeguard_compliance_id');
-    const phaseSelect = document.getElementById('filter_contraction_phase_id');
+    function setupDynamicPhaseLoader(complianceSelectId, phaseSelectId, requestPhaseId = null) {
+        const complianceSelect = document.getElementById(complianceSelectId);
+        const phaseSelect = document.getElementById(phaseSelectId);
 
-    function populatePhases() {
-        const selectedOption = complianceSelect.options[complianceSelect.selectedIndex];
-        const phases = JSON.parse(selectedOption.dataset.phases || '[]');
+        if (!complianceSelect || !phaseSelect) return;
 
-        phaseSelect.innerHTML = '<option value="">-- All Phases --</option>';
+        function populatePhases() {
+            const selectedOption = complianceSelect.options[complianceSelect.selectedIndex];
+            const phases = JSON.parse(selectedOption.dataset.phases || '[]');
 
-        if(phases.length > 0) {
-            phaseSelect.disabled = false;
-            phases.forEach((phase, i) => {
-                const opt = document.createElement('option');
-                opt.value = phase.id;
-                opt.textContent = phase.name;
-                // Auto-select first if no request selected
-                if(!{{ request('contraction_phase_id') ? 'true' : 'false' }} && i === 0) opt.selected = true;
-                // If request has phase, select it
-                if("{{ request('contraction_phase_id') }}" == phase.id) opt.selected = true;
-                phaseSelect.appendChild(opt);
-            });
-        } else {
-            phaseSelect.disabled = true;
+            phaseSelect.innerHTML = '<option value="">-- Select Phase --</option>';
+            if(phases.length > 0) {
+                phaseSelect.disabled = false;
+                phases.forEach((phase, i) => {
+                    const opt = document.createElement('option');
+                    opt.value = phase.id;
+                    opt.textContent = phase.name;
+
+                    // Auto-select logic
+                    if(requestPhaseId && requestPhaseId == phase.id) {
+                        opt.selected = true;
+                    } else if(!requestPhaseId && i === 0) {
+                        opt.selected = true;
+                    }
+
+                    phaseSelect.appendChild(opt);
+                });
+            } else {
+                phaseSelect.disabled = true;
+            }
         }
+
+        complianceSelect.addEventListener('change', populatePhases);
+
+        if(complianceSelect.value) populatePhases();
     }
 
-    complianceSelect.addEventListener('change', populatePhases);
+    // Import form
+    setupDynamicPhaseLoader('safeguard_compliance_id', 'contraction_phase_id');
 
-    // Trigger on page load if compliance is already selected
-    if(complianceSelect.value) populatePhases();
+    // Filter form (with request phase pre-select)
+    setupDynamicPhaseLoader('filter_safeguard_compliance_id', 'filter_contraction_phase_id', "{{ request('contraction_phase_id') }}");
 });
 </script>
+
 
 
             <!-- Entries Table -->
