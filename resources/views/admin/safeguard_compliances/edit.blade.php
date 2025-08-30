@@ -12,12 +12,13 @@
         />
 
         <!-- Form -->
-        <div class="card shadow-sm">
+        <div class="card shadow-sm mt-3">
             <div class="card-body">
                 <form action="{{ route('admin.safeguard-compliances.update', $safeguardCompliance) }}" method="POST">
                     @csrf 
                     @method('PUT')
 
+                    <!-- Compliance Name -->
                     <div class="mb-3">
                         <label class="form-label">Compliance Name</label>
                         <input type="text" 
@@ -30,9 +31,10 @@
                         @enderror
                     </div>
 
+                    <!-- Allowed Role -->
                     <div class="mb-3">
                         <label class="form-label">Allowed Role</label>
-                        <select name="role_id" class="form-control">
+                        <select name="role_id" class="form-control" required>
                             <option value="">-- Select Role --</option>
                             @foreach($roles as $role)
                                 <option value="{{ $role->id }}" 
@@ -46,8 +48,35 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ route('admin.safeguard-compliances.index') }}" class="btn btn-secondary">Cancel</a>
+                    <!-- Contraction Phases Checklist -->
+                    <div class="mb-3">
+                        <label class="form-label">Contraction Phases</label>
+                        <div class="row">
+                            @foreach($phases as $phase)
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" 
+                                               name="contraction_phase_ids[]" 
+                                               value="{{ $phase->id }}"
+                                               id="phase-{{ $phase->id }}"
+                                               {{ in_array($phase->id, old('contraction_phase_ids', $safeguardCompliance->contraction_phase_ids ?? [])) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="phase-{{ $phase->id }}">
+                                            {{ $phase->name }}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        @error('contraction_phase_ids') 
+                            <div class="text-danger small">{{ $message }}</div> 
+                        @enderror
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <a href="{{ route('admin.safeguard-compliances.index') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
                 </form>
             </div>
         </div>

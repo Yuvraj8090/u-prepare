@@ -67,26 +67,20 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+            // Test Reports
+            Route::get('/contracts/{contract}/history', [ContractController::class, 'history'])->name('contracts.history');
 
-    // Test Reports
-    Route::get('sub_package_project_test_reports/{testId}', [SubPackageProjectTestReportController::class, 'index'])
-        ->name('sub_package_project_test_reports.index');
+            Route::get('sub_package_project_test_reports/{testId}', [SubPackageProjectTestReportController::class, 'index'])->name('sub_package_project_test_reports.index');
 
-    Route::post('sub_package_project_test_reports', [SubPackageProjectTestReportController::class, 'store'])
-        ->name('sub_package_project_test_reports.store');
+            Route::post('sub_package_project_test_reports', [SubPackageProjectTestReportController::class, 'store'])->name('sub_package_project_test_reports.store');
 
-    Route::get('sub_package_project_test_reports/{report}/edit', [SubPackageProjectTestReportController::class, 'edit'])
-        ->name('sub_package_project_test_reports.edit');
+            Route::get('sub_package_project_test_reports/{report}/edit', [SubPackageProjectTestReportController::class, 'edit'])->name('sub_package_project_test_reports.edit');
 
-    Route::post('sub_package_project_test_reports/{report}', [SubPackageProjectTestReportController::class, 'update'])
-        ->name('sub_package_project_test_reports.update');
+            Route::post('sub_package_project_test_reports/{report}', [SubPackageProjectTestReportController::class, 'update'])->name('sub_package_project_test_reports.update');
 
-    Route::delete('sub_package_project_test_reports/{report}', [SubPackageProjectTestReportController::class, 'destroy'])
-        ->name('sub_package_project_test_reports.destroy');
+            Route::delete('sub_package_project_test_reports/{report}', [SubPackageProjectTestReportController::class, 'destroy'])->name('sub_package_project_test_reports.destroy');
 
-    Route::get('sub_package_project_test_reports/restore/{id}', [SubPackageProjectTestReportController::class, 'restore'])
-        ->name('sub_package_project_test_reports.restore');
-
+            Route::get('sub_package_project_test_reports/restore/{id}', [SubPackageProjectTestReportController::class, 'restore'])->name('sub_package_project_test_reports.restore');
 
             Route::resource('sub_package_project_test_types', SubPackageProjectTestTypeController::class)->except(['create', 'edit', 'show']);
             Route::get('sub_package_project_tests/{subPackageProject}', [SubPackageProjectTestController::class, 'index'])->name('sub_package_project_tests.index');
@@ -164,8 +158,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
             Route::resource('financial-progress-updates', FinancialProgressUpdateController::class);
 
-            Route::get('/social-safeguard-entries', [SocialSafeguardEntryController::class, 'index'])->name('social_safeguard_entries.index');
-
+            Route::get('social-safeguard-entries/{project_id}/{compliance_id}/{phase_id?}', [SocialSafeguardEntryController::class, 'index'])->name('social_safeguard_entries.index');
             Route::get('/social-safeguard-entries-all', [SocialSafeguardEntryController::class, 'subPackageProjectOverview'])->name('social_safeguard_entries.overview');
 
             Route::post('/social-safeguard-entries/store-or-update', [SocialSafeguardEntryController::class, 'storeOrUpdateFromIndex'])->name('social_safeguard_entries.storeOrUpdateFromIndex');
@@ -215,7 +208,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
             Route::get('/safeguard-entries-all', [SafeguardEntryController::class, 'index2'])->name('safeguard_entries.index2');
             Route::resource('procurement-details', ProcurementDetailController::class)->except(['create', 'store']);
             Route::post('safeguard_entries/import', [SafeguardEntryController::class, 'import'])->name('safeguard_entries.import');
-            Route::delete('safeguard_entries/bulk-delete', [SafeguardEntryController::class, 'bulkDelete'])->name('safeguard_entries.bulk-delete');
+            Route::delete('safeguard_entries/bulk-delete', [SafeguardEntryController::class, 'bulkDelete'])->name('safeguard_entries.bulkDelete');
             Route::resource('safeguard_entries', SafeguardEntryController::class);
             Route::prefix('boqentry')
                 ->name('boqentry.')

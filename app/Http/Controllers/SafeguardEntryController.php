@@ -15,6 +15,7 @@ class SafeguardEntryController extends Controller
     /**
      * Display a listing of safeguard entries (with filters for project, compliance, and phase).
      */
+   
     public function index(Request $request)
     {
         // Load all sub-projects for dropdowns
@@ -46,14 +47,10 @@ class SafeguardEntryController extends Controller
             $entries = $this->groupEntries($query->get());
 
             // Fetch only compliances relevant to this project
-            $safeguardCompliances = SafeguardCompliance::whereHas('safeguardEntries', function ($q) use ($selectedProjectId) {
-                $q->where('sub_package_project_id', $selectedProjectId);
-            })->get();
+            $safeguardCompliances = SafeguardCompliance::all();
 
             // Fetch only phases relevant to this project
-            $contractionPhases = ContractionPhase::whereHas('safeguardEntries', function ($q) use ($selectedProjectId) {
-                $q->where('sub_package_project_id', $selectedProjectId);
-            })->get();
+            $contractionPhases = ContractionPhase::all();
         }
 
         return view('admin.safeguard_entries.index', compact('subProjects', 'entries', 'subProject', 'selectedProjectId', 'safeguardCompliances', 'contractionPhases'));

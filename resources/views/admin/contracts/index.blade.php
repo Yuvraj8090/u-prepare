@@ -181,10 +181,26 @@
                             <td class="align-middle" style="max-width: 180px;">
                                 @if ($project->contracts->isNotEmpty())
                                     <div class="dropdown">
-                                        <button class="btn btn-sm btn-outline-info dropdown-toggle w-100" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        @php
+                                            $firstContract = $project->contracts->first();
+                                        @endphp
+
+                                        @if ($firstContract->is_updated)
+                                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">
+                                                <i class="fas fa-edit me-1"></i> Amended
+                                                ({{ $firstContract->update_count }})
+                                            </span>
+                                        @else
+                                            <span class="badge bg-success px-3 py-2 rounded-pill">
+                                                <i class="fas fa-check-circle me-1"></i> Original
+                                            </span>
+                                        @endif
+
+                                        <button class="btn btn-sm btn-outline-info dropdown-toggle w-100 mt-2"
+                                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             {{ $project->contracts->count() }} Contract(s)
                                         </button>
+
                                         <ul class="dropdown-menu shadow-sm p-2" style="min-width: 300px;">
                                             @foreach ($project->contracts as $contract)
                                                 <li class="list-group-item d-flex justify-content-between align-items-center"
@@ -194,8 +210,8 @@
                                                         {{ $contract->contract_number }}
                                                     </span>
                                                     <span class="fw-bold text-truncate" style="max-width: 120px;"
-                                                        title="Contract Value: ₹{{ number_format($contract->contract_value, 2) }}">
-                                                        ₹{{ number_format($contract->contract_value, 2) }}
+                                                        title="Contract Value: {{ formatPriceToCR($contract->contract_value, 2) }}">
+                                                        {{ formatPriceToCR($contract->contract_value, 2) }}
                                                     </span>
                                                 </li>
                                             @endforeach
@@ -206,6 +222,7 @@
                                         <i class="fas fa-times-circle"></i> No Contracts
                                     </span>
                                 @endif
+
                             </td>
 
                             <td>

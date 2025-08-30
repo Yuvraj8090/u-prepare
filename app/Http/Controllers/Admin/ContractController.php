@@ -20,7 +20,7 @@ class ContractController extends Controller
     public function index()
     {
         $contracts = Contract::with(['project:id,package_name', 'contractor:id,company_name', 'securities.type:id,name', 'securities.form:id,name'])
-            ->select('id', 'contract_number', 'project_id', 'contractor_id', 'contract_value', 'count_sub_project', 'signing_date')
+            ->select('id','is_updated', 'contract_number', 'project_id', 'contractor_id', 'contract_value', 'count_sub_project', 'signing_date')
             ->latest()
             ->get();
 
@@ -256,25 +256,82 @@ class ContractController extends Controller
 
     public function update(Request $request, $id)
     {
-        $contract = Contract::with('subProjects', 'project')->findOrFail($id);
+        $contract = Contract::findOrFail($id);
 
-        // Update contract itself
-        $contract->update($request->only(['contract_number', 'contract_value', 'security', 'signing_date', 'commencement_date', 'initial_completion_date', 'revised_completion_date', 'actual_completion_date', 'count_sub_project']));
+        // Track old values
+        $oldValues = $contract->only(['contract_value', 'initial_completion_date', 'actual_completion_date']);
 
-        // Update subprojects if applicable
-        if ($contract->count_sub_project > 0) {
-            $subProjects = $contract->subProjects;
+        // Track new incoming values
+        $newValues = $request->only(['contract_value', 'initial_completion_date', 'actual_completion_date']);
 
-            if ($subProjects->count() === 1) {
-                $sp = $subProjects->first();
-                $sp->update([
-                    'name' => $sp->name ?? $contract->project->package_name,
-                    'contract_value' => $contract->contract_value,
-                ]);
-            }
+        // Check if anything changed
+        $isChanged = $oldValues['contract_value'] != $newValues['contract_value'] || $oldValues['initial_completion_date'] != $newValues['initial_completion_date'] || $oldValues['actual_completion_date'] != $newValues['actual_completion_date'];
+
+        // ✅ Validation rules
+        $rules = [
+            'contract_number' => ['required', 'string', Rule::unique('contracts', 'contract_number')->ignore($id)],
+            'contract_value' => 'required|numeric|min:0',
+            'security' => 'nullable|numeric|min:0',
+            'count_sub_project' => 'nullable|numeric|min:0',
+            'signing_date' => 'nullable|date',
+            'commencement_date' => 'nullable|date',
+            'initial_completion_date' => 'nullable|date',
+            'revised_completion_date' => 'nullable|date',
+            'actual_completion_date' => 'nullable|date',
+            'contractor_id' => 'required|exists:contractors,id',
+        ];
+
+        // 🔒 If changed → document required
+        if ($isChanged) {
+            $rules['update_document_file'] = 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:5120';
+        } else {
+            $rules['update_document_file'] = 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:5120';
         }
 
+        $validated = $request->validate($rules);
+
+        DB::transaction(function () use ($request, $contract, $oldValues, $newValues, $isChanged) {
+            // Update contract
+            $contract->update($request->only(['contract_number', 'contract_value', 'security', 'signing_date', 'commencement_date', 'initial_completion_date', 'revised_completion_date', 'actual_completion_date', 'count_sub_project']));
+
+            // If values changed, log update
+            if ($isChanged) {
+                $documentPath = null;
+
+                if ($request->hasFile('update_document_file')) {
+                    $file = $request->file('update_document_file');
+                    $fileName = 'update_' . time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
+                    $documentPath = $file->storeAs('contract_updates', $fileName, 'public');
+                }
+
+                $contract->updates()->create([
+                    'old_contract_value' => $oldValues['contract_value'],
+                    'new_contract_value' => $newValues['contract_value'],
+                    'old_initial_completion_date' => $oldValues['initial_completion_date'],
+                    'new_initial_completion_date' => $newValues['initial_completion_date'],
+                    'old_actual_completion_date' => $oldValues['actual_completion_date'],
+                    'new_actual_completion_date' => $newValues['actual_completion_date'],
+                    'changed_at' => now(),
+                    'update_document' => $documentPath, // ✅ save file path
+                ]);
+
+                $contract->increment('update_count');
+                $contract->update(['is_updated' => true]);
+            }
+        });
+
         return redirect()->route('admin.contracts.index')->with('success', 'Contract updated successfully.');
+    }
+
+    public function history($id)
+    {
+        $contract = Contract::with([
+            'updates' => function ($q) {
+                $q->latest();
+            },
+        ])->findOrFail($id);
+
+        return view('admin.contracts.history', compact('contract'));
     }
 
     public function destroy(Contract $contract)

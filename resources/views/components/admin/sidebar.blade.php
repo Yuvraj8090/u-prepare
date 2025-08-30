@@ -104,7 +104,7 @@
                     @if (canRoute('admin.dashboard'))
                         <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                             <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i> Dashboard</a>
-                        </li>
+                        </li>   
                     @endif
                     {{-- Sub Package Project Test Reports --}}
 
@@ -166,8 +166,8 @@
                                     <li><a href="{{ route('admin.safeguard_entries.index') }}"><i
                                                 class="fa fa-shield"></i> Safeguard Entries</a></li>
                                 @endif
-                                @if (canRoute('admin.social_safeguard_entries.index'))
-                                    <li><a href="{{ route('admin.social_safeguard_entries.index') }}"><i
+                                @if (canRoute('admin.social_safeguard_entries.overview'))
+                                    <li><a href="{{ route('admin.social_safeguard_entries.overview') }}"><i
                                                 class="fa fa-users"></i> Social Safeguards</a></li>
                                 @endif
                             </ul>

@@ -2,144 +2,175 @@
     <div class="container-fluid">
 
         <!-- Header & Breadcrumb -->
-        <x-admin.breadcrumb-header icon="fas fa-shield-alt text-primary" title="Safeguard Entries Management"
+        <x-admin.breadcrumb-header 
+            icon="fas fa-shield-alt text-primary" 
+            title="Safeguard Entries Management"
             :breadcrumbs="[
                 ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
                 ['label' => 'Admin'],
                 ['label' => 'Safeguard Entries'],
-            ]" />
+            ]" 
+        />
 
         <!-- Alerts -->
         @foreach (['success', 'error'] as $msg)
-            @if (session($msg))
+            @if(session($msg))
                 <div class="row mb-3">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <x-alert type="{{ $msg === 'success' ? 'success' : 'danger' }}" :message="session($msg)" dismissible />
                     </div>
                 </div>
             @endif
         @endforeach
 
-        @if ($subProject)
-
+        @if($subProject)
             <!-- Project Info -->
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">Project: {{ $subProject->name }}</h5>
+                    <h5 class="mb-0"><i class="fas fa-project-diagram me-2"></i> Project: {{ $subProject->name }}</h5>
                 </div>
             </div>
 
             <!-- Import Section -->
-           <div class="d-flex justify-content-between align-items-center">
-                
-
-                <div class="accordion shadow-sm mb-4" id="safeguardAccordion">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingImport">
-                            <button class="accordion-button collapsed btn  bg-success text-white fw-semibold "
-                                type="button" data-bs-toggle="collapse" data-bs-target="#collapseImport"
-                                aria-expanded="false" aria-controls="collapseImport">
-                                <i class="fas fa-file-import me-2"></i> Import Safeguard Entries
-                            </button>
-                        </h2>
-                        <div id="collapseImport" class="accordion-collapse collapse" aria-labelledby="headingImport"
-                            data-bs-parent="#safeguardAccordion">
-                            <div class="accordion-body">
-                                <form method="POST" action="{{ route('admin.safeguard_entries.import') }}"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    <input type="hidden" name="sub_package_project_id"
-                                        value="{{ $selectedProjectId }}">
-
-                                    <div class="row g-3">
-                                        <div class="col-md-4">
-                                            <x-bootstrap.dropdown name="safeguard_compliance_id"
-                                                label="Safeguard Compliance" :options="$safeguardCompliances->pluck('name', 'id')" required />
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <x-bootstrap.dropdown name="contraction_phase_id" label="Construction Phase"
-                                                :options="$contractionPhases->pluck('name', 'id')" required />
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <x-input type="file" name="file" label="Excel File"
-                                                accept=".xlsx,.xls,.csv" required />
-                                            <div class="form-text">Upload Excel file with Safeguard Entry data</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-3">
-                                        <button type="submit" class="btn btn-success">
-                                            <i class="fas fa-upload me-1"></i> Upload
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <a href="/safeguard_entries_demo.xlsx" class="btn btn-success" download>
-                        <i class="fas fa-file-excel me-1"></i> Download Upload Format
-                    </a>
-                </div>
-            </div>
-
-
-            <!-- Filter Form -->
             <div class="card shadow-sm mb-4">
-                <div class="card-header bg-light">
-                    <h6 class="mb-0"><i class="fas fa-filter me-2"></i> Filter Entries</h6>
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-file-import me-2"></i> Import Safeguard Entries</h5>
                 </div>
                 <div class="card-body">
-                    <form method="GET" action="{{ route('admin.safeguard_entries.index') }}">
+                    <form method="POST" action="{{ route('admin.safeguard_entries.import') }}" enctype="multipart/form-data">
+                        @csrf
                         <input type="hidden" name="sub_package_project_id" value="{{ $selectedProjectId }}">
-
                         <div class="row g-3">
+
+                            <!-- Compliance -->
                             <div class="col-md-4">
-                                <x-bootstrap.dropdown name="safeguard_compliance_id" label="Safeguard Compliance"
-                                    :items="$safeguardCompliances
-                                        ->map(fn($p) => ['value' => $p->id, 'label' => $p->name])
-                                        ->toArray()" :selected="request('safeguard_compliance_id')" placeholder="-- All Compliances --" />
+                                <label for="safeguard_compliance_id" class="form-label">Compliance <span class="text-danger">*</span></label>
+                                <select name="safeguard_compliance_id" id="safeguard_compliance_id" class="form-select" required>
+                                    <option value="">-- Select Compliance --</option>
+                                    @foreach ($safeguardCompliances as $compliance)
+                                        <option value="{{ $compliance->id }}" data-phases='@json($compliance->contractionPhases())'>
+                                            {{ $compliance->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
+                            <!-- Phase -->
                             <div class="col-md-4">
-                                <x-bootstrap.dropdown id="phaseDropdown" name="contraction_phase_id"
-                                    label="Construction Phase" :items="$contractionPhases
-                                        ->map(fn($p) => ['value' => $p->id, 'label' => $p->name])
-                                        ->toArray()" :selected="request('contraction_phase_id')"
-                                    placeholder="-- Select Phase --" required />
-
+                                <label for="contraction_phase_id" class="form-label">Construction Phase <span class="text-danger">*</span></label>
+                                <select name="contraction_phase_id" id="contraction_phase_id" class="form-select" required>
+                                    <option value="">-- Select Phase --</option>
+                                </select>
                             </div>
 
-                            <div class="col-md-4 d-flex align-items-end">
-                                <button type="submit" class="btn btn-primary me-2">
-                                    <i class="fas fa-filter me-1"></i> Apply
-                                </button>
-                                <a href="{{ route('admin.safeguard_entries.index', ['sub_package_project_id' => $selectedProjectId]) }}"
-                                    class="btn btn-secondary">
-                                    <i class="fas fa-times me-1"></i> Reset
-                                </a>
+                            <!-- Excel Upload -->
+                            <div class="col-md-4">
+                                <label for="file" class="form-label">Excel File <span class="text-danger">*</span></label>
+                                <input type="file" name="file" id="file" class="form-control" accept=".xlsx,.xls,.csv" required>
+                                <small class="text-muted">Upload Excel file with safeguard entry data</small>
                             </div>
+                        </div>
+
+                        <div class="mt-3 d-flex gap-2">
+                            <button type="submit" class="btn btn-success"><i class="fas fa-upload me-1"></i> Upload</button>
+                            <a href="/safeguard_entries_demo.xlsx" class="btn btn-success"><i class="fas fa-file-excel me-1"></i> Download Template</a>
                         </div>
                     </form>
                 </div>
             </div>
 
+            <!-- Filter Section -->
+        <div class="card shadow-sm mb-4">
+    <div class="card-header bg-light">
+        <h6 class="mb-0"><i class="fas fa-filter me-2"></i> Filter Entries</h6>
+    </div>
+    <div class="card-body">
+        <form method="GET" action="{{ route('admin.safeguard_entries.index') }}">
+            <input type="hidden" name="sub_package_project_id" value="{{ $selectedProjectId }}">
+            <div class="row g-3">
+
+                <!-- Compliance Filter -->
+                <div class="col-md-4">
+                    <label for="filter_safeguard_compliance_id" class="form-label">Compliance</label>
+                    <select name="safeguard_compliance_id" id="filter_safeguard_compliance_id" class="form-select">
+                        <option value="">-- All Compliances --</option>
+                        @foreach ($safeguardCompliances as $compliance)
+                            <option value="{{ $compliance->id }}" 
+                                data-phases='@json($compliance->contractionPhases())'
+                                {{ request('safeguard_compliance_id') == $compliance->id ? 'selected' : '' }}>
+                                {{ $compliance->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Phase Filter -->
+                <div class="col-md-4">
+                    <label for="filter_contraction_phase_id" class="form-label">Phase</label>
+                    <select name="contraction_phase_id" id="filter_contraction_phase_id" class="form-select" {{ !request('safeguard_compliance_id') ? 'disabled' : '' }}>
+                        <option value="">-- All Phases --</option>
+                        {{-- Options will be populated dynamically --}}
+                    </select>
+                </div>
+
+                <div class="col-md-4 d-flex align-items-end gap-2">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-filter me-1"></i> Apply</button>
+                    <a href="{{ route('admin.safeguard_entries.index', ['sub_package_project_id' => $selectedProjectId]) }}" class="btn btn-secondary"><i class="fas fa-times me-1"></i> Reset</a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const complianceSelect = document.getElementById('filter_safeguard_compliance_id');
+    const phaseSelect = document.getElementById('filter_contraction_phase_id');
+
+    function populatePhases() {
+        const selectedOption = complianceSelect.options[complianceSelect.selectedIndex];
+        const phases = JSON.parse(selectedOption.dataset.phases || '[]');
+
+        phaseSelect.innerHTML = '<option value="">-- All Phases --</option>';
+
+        if(phases.length > 0) {
+            phaseSelect.disabled = false;
+            phases.forEach((phase, i) => {
+                const opt = document.createElement('option');
+                opt.value = phase.id;
+                opt.textContent = phase.name;
+                // Auto-select first if no request selected
+                if(!{{ request('contraction_phase_id') ? 'true' : 'false' }} && i === 0) opt.selected = true;
+                // If request has phase, select it
+                if("{{ request('contraction_phase_id') }}" == phase.id) opt.selected = true;
+                phaseSelect.appendChild(opt);
+            });
+        } else {
+            phaseSelect.disabled = true;
+        }
+    }
+
+    complianceSelect.addEventListener('change', populatePhases);
+
+    // Trigger on page load if compliance is already selected
+    if(complianceSelect.value) populatePhases();
+});
+</script>
+
+
             <!-- Entries Table -->
-            <div class="card shadow-sm">
+            <div class="card shadow-sm mb-4">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0 text-primary"><i class="fas fa-list me-2"></i> Entries for: {{ $subProject->name }}
-                    </h5>
-                    <a href="{{ route('admin.safeguard_entries.create', ['sub_package_project_id' => $selectedProjectId]) }}"
-                        class="btn btn-success btn-sm">
+                    <h5 class="mb-0 text-primary"><i class="fas fa-list me-2"></i> Entries for {{ $subProject->name }}</h5>
+                    <a href="{{ route('admin.safeguard_entries.create', ['sub_package_project_id' => $selectedProjectId]) }}" class="btn btn-success btn-sm">
                         <i class="fas fa-plus-circle me-1"></i> Add New Entry
                     </a>
                 </div>
                 <div class="card-body">
-                    @if (!empty($entries) && count($entries))
-                        <form id="bulkDeleteForm" method="POST" action="">
+                    @if($entries->isNotEmpty())
+                        <form id="bulkDeleteForm" method="POST" action="{{ route('admin.safeguard_entries.bulkDelete') }}">
                             @csrf
                             @method('DELETE')
 
@@ -148,60 +179,36 @@
                                     <i class="fas fa-trash-alt me-1"></i> Delete Selected
                                 </button>
                                 <div>
-                                    <label class="mb-0"><input type="checkbox" id="selectAllCheckbox"> Select
-                                        All</label>
+                                    <label><input type="checkbox" id="selectAllCheckbox"> Select All</label>
                                 </div>
                             </div>
 
-                            <x-admin.data-table id="entries-table" :headers="[
-                                'Select',
-                                'Sl. No.',
-                                'Description',
-                                'Compliance & Phase',
-                                'Validity',
-                                'Actions',
-                            ]" :excel="true"
-                                :print="true" :pageLength="10">
+                            <x-admin.data-table 
+                                id="entries-table"
+                                :headers="['Select','Sl. No.','Description','Compliance & Phase','Validity','Actions']"
+                                :excel="true" :print="true" :pageLength="10">
 
-                                @foreach ($entries as $slNo => $group)
+                                @foreach ($entries as $group)
                                     @foreach ($group as $entry)
-                                        @php
-                                            $isParent = !Str::contains($entry->sl_no, '.');
-                                        @endphp
-
+                                        @php $isParent = !Str::contains($entry->sl_no, '.'); @endphp
                                         <tr class="{{ $isParent ? 'table-primary fw-bold' : '' }}">
-                                            <td><input type="checkbox" class="entryCheckbox" name="ids[]"
-                                                    value="{{ $entry->id }}"></td>
+                                            <td><input type="checkbox" class="entryCheckbox" name="ids[]" value="{{ $entry->id }}"></td>
                                             <td class="{{ !$isParent ? 'ps-4' : '' }}">{{ $entry->sl_no }}</td>
                                             <td>{{ $entry->item_description }}</td>
+                                            <td>{{ optional($entry->safeguardCompliance)->name }} @if($entry->contractionPhase) ({{ $entry->contractionPhase->name }}) @endif</td>
                                             <td>
-                                                {{ optional($entry->safeguardCompliance)->name }}
-                                                @if ($entry->contractionPhase)
-                                                    ({{ $entry->contractionPhase->name }})
-                                                @endif
+                                                <span class="badge {{ $entry->is_validity ? 'bg-success' : 'bg-danger' }}">
+                                                    {{ $entry->is_validity ? 'Required' : 'Not Required' }}
+                                                </span>
                                             </td>
-                                            <td>
-                                                @if ($entry->is_validity)
-                                                    <span class="badge bg-success">Required</span>
-                                                @else
-                                                    <span class="badge bg-danger">Not Required</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <div class="d-flex">
-                                                    <a href="{{ route('admin.safeguard_entries.edit', $entry->id) }}"
-                                                        class="btn btn-sm btn-outline-warning me-2">
-                                                        <i class="fas fa-edit me-1"></i> Edit
-                                                    </a>
-                                                    <form method="POST"
-                                                        action="{{ route('admin.safeguard_entries.destroy', $entry->id) }}">
-                                                        @csrf @method('DELETE')
-                                                        <button class="btn btn-sm btn-outline-danger"
-                                                            onclick="return confirm('Delete this entry?')">
-                                                            <i class="fas fa-trash-alt me-1"></i> Delete
-                                                        </button>
-                                                    </form>
-                                                </div>
+                                            <td class="d-flex gap-2">
+                                                <a href="{{ route('admin.safeguard_entries.edit', $entry->id) }}" class="btn btn-sm btn-outline-warning"><i class="fas fa-edit me-1"></i> Edit</a>
+                                                <form method="POST" action="{{ route('admin.safeguard_entries.destroy', $entry->id) }}">
+                                                    @csrf @method('DELETE')
+                                                    <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this entry?')">
+                                                        <i class="fas fa-trash-alt me-1"></i> Delete
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -209,15 +216,17 @@
                             </x-admin.data-table>
                         </form>
                     @else
-                        <p class="text-muted mb-0">No entries found for this project.</p>
+                        <p class="text-muted">No entries found for this project.</p>
                     @endif
                 </div>
             </div>
         @endif
     </div>
 
+    <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Bulk Delete
             const checkboxes = document.querySelectorAll('.entryCheckbox');
             const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
             const selectAll = document.getElementById('selectAllCheckbox');
@@ -232,6 +241,26 @@
             });
 
             checkboxes.forEach(cb => cb.addEventListener('change', toggleBulkButton));
+
+            // Dynamic Phase Population
+            const complianceSelect = document.getElementById('safeguard_compliance_id');
+            const phaseSelect = document.getElementById('contraction_phase_id');
+
+            function populatePhases() {
+                const selectedOption = complianceSelect.options[complianceSelect.selectedIndex];
+                const phases = JSON.parse(selectedOption.dataset.phases || '[]');
+                phaseSelect.innerHTML = '<option value="">-- Select Phase --</option>';
+                if(phases.length > 0) phases.forEach((phase, i) => {
+                    const opt = document.createElement('option');
+                    opt.value = phase.id;
+                    opt.textContent = phase.name;
+                    if(i === 0) opt.selected = true;
+                    phaseSelect.appendChild(opt);
+                });
+            }
+
+            complianceSelect.addEventListener('change', populatePhases);
+            if(complianceSelect.value) populatePhases();
         });
     </script>
 </x-app-layout>

@@ -9,91 +9,130 @@ use App\Models\SafeguardCompliance;
 use App\Models\ContractionPhase;
 use App\Models\MediaFile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class SocialSafeguardEntryController extends Controller
 {
     /**
-     * Show all safeguard entries with filters
+     * List social safeguard entries for a project & compliance
      */
-    public function index(Request $request)
+    public function index(int $project_id, int $compliance_id, int $phase_id = null, Request $request)
     {
-        $selectedDate = $request->date_of_entry ? Carbon::parse($request->date_of_entry)->format('Y-m-d') : now()->format('Y-m-d');
+        $subProject = SubPackageProject::findOrFail($project_id);
+        $compliance = SafeguardCompliance::findOrFail($compliance_id);
 
-        $entries = SafeguardEntry::with(['subPackageProject', 'safeguardCompliance', 'contractionPhase', 'socialSafeguardEntries'])
-            ->when($request->filled('sub_package_project_id'), fn($q) => $q->where('sub_package_project_id', $request->sub_package_project_id))
-            ->when($request->filled('safeguard_compliance_id'), fn($q) => $q->where('safeguard_compliance_id', $request->safeguard_compliance_id))
-            ->when($request->filled('contraction_phase_id'), fn($q) => $q->where('contraction_phase_id', $request->contraction_phase_id))
+        $this->authorizeComplianceAccess($compliance);
+
+        // Auto-select first phase if not provided
+        $phase_id ??= $compliance->contractionPhases()->first()?->id ?? 1;
+
+        $selectedDate = $request->input('date_of_entry', now()->format('Y-m-d'));
+
+        $entries = SafeguardEntry::with([
+            'socialSafeguardEntries' => function ($q) use ($selectedDate) {
+                $q->whereDate('date_of_entry', $selectedDate);
+            },
+            'contractionPhase',
+        ])
+            ->where([
+                'sub_package_project_id' => $project_id,
+                'safeguard_compliance_id' => $compliance_id,
+                'contraction_phase_id' => $phase_id,
+            ])
             ->get();
 
-        // ✅ Natural sorting for sl_no
-        $entries = $entries
-            ->sort(function ($a, $b) {
-                $aParts = explode('.', $a->sl_no);
-                $bParts = explode('.', $b->sl_no);
-
-                foreach ($aParts as $i => $part) {
-                    $aNum = is_numeric($part) ? intval($part) : $part;
-                    $bNum = $bParts[$i] ?? null;
-
-                    if ($bNum === null) {
-                        return 1;
-                    } // e.g. A.1 < A.1.1
-                    $bNum = is_numeric($bNum) ? intval($bNum) : $bNum;
-
-                    if ($aNum == $bNum) {
-                        continue;
-                    }
-
-                    return $aNum < $bNum ? -1 : 1;
-                }
-
-                return count($aParts) <=> count($bParts);
-            })
-            ->values();
-
-        // ✅ Attach social & locked status
-        foreach ($entries as $entry) {
-            $allSocials = $entry->socialSafeguardEntries;
-            $eligibleEntries = $allSocials->filter(fn($s) => $s->date_of_entry->format('Y-m-d') <= $selectedDate);
-            $social = $eligibleEntries->sortByDesc('date_of_entry')->first();
+        // Attach social and locked
+        $entries = $entries->map(function ($entry) {
+            $social = $entry->socialSafeguardEntries->first();
             $entry->social = $social;
+            $entry->is_locked = $social && $entry->is_validity && $social->validity_date && Carbon::parse($social->validity_date)->isFuture();
+            return $entry;
+        });
 
-            $hasValidity = $entry->is_validity && $social?->validity_date;
-            $oneTime = $entry->contractionPhase->is_one_time ?? false;
-
-            if ($oneTime) {
-                $entry->is_locked = $social ? ($hasValidity ? Carbon::parse($social->validity_date)->isFuture() : true) : false;
-            } else {
-                $entry->is_locked = $hasValidity && Carbon::parse($social->validity_date)->isFuture();
-            }
-
-            // Load gallery
-            if ($social?->photos_documents_case_studies) {
-                $mediaIds = $social->photos_documents_case_studies;
-                $entry->gallery = MediaFile::whereIn('id', $mediaIds)->get()->map->toLightGallery();
-            } else {
-                $entry->gallery = [];
-            }
-        }
-
-        return view('admin.social_safeguard_entries.index', [
-            'entries' => $entries,
-            'projects' => SubPackageProject::orderBy('name')->get(),
-            'safeguardCompliances' => SafeguardCompliance::orderBy('name')->get(),
-            'contractionPhases' => ContractionPhase::orderBy('name')->get(),
-            'subPackageProjectId' => $request->sub_package_project_id,
-            'selectedDate' => $selectedDate,
-        ]);
+        return view('admin.social_safeguard_entries.index', compact('entries', 'subProject', 'compliance', 'phase_id', 'selectedDate'));
     }
 
     /**
-     * Overview across projects
+     * Check if user can access this compliance
      */
+    private function authorizeComplianceAccess(SafeguardCompliance $compliance)
+    {
+        $userRole = auth()->user()->role_id;
+        if ($userRole != 1 && $userRole != $compliance->role_id) {
+            abort(403, 'Unauthorized access to this compliance.');
+        }
+    }
+
+    /**
+     * Natural sort & attach social, locked status, gallery
+     */
+    private function processEntries($entries, string $selectedDate)
+    {
+        return $entries
+            ->sort(fn($a, $b) => $this->naturalSort($a->sl_no, $b->sl_no))
+            ->values()
+            ->map(function ($entry) use ($selectedDate) {
+                $social = $entry->socialSafeguardEntries->whereDate('date_of_entry', $selectedDate)->first();
+
+                $entry->social = $social;
+                $entry->is_locked = $this->computeLocked($entry, $social);
+                $entry->gallery = $this->loadGallery($social);
+
+                return $entry;
+            });
+    }
+
+    /**
+     * Natural sort by SL No
+     */
+    private function naturalSort(string $aSl, string $bSl): int
+    {
+        $aParts = explode('.', $aSl);
+        $bParts = explode('.', $bSl);
+
+        foreach ($aParts as $i => $part) {
+            $aNum = is_numeric($part) ? intval($part) : $part;
+            $bNum = $bParts[$i] ?? null;
+
+            if ($bNum === null) {
+                return 1;
+            }
+
+            $bNum = is_numeric($bNum) ? intval($bNum) : $bNum;
+
+            if ($aNum === $bNum) {
+                continue;
+            }
+
+            return $aNum < $bNum ? -1 : 1;
+        }
+
+        return count($aParts) <=> count($bParts);
+    }
+
+    /**
+     * Determine if entry is locked
+     */
+    private function computeLocked($entry, $social): bool
+    {
+        $hasValidity = $entry->is_validity && $social?->validity_date;
+        $oneTime = $entry->contractionPhase?->is_one_time ?? false;
+
+        return $oneTime ? ($social ? ($hasValidity ? Carbon::parse($social->validity_date)->isFuture() : true) : false) : $hasValidity && Carbon::parse($social->validity_date)->isFuture();
+    }
+
+    /**
+     * Load gallery from social entry
+     */
+    private function loadGallery($social)
+    {
+        if (!$social?->photos_documents_case_studies) {
+            return collect();
+        }
+        return MediaFile::whereIn('id', $social->photos_documents_case_studies)->get()->map->toLightGallery();
+    }
+
     public function subPackageProjectOverview(Request $request)
     {
         $date = $request->date_of_entry ? Carbon::parse($request->date_of_entry)->format('Y-m-d') : now()->format('Y-m-d');
@@ -127,141 +166,97 @@ class SocialSafeguardEntryController extends Controller
 
         return view('admin.social_safeguard_entries.overview', compact('subProjects', 'safeguardCompliances', 'contractionPhases', 'statusMap', 'date'));
     }
-
-    /**
-     * Save or update multiple entries (main function)
-     */
-    public function storeOrUpdateFromIndex(Request $request)
+    private function canAccessCompliance(SafeguardCompliance $compliance): bool
     {
-        if (!$request->has('entries') || !is_array($request->entries)) {
-            return response()->json(['status' => 'error', 'message' => 'No data provided.'], 400);
-        }
-
-        $updatedCount = 0;
-
-        foreach ($request->entries as $entryId => $data) {
-            $date = $data['date_of_entry'] ?? now()->format('Y-m-d');
-
-            $existing = SocialSafeguardEntry::where('safeguard_entry_id', $entryId)->whereDate('date_of_entry', $date)->first();
-
-            $mediaIds = $data['photos_documents_case_studies'] ?? [];
-
-            if ($request->hasFile("entries.$entryId.photos_documents_case_studies")) {
-                foreach ($request->file("entries.$entryId.photos_documents_case_studies") as $file) {
-                    $path = $file->store('media_files', 'public');
-                    $media = MediaFile::create([
-                        'path' => $path,
-                        'type' => $file->getClientMimeType(),
-                        'meta_data' => ['name' => $file->getClientOriginalName()],
-                    ]);
-                    $mediaIds[] = $media->id;
-                }
-            }
-
-            $payload = [
-                'yes_no' => $data['yes_no'] ?? null,
-                'photos_documents_case_studies' => $mediaIds,
-                'remarks' => $data['remarks'] ?? null,
-                'validity_date' => $data['validity_date'] ?? null,
-                'date_of_entry' => $date,
-            ];
-
-            $safeguard = SafeguardEntry::find($entryId);
-
-            if ($safeguard->is_validity && $payload['validity_date']) {
-                if (Carbon::parse($payload['validity_date'])->lt(now())) {
-                    return response()->json(
-                        [
-                            'status' => 'error',
-                            'message' => "Cannot save entry {$entryId}. Validity date has expired.",
-                        ],
-                        400,
-                    );
-                }
-            }
-
-            if (!$existing) {
-                $payload['safeguard_entry_id'] = $entryId;
-                $payload['sub_package_project_id'] = $safeguard->sub_package_project_id;
-                $payload['social_compliance_id'] = $safeguard->safeguard_compliance_id;
-                $payload['contraction_phase_id'] = $safeguard->contraction_phase_id;
-
-                SocialSafeguardEntry::create($payload);
-                $updatedCount++;
-            } elseif ($this->hasChanged($existing, $payload)) {
-                $existing->update($payload);
-                $updatedCount++;
-            }
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => $updatedCount > 0 ? "$updatedCount entr" . ($updatedCount > 1 ? 'ies' : 'y') . ' updated successfully.' : 'No changes detected.',
-        ]);
-    }
-
-    private function hasChanged(SocialSafeguardEntry $existing, array $payload)
-    {
-        foreach ($payload as $key => $value) {
-            if ($key === 'photos_documents_case_studies') {
-                if ($existing->{$key} != $value) {
-                    return true;
-                }
-            } elseif ($existing->{$key} != $value) {
-                return true;
-            }
-        }
-        return false;
+        $userRole = auth()->user()->role_id;
+        return $userRole == 1 || $userRole == $compliance->role_id;
     }
 
     /**
-     * Shortcut route alias: save()
+     * Store or update a single social safeguard entry
      */
     public function save(Request $request)
     {
-        $entryId = $request->input('entry_id');
-        $date = $request->input('date_of_entry') ?? now()->format('Y-m-d');
+        $validated = $request->validate([
+            'entry_id' => 'required|exists:safeguard_entries,id',
+            'sub_package_project_id' => 'required|exists:sub_package_projects,id',
+            'social_compliance_id' => 'required|exists:safeguard_compliances,id',
+            'contraction_phase_id' => 'required|exists:contraction_phases,id',
+            'yes_no' => 'nullable|string',
+            'remarks' => 'nullable|string',
+            'validity_date' => 'nullable|date',
+            'date_of_entry' => 'nullable|date',
+            'photos_documents_case_studies.*' => 'nullable|file',
+        ]);
 
-        $existing = SocialSafeguardEntry::where('safeguard_entry_id', $entryId)->whereDate('date_of_entry', $date)->first();
+        $entry = SafeguardEntry::findOrFail($validated['entry_id']);
+        $date = $validated['date_of_entry'] ?? now()->format('Y-m-d');
 
-        $payload = [
-            'yes_no' => $request->input('yes_no'),
-            'remarks' => $request->input('remarks'),
-            'validity_date' => $request->input('validity_date'),
-            'date_of_entry' => $date,
-        ];
+        $existing = SocialSafeguardEntry::where('safeguard_entry_id', $entry->id)->whereDate('date_of_entry', $date)->first();
 
-        $safeguard = SafeguardEntry::findOrFail($entryId);
-
-        // ✅ Only check validity if required
-        if (!empty($safeguard->is_validity) && !empty($payload['validity_date'])) {
-            if (Carbon::parse($payload['validity_date'])->lt(now())) {
-                return response()->json(
-                    [
-                        'status' => 'error',
-                        'message' => "Cannot save entry {$entryId}. Validity date has expired.",
-                    ],
-                    400,
-                );
+        $mediaIds = $existing?->photos_documents_case_studies ?? [];
+        if ($request->hasFile('photos_documents_case_studies')) {
+            foreach ($request->file('photos_documents_case_studies') as $file) {
+                $media = MediaFile::create([
+                    'path' => $file->store('media_files', 'public'),
+                    'type' => $file->getClientMimeType(),
+                    'meta_data' => ['name' => $file->getClientOriginalName()],
+                ]);
+                $mediaIds[] = $media->id;
             }
         }
 
-        if (!$existing) {
-            $payload['safeguard_entry_id'] = $entryId;
-            $payload['sub_package_project_id'] = $request->input('project_id');
-            $payload['social_compliance_id'] = $request->input('social_compliance_id'); // ✅ FIXED
-            $payload['contraction_phase_id'] = $request->input('contraction_phase_id');
+        $payload = array_merge($validated, [
+            'photos_documents_case_studies' => $mediaIds,
+            'date_of_entry' => $date,
+        ]);
 
-            $saved = SocialSafeguardEntry::create($payload);
-        } else {
-            $existing->update($payload);
-            $saved = $existing;
+        if ($entry->is_validity && !empty($payload['validity_date']) && Carbon::parse($payload['validity_date'])->lt(now())) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => "Cannot save entry {$entry->id}. Validity date has expired.",
+                ],
+                400,
+            );
         }
+
+        $social = $existing
+            ? tap($existing)->update($payload)
+            : SocialSafeguardEntry::create(
+                array_merge($payload, [
+                    'safeguard_entry_id' => $entry->id,
+                ]),
+            );
 
         return response()->json([
             'status' => 'success',
-            'social_id' => $saved->id,
+            'social_id' => $social->id,
             'message' => 'Entry saved successfully.',
         ]);
+    }
+
+    /**
+     * Overview of all projects & compliances
+     */
+    public function overview(Request $request)
+    {
+        $date = $request->input('date_of_entry', now()->format('Y-m-d'));
+
+        $subProjects = SubPackageProject::with(['safeguardEntries.socialSafeguardEntries'])
+            ->orderBy('name')
+            ->get();
+        $compliances = SafeguardCompliance::orderBy('name')->get();
+
+        $statusMap = [];
+        foreach ($subProjects as $project) {
+            foreach ($compliances as $compliance) {
+                $done = $project->safeguardEntries->where('safeguard_compliance_id', $compliance->id)->filter(fn($entry) => $entry->socialSafeguardEntries->where('date_of_entry', '<=', $date)->count() > 0)->count() > 0;
+
+                $statusMap[$project->id][$compliance->id] = $done;
+            }
+        }
+
+        return view('admin.social_safeguard_entries.overview', compact('subProjects', 'compliances', 'statusMap', 'date'));
     }
 }

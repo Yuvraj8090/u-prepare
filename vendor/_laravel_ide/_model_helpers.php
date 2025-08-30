@@ -1297,6 +1297,8 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property mixed $count_sub_project
      * @property mixed $contractor_id
+     * @property mixed $update_count
+     * @property boolean $is_updated
      * @property string|null $contract_document
      * @property \Illuminate\Support\Carbon|null $actual_completion_date
      * @property \Illuminate\Support\Carbon|null $revised_completion_date
@@ -1318,6 +1320,8 @@ namespace App\Models {
      * @property-read int|null $active_securities_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ContractSecurity> $expired_securities
      * @property-read int|null $expired_securities_count
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ContractUpdate> $updates
+     * @property-read int|null $updates_count
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereContractNumber($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereProjectId($value)
@@ -1329,6 +1333,8 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereRevisedCompletionDate($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereActualCompletionDate($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereContractDocument($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereIsUpdated($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereUpdateCount($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereContractorId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereCountSubProject($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereCreatedAt($value)
@@ -2591,16 +2597,342 @@ namespace App\Models {
     }
 
     /**
+     * App\Models\ContractUpdate
+     *
+     * @property string $update_document
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon $changed_at
+     * @property \Illuminate\Support\Carbon|null $new_actual_completion_date
+     * @property \Illuminate\Support\Carbon|null $old_actual_completion_date
+     * @property \Illuminate\Support\Carbon|null $new_initial_completion_date
+     * @property \Illuminate\Support\Carbon|null $old_initial_completion_date
+     * @property float|null $new_contract_value
+     * @property float|null $old_contract_value
+     * @property mixed $contract_id
+     * @property int $id
+     * @property-read \App\Models\Contract $contract
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereContractId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereOldContractValue($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNewContractValue($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereOldInitialCompletionDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNewInitialCompletionDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereOldActualCompletionDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNewActualCompletionDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereChangedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereUpdateDocument($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate query()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate select(mixed $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate selectSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query, string $as)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate selectRaw(string $expression)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate fromSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query, string $as)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate fromRaw(string $expression, mixed $bindings)
+     * @method static array createSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query)
+     * @method static array parseSub(mixed $query)
+     * @method static mixed prependDatabaseNameIfCrossDatabaseQuery(mixed $query)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate addSelect(mixed $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate distinct()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate from(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|\Illuminate\Contracts\Database\Query\Expression|string $table, string|null $as)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate useIndex(string $index)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate forceIndex(string $index)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate ignoreIndex(string $index)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate join(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second, string $type, bool $where)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate joinWhere(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string $operator, \Illuminate\Contracts\Database\Query\Expression|string $second, string $type)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate joinSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query, string $as, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second, string $type, bool $where)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate joinLateral(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate leftJoinLateral(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate leftJoin(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate leftJoinWhere(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate leftJoinSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query, string $as, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate rightJoin(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|string $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate rightJoinWhere(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string $operator, \Illuminate\Contracts\Database\Query\Expression|string $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate rightJoinSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query, string $as, \Closure|\Illuminate\Contracts\Database\Query\Expression|string $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate crossJoin(\Illuminate\Contracts\Database\Query\Expression|string $table, \Closure|\Illuminate\Contracts\Database\Query\Expression|string|null $first, string|null $operator, \Illuminate\Contracts\Database\Query\Expression|string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate crossJoinSub(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query, string $as)
+     * @method static \Illuminate\Database\Query\JoinClause newJoinClause(string $type, \Illuminate\Contracts\Database\Query\Expression|string $table)
+     * @method static \Illuminate\Database\Query\JoinLateralClause newJoinLateralClause(string $type, \Illuminate\Contracts\Database\Query\Expression|string $table)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate mergeWheres(array $wheres, array $bindings)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate where(\Closure|string|array|\Illuminate\Contracts\Database\Query\Expression $column, mixed $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate addArrayOfWheres(array $column, string $boolean, string $method)
+     * @method static array prepareValueAndOperator(string $value, string $operator, bool $useDefault)
+     * @method static bool invalidOperatorAndValue(string $operator, mixed $value)
+     * @method static bool invalidOperator(string $operator)
+     * @method static bool isBitwiseOperator(string $operator)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhere(\Closure|string|array|\Illuminate\Contracts\Database\Query\Expression $column, mixed $operator, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNot(\Closure|string|array|\Illuminate\Contracts\Database\Query\Expression $column, mixed $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereNot(\Closure|string|array|\Illuminate\Contracts\Database\Query\Expression $column, mixed $operator, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereColumn(\Illuminate\Contracts\Database\Query\Expression|string|array $first, string|null $operator, string|null $second, string|null $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereColumn(\Illuminate\Contracts\Database\Query\Expression|string|array $first, string|null $operator, string|null $second)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereRaw(\Illuminate\Contracts\Database\Query\Expression|string $sql, mixed $bindings, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereRaw(string $sql, mixed $bindings)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereLike(\Illuminate\Contracts\Database\Query\Expression|string $column, string $value, bool $caseSensitive, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereLike(\Illuminate\Contracts\Database\Query\Expression|string $column, string $value, bool $caseSensitive)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNotLike(\Illuminate\Contracts\Database\Query\Expression|string $column, string $value, bool $caseSensitive, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereNotLike(\Illuminate\Contracts\Database\Query\Expression|string $column, string $value, bool $caseSensitive)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereIn(\Illuminate\Contracts\Database\Query\Expression|string $column, mixed $values, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereIn(\Illuminate\Contracts\Database\Query\Expression|string $column, mixed $values)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNotIn(\Illuminate\Contracts\Database\Query\Expression|string $column, mixed $values, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereNotIn(\Illuminate\Contracts\Database\Query\Expression|string $column, mixed $values)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereIntegerInRaw(string $column, \Illuminate\Contracts\Support\Arrayable|array $values, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereIntegerInRaw(string $column, \Illuminate\Contracts\Support\Arrayable|array $values)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereIntegerNotInRaw(string $column, \Illuminate\Contracts\Support\Arrayable|array $values, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereIntegerNotInRaw(string $column, \Illuminate\Contracts\Support\Arrayable|array $values)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNull(string|array|\Illuminate\Contracts\Database\Query\Expression $columns, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereNull(string|array|\Illuminate\Contracts\Database\Query\Expression $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNotNull(string|array|\Illuminate\Contracts\Database\Query\Expression $columns, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereBetween(\Illuminate\Contracts\Database\Query\Expression|string $column, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereBetweenColumns(\Illuminate\Contracts\Database\Query\Expression|string $column, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereBetween(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereBetweenColumns(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNotBetween(\Illuminate\Contracts\Database\Query\Expression|string $column, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNotBetweenColumns(\Illuminate\Contracts\Database\Query\Expression|string $column, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereNotBetween(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereNotBetweenColumns(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereValueBetween(mixed $value, array{: \Illuminate\Contracts\Database\Query\Expression|string, : \Illuminate\Contracts\Database\Query\Expression|string} $columns, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereValueBetween(mixed $value, array{: \Illuminate\Contracts\Database\Query\Expression|string, : \Illuminate\Contracts\Database\Query\Expression|string} $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereValueNotBetween(mixed $value, array{: \Illuminate\Contracts\Database\Query\Expression|string, : \Illuminate\Contracts\Database\Query\Expression|string} $columns, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereValueNotBetween(mixed $value, array{: \Illuminate\Contracts\Database\Query\Expression|string, : \Illuminate\Contracts\Database\Query\Expression|string} $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereNotNull(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereDate(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|null $operator, \DateTimeInterface|string|null $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereDate(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|null $operator, \DateTimeInterface|string|null $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereTime(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|null $operator, \DateTimeInterface|string|null $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereTime(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|null $operator, \DateTimeInterface|string|null $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereDay(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|int|null $operator, \DateTimeInterface|string|int|null $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereDay(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|int|null $operator, \DateTimeInterface|string|int|null $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereMonth(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|int|null $operator, \DateTimeInterface|string|int|null $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereMonth(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|int|null $operator, \DateTimeInterface|string|int|null $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereYear(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|int|null $operator, \DateTimeInterface|string|int|null $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereYear(\Illuminate\Contracts\Database\Query\Expression|string $column, \DateTimeInterface|string|int|null $operator, \DateTimeInterface|string|int|null $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate addDateBasedWhere(string $type, \Illuminate\Contracts\Database\Query\Expression|string $column, string $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNested(string $boolean)
+     * @method static \Illuminate\Database\Query\Builder forNestedWhere()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate addNestedWhereQuery(\Illuminate\Database\Query\Builder $query, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereSub(\Illuminate\Contracts\Database\Query\Expression|string $column, string $operator, \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $callback, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereExists(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $callback, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereExists(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $callback, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNotExists(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $callback, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereNotExists(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $callback)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate addWhereExistsQuery(string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereRowValues(array $columns, string $operator, array $values, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereRowValues(array $columns, string $operator, array $values)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereJsonContains(string $column, mixed $value, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereJsonContains(string $column, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereJsonDoesntContain(string $column, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereJsonDoesntContain(string $column, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereJsonOverlaps(string $column, mixed $value, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereJsonOverlaps(string $column, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereJsonDoesntOverlap(string $column, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereJsonDoesntOverlap(string $column, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereJsonContainsKey(string $column, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereJsonContainsKey(string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereJsonDoesntContainKey(string $column, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereJsonDoesntContainKey(string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereJsonLength(string $column, mixed $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereJsonLength(string $column, mixed $operator, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate dynamicWhere(string $method, array $parameters)
+     * @method static void addDynamic(string $segment, string $connector, array $parameters, int $index)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereFullText(string|string[] $columns, string $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereFullText(string|string[] $columns, string $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereAll(\Illuminate\Contracts\Database\Query\Expression[]|\Closure[]|string[] $columns, mixed $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereAll(\Illuminate\Contracts\Database\Query\Expression[]|\Closure[]|string[] $columns, mixed $operator, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereAny(\Illuminate\Contracts\Database\Query\Expression[]|\Closure[]|string[] $columns, mixed $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereAny(\Illuminate\Contracts\Database\Query\Expression[]|\Closure[]|string[] $columns, mixed $operator, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNone(\Illuminate\Contracts\Database\Query\Expression[]|\Closure[]|string[] $columns, mixed $operator, mixed $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereNone(\Illuminate\Contracts\Database\Query\Expression[]|\Closure[]|string[] $columns, mixed $operator, mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate groupBy(array|\Illuminate\Contracts\Database\Query\Expression|string ...$groups)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate groupByRaw(string $sql)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate having(\Illuminate\Contracts\Database\Query\Expression|\Closure|string $column, \DateTimeInterface|string|int|float|null $operator, \Illuminate\Contracts\Database\Query\Expression|\DateTimeInterface|string|int|float|null $value, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orHaving(\Illuminate\Contracts\Database\Query\Expression|\Closure|string $column, \DateTimeInterface|string|int|float|null $operator, \Illuminate\Contracts\Database\Query\Expression|\DateTimeInterface|string|int|float|null $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate havingNested(string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate addNestedHavingQuery(\Illuminate\Database\Query\Builder $query, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate havingNull(array|string $columns, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orHavingNull(string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate havingNotNull(array|string $columns, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orHavingNotNull(string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate havingBetween(string $column, string $boolean, bool $not)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate havingRaw(string $sql, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orHavingRaw(string $sql)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orderBy(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|\Illuminate\Contracts\Database\Query\Expression|string $column, string $direction)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orderByDesc(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate latest(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate oldest(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate inRandomOrder(string|int $seed)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orderByRaw(string $sql, array $bindings)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate skip(int $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate offset(int $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate take(int $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate limit(int $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate groupLimit(int $value, string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate forPage(int $page, int $perPage)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate forPageBeforeId(int $perPage, int|null $lastId, string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate forPageAfterId(int $perPage, int|null $lastId, string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate reorder(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Contracts\Database\Query\Expression|string|null $column, string $direction)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate reorderDesc(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Contracts\Database\Query\Expression|string|null $column)
+     * @method static array removeExistingOrdersFor(string $column)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate union(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $query, bool $all)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate unionAll(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $query)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate lock(string|bool $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate lockForUpdate()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate sharedLock()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate beforeQuery()
+     * @method static void applyBeforeQueryCallbacks()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate afterQuery()
+     * @method static mixed applyAfterQueryCallbacks(mixed $result)
+     * @method static string toSql()
+     * @method static string toRawSql()
+     * @method static ContractUpdate|null find(int|string $id, string|\Illuminate\Contracts\Database\Query\Expression|(string|\Illuminate\Contracts\Database\Query\Expression)[] $columns)
+     * @method static mixed findOr(mixed $id, callable|string|\Illuminate\Contracts\Database\Query\Expression|(string|\Illuminate\Contracts\Database\Query\Expression)[] $columns, callable|null $callback)
+     * @method static mixed value(string $column)
+     * @method static mixed rawValue()
+     * @method static mixed soleValue(string $column)
+     * @method static \Illuminate\Support\Collection<int,\stdClass> get(string|\Illuminate\Contracts\Database\Query\Expression|(string|\Illuminate\Contracts\Database\Query\Expression)[] $columns)
+     * @method static array runSelect()
+     * @method static \Illuminate\Support\Collection withoutGroupLimitKeys(\Illuminate\Support\Collection $items)
+     * @method static \Illuminate\Pagination\LengthAwarePaginator paginate(int|\Closure $perPage, string|\Illuminate\Contracts\Database\Query\Expression|(string|\Illuminate\Contracts\Database\Query\Expression)[] $columns, string $pageName, int|null $page, \Closure|int|null $total)
+     * @method static \Illuminate\Contracts\Pagination\Paginator simplePaginate(int $perPage, string|\Illuminate\Contracts\Database\Query\Expression|(string|\Illuminate\Contracts\Database\Query\Expression)[] $columns, string $pageName, int|null $page)
+     * @method static \Illuminate\Contracts\Pagination\CursorPaginator cursorPaginate(int|null $perPage, string|\Illuminate\Contracts\Database\Query\Expression|(string|\Illuminate\Contracts\Database\Query\Expression)[] $columns, string $cursorName, \Illuminate\Pagination\Cursor|string|null $cursor)
+     * @method static \Illuminate\Support\Collection ensureOrderForCursorPagination(bool $shouldReverse)
+     * @method static int<0, max> getCountForPagination((string|\Illuminate\Contracts\Database\Query\Expression)[] $columns)
+     * @method static array runPaginationCountQuery((string|\Illuminate\Contracts\Database\Query\Expression)[] $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate cloneForPaginationCount()
+     * @method static (string|\Illuminate\Contracts\Database\Query\Expression)[] withoutSelectAliases((string|\Illuminate\Contracts\Database\Query\Expression)[] $columns)
+     * @method static \Illuminate\Support\LazyCollection<int,\stdClass> cursor()
+     * @method static void enforceOrderBy()
+     * @method static mixed pluck(\Illuminate\Contracts\Database\Query\Expression|string $column, string|null $key)
+     * @method static string|null stripTableForPluck(string $column)
+     * @method static \Illuminate\Support\Collection pluckFromObjectColumn(array $queryResult, string $column, string $key)
+     * @method static \Illuminate\Support\Collection pluckFromArrayColumn(array $queryResult, string $column, string $key)
+     * @method static string implode(string $column, string $glue)
+     * @method static bool exists()
+     * @method static bool doesntExist()
+     * @method static mixed existsOr()
+     * @method static mixed doesntExistOr()
+     * @method static int<0, max> count(\Illuminate\Contracts\Database\Query\Expression|string $columns)
+     * @method static mixed min(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static mixed max(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static mixed sum(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static mixed avg(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static mixed average(\Illuminate\Contracts\Database\Query\Expression|string $column)
+     * @method static mixed aggregate(string $function, array $columns)
+     * @method static float|int numericAggregate(string $function, array $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate setAggregate(string $function, (\Illuminate\Contracts\Database\Query\Expression|string)[] $columns)
+     * @method static \TResult onceWithColumns((string|\Illuminate\Contracts\Database\Query\Expression)[] $columns, callable $callback)
+     * @method static bool insert()
+     * @method static int<0, max> insertOrIgnore()
+     * @method static int insertGetId(string|null $sequence)
+     * @method static int insertUsing(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query)
+     * @method static int insertOrIgnoreUsing(\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed>|string $query)
+     * @method static int<0, max> update()
+     * @method static int updateFrom()
+     * @method static bool updateOrInsert()
+     * @method static int upsert()
+     * @method static int<0, max> increment(string $column, float|int $amount)
+     * @method static int<0, max> incrementEach(array<string,float|int|numeric-string> $columns, array<string,mixed> $extra)
+     * @method static int<0, max> decrement(string $column, float|int $amount)
+     * @method static int<0, max> decrementEach(array<string,float|int|numeric-string> $columns, array<string,mixed> $extra)
+     * @method static int delete(mixed $id)
+     * @method static void truncate()
+     * @method static \Illuminate\Database\Query\Builder newQuery()
+     * @method static \Illuminate\Database\Query\Builder forSubQuery()
+     * @method static list<string> getColumns()
+     * @method static \Illuminate\Contracts\Database\Query\Expression raw(mixed $value)
+     * @method static \Illuminate\Support\Collection getUnionBuilders()
+     * @method static mixed getLimit()
+     * @method static mixed getOffset()
+     * @method static list getBindings()
+     * @method static array{select: list, from: list, join: list, where: list, groupBy: list, having: list, order: list, union: list, unionOrder: list} getRawBindings()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate setBindings(list $bindings, "select"|"from"|"join"|"where"|"groupBy"|"having"|"order"|"union"|"unionOrder" $type)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate addBinding(mixed $value, "select"|"from"|"join"|"where"|"groupBy"|"having"|"order"|"union"|"unionOrder" $type)
+     * @method static mixed castBinding(mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate mergeBindings(self $query)
+     * @method static list cleanBindings(array $bindings)
+     * @method static mixed flattenValue(mixed $value)
+     * @method static string defaultKeyName()
+     * @method static \Illuminate\Database\ConnectionInterface getConnection()
+     * @method static \Illuminate\Database\Query\Processors\Processor getProcessor()
+     * @method static \Illuminate\Database\Query\Grammars\Grammar getGrammar()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate useWritePdo()
+     * @method static bool isQueryable(mixed $value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate clone()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate cloneWithout()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate cloneWithoutBindings()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate dump(mixed ...$args)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate dumpRawSql()
+     * @method static void dd()
+     * @method static void ddRawSql()
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate wherePast(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNowOrPast(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWherePast(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereNowOrPast(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereFuture(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereNowOrFuture(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereFuture(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereNowOrFuture(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate wherePastOrFuture(array|string $columns, string $operator, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereToday(array|string $columns, string $boolean)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereBeforeToday(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereTodayOrBefore(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereAfterToday(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereTodayOrAfter(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereToday(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereBeforeToday(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereTodayOrBefore(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereAfterToday(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate orWhereTodayOrAfter(array|string $columns)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate whereTodayBeforeOrAfter(array|string $columns, string $operator, string $boolean)
+     * @method static bool chunk(int $count, callable $callback)
+     * @method static mixed chunkMap(callable $callback, int $count)
+     * @method static bool each(callable $callback, int $count)
+     * @method static bool chunkById(int $count, callable $callback, string|null $column, string|null $alias)
+     * @method static bool chunkByIdDesc(int $count, callable $callback, string|null $column, string|null $alias)
+     * @method static bool orderedChunkById(int $count, callable $callback, string|null $column, string|null $alias, bool $descending)
+     * @method static bool eachById(callable $callback, int $count, string|null $column, string|null $alias)
+     * @method static mixed lazy(int $chunkSize)
+     * @method static mixed lazyById(int $chunkSize, string|null $column, string|null $alias)
+     * @method static mixed lazyByIdDesc(int $chunkSize, string|null $column, string|null $alias)
+     * @method static \Illuminate\Support\LazyCollection orderedLazyById(int $chunkSize, string|null $column, string|null $alias, bool $descending)
+     * @method static ContractUpdate|null first(array|string $columns)
+     * @method static ContractUpdate firstOrFail(array|string $columns, string|null $message)
+     * @method static ContractUpdate sole(array|string $columns)
+     * @method static \Illuminate\Contracts\Pagination\CursorPaginator paginateUsingCursor(int $perPage, array|string $columns, string $cursorName, \Illuminate\Pagination\Cursor|string|null $cursor)
+     * @method static string getOriginalColumnNameForCursorPagination(\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder<mixed> $builder, string $parameter)
+     * @method static \Illuminate\Pagination\LengthAwarePaginator paginator(\Illuminate\Support\Collection $items, int $total, int $perPage, int $currentPage, array $options)
+     * @method static \Illuminate\Pagination\Paginator simplePaginator(\Illuminate\Support\Collection $items, int $perPage, int $currentPage, array $options)
+     * @method static \Illuminate\Pagination\CursorPaginator cursorPaginator(\Illuminate\Support\Collection $items, int $perPage, \Illuminate\Pagination\Cursor $cursor, array $options)
+     * @method static \Illuminate\Database\Eloquent\Builder<ContractUpdate>|ContractUpdate tap(callable $callback)
+     * @method static mixed pipe(callable $callback)
+     * @method static mixed when(callable|\TWhenParameter|null $value, callable|null $callback, callable|null $default)
+     * @method static mixed unless(callable|\TUnlessParameter|null $value, callable|null $callback, callable|null $default)
+     * @method static \Illuminate\Support\Collection explain()
+     * @method static mixed forwardCallTo(mixed $object, string $method, array $parameters)
+     * @method static mixed forwardDecoratedCallTo(mixed $object, string $method, array $parameters)
+     * @method static void throwBadMethodCallException(string $method)
+     * @method static void macro(string $name, object|callable $macro)
+     * @method static void mixin(object $mixin, bool $replace)
+     * @method static bool hasMacro(string $name)
+     * @method static void flushMacros()
+     * @method static mixed macroCall(string $method, array $parameters)
+     * @mixin \Illuminate\Database\Query\Builder
+     */
+    class ContractUpdate extends \Illuminate\Database\Eloquent\Model
+    {
+        //
+    }
+
+    /**
      * App\Models\ContractionPhase
      *
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
-     * @property bool $is_one_time
+     * @property boolean $is_one_time
      * @property string $name
      * @property int $id
-     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SafeguardEntry> $safeguardEntries
-     * @property-read int|null $safeguardEntries_count
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ContractionPhase>|ContractionPhase whereIsOneTime($value)
@@ -12021,12 +12353,12 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $name
      * @property int $id
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SafeguardCompliance> $safeguardCompliances
+     * @property-read int|null $safeguardCompliances_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
      * @property-read int|null $users_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RoleRoute> $routes
      * @property-read int|null $routes_count
-     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SafeguardCompliance> $safeguardCompliances
-     * @property-read int|null $safeguardCompliances_count
      * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role whereCreatedAt($value)
@@ -12648,22 +12980,22 @@ namespace App\Models {
     /**
      * App\Models\SafeguardCompliance
      *
+     * @property array|null $contraction_phase_ids
      * @property mixed $role_id
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $name
      * @property int $id
-     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SafeguardEntry> $safeguardEntries
-     * @property-read int|null $safeguardEntries_count
-     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles
-     * @property-read int|null $roles_count
+     * @property-read mixed $contraction_phases
+     * @property-read \App\Models\Role $role
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereRoleId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance whereContractionPhaseIds($value)
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<SafeguardCompliance>|SafeguardCompliance query()

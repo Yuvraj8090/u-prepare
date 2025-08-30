@@ -10,13 +10,34 @@ class SafeguardCompliance extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name'];
-    public function safeguardEntries()
+    protected $fillable = [
+        'name',
+        'role_id',
+        'contraction_phase_ids', // stored as JSON
+    ];
+
+    protected $casts = [
+        'contraction_phase_ids' => 'array',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
+    ];
+
+    /**
+     * Role relation
+     */
+    public function role()
     {
-        return $this->hasMany(SafeguardEntry::class);
+        return $this->belongsTo(Role::class, 'role_id');
     }
-    public function roles()
+
+    /**
+     * Get contraction phases as a collection
+     */
+    public function getContractionPhasesAttribute()
     {
-        return $this->belongsToMany(Role::class, 'role_safeguard_compliance');
+        return ContractionPhase::whereIn('id', $this->contraction_phase_ids ?? [])
+            ->orderBy('name') // optional ordering
+            ->get();
     }
 }

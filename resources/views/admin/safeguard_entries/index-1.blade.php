@@ -50,7 +50,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.safeguard_entries.index', ['sub_package_project_id' => $project->id]) }}" 
+                                <a href="{{ route('admin.social_safeguard_entries.index', ['sub_package_project_id' => $project->id]) }}" 
                                    class="btn btn-sm btn-primary" title="View Entries">
                                     <i class="fas fa-eye"></i> Entries
                                 </a>

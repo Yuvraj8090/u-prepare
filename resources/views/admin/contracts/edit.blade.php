@@ -2,16 +2,15 @@
     <div class="container-fluid">
         <!-- Page Header -->
         <x-admin.breadcrumb-header
-    icon="fas fa-file-contract text-primary"
-    title="Edit Contract"
-    :breadcrumbs="[
-        ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
-        ['label' => 'Admin'],
-        ['route' => 'admin.contracts.index', 'label' => 'Contracts'],
-        ['label' => 'Edit']
-    ]"
-/>
-
+            icon="fas fa-file-contract text-primary"
+            title="Edit Contract"
+            :breadcrumbs="[
+                ['route' => 'dashboard', 'label' => '<i class=\'fas fa-home\'></i>'],
+                ['label' => 'Admin'],
+                ['route' => 'admin.contracts.index', 'label' => 'Contracts'],
+                ['label' => 'Edit']
+            ]"
+        />
 
         <!-- Error Alerts -->
         @if ($errors->any())
@@ -52,7 +51,7 @@
 
                         <div class="col-md-6">
                             <label class="form-label">Project <span class="text-danger">*</span></label>
-                            <select name="project_id" class="form-select @error('project_id') is-invalid @enderror" required>
+                            <select name="project_id" class="form-select @error('project_id') is-invalid @enderror" required disabled style="width:100%">
                                 <option value="">Select Project</option>
                                 @foreach ($projects as $project)
                                     <option value="{{ $project->id }}" @selected(old('project_id', $contract->project_id) == $project->id)>
@@ -100,6 +99,16 @@
                             @endif
                         </div>
 
+                        <!-- Update Document -->
+                        <div class="col-12">
+                            <label class="form-label">Update Document <span id="updateDocRequired" class="text-danger" style="display:none;">*</span></label>
+                            <input type="file" name="update_document_file" id="update_document_file"
+                                   class="form-control @error('update_document_file') is-invalid @enderror"
+                                   accept=".pdf,.doc,.docx,.xls,.xlsx">
+                            @error('update_document_file')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            <small class="text-muted">Required only if Contract Value / Initial Completion Date / Actual Completion Date changes.</small>
+                        </div>
+
                         <!-- Contractor Info -->
                         <div class="col-12 mt-4">
                             <div class="card border">
@@ -145,84 +154,37 @@
                                         </div>
                                     @endforeach
 
-                                    <!-- Multiple sub-projects toggle -->
-                                    <!-- Multiple sub-projects toggle -->
-<div class="col-md-6">
-    <label class="form-label">Multiple Sub-projects?</label>
-    <div>
-        <label class="form-check form-check-inline">
-            <input type="radio" name="has_multiple_sub_projects" value="yes" class="form-check-input"
-                {{ old('has_multiple_sub_projects', $contract->count_sub_project > 1 ? 'yes' : 'no') === 'yes' ? 'checked' : '' }}>
-            Yes
-        </label>
-        <label class="form-check form-check-inline">
-            <input type="radio" name="has_multiple_sub_projects" value="no" class="form-check-input"
-                {{ old('has_multiple_sub_projects', $contract->count_sub_project > 1 ? 'yes' : 'no') === 'no' ? 'checked' : '' }}>
-            No
-        </label>
-    </div>
-</div>
+                                    <!-- Multiple sub-projects -->
+                                    <div class="col-md-6">
+                                        <label class="form-label">Multiple Sub-projects?</label>
+                                        <div>
+                                            <label class="form-check form-check-inline">
+                                                <input type="radio" name="has_multiple_sub_projects" value="yes" class="form-check-input"
+                                                    {{ old('has_multiple_sub_projects', $contract->count_sub_project > 1 ? 'yes' : 'no') === 'yes' ? 'checked' : '' }}>
+                                                Yes
+                                            </label>
+                                            <label class="form-check form-check-inline">
+                                                <input type="radio" name="has_multiple_sub_projects" value="no" class="form-check-input"
+                                                    {{ old('has_multiple_sub_projects', $contract->count_sub_project > 1 ? 'yes' : 'no') === 'no' ? 'checked' : '' }}>
+                                                No
+                                            </label>
+                                        </div>
+                                    </div>
 
-<!-- Single sub-project inputs -->
-<div class="col-12 single-sub">
-    <label class="form-label">Sub Project Name</label>
-    <input type="text" name="sub_project_name" class="form-control"
-        value="{{ old('sub_project_name', optional($contract->project)->package_name) }}">
-</div>
-<div class="col-12 single-sub">
-    <label class="form-label">Sub Project Contract Value</label>
-    <input type="number" step="0.01" name="sub_project_contract_value" class="form-control"
-        value="{{ old('sub_project_contract_value', $contract->contract_value) }}">
-</div>
+                                    <!-- Single sub-project inputs -->
+                                    <div class="col-12 single-sub">
+                                        <label class="form-label">Sub Project Name</label>
+                                        <input type="text" name="sub_project_name" class="form-control"
+                                            value="{{ old('sub_project_name', optional($contract->project)->package_name) }}">
+                                    </div>
+                                    <div class="col-12 single-sub">
+                                        <label class="form-label">Sub Project Contract Value</label>
+                                        <input type="number" step="0.01" name="sub_project_contract_value" class="form-control"
+                                            value="{{ old('sub_project_contract_value', $contract->contract_value) }}">
+                                    </div>
 
-<!-- Container for dynamically generated sub-projects -->
-<div id="multiSubProjects" class="row g-3 multi-sub" style="display:none;"></div>
-
-<script>
-    function toggleSubFields() {
-        const isMulti = document.querySelector('input[name="has_multiple_sub_projects"][value="yes"]').checked;
-        const multiSubContainer = document.getElementById('multiSubProjects');
-        const contractValue = parseFloat(document.querySelector('input[name="contract_value"]').value) || 0;
-
-        document.querySelectorAll('.single-sub').forEach(el => el.style.display = isMulti ? 'none' : 'block');
-        multiSubContainer.style.display = isMulti ? 'flex' : 'none';
-
-        if (isMulti) {
-            let count = parseInt(prompt("Enter number of sub-projects:"), 10);
-            if (isNaN(count) || count < 2) count = 2;
-
-            // Clear old inputs
-            multiSubContainer.innerHTML = '';
-
-            // Distribute contract value equally as default
-            let defaultValue = contractValue > 0 ? (contractValue / count).toFixed(2) : '';
-
-            for (let i = 1; i <= count; i++) {
-                let nameField = `
-                    <div class="col-md-6">
-                        <label class="form-label">Sub Project ${i} Name</label>
-                        <input type="text" name="multi_sub_projects[${i}][name]" class="form-control" required>
-                    </div>
-                `;
-                let valueField = `
-                    <div class="col-md-6">
-                        <label class="form-label">Sub Project ${i} Contract Value</label>
-                        <input type="number" step="0.01" name="multi_sub_projects[${i}][value]" class="form-control" value="${defaultValue}" required>
-                    </div>
-                `;
-                multiSubContainer.insertAdjacentHTML('beforeend', nameField + valueField);
-            }
-        }
-    }
-
-    document.querySelectorAll('input[name="has_multiple_sub_projects"]').forEach(el => {
-        el.addEventListener('change', toggleSubFields);
-    });
-
-    // Initialize state on load
-    toggleSubFields();
-</script>
-
+                                    <!-- Dynamic sub-projects -->
+                                    <div id="multiSubProjects" class="row g-3 multi-sub" style="display:none;"></div>
                                 </div>
                             </div>
                         </div>
@@ -230,18 +192,88 @@
 
                     <!-- Buttons -->
                     <div class="mt-4 d-flex justify-content-end border-top pt-3">
-                        <a href="{{ route('admin.contracts.index') }}" class="btn btn-outline-secondary me-2">
-                            Cancel
-                        </a>
-                        <button type="submit" class="btn btn-primary">
-                            Update Contract
-                        </button>
+                        <a href="{{ route('admin.contracts.index') }}" class="btn btn-outline-secondary me-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Update Contract</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Toggle Script -->
-  
+    <!-- Scripts -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // --- Update Document requirement ---
+        const oldValues = {
+            contract_value: "{{ $contract->contract_value }}",
+            initial_completion_date: "{{ $contract->initial_completion_date }}",
+            actual_completion_date: "{{ $contract->actual_completion_date }}"
+        };
+
+        const updateDocInput = document.getElementById("update_document_file");
+        const updateDocRequiredMark = document.getElementById("updateDocRequired");
+
+        function checkIfChanged() {
+            let changed = false;
+            let contractValue = document.querySelector("input[name='contract_value']").value;
+            let initialDate = document.querySelector("input[name='initial_completion_date']").value;
+            let actualDate = document.querySelector("input[name='actual_completion_date']").value;
+
+            if (contractValue !== oldValues.contract_value ||
+                initialDate !== oldValues.initial_completion_date ||
+                actualDate !== oldValues.actual_completion_date) {
+                changed = true;
+            }
+
+            if (changed) {
+                updateDocInput.setAttribute("required", "required");
+                updateDocRequiredMark.style.display = "inline";
+            } else {
+                updateDocInput.removeAttribute("required");
+                updateDocRequiredMark.style.display = "none";
+            }
+        }
+
+        ["input[name='contract_value']", "input[name='initial_completion_date']", "input[name='actual_completion_date']"].forEach(sel => {
+            document.querySelector(sel).addEventListener("input", checkIfChanged);
+            document.querySelector(sel).addEventListener("change", checkIfChanged);
+        });
+        checkIfChanged();
+
+        // --- Multiple sub-projects toggle ---
+        function toggleSubFields() {
+            const isMulti = document.querySelector('input[name="has_multiple_sub_projects"][value="yes"]').checked;
+            const multiSubContainer = document.getElementById('multiSubProjects');
+            const contractValue = parseFloat(document.querySelector('input[name="contract_value"]').value) || 0;
+
+            document.querySelectorAll('.single-sub').forEach(el => el.style.display = isMulti ? 'none' : 'block');
+            multiSubContainer.style.display = isMulti ? 'flex' : 'none';
+
+            if (isMulti) {
+                let count = parseInt(prompt("Enter number of sub-projects:"), 10);
+                if (isNaN(count) || count < 2) count = 2;
+                multiSubContainer.innerHTML = '';
+                let defaultValue = contractValue > 0 ? (contractValue / count).toFixed(2) : '';
+
+                for (let i = 1; i <= count; i++) {
+                    multiSubContainer.insertAdjacentHTML('beforeend', `
+                        <div class="col-md-6">
+                            <label class="form-label">Sub Project ${i} Name</label>
+                            <input type="text" name="multi_sub_projects[${i}][name]" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Sub Project ${i} Contract Value</label>
+                            <input type="number" step="0.01" name="multi_sub_projects[${i}][value]" class="form-control" value="${defaultValue}" required>
+                        </div>
+                    `);
+                }
+            }
+        }
+
+        document.querySelectorAll('input[name="has_multiple_sub_projects"]').forEach(el => {
+            el.addEventListener('change', toggleSubFields);
+        });
+        toggleSubFields();
+    });
+    </script>
 </x-app-layout>

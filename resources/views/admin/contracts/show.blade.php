@@ -23,6 +23,8 @@
 
                 <x-admin.contract-details :contract="$contract" />
 
+                
+
                 {{-- Contractor Info --}}
                 <x-admin.contractor-info :contractor="$contract->contractor" />
 
@@ -33,12 +35,11 @@
 
                 @if ($contract->project && $contract->project->procurementDetail)
                     <x-admin.procurement-details :procurementDetail="$contract->project->procurementDetail" />
-                    
                 @endif
                 <x-admin.work-program :workPrograms="$contract->project->workPrograms" />
                 {{-- Yuvraj Add Procurement Work Program   --}}
 
-         
+
 
 
                 <div class="card shadow-sm mb-4">
@@ -54,13 +55,7 @@
                             @if ($contract->subProjects->isEmpty())
                                 <p class="text-muted fst-italic">No sub-projects found.</p>
                             @else
-                                <x-admin.data-table id="sub-projects-table" :headers="[
-                                    '#',
-                                    'Name',
-                                    'Contract Value (₹)',
-                                    
-                                    'Actions',
-                                ]" :excel="true"
+                                <x-admin.data-table id="sub-projects-table" :headers="['#', 'Name', 'Contract Value (₹)', 'Actions']" :excel="true"
                                     :print="true" :pageLength="10" :resourceName="'sub-projects'">
 
                                     @foreach ($subProjectsData as $i => $sp)
@@ -70,7 +65,7 @@
                                             <td class="text-end">₹{{ $sp['contractValue'] }}</td>
 
                                             <!-- Financial Progress -->
-                                           
+
 
                                             <!-- Actions -->
                                             <td>
@@ -93,6 +88,7 @@
                     </div>
                 </div>
             </div>
+            <x-admin.contract-history :updates="$contract->updates" />
         </div>
     </div>
 </x-app-layout>
