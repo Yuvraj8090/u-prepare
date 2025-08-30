@@ -69,7 +69,9 @@
         body {
             zoom: 75%;
         }
-
+select{
+    width:100% !important;
+}
         input[type=number]::-webkit-outer-spin-button,
         input[type=number]::-webkit-inner-spin-button {
             -webkit-appearance: none;
