@@ -183,7 +183,7 @@ class ProcurementDetailController extends Controller
             'method_of_procurement'      => 'required|string|max:255',
             'type_of_procurement_id'     => 'required|exists:type_of_procurements,id',
             'publication_date'           => 'nullable|date',
-            'publication_document'       => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'publication_document'       => 'nullable|file|mimes:pdf,doc,docx',
             'tender_fee'                 => 'nullable|numeric|min:0',
             'earnest_money_deposit'      => 'nullable|numeric|min:0',
             'bid_validity_days'          => 'nullable|integer|min:0',
