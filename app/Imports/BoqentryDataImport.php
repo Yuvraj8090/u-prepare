@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\BoqentryData;
+use App\Models\BoqEntryData; // fixed
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -25,7 +25,7 @@ class BoqentryDataImport implements ToCollection, WithHeadingRow
                 $sl_no = $this->formatSlNo($sl_no);
             }
 
-            BoqentryData::create([
+            BoqEntryData::create([
                 'sub_package_project_id' => $this->subPackageProjectId,
                 'sl_no' => $sl_no,
                 'item_description' => $row['item'] ?? null,
@@ -42,7 +42,7 @@ class BoqentryDataImport implements ToCollection, WithHeadingRow
         if (strpos($sl_no, '.') !== false) {
             [$intPart, $decPart] = explode('.', $sl_no, 2);
             if (strlen($decPart) === 1) {
-                $decPart .= '0'; // add trailing zero if decimal part is 1 digit
+                $decPart .= '0';
             }
             return $intPart . '.' . $decPart;
         }
