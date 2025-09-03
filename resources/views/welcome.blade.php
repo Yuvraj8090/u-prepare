@@ -4,7 +4,7 @@
         <div class="hero-slider">
             @foreach ($allslides as $slide)
                 <div>
-                    <div class="slider-item" style="background-image: url({{ asset('storage/' . $slide->img) }})">
+                    <div class="slider-item" style="background-image: url({{ asset('storage/app/public/' . $slide->img) }})">
                         <div class="overlay"></div>
                         <div class="caption">
                             @if ($slide->head)
@@ -39,7 +39,7 @@
                     @foreach ($persons as $person)
                         <div class="col-md-3 d-flex flex-column center honper">
                             <figure class="d-flex center">
-                                <img src="{{ asset('storage/' . $person->img) }}" />
+                                <img src="{{ asset('storage/app/public/' . $person->img) }}" />
                             </figure>
                             <div class="caption text-center m-0">
                                 <h4>{{ $person->name }}</h4>
@@ -246,7 +246,7 @@
                         <div>
                             <div class="vid-item">
                                 <div class="vid-img">
-                                    <img src="{{ asset('storage/' . $vid->img) }}" />
+                                    <img src="{{ asset('storage/app/public/' . $vid->img) }}" />
                                     <a class="d-flex center" href="#">
                                         <i class="bi bi-play-circle"></i>
                                     </a>

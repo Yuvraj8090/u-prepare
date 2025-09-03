@@ -11,8 +11,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('package_projects', function (Blueprint $table) {
-            $table->string('status')->nullable()->after('deleted_at');
-            // you can add default like ->default('pending')
+            if (!Schema::hasColumn('package_projects', 'status')) {
+                $table->string('status')->nullable()->after('deleted_at');
+                // Optional default: ->default('pending')
+            }
         });
     }
 
@@ -22,7 +24,9 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('package_projects', function (Blueprint $table) {
-            $table->dropColumn('status');
+            if (Schema::hasColumn('package_projects', 'status')) {
+                $table->dropColumn('status');
+            }
         });
     }
 };

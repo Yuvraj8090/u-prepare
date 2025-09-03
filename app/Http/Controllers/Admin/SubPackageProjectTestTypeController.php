@@ -8,7 +8,7 @@ use App\Models\SubPackageProject;
 use App\Models\SubPackageProjectTestType;
 use Illuminate\Http\Request;
 
-class SubPackageProjectTestController extends Controller
+class SubPackageProjectTestTypeController extends Controller
 {
     /**
      * Display a listing of the test types.

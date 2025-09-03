@@ -23,7 +23,7 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Current Image</label><br>
                             @if($slide->img)
-                                <img src="{{ asset('storage/' . $slide->img) }}" 
+                                <img src="{{ asset('storage/app/public/' . $slide->img) }}" 
                                      alt="Slide Image" 
                                      class="img-thumbnail mb-2" 
                                      width="200">

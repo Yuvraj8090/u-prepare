@@ -25,6 +25,7 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $project->name }}</td>
+                            
 
                             @foreach ($safeguardCompliances as $compliance)
                                 @php
@@ -37,21 +38,35 @@
                                     $phase = $compliance->contractionPhases->first()?->id ?? 1;
                                 @endphp
                                 <td>
-                                    @if ($canAccess)
-                                        <a href="{{ route('admin.social_safeguard_entries.index', [
-                                            'project_id' => $project->id,
-                                            'compliance_id' => $compliance->id,
-                                            'phase_id' => $phase,
-                                            'date_of_entry' => $date,
-                                        ]) }}"
-                                            class="btn btn-sm {{ $done ? 'btn-success' : 'btn-warning' }}">
-                                            {{ $done ? '✔ Done' : 'Update' }}
-                                        </a>
-                                    @else
-                                        <button class="btn btn-sm btn-secondary" disabled title="Not authorized">
-                                            {{ $done ? '✔ Done' : 'Update' }}
-                                        </button>
-                                    @endif
+                                   
+                                       <a href="{{ route('admin.social_safeguard_entries.index', [
+        'project_id' => $project->id,
+        'compliance_id' => $compliance->id,
+        'phase_id' => $phase,
+        'date_of_entry' => $date,
+    ]) }}"
+    class="btn btn-sm {{ $done ? 'btn-warning' : 'btn-primary' }}">
+    {{ $done ? 'Update' : 'Add' }}
+</a>
+ <a href="{{ route('admin.social_safeguard_entries.report', [
+        'project_id' => $project->id,
+        'compliance_id' => $compliance->id,
+        
+    ]) }}"
+    class="btn btn-sm btn-primary">
+  View Report
+</a>
+ <a href="{{ route('admin.social_safeguard_entries.report_details', [
+        'project_id' => $project->id,
+        'compliance_id' => $compliance->id,
+        
+    ]) }}"
+    class="btn btn-sm btn-primary">
+  View Report Detailed 
+</a>
+
+                                   
+                                  
                                 </td>
                             @endforeach
                         </tr>

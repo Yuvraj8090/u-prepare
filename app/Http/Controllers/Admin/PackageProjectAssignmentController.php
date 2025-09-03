@@ -15,20 +15,18 @@ class PackageProjectAssignmentController extends Controller
      * Show all assignments
      */
     public function index()
-    {
-        $query = PackageProjectAssignment::with(['project', 'assignee', 'assigner'])
-            ->whereNotNull('assigned_to') // only assigned ones
-            ->latest();
+{
+    // Get all projects with their assignments, assignee & assigner
+    $projects = PackageProject::with([
+        'assignments.assignee',
+        'assignments.assigner',
+    ])
+    ->latest()
+    ->get();
 
-        if (auth()->user()->role_id != 1) {
-            // only show records for the logged-in user
-            $query->where('assigned_to', auth()->id());
-        }
+    return view('admin.package_project_assignments.index', compact('projects'));
+}
 
-        $assignments = $query->get();
-
-        return view('admin.package_project_assignments.index', compact('assignments'));
-    }
 
     /**
      * Show form to assign a project

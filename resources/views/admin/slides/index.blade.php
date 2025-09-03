@@ -54,7 +54,7 @@
                         <tr>
                             <td>{{ $slide->id }}</td>
                            <td>
-    <img src="{{ asset('storage/' . $slide->img) }}" 
+    <img src="{{ asset('storage/app/public/' . $slide->img) }}" 
          alt="slide image" 
          class="rounded shadow-sm" 
          width="100">

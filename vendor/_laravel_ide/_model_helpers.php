@@ -11379,8 +11379,8 @@ namespace App\Models {
     /**
      * App\Models\ProcurementWorkProgram
      *
+     * @property bool|null $status
      * @property \Illuminate\Support\Carbon|null $deleted_at
-     * @property bool $status
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string|null $pre_bid_minutes_document
@@ -11409,8 +11409,8 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementWorkProgram>|ProcurementWorkProgram wherePreBidMinutesDocument($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementWorkProgram>|ProcurementWorkProgram whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementWorkProgram>|ProcurementWorkProgram whereUpdatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ProcurementWorkProgram>|ProcurementWorkProgram whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementWorkProgram>|ProcurementWorkProgram whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ProcurementWorkProgram>|ProcurementWorkProgram whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementWorkProgram>|ProcurementWorkProgram samePackageOrProcurement()
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementWorkProgram>|ProcurementWorkProgram samePackageAndProcurement()
      * @method static \Illuminate\Database\Eloquent\Builder<ProcurementWorkProgram>|ProcurementWorkProgram forPackage()

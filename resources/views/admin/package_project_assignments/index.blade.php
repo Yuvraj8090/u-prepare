@@ -30,46 +30,68 @@
                 </a>
             </div>
             <div class="card-body">
-                <x-admin.data-table id="assignments-table" :headers="['#', 'Project', 'Assigned To', 'Assigned By', 'Actions']" :excel="true" :print="true"
-                    title="Assignments Export" searchPlaceholder="Search assignments..." resourceName="assignments"
-                    :pageLength="10">
-                    @foreach ($assignments as $assignment)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td style="max-width: 350px;">
-                                <a href="{{ route('admin.package-projects.show', $assignment->project->id) }}"
-                                    class="badge bg-light text-dark text-truncate d-inline-block text-decoration-none"
-                                    style="max-width: 100%; cursor: pointer;"
-                                    title="{{ $assignment->project->package_name ?? 'N/A' }}">
-                                    {{ $assignment->project->package_name ?? 'N/A' }}
-                                </a>
-                            </td>
-                            <td>
-                                <span class="badge bg-light text-primary">
-                                    {{ $assignment->assignee->name ?? 'N/A' }}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge bg-light text-info">
-                                    {{ $assignment->assigner->name ?? 'N/A' }}
-                                </span>
-                            </td>
-                            <td>
-                                <div class="d-flex justify-content-end gap-2">
-                                    <form action="{{ route('admin.package-project-assignments.destroy', $assignment) }}"
-                                        method="POST"
-                                        onsubmit="return confirm('Are you sure you want to remove this assignment?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash-alt me-1"></i> Remove
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </x-admin.data-table>
+                <x-admin.data-table id="projects-table" 
+    :headers="['#','Package Number', 'Project', 'Assignments Count', 'Assignments Details', 'Actions']" 
+    :excel="true" :print="true" title="Projects Export" 
+    searchPlaceholder="Search projects..." resourceName="projects" 
+    :pageLength="10">
+
+    @foreach ($projects as $project)
+        <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $project->package_number ?? 'N/A' }}</td>
+            <td style="max-width: 350px;">
+                <a href="{{ route('admin.package-projects.show', $project->id) }}"
+                    class="badge bg-light text-dark text-truncate d-inline-block text-decoration-none"
+                    style="max-width: 100%; cursor: pointer;"
+                    title="{{ $project->package_name ?? 'N/A' }}">
+                    {{ $project->package_name ?? 'N/A' }}
+                </a>
+            </td>
+
+            {{-- Count of Assignments --}}
+            <td>
+                <span class="badge bg-primary">
+                    {{ $project->assignments->count() }}
+                </span>
+            </td>
+
+            {{-- Hover/Click Dropdown of Details --}}
+            <td>
+                @if($project->assignments->count() > 0)
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" 
+                                type="button" 
+                                data-bs-toggle="dropdown" 
+                                aria-expanded="false">
+                            View Details
+                        </button>
+                        <ul class="dropdown-menu">
+                            @foreach ($project->assignments as $assignment)
+                                <li class="dropdown-item">
+                                    <strong>Assigned To:</strong> {{ $assignment->assignee->name ?? 'N/A' }} <br>
+                                    <strong>Assigned By:</strong> {{ $assignment->assigner->name ?? 'N/A' }}
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @else
+                    <span class="badge bg-warning text-dark">Not Assigned</span>
+                @endif
+            </td>
+
+            {{-- Actions --}}
+            <td>
+                <a href="{{ route('admin.package-project-assignments.create', ['project_id' => $project->id]) }}" 
+                   class="btn btn-sm btn-primary">
+                    <i class="fas fa-plus-circle me-1"></i> Assign
+                </a>
+            </td>
+        </tr>
+    @endforeach
+</x-admin.data-table>
+
             </div>
         </div>
     </div>

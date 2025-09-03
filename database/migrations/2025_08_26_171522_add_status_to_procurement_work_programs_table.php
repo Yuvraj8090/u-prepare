@@ -9,14 +9,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('procurement_work_programs', function (Blueprint $table) {
-            $table->tinyInteger('status')->default(0)->after('updated_at');
+            if (!Schema::hasColumn('procurement_work_programs', 'status')) {
+                $table->tinyInteger('status')->default(0)->after('updated_at');
+            }
         });
     }
 
     public function down(): void
     {
         Schema::table('procurement_work_programs', function (Blueprint $table) {
-            $table->dropColumn('status');
+            if (Schema::hasColumn('procurement_work_programs', 'status')) {
+                $table->dropColumn('status');
+            }
         });
     }
 };

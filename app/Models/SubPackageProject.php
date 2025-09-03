@@ -5,18 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Database\Eloquent\Builder;
 class SubPackageProject extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'project_id',
-        'name',
-        'contract_value',
-        'lat',
-        'long',
-    ];
+    protected $fillable = ['project_id', 'name', 'contract_value', 'lat', 'long'];
 
     protected $casts = [
         'lat' => 'float',
@@ -33,24 +27,32 @@ class SubPackageProject extends Model
     {
         return $this->belongsTo(PackageProject::class, 'project_id');
     }
+    protected static function booted()
+    {
+        static::addGlobalScope('userAssignments', function (Builder $builder) {
+            if (auth()->check() && auth()->user()->role_id !== 1) {
+                $builder->whereHas('packageProject.assignments', function ($q) {
+                    $q->where('assigned_to', auth()->id());
+                });
+            }
+        });
+    }
 
     public function procurementDetail()
     {
         return $this->hasOneThrough(
             ProcurementDetail::class,
             PackageProject::class,
-            'id',                  // FK on PackageProject
-            'package_project_id',  // FK on ProcurementDetail
-            'project_id',          // FK on SubPackageProject
-            'id'                   // PK on PackageProject
+            'id', // FK on PackageProject
+            'package_project_id', // FK on ProcurementDetail
+            'project_id', // FK on SubPackageProject
+            'id', // PK on PackageProject
         );
     }
 
     public function getTypeOfProcurementNameAttribute()
     {
-        return $this->procurementDetail
-            ? $this->procurementDetail->typeOfProcurement->name
-            : null;
+        return $this->procurementDetail ? $this->procurementDetail->typeOfProcurement->name : null;
     }
 
     public function contract()
@@ -81,9 +83,9 @@ class SubPackageProject extends Model
             PhysicalEpcProgress::class,
             EpcEntryData::class,
             'sub_package_project_id', // FK on epcentry_data
-            'epcentry_data_id',       // FK on physical_epc_progress
-            'id',                     // PK on sub_package_project
-            'id'                      // PK on epcentry_data
+            'epcentry_data_id', // FK on physical_epc_progress
+            'id', // PK on sub_package_project
+            'id', // PK on epcentry_data
         );
     }
 
@@ -106,9 +108,7 @@ class SubPackageProject extends Model
     */
     public function getPhysicalProgressPercentageAttribute(): float
     {
-        return $this->type_of_procurement_name === 'EPC'
-            ? $this->calculateEpcProgress()
-            : $this->calculateBoqProgress();
+        return $this->type_of_procurement_name === 'EPC' ? $this->calculateEpcProgress() : $this->calculateBoqProgress();
     }
 
     protected function calculateEpcProgress(): float
@@ -117,13 +117,9 @@ class SubPackageProject extends Model
         $plannedAmount = $this->epcEntries()->sum('amount');
 
         // Executed amount (must specify the table)
-        $executedAmount = $this->physicalEpcProgresses()
-            ->selectRaw('COALESCE(SUM(physical_epc_progress.amount), 0) as total')
-            ->value('total');
+        $executedAmount = $this->physicalEpcProgresses()->selectRaw('COALESCE(SUM(physical_epc_progress.amount), 0) as total')->value('total');
 
-        return $plannedAmount > 0
-            ? round(($executedAmount / $plannedAmount) * 100, 2)
-            : 0.0;
+        return $plannedAmount > 0 ? round(($executedAmount / $plannedAmount) * 100, 2) : 0.0;
     }
 
     protected function calculateBoqProgress(): float
@@ -131,15 +127,13 @@ class SubPackageProject extends Model
         $totalQty = $this->boqEntries()->sum('qty'); // planned qty
         $completedQty = $this->physicalBoqProgresses()->sum('qty'); // executed qty
 
-        return $totalQty > 0
-            ? round(($completedQty / $totalQty) * 100, 2)
-            : 0.0;
+        return $totalQty > 0 ? round(($completedQty / $totalQty) * 100, 2) : 0.0;
     }
 
     public function tests()
-{
-    return $this->hasMany(SubPackageProjectTest::class);
-}
+    {
+        return $this->hasMany(SubPackageProjectTest::class);
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -153,8 +147,6 @@ class SubPackageProject extends Model
 
     public function getFinancialProgressPercentageAttribute(): float
     {
-        return $this->contract_value > 0
-            ? round(($this->total_finance_amount / $this->contract_value) * 100, 2)
-            : 0.0;
+        return $this->contract_value > 0 ? round(($this->total_finance_amount / $this->contract_value) * 100, 2) : 0.0;
     }
 }

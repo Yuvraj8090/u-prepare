@@ -116,7 +116,15 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
             Route::get('update-progress', [FinancialProgressUpdateController::class, 'index2'])->name('financial-progress-updates.index2');
             Route::resource('grievances', GrievanceController::class);
+Route::get('social-safeguard-entries/{project_id}/{compliance_id}/report-details',
+        [SocialSafeguardEntryController::class, 'reportDetails'])
+        ->name('social_safeguard_entries.report_details');
 
+    // permanent delete
+    Route::delete('social-safeguard-entries/{id}',
+        [SocialSafeguardEntryController::class, 'destroy'])
+        ->name('social_safeguard_entries.destroy');
+            Route::get('social-safeguard-entries/{project_id}/{compliance_id}/report', [SocialSafeguardEntryController::class, 'report'])->name('social_safeguard_entries.report');
             // Show by grievance_no instead of ID
             Route::get('/grievances/{grievance_no}', [GrievanceController::class, 'show'])->name('grievances.show');
 
@@ -162,6 +170,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
             Route::get('/social-safeguard-entries-all', [SocialSafeguardEntryController::class, 'subPackageProjectOverview'])->name('social_safeguard_entries.overview');
 
             Route::post('/social-safeguard-entries/store-or-update', [SocialSafeguardEntryController::class, 'storeOrUpdateFromIndex'])->name('social_safeguard_entries.storeOrUpdateFromIndex');
+
             Route::get('/package-projects/by-department/{department}', [\App\Http\Controllers\Admin\PackageProjectAssignmentController::class, 'getProjectsByDepartment'])->name('package-projects.by-department');
 
             // alias for save()

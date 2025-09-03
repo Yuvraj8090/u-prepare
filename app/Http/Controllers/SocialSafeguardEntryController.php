@@ -7,9 +7,12 @@ use App\Models\SocialSafeguardEntry;
 use App\Models\SubPackageProject;
 use App\Models\SafeguardCompliance;
 use App\Models\ContractionPhase;
+use App\Models\Contract;
 use App\Models\MediaFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class SocialSafeguardEntryController extends Controller
@@ -52,6 +55,259 @@ class SocialSafeguardEntryController extends Controller
 
         return view('admin.social_safeguard_entries.index', compact('entries', 'subProject', 'compliance', 'phase_id', 'selectedDate'));
     }
+public function report(int $project_id, int $compliance_id, Request $request)
+{
+    $subProject = SubPackageProject::findOrFail($project_id);
+    $compliance = SafeguardCompliance::findOrFail($compliance_id);
+
+    // package & contract (if relations exist on models, otherwise adjust)
+    $packageProject = $subProject->packageProject ?? null;
+    $contract = $packageProject ? Contract::where('project_id', $packageProject->id)->first() : null;
+    $contractStart = $contract?->commencement_date;
+
+    // date range (fallback to contractStart or project start)
+    $requestedStart = $request->input('start_date', $contractStart ?? $subProject->start_date?->format('Y-m-d'));
+    $requestedEnd   = $request->input('end_date', now()->format('Y-m-d'));
+
+    $start = Carbon::parse($requestedStart);
+    $end   = Carbon::parse($requestedEnd);
+
+    // enforce start >= contractStart if available
+    if ($contractStart) {
+        $contractStartC = Carbon::parse($contractStart);
+        if ($start->lt($contractStartC)) {
+            $start = $contractStartC;
+        }
+    }
+
+    // end cannot be future
+    $now = Carbon::now();
+    if ($end->gt($now)) $end = $now;
+
+    // ensure start <= end
+    if ($start->gt($end)) {
+        // swap so we still have valid range
+        [$start, $end] = [$end, $start];
+    }
+
+    $startDate = $start->format('Y-m-d');
+    $endDate   = $end->format('Y-m-d');
+
+    // months in range (inclusive)
+    $monthsInRange = ($end->year * 12 + $end->month) - ($start->year * 12 + $start->month) + 1;
+    $monthsInRange = max(1, $monthsInRange);
+
+    $phases = ContractionPhase::orderBy('name')->get();
+
+    $phaseReports = [];
+    $overallTotal = 0;
+    $overallDone  = 0;
+
+    $debug = $request->boolean('debug', false);
+    $debugInfo = [];
+
+    foreach ($phases as $phase) {
+        // Get child safeguard_entry IDs at DB level
+        $childIds = DB::table('safeguard_entries')
+            ->where('sub_package_project_id', $subProject->id)
+            ->where('safeguard_compliance_id', $compliance->id)
+            ->where('contraction_phase_id', $phase->id)
+            ->where('sl_no', 'like', '%.%')
+            ->pluck('id')
+            ->toArray();
+
+        $childCount = count($childIds);
+
+        if ($childCount === 0) {
+            $phaseReports[] = [
+                'phase'   => $phase->name,
+                'total'   => 0,
+                'done'    => 0,
+                'percent' => 0.0,
+            ];
+
+            if ($debug) {
+                $debugInfo[$phase->name] = [
+                    'child_count' => 0,
+                    'child_ids_sql' => DB::table('safeguard_entries')
+                        ->where('sub_package_project_id', $subProject->id)
+                        ->where('safeguard_compliance_id', $compliance->id)
+                        ->where('contraction_phase_id', $phase->id)
+                        ->where('sl_no', 'like', '%.%')
+                        ->toSql(),
+                ];
+            }
+
+            continue;
+        }
+
+        if ($phase->is_one_time) {
+            // expected = 1 per child
+            $totalForPhase = $childCount * 1;
+
+            // DONE = raw rows for those child IDs in the date range
+            $doneForPhase = DB::table('social_safeguard_entries')
+                ->whereIn('safeguard_entry_id', $childIds)
+                ->where('sub_package_project_id', $subProject->id)
+                ->where('social_compliance_id', $compliance->id)
+                ->where('contraction_phase_id', $phase->id)
+                ->whereBetween('date_of_entry', [$startDate, $endDate])
+                ->count();
+
+            if ($debug) {
+                $debugInfo[$phase->name] = [
+                    'type' => 'one_time',
+                    'child_count' => $childCount,
+                    'child_ids_sample' => array_slice($childIds, 0, 10),
+                    'done_query_sql' => DB::table('social_safeguard_entries')
+                        ->whereIn('safeguard_entry_id', $childIds)
+                        ->where('sub_package_project_id', $subProject->id)
+                        ->where('social_compliance_id', $compliance->id)
+                        ->where('contraction_phase_id', $phase->id)
+                        ->whereBetween('date_of_entry', [$startDate, $endDate])
+                        ->toSql(),
+                    'done_count' => $doneForPhase,
+                ];
+            }
+        } else {
+            // monthly: expected = childCount * monthsInRange
+            $totalForPhase = $childCount * $monthsInRange;
+
+            // DONE = raw rows for those child IDs in the date range (matching your SQL)
+            $doneForPhase = DB::table('social_safeguard_entries')
+                ->whereIn('safeguard_entry_id', $childIds)
+                ->where('sub_package_project_id', $subProject->id)
+                ->where('social_compliance_id', $compliance->id)
+                ->where('contraction_phase_id', $phase->id)
+                ->whereBetween('date_of_entry', [$startDate, $endDate])
+                ->count();
+
+            if ($debug) {
+                $debugInfo[$phase->name] = [
+                    'type' => 'monthly',
+                    'child_count' => $childCount,
+                    'monthsInRange' => $monthsInRange,
+                    'total_expected' => $totalForPhase,
+                    'done_query_sql' => DB::table('social_safeguard_entries')
+                        ->whereIn('safeguard_entry_id', $childIds)
+                        ->where('sub_package_project_id', $subProject->id)
+                        ->where('social_compliance_id', $compliance->id)
+                        ->where('contraction_phase_id', $phase->id)
+                        ->whereBetween('date_of_entry', [$startDate, $endDate])
+                        ->toSql(),
+                    'done_count' => $doneForPhase,
+                ];
+            }
+        }
+
+        $percent = $totalForPhase > 0 ? round(($doneForPhase / $totalForPhase) * 100, 2) : 0.0;
+
+        $phaseReports[] = [
+            'phase'   => $phase->name,
+            'total'   => $totalForPhase,
+            'done'    => $doneForPhase,
+            'percent' => $percent,
+        ];
+
+        $overallTotal += $totalForPhase;
+        $overallDone  += $doneForPhase;
+    }
+
+    $overallPercent = $overallTotal > 0 ? round(($overallDone / $overallTotal) * 100, 2) : 0.0;
+
+    if ($debug) {
+        dd([
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'monthsInRange' => $monthsInRange,
+            'packageProject' => $packageProject ? $packageProject->only('id','package_name') : null,
+            'contract' => $contract ? $contract->only('id','contract_number','commencement_date') : null,
+            'phaseReports' => $phaseReports,
+            'overallTotal' => $overallTotal,
+            'overallDone' => $overallDone,
+            'overallPercent' => $overallPercent,
+            'debugInfo' => $debugInfo,
+        ]);
+    }
+
+    return view('admin.social_safeguard_entries.report', compact(
+        'subProject',
+        'packageProject',
+        'contract',
+        'compliance',
+        'startDate',
+        'endDate',
+        'monthsInRange',
+        'phaseReports',
+        'overallTotal',
+        'overallDone',
+        'overallPercent'
+    ));
+}
+public function reportDetails(int $project_id, int $compliance_id, Request $request)
+{
+    $subProject = SubPackageProject::findOrFail($project_id);
+    $compliance = SafeguardCompliance::findOrFail($compliance_id);
+
+    $packageProject = $subProject->packageProject ?? null;
+    $contract = $packageProject ? Contract::where('project_id', $packageProject->id)->first() : null;
+    $contractStart = $contract?->commencement_date;
+
+    $start = Carbon::parse($request->input('start_date', $contractStart ?? $subProject->start_date?->format('Y-m-d')));
+    $end   = Carbon::parse($request->input('end_date', now()->format('Y-m-d')));
+
+    // enforce start >= contractStart if available
+    if ($contractStart && $start->lt(Carbon::parse($contractStart))) {
+        $start = Carbon::parse($contractStart);
+    }
+
+    // end cannot be future
+    if ($end->gt(Carbon::now())) $end = Carbon::now();
+
+    $startDate = $start->format('Y-m-d');
+    $endDate   = $end->format('Y-m-d');
+
+    // Fetch all entries for this project & compliance in this date range
+    $entries = DB::table('social_safeguard_entries AS sse')
+        ->join('safeguard_entries AS se', 'sse.safeguard_entry_id', '=', 'se.id')
+        ->join('contraction_phases AS cp', 'sse.contraction_phase_id', '=', 'cp.id')
+        ->select(
+            'sse.id as sse_id',
+            'se.id as safeguard_entry_id',
+            'se.item_description',
+            
+            'sse.yes_no',
+            'sse.photos_documents_case_studies',
+            'sse.remarks',
+            'sse.validity_date',
+            'sse.date_of_entry',
+            'sse.created_at',
+            'sse.updated_at',
+            'cp.name as phase_name'
+        )
+        ->where('sse.sub_package_project_id', $subProject->id)
+        ->where('sse.social_compliance_id', $compliance->id)
+        ->whereBetween('sse.date_of_entry', [$startDate, $endDate])
+        ->orderBy('sse.date_of_entry', 'desc')
+        ->get();
+
+    return view('admin.social_safeguard_entries.report_details', compact(
+        'subProject',
+        'compliance',
+        'packageProject',
+        'contract',
+        'startDate',
+        'endDate',
+        'entries'
+    ));
+}
+public function destroy($id)
+{
+    // Permanently delete the entry
+    DB::table('social_safeguard_entries')->where('id', $id)->delete();
+
+    return redirect()->back()->with('success', 'Safeguard entry deleted successfully.');
+}
 
     /**
      * Check if user can access this compliance
