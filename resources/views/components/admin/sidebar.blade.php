@@ -162,13 +162,10 @@
                                     <li><a href="{{ route('admin.safeguard-compliances.index') }}"><i
                                                 class="fa fa-check-circle"></i> Compliance</a></li>
                                 @endif
-                                @if (canRoute('admin.safeguard_entries.index'))
-                                    <li><a href="{{ route('admin.safeguard_entries.index') }}"><i
-                                                class="fa fa-shield"></i> Safeguard Entries</a></li>
-                                @endif
+                                
                                 @if (canRoute('admin.social_safeguard_entries.overview'))
                                     <li><a href="{{ route('admin.social_safeguard_entries.overview') }}"><i
-                                                class="fa fa-users"></i> Social Safeguards</a></li>
+                                                class="fa fa-users"></i> Safeguards</a></li>
                                 @endif
                             </ul>
                         </li>
@@ -315,12 +312,17 @@
                             canRoute('admin.package-components.index') ||
                             canRoute('admin.designations.index') ||
                             canRoute('admin.projects-category.index') ||
+                            canRoute('admin.safeguard_entries.index') ||
                             canRoute('admin.contractors.index'))
                         <li
                             class="{{ request()->routeIs('admin.users.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.role_routes.*') || request()->routeIs('admin.departments.*') || request()->routeIs('admin.package-components.*') || request()->routeIs('admin.designations.*') || request()->routeIs('admin.projects-category.*') || request()->routeIs('admin.contractors.*') ? 'active' : '' }}">
                             <a><i class="fa fa-user-shield"></i> Admin Panel <span
                                     class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
+                                @if (canRoute('admin.safeguard_entries.index'))
+                                    <li><a href="{{ route('admin.safeguard_entries.index') }}"><i
+                                                class="fa fa-shield"></i> Safeguard Entries</a></li>
+                                @endif
                                 @if (canRoute('admin.users.index'))
                                     <li><a href="{{ route('admin.users.index') }}"><i class="fa fa-user"></i>
                                             Users</a>

@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Auth;
 
 class Contract extends Model
 {
@@ -42,7 +41,6 @@ class Contract extends Model
     | Relationships
     |--------------------------------------------------------------------------
     */
-
     public function project()
     {
         return $this->belongsTo(PackageProject::class, 'project_id');
@@ -83,7 +81,6 @@ class Contract extends Model
     | Scopes
     |--------------------------------------------------------------------------
     */
-
     public function scopeWithBasicRelations($query)
     {
         return $query->with([
@@ -95,12 +92,40 @@ class Contract extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | Custom Methods
+    | Accessors / Custom Methods
     |--------------------------------------------------------------------------
     */
 
     /**
-     * Log contract changes into contract_updates table
+     * Determine contract status (ongoing, completed, delayed, not started).
+     */
+    public function getStatusAttribute(): string
+    {
+        $today = now();
+
+        if ($this->actual_completion_date) {
+            return 'completed';
+        }
+
+        if ($this->commencement_date && $this->commencement_date > $today) {
+            return 'not started';
+        }
+
+        $completionDate = $this->revised_completion_date ?? $this->initial_completion_date;
+
+        if ($completionDate && $completionDate < $today) {
+            return 'delayed';
+        }
+
+        if ($this->commencement_date && (!$completionDate || $completionDate >= $today)) {
+            return 'ongoing';
+        }
+
+        return 'pending';
+    }
+
+    /**
+     * Log contract changes into contract_updates table.
      */
     public function logUpdate(array $oldValues, array $newValues): void
     {

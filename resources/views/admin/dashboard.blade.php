@@ -116,8 +116,8 @@
                     <td>{{ $type->loa_issued_count }}</td> {{-- LOA Issued --}}
                     <td>{{ $type->contract_pending_count }}</td> {{-- Contract Signing Pending --}}
                     <td>{{ $type->signed_contracts_count }}</td> {{-- Contract Signed --}}
-                    <td>{{ $type->description }}</td> {{-- Start Date or remarks --}}
-                    <td>{{ $type->description ?? 0 }}</td> {{-- Total Contract Value or To be Rebid --}}
+                      <td>{{ $type->commencement_given_count }}</td> {{-- ✅ new column --}}
+                      <td>{{ $type->rebid_count }}</td> <!-- ✅ Rebid count -->
                 </tr>
             @endforeach
         </x-admin.data-table>

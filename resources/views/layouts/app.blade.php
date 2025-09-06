@@ -62,6 +62,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
     <script src="{{ asset('asset/build/js/custom.js') }}?ver=1.5.1"></script>
     <style>
+        .bg-light-success {
+    background-color: #83ffa0 !important; /* light green */
+}
+.bg-light-danger {
+    background-color: #ff7d88 !important; /* light red */
+}
+
         .form-group {
             position: relative;
         }
