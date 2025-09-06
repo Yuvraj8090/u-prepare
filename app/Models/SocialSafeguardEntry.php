@@ -80,4 +80,11 @@ class SocialSafeguardEntry extends Model
 
         return false;
     }
+    public function getMediaFilesAttribute()
+{
+    $ids = $this->photos_documents_case_studies ?? [];
+    return MediaFile::whereIn('id', $ids)->get();
+}
+
+    
 }

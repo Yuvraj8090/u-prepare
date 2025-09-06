@@ -11,40 +11,62 @@
         @endif
 
         {{-- Filter Form --}}
-        <form id="filter-form" method="GET" class="row mb-4">
-            <div class="col-md-12 ">
-
-                <input type="hidden" name="sub_package_project_id" value="{{ $subProject->id }}">
-            </div>
-
-            <div class="col-md-2">
-                <label class="form-label">Safeguard Compliance</label> <select name="safeguard_compliance_id"
-                    class="form-select">
-                    <option value="{{ $compliance->id }}">{{ $compliance->name }}</option>
-                </select>
-            </div>
+        <div class="col-md-2">
+            <label class="form-label">Safeguard Compliance</label>
+            <select name="safeguard_compliance_id" class="form-select">
+                <option value="{{ $compliance->id }}">{{ $compliance->name }}</option>
+            </select>
+        </div>
+        <div class="row mb-4">
+            <input type="hidden" id="project-id" value="{{ $subProject->id }}">
+            <input type="hidden" id="compliance-id" value="{{ $compliance->id }}">
 
             <div class="col-md-2">
                 <label class="form-label">Contraction Phase</label>
-                <select name="contraction_phase_id" class="form-select">
+                <select id="phase-id" class="form-select">
                     <option value="">-- All --</option>
                     @foreach ($compliance->contractionPhases as $phase)
                         <option value="{{ $phase->id }}" {{ $phase->id == $phase_id ? 'selected' : '' }}>
-                            {{ $phase->name }} </option>
+                            {{ $phase->name }}
+                        </option>
                     @endforeach
                 </select>
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">Date of Entry</label>
-                <input type="date" name="date_of_entry" class="form-control"
-                    value="{{ request('date_of_entry', now()->format('Y-m-d')) }}" required>
+                <input type="date" id="date-of-entry" class="form-control"
+                    value="{{ request('date_of_entry', now()->format('Y-m-d')) }}">
             </div>
 
             <div class="col-md-2 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary w-100">Filter</button>
+                <button id="filter-btn" class="btn btn-primary w-100">Filter</button>
             </div>
-        </form>
+        </div>
+
+        <script>
+            document.getElementById('filter-btn').addEventListener('click', function() {
+                const projectId = document.getElementById('project-id').value;
+                const complianceId = document.getElementById('compliance-id').value;
+                const phaseId = document.getElementById('phase-id').value || 0; // optional
+                const dateOfEntry = document.getElementById('date-of-entry').value;
+
+                // Use Laravel route template with placeholders
+                let urlTemplate =
+                    "{{ route('admin.social_safeguard_entries.index', ['project_id' => 'PROJECT_ID', 'compliance_id' => 'COMPLIANCE_ID', 'phase_id' => 'PHASE_ID']) }}";
+
+                // Replace placeholders with actual values
+                urlTemplate = urlTemplate
+                    .replace('PROJECT_ID', projectId)
+                    .replace('COMPLIANCE_ID', complianceId)
+                    .replace('PHASE_ID', phaseId);
+
+                // Append date_of_entry as query string
+                urlTemplate += `?date_of_entry=${dateOfEntry}`;
+
+                window.location.href = urlTemplate;
+            });
+        </script>
 
         {{-- Entries Table --}}
         @if ($entries->isNotEmpty())
@@ -56,9 +78,9 @@
                                 <th>SL No</th>
                                 <th>Item</th>
                                 <th>Yes/No</th>
-                                <th>Photos/Documents</th>
+                                <th>Files</th>
                                 <th>Remarks</th>
-                                <th>Validity Till</th>
+                                <th>Validity</th>
                                 <th>Date of Entry</th>
                                 <th>Action</th>
                             </tr>
@@ -67,26 +89,21 @@
                             @foreach ($entries as $entry)
                                 @php
                                     $allSlNos = collect($entries)->pluck('sl_no')->toArray();
-
-                                    // A row is parent if at least one other row starts with "sl_no."
-                                    $isParent = collect($allSlNos)->contains(function ($sl) use ($entry) {
-                                        return Str::startsWith($sl, $entry->sl_no . '.');
-                                    });
-
-                                    // count dots to know level (A=0, A.1=1, A.1.1=2 ...)
+                                    $isParent = collect($allSlNos)->contains(
+                                        fn($sl) => Str::startsWith($sl, $entry->sl_no . '.'),
+                                    );
                                     $level = substr_count($entry->sl_no, '.');
-
                                     $social = $entry->social;
                                     $locked = $entry->is_locked;
+                                    $filesExist = $social && !empty($social->photos_documents_case_studies);
                                 @endphp
-
                                 <tr class="{{ $isParent ? 'table-secondary fw-bold' : '' }}"
                                     data-entry-id="{{ $entry->id }}" data-social-id="{{ $social?->id }}">
 
                                     {{-- SL No --}}
                                     <td>{{ $entry->sl_no }}</td>
 
-                                    {{-- Item (with indentation) --}}
+                                    {{-- Item --}}
                                     <td class="text-start" style="padding-left: {{ $level * 20 }}px;">
                                         {{ $entry->item_description }}
                                     </td>
@@ -98,31 +115,50 @@
                                         @else
                                             <select name="yes_no" class="form-select" {{ $locked ? 'disabled' : '' }}>
                                                 <option value="">Select</option>
-                                                <option value="1"
-                                                    {{ $social && $social->yes_no == 1 ? 'selected' : '' }}>Yes
+                                                <option value="1" {{ $social?->yes_no == 1 ? 'selected' : '' }}>
+                                                    Yes
                                                 </option>
-                                                <option value="0"
-                                                    {{ $social && $social->yes_no == 0 ? 'selected' : '' }}>No</option>
-                                                <option value="3"
-                                                    {{ $social && $social->yes_no == 3 ? 'selected' : '' }}>N/A
+                                                <option value="0" {{ $social?->yes_no == 0 ? 'selected' : '' }}>No
+                                                </option>
+                                                <option value="3" {{ $social?->yes_no == 3 ? 'selected' : '' }}>
+                                                    N/A
                                                 </option>
                                             </select>
                                         @endif
                                     </td>
 
                                     {{-- Files --}}
-                                    <td>
-                                        @if ($isParent)
-                                            <span class="text-muted">—</span>
-                                        @else
-                                            <button type="button" class="btn btn-secondary btn-sm open-upload-modal"
-                                                data-bs-toggle="modal" data-bs-target="#uploadModal"
-                                                data-entry-id="{{ $entry->id }}"
-                                                data-social-id="{{ $social?->id }}">
-                                                <i class="fas fa-upload"></i> Upload/View
-                                            </button>
-                                        @endif
-                                    </td>
+                                    <td class="uploaded-files 
+    @if($isParent) bg-light 
+    @elseif($filesExist) bg-light-success 
+    @else bg-light-danger 
+    @endif">
+    @if ($isParent)
+        <span class="text-muted">—</span>
+    @else
+        @if ($filesExist)
+            <ul class="list-unstyled mb-1 d-none">
+                @foreach ($social->photos_documents_case_studies as $mediaId)
+                    @php $media = \App\Models\MediaFile::find($mediaId); @endphp
+                    @if ($media)
+                        <li>
+                            <i class="far fa-file"></i>
+                            <a href="{{ Storage::url($media->path) }}" target="_blank">
+                                {{ $media->meta_data['name'] ?? $media->id }}
+                            </a>
+                        </li>
+                    @endif
+                @endforeach
+            </ul>
+        @endif
+        <button type="button" class="btn btn-sm btn-primary open-upload-modal mt-1"
+            data-entry-id="{{ $entry->id }}"
+            data-social-id="{{ $social?->id }}">
+            {{ $filesExist ? 'Manage Files' : 'Upload File' }}
+        </button>
+    @endif
+</td>
+
 
                                     {{-- Remarks --}}
                                     <td>
@@ -138,7 +174,7 @@
                                     <td>
                                         @if ($isParent)
                                             <span class="text-muted">—</span>
-                                        @elseif ($entry->is_validity)
+                                        @elseif($entry->is_validity)
                                             <input type="date" name="validity_date" class="form-control"
                                                 value="{{ $social?->validity_date?->format('Y-m-d') ?? '' }}"
                                                 {{ $locked ? 'readonly' : '' }}>
@@ -153,7 +189,7 @@
                                             <span class="text-muted">—</span>
                                         @else
                                             <input type="date" name="date_of_entry" class="form-control"
-                                                value="{{ $social?->date_of_entry?->format('Y-m-d') ?? request('date_of_entry', now()->format('Y-m-d')) }}"
+                                                value="{{ $social?->date_of_entry?->format('Y-m-d') ?? now()->format('Y-m-d') }}"
                                                 max="{{ now()->format('Y-m-d') }}" {{ $locked ? 'readonly' : '' }}>
                                         @endif
                                     </td>
@@ -168,13 +204,12 @@
                                     </td>
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
             </form>
         @else
-            <div class="alert alert-warning">
+            <div class="alert alert-warning text-center">
                 @if (request()->has('sub_package_project_id'))
                     No entries found for the selected filters.
                 @else
@@ -184,251 +219,9 @@
         @endif
 
         {{-- Upload Modal --}}
-        <div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><i class="fas fa-upload"></i> Media Manager</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <ul class="nav nav-tabs" id="uploadTab" role="tablist">
-                            <li class="nav-item">
-                                <button class="nav-link active" id="upload-tab" data-bs-toggle="tab"
-                                    data-bs-target="#upload" type="button">Upload</button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link" id="view-tab" data-bs-toggle="tab" data-bs-target="#view"
-                                    type="button">View</button>
-                            </li>
-                        </ul>
+        <x-upload-modal />
+    </div>
 
-                        <div class="tab-content mt-3">
-                            <div class="tab-pane fade show active" id="upload">
-                                <form id="upload-form">
-                                    <input type="hidden" name="entry_id" id="modal-entry-id">
-                                    <input type="hidden" name="social_id" id="modal-social-id">
-
-                                    <table class="table table-bordered d-none" id="upload-table">
-                                        <thead>
-                                            <tr>
-                                                <th>File Name</th>
-                                                <th>Size</th>
-                                                <th>Type</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-
-                                    <input type="file" name="media_files[]" multiple class="form-control mb-3"
-                                        id="file-input">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-cloud-upload-alt"></i> Upload
-                                    </button>
-                                </form>
-                            </div>
-
-                            <div class="tab-pane fade" id="view">
-                                <table class="table table-bordered" id="view-table">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>File Name</th>
-                                            <th>Type</th>
-                                            <th>Preview</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="view-table-body"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- jQuery CDN -->
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-        <script>
-            $(document).on('click', '.save-row', function() {
-                const btn = $(this);
-                const row = btn.closest('tr');
-                const entryId = row.data('entry-id');
-
-                // Build payload to match controller
-                const payload = {
-                    _token: $('meta[name="csrf-token"]').attr('content'),
-                    entry_id: entryId,
-                    yes_no: row.find('select[name="yes_no"]').val(),
-                    remarks: row.find('input[name="remarks"]').val(),
-                    validity_date: row.find('input[name="validity_date"]').val(),
-                    date_of_entry: row.find('input[name="date_of_entry"]').val(),
-                    project_id: "{{ $subProject->id }}",
-                    social_compliance_id: "{{ $compliance->id }}", // ✅ FIXED
-                    contraction_phase_id: "{{ $phase->id }}",
-                };
-
-                $.ajax({
-                    url: "{{ route('admin.social_safeguard_entries.save') }}",
-                    method: "POST",
-                    data: payload,
-                    success: function(res) {
-                        if (res.status === 'success') {
-                            alert(res.message);
-                            location.reload();
-                        } else {
-                            alert(res.message || 'Something went wrong.');
-                        }
-                    },
-                    error: function(xhr) {
-                        alert(xhr.responseJSON?.message || 'Server error.');
-                    }
-                });
-            });
-        </script>
-
-
-        {{-- JS --}}
-        <script>
-            const fileInput = document.getElementById('file-input');
-            const uploadTableBody = document.querySelector('#upload-table tbody');
-            const viewTableBody = document.getElementById('view-table-body');
-
-            const getIcon = (filename) => {
-                const ext = filename.split('.').pop().toLowerCase();
-                const icons = {
-                    pdf: 'far fa-file-pdf text-danger',
-                    doc: 'far fa-file-word text-primary',
-                    docx: 'far fa-file-word text-primary',
-                    xls: 'far fa-file-excel text-success',
-                    xlsx: 'far fa-file-excel text-success',
-                    jpg: 'far fa-file-image text-warning',
-                    jpeg: 'far fa-file-image text-warning',
-                    png: 'far fa-file-image text-warning'
-                };
-                return icons[ext] ?? 'far fa-file';
-            };
-
-            // Show selected files in Upload table
-            fileInput.addEventListener('change', () => {
-                uploadTableBody.innerHTML = '';
-                Array.from(fileInput.files).forEach((file, index) => {
-                    uploadTableBody.innerHTML += `
-                        <tr>
-                            <td>${file.name}</td>
-                            <td>${(file.size / 1024).toFixed(2)} KB</td>
-                            <td>${file.type}</td>
-                            <td><button type="button" class="btn btn-sm btn-danger remove-file" data-index="${index}">Remove</button></td>
-                        </tr>
-                    `;
-                });
-            });
-
-            uploadTableBody.addEventListener('click', e => {
-                if (e.target.classList.contains('remove-file')) {
-                    const idx = e.target.dataset.index;
-                    const dt = new DataTransfer();
-                    Array.from(fileInput.files).forEach((file, i) => i != idx && dt.items.add(file));
-                    fileInput.files = dt.files;
-                    e.target.closest('tr').remove();
-                }
-            });
-
-            // Open modal & populate view tab
-            document.querySelectorAll('.open-upload-modal').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const entryId = btn.dataset.entryId;
-                    const socialId = btn.dataset.socialId;
-
-                    if (!socialId) {
-                        alert('Please save the entry before uploading files.');
-                        btn.closest('tr').querySelector('.save-row')?.focus();
-                        return;
-                    }
-
-                    document.getElementById('modal-entry-id').value = entryId;
-                    document.getElementById('modal-social-id').value = socialId;
-
-                    viewTableBody.innerHTML = '';
-                    const uploadedFiles = btn.closest('tr').querySelectorAll('.uploaded-files ul li');
-                    if (uploadedFiles.length) {
-                        uploadedFiles.forEach(li => {
-                            const name = li.querySelector('a').innerText;
-                            const path = li.querySelector('a').href;
-                            const icon = li.querySelector('i').className;
-                            const ext = name.split('.').pop().toUpperCase();
-                            viewTableBody.innerHTML += `<tr>
-                                <td>${name}</td>
-                                <td>-</td>
-                                <td>${ext}</td>
-                                <td><a href="${path}" target="_blank"><i class="${icon}"></i> View</a></td>
-                            </tr>`;
-                        });
-                    } else {
-                        viewTableBody.innerHTML =
-                            `<tr><td colspan="4" class="text-center">No files uploaded yet.</td></tr>`;
-                    }
-                });
-            });
-
-            // Upload form
-            document.getElementById('upload-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const entryId = document.getElementById('modal-entry-id').value;
-                const socialId = document.getElementById('modal-social-id').value;
-                if (!socialId) return alert('Cannot upload without saving the entry first.');
-
-                const row = document.querySelector(`tr[data-entry-id="${entryId}"]`);
-                const formData = new FormData(e.target);
-                formData.append('social_id', socialId);
-                formData.append('sl_no', row.children[0].innerText);
-                formData.append('item_description', row.children[1].innerText);
-                formData.append('yes_no', row.querySelector('select[name="yes_no"]').value);
-                formData.append('remarks', row.querySelector('input[name="remarks"]').value);
-                formData.append('validity_date', row.querySelector('input[name="validity_date"]')?.value || '');
-                formData.append('date_of_entry', row.querySelector('input[name="date_of_entry"]').value);
-                formData.append('project_id', "{{ request('sub_package_project_id') }}");
-                formData.append('safeguard_compliance_id', "{{ request('safeguard_compliance_id') }}");
-                formData.append('contraction_phase_id', "{{ request('contraction_phase_id') }}");
-
-                try {
-                    const res = await fetch("{{ route('admin.media_files.upload') }}", {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
-                                'content')
-                        },
-                        body: formData
-                    });
-                    const data = await res.json();
-                    if (data.status === 'success') {
-                        let rowUl = row.querySelector('.uploaded-files ul');
-                        if (!rowUl) {
-                            rowUl = document.createElement('ul');
-                            rowUl.classList.add('list-unstyled', 'mb-0');
-                            row.querySelector('.uploaded-files').innerHTML = '';
-                            row.querySelector('.uploaded-files').appendChild(rowUl);
-                        }
-
-                        data.files.forEach(file => {
-                            const icon = getIcon(file.name);
-                            rowUl.insertAdjacentHTML('beforeend',
-                                `<li><i class="${icon}"></i> <a href="${file.url}" target="_blank">${file.name}</a></li>`
-                            );
-                            viewTableBody.innerHTML += `<tr>
-                                <td>${file.name}</td>
-                                <td>-</td>
-                                <td>${file.name.split('.').pop().toUpperCase()}</td>
-                                <td><a href="${file.url}" target="_blank"><i class="${icon}"></i> View</a></td>
-                            </tr>`;
-                        });
-
-                        bootstrap.Modal.getInstance(document.getElementById('uploadModal')).hide();
-                    }
-                } catch (err) {
-                    console.error(err);
-                }
-            });
-        </script>
+    {{-- JS Scripts --}}
+    <x-upload-js :subProjectId="$subProject->id" :complianceId="$compliance->id" :phaseId="$phase_id" />
 </x-app-layout>
